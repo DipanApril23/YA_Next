@@ -1,0 +1,63 @@
+[
+  {
+    "name": "Java",
+    "modules": [
+      "Understanding the Architecture of JAVA.",
+      "Core Basic Programming of JAVA.",
+      "Progressing with OOPs concept.",
+      "Stepping into Advance Layers of JAVA.",
+      "DSA with JAVA (sounds difficult but not impossible).",
+      "Spring Framework with JAVA (Full project based - Making Backend & API)",
+      "Selenium with JAVA for automation purposes."
+    ],
+    "image": "https://youngarchitects.in/assets/coursesImage/java.webp"
+  },
+  {
+    "name": "JavaScript",
+    "modules": [
+      "Understanding the Architecture of JavaScript.",
+      "Core Basic Programming of JavaScript(HTML, CSS and Javascript).",
+      "Progressing with other concepts of JavaScript.",
+      "Stepping into Advanced Layers of JavaScript.",
+      "DSA with JavaScript.",
+      "Project Making with Frontend Framework with JavaScript like ReactJs and NextJs",
+      "Advanced concepts of JavaScript Frameworks.",
+      "Backend API with NodeJs"
+    ],
+    "image": "https://youngarchitects.in/assets/coursesImage/JavaScript-logo.webp"
+  },
+  {
+    "name": "Database",
+    "modules": [
+      "Deep-diving concepts of Database.",
+      "Making a good database designs, utilizing the theory-concepts.",
+      "Learn Oracle Database with proper SQL Queries and proper scenarios where you should implement it.",
+      "Learn MongoDB and implement it in the backend like NodeJs.",
+      "Implement database concepts in backend with Python and JAVA."
+    ],
+    "image": "https://youngarchitects.in/assets/coursesImage/database.webp"
+  },
+  {
+    "name": "Python",
+    "modules": [
+      "Understanding the Architecture of Python.",
+      "Core Basic Programming of Python in scripting style format.",
+      "Progressing with POP and OOPs concepts.",
+      "Stepping into Advanced Layers of Python.",
+      "DSA with Python.",
+      "Numerous Framework with Python(Full project based - Making Backend & API).",
+      "AI with Python."
+    ],
+    "image": "https://youngarchitects.in/assets/coursesImage/python.webp"
+  },
+  {
+    "name": "General Concepts",
+    "modules": [
+      "Understanding the architecture of Operating System.",
+      "Understanding the concepts of Database and deep diving into architecture.",
+      "Conceptual deep dive into Computer Networks",
+      "Learning about cloud based on GCP (Google Cloud Platform)"
+    ],
+    "image": "https://youngarchitects.in/assets/coursesImage/computer.webp"
+  }
+]

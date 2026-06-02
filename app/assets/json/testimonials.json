@@ -1,0 +1,107 @@
+{
+  "clients": [
+    {
+      "image": "https://youngarchitects.in/assets/client/patrick.svg",
+      "name": "Patrick Boehm",
+      "title": "Electroplating engineer and founder of GALVA-AI, Switzerland",
+      "quote": "Young Architects has helped my vison and idea to carry forward. Definitely you can use their AI Implementation and custom software design and consultation. Their support system and dedication has led me to continue till Release 3 and I still like to continue my vision with their services in near future."
+    },
+    {
+      "image": "https://youngarchitects.in/assets/client/jaclyn.svg",
+      "name": "Jaclyn Kaur",
+      "title": "CEO of CARBON AI, Singapore",
+      "quote": "We had started our investment project with Young Architects but unfortunately the investors withdrew due to financial constraints. We still keep contact with Young Architects and we are willing to work with them again, once we start our investment project. You should avail them custom web development and their IT consultancy service."
+    },
+    {
+      "image": "https://youngarchitects.in/assets/client/jasbin.svg",
+      "name": "Jasbin Singh",
+      "title": "CTO of CARBON AI, Singapore",
+      "quote": "As Jaclyn mentioned and being a CTO of a company, I would definitely like to vouch for Young Architects and you can work with them with their innovative solutions."
+    },
+    {
+      "image": "https://youngarchitects.in/assets/client/meni.svg",
+      "name": "Meni Agababayev ",
+      "quote": "Young Architects Marketing Solutions are quite good but they can improve the monetary policy as taking advance from clients is not so good. But still they have ranked me from nowhere to second page of Google within one month and have satisfied me with results."
+    },
+    {
+      "image": "https://youngarchitects.in/assets/client/sujit.svg",
+      "name": "Sujit Charkraborty",
+      "title": "Designated Partner of Innerwork Advisors LLP and InnerWork Legal Service, India",
+      "quote": "Young Architects Marketing Solutions is well sufficient and within three months of time and has ranked both the company in Google Map and we are still continuing our services with them. Their custom web development, and we remaking of website for both the companies is remarkable as well."
+    },
+    {
+      "image": "https://youngarchitects.in/assets/client/asim.svg",
+      "name": "Md. Asim Ali",
+      "title": "Designated Partner of Innerwork Advisors LLP, India",
+      "quote": "As Sujit Sir said, I would like to add that they should keep up the good work and maintain this well optimized services as well."
+    },
+    {
+      "image": "https://youngarchitects.in/assets/client/bibaswan.svg",
+      "name": "Bibaswan Mukherjee",
+      "title": "Designated Partner of Innerwork Advisors LLP and InnerWork Legal Service, India",
+      "quote": "As mentioned by my other designated partners, there is nothing new to add but they should definitely keep up the good work."
+    },
+    {
+      "image": "https://youngarchitects.in/assets/client/deepak.svg",
+      "name": "Deepak Kumar Dutta",
+      "title": "Designated Partner of Innerwork Advisors LLP, India",
+      "quote": "They are good in work and have confident what they are doing. Altough it feels like in the initial stage that they are charging a bit higher amount but as time pass by we really saw the return and we are really satisfied with they are providing as services are top notch"
+    }
+  ],
+  "students": [
+    {
+      "image": "https://youngarchitects.in/assets/student/anuska.svg",
+      "name": "Anuska Paul",
+      "title": "BCA Student of Insitute of Engineering & Management",
+      "quote": "Young Architects' technique of making student understand in a short span of time is amazing. I just opted in Python and did Machine Learning and Streamlit with database. I would highly recommend to join Young Architects"
+    },
+    {
+      "image": "https://youngarchitects.in/assets/student/bristi.svg",
+      "name": "Brishti Mahato",
+      "title": "BCA Student of Insitute of Engineering & Management",
+      "quote": "Being an IEM student, pressure was our constant companion but Young Architects really helped to handle out the pressure and upskilling was not a burden to us anymore and we gradually held ourself confident and my technical knowledge gradually developed with time."
+    },
+    {
+      "image": "https://youngarchitects.in/assets/student/rishikesh_formal.svg",
+      "name": "Rishikesh Kumar",
+      "title": "BCA Student of Insitute of Engineering & Management",
+      "quote": "Hey, Rishikesh here. Well at first I really had no clue what should we do or not but Young Architects treated us not like students but friends. We started to build confidence gradually and my technical skills was improving day by day. Yeah, its not a one day task and Young Architects pushed me to my daily everyday, and made me landed on a job. Yes I got Accenture from my On-Campus. Thanks to IEM and Young Architects once again."
+    },
+    {
+      "image": "https://youngarchitects.in/assets/student/nibedita.webp",
+      "name": "Nibedita Mondal",
+      "title": "BCA Student of Insitute of Engineering & Management",
+      "quote": "Hello, I am extremely gratitude to Young Architects and they really helped me to go beyond my limit. I personally took training in JAVA and liked the  way of teaching and helped me understand concepts which really helped me to crack placements while I was in college. When I sat for Accenture, I was close to the chase but lost. Young Architects encouraged me and here I am. I got three jobs at TCS, Braniacs and ZOLO which I got via On_Campus. So thank you to IEM and Young Architects once again."
+    },
+    {
+      "image": "https://youngarchitects.in/assets/student/dipayan.svg",
+      "name": "Dipayan Halder",
+      "title": "BCA Student of Insitute of Engineering & Management",
+      "quote": "Well words will be less to show gratitude to Young Architects. I have never seen an eductaion cell so dedicated for their students. Yeah timing of the class was a bit issue here but other than that Young Architects helped me to go with my tech skills and upgraded me and here I am. I got good score in college projects where I really thought that we cannot do anything."
+    },
+    {
+      "image": "https://youngarchitects.in/assets/student/arijit.webp",
+      "name": "Arijit Paul",
+      "title": "BCA Student of Insitute of Engineering & Management",
+      "quote": "Young Architects has helped me not only upskilling but also has helped me to develop my communication skills and in my personality. Recently Young Architects have helped me to get a job in Wipro and I am really grateful for that."
+    },
+    {
+      "image": "https://youngarchitects.in/assets/student/Dipta_Karar.webp",
+      "name": "Dipta Karar",
+      "title": "BCA Student of Insitute of Engineering & Management",
+      "quote": "Young Architects has helped me not only upskilling but also has helped me to develop my communication skills and upskilling as well.Young Architects backed me even after I failed to secure a job in Accenture and Deloitte but they never gave up on me and I landed two jobs in the same time and cracked TCS and Cognizant in one go. Thank You Young Architects."
+    },
+    {
+      "image": "https://youngarchitects.in/assets/student/poulami.webp",
+      "name": "Poulami Pan",
+      "title": "BCA Student of Insitute of Engineering & Management",
+      "quote": "Hello, I am extremely gratitude to Young Architects and they really helped me to clear the concepts of JAVA, Python and JavaScript and most importantly they helped me to clear out my concepts on coding. Even I did panic while coding but they helped me to overcome my fears and did Spring Projects to MERN stack"
+    },
+    {
+      "image": "https://youngarchitects.in/assets/student/abhishek.svg",
+      "name": "Abhishek Saha",
+      "title": "BCA Student of Insitute of Engineering & Management",
+      "quote": "I am extremely grateful that Young Architects has guided me for so long and since I was weak in coding they taught me with special attention and more importantly I like designing and they encouraged me to do it more and importantly gave me a choice as intern in their company as well seeing my talent and trying to make it to full attention."
+    }
+  ]
+}

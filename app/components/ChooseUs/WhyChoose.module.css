@@ -1,0 +1,27 @@
+.pentagonCardCategory1 {
+  animation: animation 1.2s infinite alternate linear;
+}
+
+.pentagonCardCategory2 {
+  animation: reverseAnimation 1.2s infinite alternate linear;
+}
+
+@keyframes animation {
+  0% {
+    transform: translateY(-10px);
+  }
+
+  100% {
+    transform: translateY(5px);
+  }
+}
+
+@keyframes reverseAnimation {
+  0% {
+    transform: translateY(5px);
+  }
+
+  100% {
+    transform: translateY(-10px);
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "marketing": [
+    {
+      "title": "Innerwork Advisors LLP",
+      "description": "These are some marketing insights of this company which has had a digital business for over 5 years but started SEO for only 2 months and this is the result already.",
+      "longDescription": "This is long description",
+      "logo": "https://youngarchitects.in/assets/clientLogo/iwallp.webp",
+      "img": "https://youngarchitects.in/assets/workImage/Marketing1.webp"
+    },
+    {
+      "title": "InnerWork Legal Services",
+      "description": "A child entity of InnerWork Advisors LLP, came into digital existence for 2 months and the results have been shocking just by organic marketing.",
+      "longDescription": "This is long description",
+      "logo": "https://youngarchitects.in/assets/clientLogo/iwls2.webp",
+      "img": "https://youngarchitects.in/assets/workImage/Marketing2.webp"
+    },
+    {
+      "title": "SaveLockSmith",
+      "description": "Situated in Los Angeles, they wanted to rank in Google organically within 1 month contracts’ time, and we have done it by pulling off the impossible. Now they have ranked in Los Angeles and have been happy with the results as well.",
+      "longDescription": "This is long description",
+      "logo": "https://youngarchitects.in/assets/clientLogo/locksmith.webp",
+      "img": "https://youngarchitects.in/assets/workImage/Marketing3.webp"
+    }
+  ],
+  "designing": [
+    {
+      "title": "Instagram Design Poster",
+      "description": "doloribus neque excepturi perferendis aspernatur, commodi inventore",
+      "longDescription": "This is long description",
+      "logo": "https://youngarchitects.in/assets/workImage/Design1.webp"
+    },
+    {
+      "title": " Digital Banner Design",
+      "description": "doloribus neque excepturi perferendis aspernatur, commodi inventore",
+      "longDescription": "This is long description",
+      "logo": "https://youngarchitects.in/assets/workImage/Design2.webp"
+    },
+    {
+      "title": "LinkedIN Design Poster",
+      "description": "doloribus neque excepturi perferendis aspernatur, commodi inventore",
+      "longDescription": "This is long description",
+      "logo": "https://youngarchitects.in/assets/workImage/Design3.webp"
+    },
+    {
+      "title": "Impressive Advertisement Poster Design",
+      "description": "doloribus neque excepturi perferendis aspernatur, commodi inventore",
+      "longDescription": "This is long description",
+      "logo": "https://youngarchitects.in/assets/workImage/Design4.webp"
+    },
+    {
+      "title": "Event Poster Design",
+      "description": "doloribus neque excepturi perferendis aspernatur, commodi inventore",
+      "longDescription": "This is long description",
+      "logo": "https://youngarchitects.in/assets/workImage/Design5.webp"
+    },
+    {
+      "title": "Custom Hand-Made design",
+      "description": "doloribus neque excepturi perferendis aspernatur, commodi inventore",
+      "longDescription": "This is long description",
+      "logo": "https://youngarchitects.in/assets/workImage/Design6.webp"
+    }
+  ],
+  "development": [
+    {
+      "title": "GALVA AI",
+      "description": "A company situated in Switzerland, which is fitted with a model AI into a simple landing page, optimizing it more with the continual of Release 3 and turning AI smarter day by day with customized solutions.",
+      "longDescription": "This is long description",
+      "logo": "https://youngarchitects.in/assets/workImage/Dev1.webp"
+    },
+    {
+      "title": "Innerwork Advisors LLP",
+      "description": "A company situated in SwitzerlandTurning a simple boring and not so user friendly Wordpress website into a sleek custom coded website which is giving them good reviews and SEO is skyrocketing with the passing day.",
+      "longDescription": "This is long description",
+      "logo": "https://youngarchitects.in/assets/workImage/Dev3.webp"
+    },
+    {
+      "title": "InnerWork Legal Services",
+      "description": "Impressed by Innerwork Advisors LLP website, they provided us the responsibility to make a website for this company and the result is impressive as ever.",
+      "longDescription": "This is long description",
+      "logo": "https://youngarchitects.in/assets/workImage/Dev2.webp"
+    },
+    {
+      "title": "Carbon AI",
+      "description": "A company situated in Singapore, had a really good experience with us. Based on an investment project, we did a model prototyping carbon credit project and developed to some extent.",
+      "longDescription": "This is long description",
+      "logo": "https://youngarchitects.in/assets/workImage/Dev6.webp"
+    }
+  ]
+}
