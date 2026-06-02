@@ -510,8 +510,8 @@ export default function ServicesSection() {
       if (!cards.length) return;
 
       // Initial states
-      gsap.set(cards,    { autoAlpha: 0, y: 60,  scale: 0.95, filter: "blur(10px)" });
-      gsap.set(cards[0], { autoAlpha: 1, y: 0,   scale: 1,    filter: "blur(0px)"  });
+      gsap.set(cards,    { autoAlpha: 0, y: 60,  scale: 0.95 });
+      gsap.set(cards[0], { autoAlpha: 1, y: 0,   scale: 1    });
       gsap.set(bars,     { scaleY: 0, transformOrigin: "top center" });
 
       const tl = gsap.timeline({
@@ -537,11 +537,11 @@ export default function ServicesSection() {
         if (next) {
           tl.to(card, {
             autoAlpha: 0, y: -80, scale: 0.93,
-            filter: "blur(8px)", ease: "power2.inOut",
+            ease: "power2.inOut",
           }, lbl);
           tl.to(next, {
             autoAlpha: 1, y: 0,   scale: 1,
-            filter: "blur(0px)", ease: "power2.inOut",
+            ease: "power2.inOut",
           }, lbl);
         }
       });
@@ -721,7 +721,7 @@ export default function ServicesSection() {
               {/* Reference card (visible, relative-positioned) */}
               <div
                 ref={el => (mobCards.current[0] = el)}
-                style={{ position: "relative", willChange: "transform, opacity" }}
+                style={{ position: "relative" }}
               >
                 <Card svc={SERVICES[0]} compact />
               </div>
@@ -740,7 +740,6 @@ export default function ServicesSection() {
                       right:      0,
                       opacity:    0,
                       visibility: "hidden",
-                      willChange: "transform, opacity",
                     }}
                   >
                     <Card svc={svc} compact />
@@ -851,7 +850,7 @@ export default function ServicesSection() {
                 {/* Reference card */}
                 <div
                   ref={el => (deskCards.current[0] = el)}
-                  style={{ position: "relative", willChange: "transform, opacity, filter" }}
+                  style={{ position: "relative" }}
                 >
                   <Card svc={SERVICES[0]} />
                 </div>
@@ -870,7 +869,6 @@ export default function ServicesSection() {
                         right:      0,
                         opacity:    0,
                         visibility: "hidden",
-                        willChange: "transform, opacity, filter",
                       }}
                     >
                       <Card svc={svc} />
