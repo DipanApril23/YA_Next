@@ -694,8 +694,7 @@ export default function ServicesSection() {
                 margin:     0,
               }}
             >
-              Most scale-stage companies don't suffer from a visibility deficiency.
-              We engineer undisputed industry systems.
+              Most scale-stage companies don't suffer from a visibility deficiency. They struggle with conversion pipelines caused by digital positioning architecture. We engineer undisputed industry systems.
             </motion.p>
           </div>
 
