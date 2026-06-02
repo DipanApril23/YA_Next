@@ -1,17 +1,5 @@
 "use client";
 
-/**
- * ServicesSection.jsx — PREMIUM STRUCTURED REFACTOR
- * ─────────────────────────────────────────────────────────────
- * • Eliminated dead whitespace on all breakpoints with proper flex fill.
- * • Desktop: Full-height two-column layout with left panel anchored top→bottom.
- * • Tablet (768–1023px): Vertical stacked layout, no dead zones.
- * • Mobile (<768px): Tight header + full-flex card area, zero wasted vh.
- * • Preserved: GSAP pin-scroll cinematic card swap on all breakpoints.
- * • Enhanced: Richer card interior, gradient decorations, number accent.
- * ─────────────────────────────────────────────────────────────
- */
-
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -29,14 +17,14 @@ const C = {
   muted:     "#A09C98",
   accent1:   "#7C3AED",
   accent2:   "#EC4899",
-  accentMid: "#A855F7",
   tagBg:     "#EDEBF0",
   tagText:   "#6B5F7A",
   progBg:    "rgba(124,58,237,0.1)",
   numBg:     "rgba(124,58,237,0.05)",
 };
 
-const GRAD      = `linear-gradient(135deg, ${C.accent1} 0%, ${C.accent2} 100%)`;
+const GRAD = `linear-gradient(135deg, ${C.accent1} 0%, ${C.accent2} 100%)`;
+
 const GRAD_TEXT = {
   backgroundImage: GRAD,
   WebkitBackgroundClip: "text",
@@ -44,9 +32,11 @@ const GRAD_TEXT = {
   backgroundClip: "text",
 };
 
+// ─── Services Data ────────────────────────────────────────────
 const SERVICES = [
   {
-    id: "01", label: "POSITIONING",
+    id: "01",
+    label: "POSITIONING",
     title: "Authority\nWebsites",
     heading: "Designed to make your company feel established before the first conversation.",
     description: "We create premium digital experiences engineered to increase perceived value, strengthen trust, and position brands like category leaders.",
@@ -55,7 +45,8 @@ const SERVICES = [
     stat: { value: "3×", label: "avg. conversion lift" },
   },
   {
-    id: "02", label: "GROWTH",
+    id: "02",
+    label: "GROWTH",
     title: "SEO Growth\nInfrastructure",
     heading: "Organic visibility engineered for long-term acquisition.",
     description: "We build scalable SEO ecosystems combining technical foundations, strategic content architecture, and search-intent systems that compound over time.",
@@ -64,7 +55,8 @@ const SERVICES = [
     stat: { value: "12×", label: "organic traffic growth" },
   },
   {
-    id: "03", label: "SYSTEMS",
+    id: "03",
+    label: "SYSTEMS",
     title: "AI &\nAutomation",
     heading: "Modern businesses scale through intelligent systems, not operational chaos.",
     description: "We implement AI-powered workflows and operational automations that reduce friction, improve efficiency, and create scalable execution systems.",
@@ -74,13 +66,19 @@ const SERVICES = [
   },
 ];
 
+// ─── Animation Variants ───────────────────────────────────────
 const fadeUp = (delay = 0) => ({
-  hidden:   { y: 24, opacity: 0 },
-  visible:  { y: 0, opacity: 1, transition: { duration: 0.9, ease: [0.16, 1, 0.3, 1], delay } },
+  hidden:  { y: 24, opacity: 0 },
+  visible: {
+    y: 0, opacity: 1,
+    transition: { duration: 0.9, ease: [0.16, 1, 0.3, 1], delay },
+  },
 });
 
 // ─── Service Card ─────────────────────────────────────────────
 function Card({ svc, compact = false }) {
+  const pad = compact ? "20px 20px 22px" : "clamp(28px, 3vw, 44px)";
+
   return (
     <div style={{
       background: C.card,
@@ -88,12 +86,14 @@ function Card({ svc, compact = false }) {
       borderRadius: compact ? 20 : 28,
       overflow: "hidden",
       width: "100%",
-      boxShadow: "0 2px 4px rgba(0,0,0,0.02), 0 16px 48px rgba(15,14,13,0.06), 0 4px 12px rgba(124,58,237,0.04)",
+      boxShadow:
+        "0 2px 4px rgba(0,0,0,0.02), 0 16px 48px rgba(15,14,13,0.06), 0 4px 12px rgba(124,58,237,0.04)",
     }}>
+
       {/* Top gradient stripe */}
       <div style={{ height: 3, background: GRAD }} />
 
-      <div style={{ padding: compact ? "20px 20px 18px" : "clamp(28px, 3vw, 44px)" }}>
+      <div style={{ padding: pad }}>
 
         {/* ── Header Row ── */}
         <div style={{
@@ -106,14 +106,16 @@ function Card({ svc, compact = false }) {
           <div>
             <p style={{
               fontFamily: "monospace", fontSize: 8, letterSpacing: "0.32em",
-              textTransform: "uppercase", color: C.accent1, marginBottom: 6,
-              fontWeight: 700,
+              textTransform: "uppercase", color: C.accent1,
+              marginBottom: 6, fontWeight: 700,
             }}>
               {svc.label}
             </p>
             <h3 style={{
               fontFamily: "'Fraunces', Georgia, serif",
-              fontSize: compact ? "clamp(1.5rem, 6vw, 1.9rem)" : "clamp(2rem, 2.6vw, 2.8rem)",
+              fontSize: compact
+                ? "clamp(1.5rem, 6vw, 1.9rem)"
+                : "clamp(2rem, 2.6vw, 2.8rem)",
               fontWeight: 700, lineHeight: 1.05, letterSpacing: "-0.025em",
               color: C.ink, whiteSpace: "pre-line", margin: 0,
             }}>
@@ -121,34 +123,29 @@ function Card({ svc, compact = false }) {
             </h3>
           </div>
 
-          {/* Service number badge */}
-          <div style={{
-            display: "flex", flexDirection: "column", alignItems: "center",
-            gap: 4, flexShrink: 0,
+          <span style={{
+            fontFamily: "monospace", fontSize: 9, letterSpacing: "0.1em",
+            padding: "5px 11px", borderRadius: 100, flexShrink: 0,
+            background: C.numBg, color: C.accent1,
+            border: `1px solid rgba(124,58,237,0.18)`, fontWeight: 700,
           }}>
-            <span style={{
-              fontFamily: "monospace", fontSize: 9, letterSpacing: "0.1em",
-              padding: "5px 11px", borderRadius: 100,
-              background: C.numBg, color: C.accent1,
-              border: `1px solid rgba(124,58,237,0.18)`,
-              fontWeight: 700,
-            }}>
-              {svc.id}
-            </span>
-          </div>
+            {svc.id}
+          </span>
         </div>
 
-        {/* ── Highlight heading ── */}
+        {/* ── Highlight Heading ── */}
         <p style={{
           fontFamily: "'Outfit', sans-serif",
-          fontSize: compact ? "clamp(13px, 3.5vw, 14.5px)" : "clamp(15px, 1.15vw, 17.5px)",
+          fontSize: compact
+            ? "clamp(13px, 3.5vw, 14.5px)"
+            : "clamp(15px, 1.15vw, 17.5px)",
           fontWeight: 600, lineHeight: 1.4, letterSpacing: "-0.01em",
           color: C.ink, marginBottom: compact ? 14 : 22,
         }}>
           {svc.heading}
         </p>
 
-        {/* ── Description + Points Grid ── */}
+        {/* ── Description + Points ── */}
         <div style={{
           display: "grid",
           gridTemplateColumns: compact ? "1fr" : "1.1fr 0.9fr",
@@ -186,31 +183,35 @@ function Card({ svc, compact = false }) {
           </ul>
         </div>
 
-        {/* ── Stat highlight ── */}
-        {!compact && (
-          <div style={{
-            display: "inline-flex", alignItems: "center", gap: 12,
-            background: "rgba(124,58,237,0.04)", border: `1px solid rgba(124,58,237,0.1)`,
-            borderRadius: 12, padding: "10px 18px", marginBottom: 22,
+        {/* ── Stat Highlight ── */}
+        <div style={{
+          display: "inline-flex", alignItems: "center", gap: 12,
+          background: "rgba(124,58,237,0.04)",
+          border: `1px solid rgba(124,58,237,0.1)`,
+          borderRadius: 12,
+          padding: compact ? "8px 14px" : "10px 18px",
+          marginBottom: compact ? 14 : 22,
+        }}>
+          <span style={{
+            fontFamily: "'Fraunces', Georgia, serif",
+            fontSize: compact
+              ? "clamp(1rem, 4vw, 1.2rem)"
+              : "clamp(1.2rem, 1.8vw, 1.5rem)",
+            fontWeight: 700, ...GRAD_TEXT,
           }}>
-            <span style={{
-              fontFamily: "'Fraunces', Georgia, serif",
-              fontSize: "clamp(1.2rem, 1.8vw, 1.5rem)",
-              fontWeight: 700, ...GRAD_TEXT,
-            }}>
-              {svc.stat.value}
-            </span>
-            <span style={{
-              fontFamily: "'Outfit', sans-serif",
-              fontSize: 12, color: C.body, fontWeight: 500,
-            }}>
-              {svc.stat.label}
-            </span>
-          </div>
-        )}
+            {svc.stat.value}
+          </span>
+          <span style={{
+            fontFamily: "'Outfit', sans-serif",
+            fontSize: compact ? 11 : 12,
+            color: C.body, fontWeight: 500,
+          }}>
+            {svc.stat.label}
+          </span>
+        </div>
 
         {/* ── Tags ── */}
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: compact ? 16 : 26 }}>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
           {svc.tags.map(tag => (
             <span key={tag} style={{
               padding: "5px 12px", borderRadius: 100,
@@ -224,47 +225,20 @@ function Card({ svc, compact = false }) {
           ))}
         </div>
 
-        {/* ── Footer CTA ── */}
-        <div style={{
-          display: "flex", alignItems: "center", justifyContent: "space-between",
-          paddingTop: compact ? 14 : 20,
-          borderTop: `1px solid ${C.border}`,
-          flexWrap: "wrap", gap: 10,
-        }}>
-          <p style={{
-            fontFamily: "'Outfit', sans-serif",
-            fontSize: compact ? 10.5 : 12, color: C.muted, fontWeight: 500, margin: 0,
-          }}>
-            Premium Architecture Ecosystem.
-          </p>
-          <button className="svc-action-btn" style={{
-            display: "inline-flex", alignItems: "center", gap: 7,
-            background: C.ink, color: "#fff", border: "none",
-            borderRadius: 100,
-            padding: compact ? "9px 18px" : "13px 28px",
-            fontFamily: "'Outfit', sans-serif",
-            fontSize: compact ? 10.5 : 11.5, fontWeight: 600,
-            letterSpacing: "0.04em", cursor: "pointer",
-            transition: "all 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
-          }}>
-            Explore Service
-            <span className="svc-arrow" style={{ transition: "transform 0.3s ease", display: "inline-block" }}>↗</span>
-          </button>
-        </div>
-
       </div>
     </div>
   );
 }
 
-// ─── Left Panel (desktop) ─────────────────────────────────────
+// ─── Left Panel (Desktop Only) ────────────────────────────────
 function LeftPanel({ bars }) {
   return (
     <div style={{
       display: "flex", flexDirection: "column",
       justifyContent: "space-between", height: "100%",
     }}>
-      {/* Top: label + heading */}
+
+      {/* Top: headline */}
       <div>
         <motion.div
           initial="hidden" whileInView="visible" viewport={{ once: true }}
@@ -311,7 +285,7 @@ function LeftPanel({ bars }) {
         </motion.p>
       </div>
 
-      {/* Middle: service index with progress bars */}
+      {/* Middle: progress index */}
       <div>
         <p style={{
           fontFamily: "monospace", fontSize: 8, letterSpacing: "0.3em",
@@ -334,7 +308,7 @@ function LeftPanel({ bars }) {
                 </p>
                 <p style={{
                   fontFamily: "'Outfit', sans-serif", fontSize: 11,
-                  color: C.body, fontWeight: 500, margin: 0, letterSpacing: "0.01em",
+                  color: C.body, fontWeight: 500, margin: 0,
                 }}>
                   {svc.label}
                 </p>
@@ -344,26 +318,22 @@ function LeftPanel({ bars }) {
         </div>
       </div>
 
-      {/* Bottom: decorative stat pill */}
+      {/* Bottom: trust pill */}
       <div style={{
         display: "inline-flex", alignItems: "center", gap: 10,
         background: C.card, border: `1px solid ${C.border}`,
         borderRadius: 14, padding: "12px 20px",
-        boxShadow: "0 2px 12px rgba(0,0,0,0.04)",
-        alignSelf: "flex-start",
+        boxShadow: "0 2px 12px rgba(0,0,0,0.04)", alignSelf: "flex-start",
       }}>
         <div style={{
           width: 8, height: 8, borderRadius: "50%",
-          background: GRAD, flexShrink: 0,
-          boxShadow: `0 0 8px ${C.accent1}66`,
+          background: GRAD, flexShrink: 0, boxShadow: `0 0 8px ${C.accent1}66`,
         }} />
-        <span style={{
-          fontFamily: "'Outfit', sans-serif", fontSize: 12,
-          color: C.body, fontWeight: 500,
-        }}>
+        <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: 12, color: C.body, fontWeight: 500 }}>
           Trusted by <strong style={{ color: C.ink }}>40+ scale-stage</strong> companies
         </span>
       </div>
+
     </div>
   );
 }
@@ -382,19 +352,13 @@ export default function ServicesSection() {
   useEffect(() => {
     const mm = gsap.matchMedia();
 
-    // ══ MOBILE < 768px ══════════════════════════════════════════
+    // ── Mobile < 768px ──────────────────────────────────────────
     mm.add("(max-width: 767px)", () => {
       const cards = mobCards.current.filter(Boolean);
       if (!cards.length) return;
 
-      gsap.set(cards, {
-        y: 40, autoAlpha: 0, scale: 0.96,
-        filter: "blur(6px)", pointerEvents: "none",
-      });
-      gsap.set(cards[0], {
-        y: 0, autoAlpha: 1, scale: 1,
-        filter: "blur(0px)", pointerEvents: "auto",
-      });
+      gsap.set(cards,    { y: 40, autoAlpha: 0, scale: 0.96, filter: "blur(6px)", pointerEvents: "none" });
+      gsap.set(cards[0], { y: 0,  autoAlpha: 1, scale: 1,    filter: "blur(0px)", pointerEvents: "auto" });
 
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -414,24 +378,18 @@ export default function ServicesSection() {
         const lbl = `m${i}`;
         tl.add(lbl);
         tl.to(card, { y: -50, autoAlpha: 0, scale: 0.92, filter: "blur(6px)", pointerEvents: "none", ease: "power1.inOut" }, lbl);
-        tl.to(next, { y: 0, autoAlpha: 1, scale: 1, filter: "blur(0px)", pointerEvents: "auto", ease: "power1.inOut" }, lbl);
+        tl.to(next, { y: 0,   autoAlpha: 1, scale: 1,    filter: "blur(0px)", pointerEvents: "auto", ease: "power1.inOut" }, lbl);
       });
     });
 
-    // ══ DESKTOP ≥ 768px ══════════════════════════════════════════
+    // ── Desktop ≥ 768px ─────────────────────────────────────────
     mm.add("(min-width: 768px)", () => {
       const cards = deskCards.current.filter(Boolean);
       const bars  = deskBars.current.filter(Boolean);
       if (!cards.length) return;
 
-      gsap.set(cards, {
-        y: 60, autoAlpha: 0, scale: 0.96,
-        filter: "blur(10px)", pointerEvents: "none",
-      });
-      gsap.set(cards[0], {
-        y: 0, autoAlpha: 1, scale: 1,
-        filter: "blur(0px)", pointerEvents: "auto",
-      });
+      gsap.set(cards,    { y: 60, autoAlpha: 0, scale: 0.96, filter: "blur(10px)", pointerEvents: "none" });
+      gsap.set(cards[0], { y: 0,  autoAlpha: 1, scale: 1,    filter: "blur(0px)",  pointerEvents: "auto" });
       gsap.set(bars, { scaleY: 0, transformOrigin: "top center" });
 
       const tl = gsap.timeline({
@@ -455,8 +413,8 @@ export default function ServicesSection() {
         if (bar) tl.to(bar, { scaleY: 1, ease: "none" }, lbl);
 
         if (next) {
-          tl.to(cards[i], { y: -80, autoAlpha: 0, scale: 0.92, filter: "blur(8px)", pointerEvents: "none", ease: "power2.inOut" }, lbl);
-          tl.to(next, { y: 0, autoAlpha: 1, scale: 1, filter: "blur(0px)", pointerEvents: "auto", ease: "power2.inOut" }, lbl);
+          tl.to(cards[i], { y: -80, autoAlpha: 0, scale: 0.92, filter: "blur(8px)",  pointerEvents: "none", ease: "power2.inOut" }, lbl);
+          tl.to(next,     { y: 0,   autoAlpha: 1, scale: 1,    filter: "blur(0px)",  pointerEvents: "auto", ease: "power2.inOut" }, lbl);
         }
       });
     });
@@ -466,17 +424,19 @@ export default function ServicesSection() {
 
   return (
     <div style={{ overflowX: "hidden", position: "relative", background: C.bg }}>
+
+      {/* ── Global Styles ── */}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,400&family=Outfit:wght@300;400;500;600;700&display=swap');
 
         #svc-mobile *, #svc-desktop * { box-sizing: border-box; }
+
         #svc-mobile p,  #svc-desktop p,
         #svc-mobile h2, #svc-desktop h2,
         #svc-mobile h3, #svc-desktop h3,
         #svc-mobile ul, #svc-desktop ul,
         #svc-mobile li, #svc-desktop li { margin: 0; padding: 0; }
 
-        /* Dot-grid texture */
         .svc-texture::after {
           content: '';
           position: absolute; inset: 0; pointer-events: none; z-index: 0;
@@ -484,28 +444,19 @@ export default function ServicesSection() {
           background-size: 30px 30px;
         }
 
-        /* Progress bar tracks */
         .prog-track {
           position: relative; width: 3px; height: 52px;
-          background: ${C.progBg}; border-radius: 4px; overflow: hidden; flex-shrink: 0;
+          background: ${C.progBg}; border-radius: 4px;
+          overflow: hidden; flex-shrink: 0;
         }
         .prog-fill {
-          position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+          position: absolute; top: 0; left: 0;
+          width: 100%; height: 100%;
           background: ${GRAD}; border-radius: 4px;
           transform: scaleY(0); transform-origin: top center;
         }
 
-        /* CTA button hover */
-        .svc-action-btn:hover {
-          background: ${C.accent1} !important;
-          box-shadow: 0 8px 24px rgba(124,58,237,0.28) !important;
-          transform: translateY(-1px);
-        }
-        .svc-action-btn:hover .svc-arrow {
-          transform: translate(3px, -3px) !important;
-        }
-
-        /* Responsive show/hide */
+        /* Responsive visibility */
         .svc-mobile-only  { display: block; }
         .svc-desktop-only { display: none;  }
 
@@ -515,11 +466,7 @@ export default function ServicesSection() {
         }
       `}</style>
 
-      {/* ══════════════════════════════════════════════════════
-          MOBILE ENGINE  (<768px)
-          Strategy: 100vh pinned section, header is compact
-          top strip, card fills the remaining flex space.
-          ══════════════════════════════════════════════════════ */}
+      {/* ══ MOBILE ENGINE (<768px) ══════════════════════════════ */}
       <div
         ref={mobWrapRef}
         className="svc-mobile-only"
@@ -536,25 +483,14 @@ export default function ServicesSection() {
             background: C.bg,
           }}
         >
-          {/* Ambient glow */}
-          <div style={{
-            position: "absolute", top: -80, left: -60,
-            width: 320, height: 320,
-            background: `radial-gradient(circle, ${C.accent1}0F 0%, transparent 70%)`,
-            filter: "blur(60px)", pointerEvents: "none", zIndex: 0,
-          }} />
-          <div style={{
-            position: "absolute", bottom: -60, right: -60,
-            width: 280, height: 280,
-            background: `radial-gradient(circle, ${C.accent2}0B 0%, transparent 70%)`,
-            filter: "blur(60px)", pointerEvents: "none", zIndex: 0,
-          }} />
+          {/* Ambient glows */}
+          <div style={{ position: "absolute", top: -80, left: -60, width: 320, height: 320, background: `radial-gradient(circle, ${C.accent1}0F 0%, transparent 70%)`, filter: "blur(60px)", pointerEvents: "none", zIndex: 0 }} />
+          <div style={{ position: "absolute", bottom: -60, right: -60, width: 280, height: 280, background: `radial-gradient(circle, ${C.accent2}0B 0%, transparent 70%)`, filter: "blur(60px)", pointerEvents: "none", zIndex: 0 }} />
 
-          {/* ── Mobile header strip ── */}
+          {/* Header strip */}
           <div style={{
-            position: "relative", zIndex: 1,
+            position: "relative", zIndex: 1, flexShrink: 0,
             padding: "clamp(18px,4vw,28px) clamp(18px,5vw,28px) clamp(10px,2vw,16px)",
-            flexShrink: 0,
           }}>
             <motion.div
               initial="hidden" whileInView="visible" viewport={{ once: true }}
@@ -577,7 +513,7 @@ export default function ServicesSection() {
                 fontFamily: "'Fraunces', Georgia, serif",
                 fontSize: "clamp(1.7rem, 7.5vw, 2.3rem)",
                 fontWeight: 700, lineHeight: 1.0, letterSpacing: "-0.025em",
-                color: C.ink, marginBottom: 10,
+                color: C.ink, marginBottom: 8,
               }}
             >
               Engineering{" "}
@@ -591,19 +527,16 @@ export default function ServicesSection() {
               style={{
                 fontFamily: "'Outfit', sans-serif",
                 fontSize: "clamp(12px, 3.5vw, 13.5px)",
-                lineHeight: 1.5, color: C.body,
+                lineHeight: 1.5, color: C.body, margin: 0,
               }}
             >
-              Your audience establishes trust in fractions of a second. We position your brand
-              like an undisputed category leader.
+              Most scale-stage companies don't suffer from a visibility deficiency.
+              We engineer undisputed industry systems.
             </motion.p>
           </div>
 
-          {/* ── Card swap area: flex-1 height, card centered inside ── */}
-          <div style={{
-            position: "relative", zIndex: 1,
-            flex: 1, minHeight: 0,
-          }}>
+          {/* Card zone — fills remaining height, cards centered */}
+          <div style={{ position: "relative", zIndex: 1, flex: 1, minHeight: 0 }}>
             {SERVICES.map((svc, i) => (
               <div
                 key={svc.id}
@@ -614,9 +547,9 @@ export default function ServicesSection() {
                   left: "clamp(18px,5vw,28px)",
                   right: "clamp(18px,5vw,28px)",
                   transform: "translateY(-50%)",
-                  opacity: i === 0 ? 1 : 0,
+                  opacity:       i === 0 ? 1 : 0,
                   pointerEvents: i === 0 ? "auto" : "none",
-                  visibility: i === 0 ? "visible" : "hidden",
+                  visibility:    i === 0 ? "visible" : "hidden",
                 }}
               >
                 <Card svc={svc} compact />
@@ -624,11 +557,10 @@ export default function ServicesSection() {
             ))}
           </div>
 
-          {/* ── Scroll hint ── */}
+          {/* Scroll hint */}
           <div style={{
             position: "relative", zIndex: 1, flexShrink: 0,
-            paddingBottom: "clamp(10px, 2.5vw, 18px)",
-            textAlign: "center",
+            paddingBottom: "clamp(10px, 2.5vw, 18px)", textAlign: "center",
           }}>
             <p style={{
               fontFamily: "monospace", fontSize: 8, letterSpacing: "0.28em",
@@ -640,12 +572,7 @@ export default function ServicesSection() {
         </section>
       </div>
 
-      {/* ══════════════════════════════════════════════════════
-          DESKTOP ENGINE  (≥768px)
-          Strategy: Full 100vh, two equal columns.
-          Left panel fills height top→bottom with flex spacing.
-          Right card stack is centered in its column.
-          ══════════════════════════════════════════════════════ */}
+      {/* ══ DESKTOP ENGINE (≥768px) ══════════════════════════════ */}
       <div
         ref={deskWrapRef}
         className="svc-desktop-only"
@@ -663,35 +590,22 @@ export default function ServicesSection() {
           }}
         >
           {/* Ambient glows */}
-          <div style={{
-            position: "absolute", top: -100, left: -100,
-            width: 600, height: 600,
-            background: `radial-gradient(circle, ${C.accent1}08 0%, transparent 70%)`,
-            filter: "blur(100px)", pointerEvents: "none", zIndex: 0,
-          }} />
-          <div style={{
-            position: "absolute", bottom: -80, right: -80,
-            width: 500, height: 500,
-            background: `radial-gradient(circle, ${C.accent2}07 0%, transparent 70%)`,
-            filter: "blur(100px)", pointerEvents: "none", zIndex: 0,
-          }} />
+          <div style={{ position: "absolute", top: -100, left: -100, width: 600, height: 600, background: `radial-gradient(circle, ${C.accent1}08 0%, transparent 70%)`, filter: "blur(100px)", pointerEvents: "none", zIndex: 0 }} />
+          <div style={{ position: "absolute", bottom: -80, right: -80, width: 500, height: 500, background: `radial-gradient(circle, ${C.accent2}07 0%, transparent 70%)`, filter: "blur(100px)", pointerEvents: "none", zIndex: 0 }} />
 
-          {/* Inner max-width container */}
+          {/* Content grid */}
           <div style={{
             position: "relative", zIndex: 1,
-            width: "100%", maxWidth: 1340,
-            margin: "0 auto",
+            width: "100%", maxWidth: 1340, margin: "0 auto",
             padding: "clamp(48px,6vh,72px) clamp(32px,4vw,56px)",
             display: "grid",
             gridTemplateColumns: "1fr 1.08fr",
             gap: "clamp(48px,5vw,100px)",
             alignItems: "stretch",
           }}>
-
-            {/* LEFT PANEL */}
             <LeftPanel bars={deskBars} />
 
-            {/* RIGHT: Card stack */}
+            {/* Right: card stack */}
             <div style={{
               position: "relative",
               display: "flex", alignItems: "center", justifyContent: "center",
@@ -704,10 +618,9 @@ export default function ServicesSection() {
                     position: "absolute",
                     width: "100%",
                     display: "flex", alignItems: "center", justifyContent: "center",
-                    // Cards after the first are invisible + non-interactive until GSAP animates them in
-                    opacity: i === 0 ? 1 : 0,
+                    opacity:       i === 0 ? 1 : 0,
                     pointerEvents: i === 0 ? "auto" : "none",
-                    visibility: i === 0 ? "visible" : "hidden",
+                    visibility:    i === 0 ? "visible" : "hidden",
                   }}
                 >
                   <div style={{ width: "100%", maxWidth: 580 }}>
@@ -716,16 +629,16 @@ export default function ServicesSection() {
                 </div>
               ))}
             </div>
-
           </div>
 
-          {/* Thin bottom gradient line */}
+          {/* Bottom separator line */}
           <div style={{
             position: "absolute", bottom: 0, left: 0, right: 0,
             height: 1, background: GRAD, opacity: 0.15, zIndex: 2,
           }} />
         </section>
       </div>
+
     </div>
   );
 }
