@@ -661,7 +661,7 @@ export default function ServicesSection() {
                 color:         C.accent1,
                 fontWeight:    700,
               }}>
-                Our Services
+                Our Capabilities
               </span>
             </motion.div>
 
