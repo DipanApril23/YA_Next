@@ -599,12 +599,10 @@ export default function ServicesSection() {
             </motion.p>
           </div>
 
-          {/* ── Card swap area: fills remaining height, anchored to top ── */}
+          {/* ── Card swap area: flex-1 height, card centered inside ── */}
           <div style={{
             position: "relative", zIndex: 1,
             flex: 1, minHeight: 0,
-            padding: "0 clamp(18px,5vw,28px) clamp(10px,2vw,16px)",
-            display: "flex", alignItems: "flex-start",
           }}>
             {SERVICES.map((svc, i) => (
               <div
@@ -612,17 +610,16 @@ export default function ServicesSection() {
                 ref={el => (mobCards.current[i] = el)}
                 style={{
                   position: "absolute",
-                  top: 0, left: 0, right: 0, bottom: 0,
-                  display: "flex", alignItems: "flex-start",
-                  // Cards after the first are invisible + non-interactive until GSAP animates them in
+                  top: "50%",
+                  left: "clamp(18px,5vw,28px)",
+                  right: "clamp(18px,5vw,28px)",
+                  transform: "translateY(-50%)",
                   opacity: i === 0 ? 1 : 0,
                   pointerEvents: i === 0 ? "auto" : "none",
                   visibility: i === 0 ? "visible" : "hidden",
                 }}
               >
-                <div style={{ width: "100%", maxHeight: "100%", overflowY: "auto" }}>
-                  <Card svc={svc} compact />
-                </div>
+                <Card svc={svc} compact />
               </div>
             ))}
           </div>
