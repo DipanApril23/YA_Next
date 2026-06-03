@@ -1,5 +1,5 @@
 // app/components/Services/index.js
 
-import ServicesSection from "./ServicesSection";
+import ServicesSection from "./CapabilitiesSection";
 
 export default ServicesSection;

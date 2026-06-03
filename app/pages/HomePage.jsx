@@ -1,4 +1,4 @@
-import { Layout, Hero, ServicesSection, WhyChoose } from "../components";
+import { Layout, Hero, CapabilitiesSection, WhyChoose } from "../components";
 
 const HomePage = () => {
   return (
@@ -7,7 +7,7 @@ const HomePage = () => {
         <Hero />
       </div>
       <div className="bg-white">
-        <ServicesSection />
+        <CapabilitiesSection />
       </div>
       <div className="bg-black">
         <WhyChoose />
