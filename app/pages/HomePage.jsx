@@ -1,4 +1,5 @@
 import { Layout, Hero, CapabilitiesSection, WhyChoose } from "../components";
+import Service from "../components/Services/Service";
 
 const HomePage = () => {
   return (
@@ -9,6 +10,9 @@ const HomePage = () => {
       <div className="bg-white">
         <CapabilitiesSection />
       </div>
+      {/* <div className="bg-white">
+        <Service />
+      </div> */}
       <div className="bg-black">
         <WhyChoose />
       </div>
