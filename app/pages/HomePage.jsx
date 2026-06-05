@@ -10,9 +10,9 @@ const HomePage = () => {
       <div className="bg-white">
         <CapabilitiesSection />
       </div>
-      {/* <div className="bg-white">
+      <div className="bg-white">
         <Service />
-      </div> */}
+      </div>
       <div className="bg-black">
         <WhyChoose />
       </div>

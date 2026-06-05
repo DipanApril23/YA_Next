@@ -1,239 +1,236 @@
 "use client";
-import Image from "next/image";
+
+import React, { useRef } from "react";
+// import Image from "next/image";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import ServiceCards from "./ServiceCards";
-import { Container } from "..";
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { Container, Button } from "..";
 
-const stats = [
-  { value: "10+", label: "Projects Delivered", icon: "🚀" },
-  { value: "30+", label: "Happy Clients", icon: "🤝" },
-  { value: "4.1★", label: "Client Rating", icon: "⭐" },
-];
+// ── Floating Particle ─────────────────────────────────────────────────────────
+const Particle = ({ style }) => (
+  <motion.div
+    className="absolute rounded-full pointer-events-none"
+    style={style}
+    animate={{
+      y: [0, -30, 0],
+      opacity: [0.15, 0.45, 0.15],
+      scale: [1, 1.3, 1],
+    }}
+    transition={{
+      duration: style.duration || 6,
+      repeat: Infinity,
+      ease: "easeInOut",
+      delay: style.delay || 0,
+    }}
+  />
+);
 
-const floatingBadges = [
-  {
-    text: "AI-Powered",
-    icon: "🤖",
-    position: "top-4 -right-6",
-    delay: 0,
-    borderColor: "border-pink-500/40",
-    bg: "from-pink-900/60 to-black/80",
-  },
-  {
-    text: "Custom Solutions",
-    icon: "⚡",
-    position: "-bottom-4 -left-6",
-    delay: 0.5,
-    borderColor: "border-blue-500/40",
-    bg: "from-blue-900/60 to-black/80",
-  },
-];
+// ── Stat Pill ─────────────────────────────────────────────────────────────────
+const StatPill = ({ value, label, color }) => (
+  <motion.div
+    initial={{ opacity: 0, scale: 0.85 }}
+    whileInView={{ opacity: 1, scale: 1 }}
+    viewport={{ once: true }}
+    transition={{ type: "spring", stiffness: 200, damping: 20 }}
+    className="flex flex-col items-center justify-center px-5 py-4 rounded-2xl border"
+    style={{
+      background: "rgba(255,255,255,0.03)",
+      borderColor: `${color}33`,
+    }}
+  >
+    <span
+      className="text-2xl sm:text-3xl font-black tracking-tight"
+      style={{ color }}
+    >
+      {value}
+    </span>
+    <span className="text-[10px] sm:text-xs text-neutral-500 font-semibold tracking-widest uppercase mt-0.5">
+      {label}
+    </span>
+  </motion.div>
+);
 
+// ─── Main Service Section ─────────────────────────────────────────────────────
 const Service = () => {
   const sectionRef = useRef(null);
-  const isInView = useInView(sectionRef, { once: false, margin: "-80px" });
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+
+  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
+  const spring = useSpring(bgY, { stiffness: 80, damping: 20 });
+
+  const particles = [
+    { width: 6, height: 6, top: "12%", left: "8%",  background: "#ff007f", filter: "blur(1px)", duration: 7, delay: 0   },
+    { width: 4, height: 4, top: "28%", left: "92%", background: "#00f5d4", filter: "blur(1px)", duration: 9, delay: 1.5 },
+    { width: 8, height: 8, top: "60%", left: "5%",  background: "#a855f7", filter: "blur(2px)", duration: 6, delay: 0.8 },
+    { width: 5, height: 5, top: "75%", left: "88%", background: "#ff007f", filter: "blur(1px)", duration: 8, delay: 2   },
+    { width: 3, height: 3, top: "45%", left: "50%", background: "#00f5d4", filter: "blur(0px)", duration: 5, delay: 3   },
+    { width: 6, height: 6, top: "85%", left: "22%", background: "#a855f7", filter: "blur(1px)", duration: 10,delay: 1   },
+  ];
 
   return (
-    <section
-      id="services"
-      className="relative overflow-hidden bg-[#04040f]"
+    <div
       ref={sectionRef}
+      className="relative w-full overflow-hidden"
+      style={{ background: "linear-gradient(180deg, #010208 0%, #060612 60%, #010208 100%)" }}
     >
-      {/* ── Ambient background glows ── */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <motion.div
-          className="absolute -top-32 left-1/3 h-[500px] w-[500px] rounded-full bg-blue-700/20 blur-[130px]"
-          animate={isInView ? { scale: [1, 1.15, 1], opacity: [0.15, 0.25, 0.15] } : {}}
-          transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <motion.div
-          className="absolute bottom-0 right-1/4 h-[400px] w-[400px] rounded-full bg-pink-600/20 blur-[130px]"
-          animate={isInView ? { scale: [1, 1.2, 1], opacity: [0.15, 0.3, 0.15] } : {}}
-          transition={{ duration: 9, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-        />
+      {/* ── Ambient background blobs ──────────────────────────── */}
+      <motion.div style={{ y: spring }} className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] rounded-full bg-purple-700/10 blur-[140px]" />
+        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] rounded-full bg-teal-500/10  blur-[140px]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] rounded-full bg-pink-600/5 blur-[100px]" />
+      </motion.div>
 
-        {/* Subtle grid */}
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.025)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.025)_1px,transparent_1px)] bg-[size:64px_64px]" />
+      {/* ── Floating particles ────────────────────────────────── */}
+      {particles.map((p, i) => (
+        <Particle key={i} style={p} />
+      ))}
 
-        {/* Top separator line */}
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-500/40 to-transparent" />
-      </div>
+      {/* ── Mesh grid overlay ─────────────────────────────────── */}
+      <div
+        className="absolute inset-0 pointer-events-none opacity-[0.025]"
+        style={{
+          backgroundImage:
+            "linear-gradient(rgba(255,255,255,0.3) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.3) 1px,transparent 1px)",
+          backgroundSize: "60px 60px",
+        }}
+      />
 
       <Container>
-        <article className="relative flex flex-col gap-20 py-28">
+        <article id="services" className="relative z-10 py-20 sm:py-28 flex flex-col gap-16 sm:gap-20">
 
-          {/* ── Section Badge + Heading ── */}
-          <div className="flex flex-col items-center gap-4 text-center">
-            <motion.span
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: false }}
-              className="inline-flex items-center gap-2 rounded-full border border-pink-500/30 bg-pink-500/10 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.25em] text-pink-400"
+          {/* ── Section header ────────────────────────────────── */}
+          <motion.div
+            initial={{ opacity: 0, y: 32 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.7, ease: [0.4, 0, 0.2, 1] }}
+            className="flex flex-col items-center gap-4 text-center"
+          >
+            {/* Label chip */}
+            <div
+              className="flex items-center gap-2 px-4 py-1.5 rounded-full border text-[10px] sm:text-xs font-mono font-bold tracking-widest uppercase"
+              style={{
+                color: "#00f5d4",
+                borderColor: "rgba(0,245,212,0.3)",
+                background: "rgba(0,245,212,0.07)",
+              }}
             >
-              <span className="h-1.5 w-1.5 rounded-full bg-pink-400 animate-pulse" />
-              What We Offer
-            </motion.span>
+              <span
+                className="w-1.5 h-1.5 rounded-full animate-pulse"
+                style={{ background: "#00f5d4", boxShadow: "0 0 6px #00f5d4" }}
+              />
+              Our Expertise
+            </div>
 
-            <motion.h2
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.1 }}
-              viewport={{ once: false }}
-              className="text-5xl font-black text-white md:text-6xl"
-            >
-              Our{" "}
-              <span className="bg-gradient-to-r from-blue-400 via-violet-400 to-pink-500 bg-clip-text text-transparent">
-                Services
+            <h2 className="text-[32px] sm:text-[44px] md:text-[56px] font-black leading-[1.1] tracking-tight max-w-3xl">
+              <span className="bg-gradient-to-r from-white via-neutral-200 to-neutral-500 bg-clip-text text-transparent">
+                Premium Services{" "}
               </span>
-            </motion.h2>
+              <br className="hidden sm:block" />
+              <span
+                className="bg-gradient-to-r from-[#ff007f] via-purple-500 to-[#00f5d4] bg-clip-text text-transparent"
+              >
+                Built to Scale
+              </span>
+            </h2>
 
-            {/* Decorative line under heading */}
-            <motion.div
-              initial={{ scaleX: 0 }}
-              whileInView={{ scaleX: 1 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              viewport={{ once: false }}
-              className="h-px w-40 bg-gradient-to-r from-transparent via-blue-400 to-transparent"
-            />
-          </div>
+            <p className="text-neutral-400 max-w-xl text-sm sm:text-base leading-relaxed">
+              Streamline development, marketing, and design operations with our
+              custom-made solutions engineered for enterprise-grade growth.
+            </p>
+          </motion.div>
 
-          {/* ── Intro Split Layout ── */}
-          <section className="flex flex-col-reverse items-center justify-between gap-14 md:flex-row">
+          {/* ── Two-column info + cards layout ────────────────── */}
+          <div className="flex flex-col gap-12 xl:flex-row xl:items-start xl:gap-16">
 
-            {/* Left — Copy + Stats + CTA */}
-            <motion.div
-              className="flex w-full flex-col gap-8 md:w-[55%]"
-              initial={{ opacity: 0, x: -48 }}
+            {/* LEFT: Sticky info panel */}
+            <motion.section
+              initial={{ opacity: 0, x: -40 }}
               whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-              viewport={{ once: false }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.65, ease: [0.4, 0, 0.2, 1] }}
+              className="w-full xl:w-[38%] xl:sticky xl:top-28 flex flex-col gap-8 font-poppins"
             >
-              <div className="flex flex-col gap-4">
-                <h3 className="text-3xl font-extrabold leading-tight tracking-tight md:text-[2.25rem]">
-                  <span className="text-blue-400">Create a new way to enhance your </span>
-                  <span className="bg-gradient-to-r from-violet-400 to-pink-500 bg-clip-text text-transparent">
-                    business needs and grow consistently
+              {/* Heading block */}
+              <div className="space-y-4">
+                <h3 className="text-2xl sm:text-[30px] md:text-[36px] font-black leading-tight">
+                  <span className="bg-gradient-to-r from-[#00b4db] to-[#00f5d4] bg-clip-text text-transparent">
+                    Create a new way
+                  </span>
+                  <br />
+                  <span className="text-white">to enhance your</span>
+                  <br />
+                  <span className="bg-gradient-to-r from-[#ff007f] via-purple-400 to-[#a855f7] bg-clip-text text-transparent">
+                    business needs
                   </span>
                 </h3>
-                <p className="max-w-lg text-base leading-relaxed text-slate-400">
+
+                <p className="text-neutral-400 font-normal leading-relaxed text-sm sm:text-[15px]">
                   Stay organised and improve. Streamline custom development,
-                  marketing, design and other business operations of your
-                  enterprise. Let us help enhance the bottom line of your
-                  business with our custom-made solutions.
+                  marketing, design, and other business operations of your
+                  enterprise. Let us help enhance the bottom line with our
+                  custom-made solutions.
                 </p>
               </div>
 
               {/* Stats row */}
-              <div className="grid grid-cols-3 gap-4">
-                {stats.map((stat, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 0.15 * i + 0.3 }}
-                    viewport={{ once: false }}
-                    whileHover={{ y: -4, scale: 1.03 }}
-                    className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-4 text-center backdrop-blur-sm transition-colors duration-300 hover:border-blue-500/30"
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-pink-500/10 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                    <div className="text-xl">{stat.icon}</div>
-                    <div className="mt-1 bg-gradient-to-r from-blue-400 to-pink-500 bg-clip-text text-2xl font-black text-transparent">
-                      {stat.value}
-                    </div>
-                    <div className="mt-1 text-[0.65rem] font-semibold uppercase tracking-widest text-slate-500">
-                      {stat.label}
-                    </div>
-                  </motion.div>
-                ))}
+              <div className="grid grid-cols-3 gap-3">
+                <StatPill value="20+" label="Services"  color="#ff007f" />
+                <StatPill value="3"   label="Domains"   color="#00f5d4" />
+                <StatPill value="∞"   label="Growth"    color="#a855f7" />
               </div>
 
-              {/* CTA button */}
-              <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.5 }}
-                viewport={{ once: false }}
-              >
-                <motion.button
-                  whileHover={{ scale: 1.04 }}
+              {/* CTA */}
+              <div className="flex flex-col sm:flex-row gap-3">
+                <Button className="shadow-[0_0_24px_rgba(255,0,127,0.3)]">
+                  Click to Explore →
+                </Button>
+                {/* <motion.a
+                  href="#contact"
+                  whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.97 }}
-                  className="group relative inline-flex items-center gap-3 overflow-hidden rounded-full bg-gradient-to-r from-blue-500 to-pink-500 px-8 py-3.5 font-bold text-white shadow-[0_0_30px_rgba(99,102,241,0.35)] transition-shadow duration-300 hover:shadow-[0_0_50px_rgba(168,85,247,0.5)]"
+                  className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl border text-sm font-bold text-neutral-300 hover:text-white transition-colors duration-200"
+                  style={{ borderColor: "rgba(255,255,255,0.12)", background: "rgba(255,255,255,0.03)" }}
                 >
-                  <span className="relative z-10">Explore All Services</span>
-                  <motion.span
-                    className="relative z-10 inline-block"
-                    animate={{ x: [0, 4, 0] }}
-                    transition={{ duration: 1.5, repeat: Infinity }}
-                  >
-                    →
-                  </motion.span>
-                  {/* Shimmer sweep */}
-                  <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
-                </motion.button>
-              </motion.div>
-            </motion.div>
-
-            {/* Right — Image with glow + floating badges */}
-            <motion.div
-              className="relative flex w-full justify-center md:w-[45%]"
-              initial={{ opacity: 0, x: 48, scale: 0.92 }}
-              whileInView={{ opacity: 1, x: 0, scale: 1 }}
-              transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-              viewport={{ once: false }}
-            >
-              <div className="relative w-full max-w-[420px]">
-                {/* Multi-layer glow halo */}
-                <div className="absolute inset-0 scale-90 rounded-full bg-blue-600/25 blur-[60px]" />
-                <div className="absolute inset-0 scale-75 rounded-full bg-pink-600/20 blur-[40px]" />
-
-                <motion.div
-                  animate={{ y: [0, -10, 0] }}
-                  transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                >
-                  <Image
-                    className="relative z-10 w-full object-contain drop-shadow-[0_0_40px_rgba(99,102,241,0.3)]"
-                    src="https://youngarchitects.in/assets/image/service-wire.webp"
-                    alt="service-image"
-                    width={500}
-                    height={500}
-                  />
-                </motion.div>
-
-                {/* Floating badges */}
-                {floatingBadges.map((badge, i) => (
-                  <motion.div
-                    key={i}
-                    className={`absolute ${badge.position} z-20`}
-                    initial={{ opacity: 0, scale: 0.7 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.5, delay: badge.delay + 0.6 }}
-                    viewport={{ once: false }}
-                    animate={{ y: [0, i % 2 === 0 ? -7 : 7, 0] }}
-                    // Override animate after initial for floating
-                    style={{ animationDelay: `${badge.delay}s` }}
-                  >
-                    <motion.div
-                      animate={{ y: [0, i % 2 === 0 ? -7 : 7, 0] }}
-                      transition={{ duration: 3.5 + i * 0.5, repeat: Infinity, ease: "easeInOut", delay: badge.delay }}
-                      className={`flex items-center gap-2 rounded-xl border ${badge.borderColor} bg-gradient-to-br ${badge.bg} px-3 py-2 text-xs font-bold text-white backdrop-blur-md shadow-lg`}
-                    >
-                      <span>{badge.icon}</span>
-                      <span>{badge.text}</span>
-                    </motion.div>
-                  </motion.div>
-                ))}
+                  Book Consultation →
+                </motion.a> */}
               </div>
-            </motion.div>
-          </section>
 
-          {/* ── Service Cards ── */}
-          <ServiceCards />
+              {/* Wireframe visual */}
+              {/* <motion.div
+                whileHover={{ scale: 1.03, opacity: 0.7 }}
+                transition={{ type: "spring", stiffness: 200, damping: 20 }}
+                className="hidden xl:block opacity-30 transition-opacity duration-500 mt-2"
+              >
+                <Image
+                  className="w-[70%] object-contain filter drop-shadow-[0_0_20px_rgba(157,78,221,0.2)]"
+                  src="https://youngarchitects.in/assets/image/service-wire.webp"
+                  alt="service-wireframe"
+                  width={300}
+                  height={300}
+                />
+              </motion.div> */}
+            </motion.section>
+
+            {/* RIGHT: Interactive card stack */}
+            <motion.section
+              initial={{ opacity: 0, x: 40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.65, ease: [0.4, 0, 0.2, 1], delay: 0.1 }}
+              className="w-full xl:w-[62%]"
+            >
+              <ServiceCards />
+            </motion.section>
+          </div>
 
         </article>
       </Container>
-    </section>
+    </div>
   );
 };
 
