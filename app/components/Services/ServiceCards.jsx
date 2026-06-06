@@ -8,9 +8,9 @@ import { Modal } from "..";
 
 // ─── Tab Configuration ────────────────────────────────────────────────────────
 const TABS = [
-  { id: "marketing",   label: "Marketing",   color: "#ff007f", glow: "rgba(255,0,127,0.35)"  },
-  { id: "development", label: "Development", color: "#00f5d4", glow: "rgba(0,245,212,0.35)"  },
-  { id: "designing",   label: "Designing",   color: "#a855f7", glow: "rgba(168,85,247,0.35)" },
+  { id: "marketing",   label: "Marketing",   color: "#AD449A", glow: "rgba(255,0,127,0.35)"  },
+  { id: "development", label: "Development", color: "#59B2E6", glow: "rgba(89,178,230,0.35)"  },
+  { id: "designing",   label: "Designing",   color: "#AD449A", glow: "rgba(168,85,247,0.35)" },
 ];
 
 // ─── Fanning offsets (stack positions 0=front … 3=back) ──────────────────────
@@ -24,69 +24,79 @@ const OFFSETS = [
 // ─── Card content (only rendered for the front card) ─────────────────────────
 const CardFace = ({ service, accent, glow, onLearnMore }) => (
   <div
-    className="w-full h-full rounded-[28px] border flex flex-col justify-between p-6 sm:p-8"
+    className="w-full h-full rounded-[28px] border flex flex-col overflow-hidden"
     style={{
       background: "linear-gradient(145deg,rgba(18,18,28,0.97) 0%,rgba(10,10,20,0.99) 100%)",
       borderColor: `${accent}55`,
       boxShadow: `0 0 0 1px ${accent}22, 0 28px 70px rgba(0,0,0,0.75), 0 0 50px ${glow}`,
     }}
   >
-    {/* Header */}
-    <div className="flex items-start justify-between gap-3">
+    {/* ── Full-width logo banner ── */}
+    <div
+      className="relative w-full flex items-center justify-center flex-shrink-0"
+      style={{
+        height: "clamp(130px, 28%, 165px)",
+        background: `linear-gradient(135deg, ${accent}1a 0%, rgba(8,8,18,0.7) 100%)`,
+        borderBottom: `1px solid ${accent}22`,
+      }}
+    >
+      {/* Soft glow behind logo */}
       <div
-        className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl border flex items-center justify-center relative overflow-hidden flex-shrink-0"
-        style={{ borderColor: `${accent}33`, background: `${accent}10` }}
-      >
-        <div
-          className="absolute inset-0 opacity-30"
-          style={{ background: `radial-gradient(circle at 40% 40%, ${accent}88, transparent 70%)` }}
-        />
-        <Image
-          className="w-8 h-8 sm:w-9 sm:h-9 object-contain relative z-10"
-          src={service.logo}
-          alt={service.title}
-          width={80}
-          height={80}
-        />
-      </div>
+        className="absolute inset-0 pointer-events-none"
+        style={{ background: `radial-gradient(ellipse at 50% 55%, ${accent}28, transparent 70%)` }}
+      />
+
+      {/* Service logo — large, centred, clearly readable */}
+      <Image
+        src={service.logo}
+        alt={service.title}
+        width={220}
+        height={140}
+        className="object-contain relative z-10"
+        style={{ maxHeight: "110px", width: "auto", maxWidth: "80%" }}
+      />
+
+      {/* Category badge top-right */}
       <span
-        className="text-[9px] sm:text-[10px] font-mono font-bold tracking-widest uppercase px-3 py-1 rounded-full border flex-shrink-0"
-        style={{ color: accent, borderColor: `${accent}33`, background: `${accent}0f` }}
+        className="absolute top-3 right-3 text-[9px] sm:text-[10px] font-mono font-bold tracking-widest uppercase px-2.5 py-1 rounded-full border"
+        style={{ color: accent, borderColor: `${accent}44`, background: "rgba(8,8,18,0.88)" }}
       >
         {service.category}
       </span>
     </div>
+    {/* ── Body + Footer ── */}
+    <div className="flex flex-col justify-between flex-1 p-5 sm:p-6">
+      {/* Body */}
+      <div className="space-y-2">
+        <h3
+          className="text-white text-base sm:text-lg font-extrabold tracking-tight leading-snug capitalize"
+          style={{ textShadow: `0 0 20px ${accent}44` }}
+        >
+          {service.title}
+        </h3>
+        <p className="text-neutral-400 text-xs sm:text-sm leading-relaxed line-clamp-3">
+          {service.description}
+        </p>
+      </div>
 
-    {/* Body */}
-    <div className="flex-1 mt-5 space-y-3">
-      <h3
-        className="text-white text-lg sm:text-xl font-extrabold tracking-tight leading-snug capitalize"
-        style={{ textShadow: `0 0 20px ${accent}44` }}
-      >
-        {service.title}
-      </h3>
-      <p className="text-neutral-400 text-xs sm:text-sm leading-relaxed line-clamp-4">
-        {service.description}
-      </p>
-    </div>
-
-    {/* Footer */}
-    <div
-      className="pt-5 mt-4 flex items-center justify-between border-t"
-      style={{ borderColor: "rgba(255,255,255,0.06)" }}
-    >
-      <button
-        onClick={onLearnMore}
-        className="group/btn flex items-center gap-2 text-xs font-black uppercase tracking-widest transition-all duration-200"
-        style={{ color: accent }}
-      >
-        <span className="group-hover/btn:underline underline-offset-4">Learn More</span>
-        <span className="inline-block transition-transform group-hover/btn:translate-x-1">→</span>
-      </button>
+      {/* Footer */}
       <div
-        className="w-2 h-2 rounded-full"
-        style={{ background: accent, boxShadow: `0 0 10px ${accent}` }}
-      />
+        className="pt-4 mt-3 flex items-center justify-between border-t"
+        style={{ borderColor: "rgba(255,255,255,0.06)" }}
+      >
+        <button
+          onClick={onLearnMore}
+          className="group/btn flex items-center gap-2 text-xs font-black uppercase tracking-widest transition-all duration-200"
+          style={{ color: accent }}
+        >
+          <span className="group-hover/btn:underline underline-offset-4">Learn More</span>
+          <span className="inline-block transition-transform group-hover/btn:translate-x-1">→</span>
+        </button>
+        <div
+          className="w-2 h-2 rounded-full"
+          style={{ background: accent, boxShadow: `0 0 10px ${accent}` }}
+        />
+      </div>
     </div>
   </div>
 );
@@ -267,7 +277,7 @@ const ServiceGrid = ({ serviceList, accent, glow, onLearnMore }) => {
   const [hovered, setHovered] = useState(null);
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 w-full">
       {serviceList.map((service, i) => (
         <motion.div
           key={i}
@@ -276,7 +286,7 @@ const ServiceGrid = ({ serviceList, accent, glow, onLearnMore }) => {
           transition={{ delay: i * 0.055, duration: 0.38 }}
           onHoverStart={() => setHovered(i)}
           onHoverEnd={() => setHovered(null)}
-          className="relative rounded-2xl border p-5 cursor-pointer overflow-hidden"
+          className="relative rounded-[20px] border flex flex-col p-5 cursor-pointer overflow-hidden"
           style={{
             background:   "linear-gradient(145deg,rgba(15,15,25,0.95),rgba(8,8,18,0.98))",
             borderColor:  hovered === i ? `${accent}55` : "rgba(255,255,255,0.07)",
@@ -295,23 +305,43 @@ const ServiceGrid = ({ serviceList, accent, glow, onLearnMore }) => {
               style={{ skewX: "-20deg" }}
             />
           )}
-          <div className="flex items-start gap-3">
+          <div className="flex flex-col flex-1 gap-4">
+            {/* Banner Logo */}
             <div
-              className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
-              style={{ background: `${accent}15`, border: `1px solid ${accent}25` }}
+              className="relative w-full rounded-xl flex items-center justify-center flex-shrink-0 p-4"
+              style={{
+                background: `linear-gradient(135deg, ${accent}15 0%, rgba(8,8,18,0.7) 100%)`,
+                border: `1px solid ${accent}22`,
+                minHeight: "120px"
+              }}
             >
-              <Image className="w-6 h-6 object-contain" src={service.logo} alt={service.title} width={48} height={48} />
+              <div
+                className="absolute inset-0 pointer-events-none rounded-xl"
+                style={{ background: `radial-gradient(ellipse at 50% 50%, ${accent}28, transparent 70%)` }}
+              />
+              <Image
+                className="w-auto h-16 sm:h-20 object-contain relative z-10"
+                src={service.logo}
+                alt={service.title}
+                width={200}
+                height={100}
+              />
             </div>
+            
+            {/* Full Description */}
             <div className="min-w-0 flex-1">
-              <h4
-                className="text-sm font-bold capitalize leading-tight truncate transition-colors duration-200"
-                style={{ color: hovered === i ? accent : "white" }}
-              >
-                {service.title}
-              </h4>
-              <p className="text-neutral-500 text-xs mt-1 line-clamp-2 leading-relaxed">
+              <p className="text-neutral-300 text-sm leading-relaxed transition-colors duration-200">
                 {service.description}
               </p>
+            </div>
+            
+            {/* Learn More link */}
+            <div
+              className="pt-3 border-t flex items-center gap-2 text-xs font-bold uppercase tracking-widest transition-colors duration-200"
+              style={{ borderColor: "rgba(255,255,255,0.06)", color: hovered === i ? accent : "rgba(255,255,255,0.5)" }}
+            >
+              <span>Learn More</span>
+              <span className={`inline-block transition-transform ${hovered === i ? "translate-x-1" : ""}`}>→</span>
             </div>
           </div>
           <motion.div
@@ -394,7 +424,18 @@ const ServiceCards = () => {
           className="flex items-center gap-1 p-1 rounded-xl border"
           style={{ background: "rgba(255,255,255,0.03)", borderColor: "rgba(255,255,255,0.08)" }}
         >
-          {[{ mode: "stack", icon: "⊞", label: "Stack" }, { mode: "grid", icon: "⊟", label: "Grid" }].map(
+          {[
+            { 
+              mode: "stack", 
+              icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>, 
+              label: "Desktop View" 
+            }, 
+            { 
+              mode: "grid", 
+              icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>, 
+              label: "Mobile View" 
+            }
+          ].map(
             ({ mode, icon, label }) => (
               <button
                 key={mode}
