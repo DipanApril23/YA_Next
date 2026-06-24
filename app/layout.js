@@ -1,18 +1,10 @@
-import { Geist, Geist_Mono, Roboto } from "next/font/google";
+import { Roboto } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 const roboto = Roboto({
   variable: "--font-roboto",
   subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata = {
@@ -24,15 +16,26 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="scroll-smooth">
       <head>
+        {/* Warm up the font + remote-image origins early */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+        <link rel="preconnect" href="https://youngarchitects.in" />
+        <link
+          rel="dns-prefetch"
+          href="https://youngarchitects.in"
+        />
+        {/* Section fonts (Fraunces / Outfit) — loaded once here instead of via a
+            runtime @import inside a component <style> block */}
         <link
           rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+          href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,400&family=Outfit:wght@300;400;500;600;700&display=swap"
         />
       </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} ${roboto.variable} antialiased`}
-        suppressHydrationWarning
-      >
+      <body className={`${roboto.variable} antialiased`} suppressHydrationWarning>
         {children}
         <div id="portal-modal-root" />
       </body>

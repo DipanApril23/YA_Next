@@ -12,7 +12,7 @@ import { Container } from "../shared";
 
 const Footer = () => {
   return (
-    <footer className="bg-black text-white">
+    <footer className="cv-section bg-black text-white">
       <Container>
         <article className="py-10 sm:py-14">
           <div className="grid grid-cols-1 gap-10 lg:grid-cols-[1.2fr_0.8fr_0.8fr_1.4fr] lg:gap-12">
@@ -28,7 +28,7 @@ const Footer = () => {
                   alt="Young Architects logo"
                   width={260}
                   height={90}
-                  priority
+                  loading="lazy"
                   quality={100}
                   sizes="(max-width: 640px) 100vw, 260px"
                   className="h-auto w-full max-w-55 sm:max-w-65 select-none"

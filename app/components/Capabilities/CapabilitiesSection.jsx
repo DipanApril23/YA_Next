@@ -652,8 +652,6 @@ export default function ServicesSection() {
 
       {/* ── Global styles ─────────────────────────────────── */}
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,400&family=Outfit:wght@300;400;500;600;700&display=swap');
-
         #svc-mobile *,
         #svc-desktop * {
           box-sizing: border-box;

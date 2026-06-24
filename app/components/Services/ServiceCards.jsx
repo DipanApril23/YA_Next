@@ -52,6 +52,7 @@ const CardFace = ({ service, accent, glow, onLearnMore }) => (
         alt={service.title}
         width={220}
         height={140}
+        sizes="(max-width: 640px) 60vw, 220px"
         className="object-contain relative z-10"
         style={{ maxHeight: "110px", width: "auto", maxWidth: "80%" }}
       />
@@ -325,6 +326,7 @@ const ServiceGrid = ({ serviceList, accent, glow, onLearnMore }) => {
                 alt={service.title}
                 width={200}
                 height={100}
+                sizes="(max-width: 640px) 50vw, 200px"
               />
             </div>
             
@@ -517,6 +519,7 @@ const ServiceCards = () => {
                     alt={selectedService.title}
                     width={80}
                     height={80}
+                    sizes="36px"
                   />
                 </div>
 

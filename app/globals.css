@@ -24,8 +24,6 @@
   --color-primary-blue-ed: var(--primary-blue-ed);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
   /* Screen Breakpoints */
   --breakpoint-xs: 320px;
   --breakpoint-sm: 576px;
@@ -46,4 +44,29 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: "Roboto", "Poppins", sans-serif;
+}
+
+/*
+  Skip rendering/painting of below-the-fold sections until they scroll near
+  the viewport. The intrinsic-size hints keep the scrollbar/layout stable so
+  there is no visual shift. Applied via the `cv-section` class in JSX.
+*/
+.cv-section {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 720px;
+}
+
+/*
+  Respect users who ask the OS for reduced motion. Has no effect for everyone
+  else — the design and animations are untouched for default visitors.
+*/
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }

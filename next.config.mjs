@@ -8,6 +8,9 @@ const nextConfig = {
       },
     ],
 
+    // Serve AVIF first (smaller), fall back to WebP. Visually identical.
+    formats: ["image/avif", "image/webp"],
+
     qualities: [75, 100],
   },
 };

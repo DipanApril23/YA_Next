@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Container, FlipCard, Button } from "../../shared";
 
@@ -55,6 +55,17 @@ const PARTICLES = Array.from({ length: 14 }, (_, i) => ({
 ══════════════════════════════════ */
 const Hero = () => {
   const sectionRef = useRef(null);
+
+  /* Desktop parallax is only applied after mount so server and client render
+     identically (avoids a hydration mismatch from reading window during render). */
+  const [isDesktop, setIsDesktop] = useState(false);
+  useEffect(() => {
+    const check = () => setIsDesktop(window.innerWidth > 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end start"],
@@ -237,12 +248,7 @@ const Hero = () => {
           <div className="relative z-10 flex min-h-screen w-full flex-col items-center justify-center gap-12 py-20 md:flex-row md:gap-6 md:py-24">
             {/* ── LEFT COMPONENT COLUMN ── */}
             <motion.div
-              style={{
-                y:
-                  typeof window !== "undefined" && window.innerWidth > 768
-                    ? contentY
-                    : 0,
-              }}
+              style={{ y: isDesktop ? contentY : 0 }}
               className="flex w-full flex-col items-center text-center gap-5 sm:gap-6 md:w-[55%] md:items-start md:text-left md:pr-6 lg:pr-12"
             >
               {/* Status chip */}

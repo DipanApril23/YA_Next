@@ -13,7 +13,7 @@ const WhyChoose = () => {
         data-aos="fade-up"
         data-aos-delay="100"
         data-aos-duration="600"
-        className="flex flex-col justify-between gap-6 py-16 md:flex-row"
+        className="cv-section flex flex-col justify-between gap-6 py-16 md:flex-row"
       >
         <section className="flex w-full flex-col justify-center gap-y-2 text-white md:w-[30%]">
           <h2 className="font-[Roboto] text-[24px] font-bold leading-8 md:text-[35px] md:leading-10">
@@ -58,6 +58,7 @@ const WhyChoose = () => {
               alt={`about-image-${index + 1}`}
               width={208}
               height={208}
+              sizes="208px"
             />
           ))}
         </section>

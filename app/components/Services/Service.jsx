@@ -194,8 +194,8 @@ const Service = () => {
                   alt="Young Architects service network"
                   width={480}
                   height={480}
+                  sizes="(max-width: 1024px) 0px, 460px"
                   className="relative z-10 w-full max-w-[320px] sm:max-w-[400px] md:max-w-[460px] object-contain drop-shadow-[0_0_40px_rgba(168,85,247,0.3)]"
-                  priority
                 />
               </motion.div>
             </motion.div>
