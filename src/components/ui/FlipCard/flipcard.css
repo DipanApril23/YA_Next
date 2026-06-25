@@ -1,0 +1,26 @@
+/* ── FlipCard: glow, rings, shimmer, pulse keyframes ── */
+
+@keyframes fcGlow {
+  0%, 100% { opacity: 0.32; transform: scale(1); }
+  50% { opacity: 0.55; transform: scale(1.04); }
+}
+@keyframes fcRing1 {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes fcRing2 {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+@keyframes fcShim {
+  0% { background-position: 200% 50%; }
+  100% { background-position: -200% 50%; }
+}
+@keyframes fcPulse {
+  0%, 100% { opacity: 0.45; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.55); }
+}
+@keyframes fcFlipHint {
+  0%, 100% { opacity: 0.5; transform: translateY(0); }
+  50% { opacity: 0.9; transform: translateY(-3px); }
+}
