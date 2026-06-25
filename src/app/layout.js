@@ -1,8 +1,22 @@
-import { Roboto } from "next/font/google";
+import { Roboto, Fraunces, Outfit } from "next/font/google";
 import "./globals.css";
 
+// Self-hosted via next/font — no render-blocking external stylesheet request.
 const roboto = Roboto({
   variable: "--font-roboto",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const fraunces = Fraunces({
+  variable: "--font-fraunces",
+  subsets: ["latin"],
+  display: "swap",
+  style: ["normal", "italic"],
+});
+
+const outfit = Outfit({
+  variable: "--font-outfit",
   subsets: ["latin"],
   display: "swap",
 });
@@ -16,26 +30,14 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="scroll-smooth">
       <head>
-        {/* Warm up the font + remote-image origins early */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
+        {/* Warm up the remote-image origin used by the hero card */}
         <link rel="preconnect" href="https://youngarchitects.in" />
-        <link
-          rel="dns-prefetch"
-          href="https://youngarchitects.in"
-        />
-        {/* Section fonts (Fraunces / Outfit) — loaded once here instead of via a
-            runtime @import inside a component <style> block */}
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,400&family=Outfit:wght@300;400;500;600;700&display=swap"
-        />
+        <link rel="dns-prefetch" href="https://youngarchitects.in" />
       </head>
-      <body className={`${roboto.variable} antialiased`} suppressHydrationWarning>
+      <body
+        className={`${roboto.variable} ${fraunces.variable} ${outfit.variable} antialiased`}
+        suppressHydrationWarning
+      >
         {children}
         <div id="portal-modal-root" />
       </body>

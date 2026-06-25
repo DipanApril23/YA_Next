@@ -162,12 +162,12 @@ const FlipCard = ({
                   boxShadow: "-6px -10px 12px rgba(255,255,255,.055), 6px 10px 14px rgba(0,0,0,.6), 0 0 50px rgba(6,182,212,.08), inset 0 0 40px rgba(0,0,0,.5)",
                   border: "1px solid rgba(255,255,255,.06)",
                 }}>
-                  <Image 
-                    src={frontLogo} 
-                    alt="Young Architects" 
-                    fill 
-                    className="object-cover" 
-                    unoptimized 
+                  <Image
+                    src={frontLogo}
+                    alt="Young Architects"
+                    fill
+                    sizes="(max-width: 768px) 60vw, 283px"
+                    className="object-cover"
                   />
                 </div>
 
@@ -187,7 +187,7 @@ const FlipCard = ({
                   boxShadow:"0 0 30px rgba(236,72,153,.22), 0 0 0 1px rgba(236,72,153,.18)",
                   background:"rgba(236,72,153,.04)",
                 }}>
-                  <Image src={qrCode} alt="QR Code" fill className="object-cover" unoptimized />
+                  <Image src={qrCode} alt="QR Code" fill sizes="144px" className="object-cover" />
                   {[
                     {top:5,left:5,  borderTop:"2px solid rgba(236,72,153,.7)", borderLeft:"2px solid rgba(236,72,153,.7)"},
                     {top:5,right:5, borderTop:"2px solid rgba(236,72,153,.7)", borderRight:"2px solid rgba(236,72,153,.7)"},
@@ -234,12 +234,12 @@ const FlipCard = ({
                   boxShadow: "0 0 50px rgba(168,85,247,.1), inset 0 0 40px rgba(0,0,0,.4)",
                   border: "1px solid rgba(168,85,247,.10)",
                 }}>
-                  <Image 
-                    src={backLogo} 
-                    alt="Young Architects" 
-                    fill 
-                    className="object-cover" 
-                    unoptimized 
+                  <Image
+                    src={backLogo}
+                    alt="Young Architects"
+                    fill
+                    sizes="(max-width: 768px) 60vw, 270px"
+                    className="object-cover"
                   />
                 </div>
 

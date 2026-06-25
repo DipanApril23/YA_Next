@@ -154,7 +154,7 @@ function Card({ svc, compact = false }) {
               {svc.label}
             </p>
             <h3 style={{
-              fontFamily:    "'Fraunces', Georgia, serif",
+              fontFamily:    "var(--font-fraunces), Georgia, serif",
               fontSize:      compact
                                ? "clamp(1.5rem,6vw,1.9rem)"
                                : "clamp(2rem,2.6vw,2.8rem)",
@@ -190,7 +190,7 @@ function Card({ svc, compact = false }) {
 
         {/* ── Highlight heading ── */}
         <p style={{
-          fontFamily:    "'Outfit', sans-serif",
+          fontFamily:    "var(--font-outfit), sans-serif",
           fontSize:      compact
                            ? "clamp(13px,3.5vw,14.5px)"
                            : "clamp(15px,1.15vw,17.5px)",
@@ -211,7 +211,7 @@ function Card({ svc, compact = false }) {
           marginBottom:        compact ? 16 : 24,
         }}>
           <p style={{
-            fontFamily: "'Outfit', sans-serif",
+            fontFamily: "var(--font-outfit), sans-serif",
             fontSize:   compact ? 12.5 : 13.5,
             lineHeight: 1.65,
             color:      C.body,
@@ -240,7 +240,7 @@ function Card({ svc, compact = false }) {
                   boxShadow:   `0 0 6px rgba(124,58,237,0.5)`,
                 }} />
                 <span style={{
-                  fontFamily: "'Outfit', sans-serif",
+                  fontFamily: "var(--font-outfit), sans-serif",
                   fontSize:   compact ? 12 : 13,
                   lineHeight: 1.35,
                   color:      C.ink,
@@ -267,7 +267,7 @@ function Card({ svc, compact = false }) {
           boxShadow:    "inset 0 1px 0 rgba(255,255,255,0.8), 0 2px 8px rgba(124,58,237,0.08)",
         }}>
           <span style={{
-            fontFamily: "'Fraunces', Georgia, serif",
+            fontFamily: "var(--font-fraunces), Georgia, serif",
             fontSize:   compact
                           ? "clamp(1rem,4vw,1.2rem)"
                           : "clamp(1.2rem,1.8vw,1.5rem)",
@@ -277,7 +277,7 @@ function Card({ svc, compact = false }) {
             {svc.stat.value}
           </span>
           <span style={{
-            fontFamily: "'Outfit', sans-serif",
+            fontFamily: "var(--font-outfit), sans-serif",
             fontSize:   compact ? 11 : 12,
             color:      C.body,
             fontWeight: 500,
@@ -298,7 +298,7 @@ function Card({ svc, compact = false }) {
                 background:     "rgba(124,58,237,0.07)",
                 backdropFilter: "blur(10px)",
                 color:          C.tagText,
-                fontFamily:     "'Outfit', sans-serif",
+                fontFamily:     "var(--font-outfit), sans-serif",
                 fontSize:       9,
                 fontWeight:     700,
                 letterSpacing:  "0.04em",
@@ -364,7 +364,7 @@ function LeftPanel({ bars }) {
           initial="hidden" whileInView="visible" viewport={{ once: true }}
           variants={fadeUp(0.06)}
           style={{
-            fontFamily:    "'Fraunces', Georgia, serif",
+            fontFamily:    "var(--font-fraunces), Georgia, serif",
             fontSize:      "clamp(2.6rem,4vw,4.4rem)",
             fontWeight:    700,
             lineHeight:    0.96,
@@ -382,7 +382,7 @@ function LeftPanel({ bars }) {
           initial="hidden" whileInView="visible" viewport={{ once: true }}
           variants={fadeUp(0.12)}
           style={{
-            fontFamily:   "'Outfit', sans-serif",
+            fontFamily:   "var(--font-outfit), sans-serif",
             fontSize:     "clamp(13px,1vw,15px)",
             lineHeight:   1.75,
             color:        C.body,
@@ -428,7 +428,7 @@ function LeftPanel({ bars }) {
                   {svc.id}
                 </p>
                 <p style={{
-                  fontFamily: "'Outfit', sans-serif",
+                  fontFamily: "var(--font-outfit), sans-serif",
                   fontSize:   11,
                   color:      C.body,
                   fontWeight: 500,
@@ -464,7 +464,7 @@ function LeftPanel({ bars }) {
           boxShadow:    `0 0 8px ${C.accent1}66`,
         }} />
         <span style={{
-          fontFamily: "'Outfit', sans-serif",
+          fontFamily: "var(--font-outfit), sans-serif",
           fontSize:   12,
           color:      C.body,
           fontWeight: 500,
@@ -646,7 +646,7 @@ export default function ServicesSection() {
               initial="hidden" whileInView="visible" viewport={{ once: true }}
               variants={fadeUp(0.05)}
               style={{
-                fontFamily:    "'Fraunces', Georgia, serif",
+                fontFamily:    "var(--font-fraunces), Georgia, serif",
                 fontSize:      "clamp(1.7rem,7.5vw,2.4rem)",
                 fontWeight:    700,
                 lineHeight:    1.0,
@@ -664,7 +664,7 @@ export default function ServicesSection() {
               initial="hidden" whileInView="visible" viewport={{ once: true }}
               variants={fadeUp(0.1)}
               style={{
-                fontFamily: "'Outfit', sans-serif",
+                fontFamily: "var(--font-outfit), sans-serif",
                 fontSize:   "clamp(12px,3.5vw,13.5px)",
                 lineHeight: 1.55,
                 color:      C.body,
