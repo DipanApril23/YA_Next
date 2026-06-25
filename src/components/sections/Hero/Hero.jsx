@@ -7,21 +7,6 @@ import { HERO_STATS as STATS, HERO_TAGS as TAGS, HERO_PARTICLES as PARTICLES } f
 import "./hero.css";
 
 /* ── Animation variants ── */
-const stagger = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.13, delayChildren: 0.25 } },
-};
-
-const lineUp = {
-  hidden: { y: 90, opacity: 0, filter: "blur(14px)" },
-  visible: {
-    y: 0,
-    opacity: 1,
-    filter: "blur(0px)",
-    transition: { duration: 0.95, ease: [0.22, 1, 0.36, 1] },
-  },
-};
-
 const fadeUp = (delay = 0) => ({
   hidden: { y: 28, opacity: 0 },
   visible: {
@@ -205,51 +190,40 @@ const Hero = () => {
                 </span>
               </motion.div>
 
-              {/* Headline */}
-              <motion.div
-                variants={stagger}
-                initial="hidden"
-                animate="visible"
-                className="w-full flex flex-col gap-1 overflow-hidden"
-              >
-                <div style={{ overflow: "hidden" }}>
-                  <motion.h1
-                    variants={lineUp}
-                    className="hero-grad-text font-black leading-[1.1] md:leading-[1.03] tracking-tight pb-1"
-                    style={{ fontSize: "clamp(1.95rem, 5vw, 3.8rem)" }}
-                  >
-                    Build a Digital Presence {"\u2014"}
-                  </motion.h1>
+              {/*
+                Headline + brand + lead paragraph render statically (no JS-gated
+                entrance) so the LCP text paints on first server render instead of
+                waiting for framer-motion to hydrate. This is the LCP element.
+              */}
+              <div className="w-full flex flex-col gap-1">
+                <div className="hero-rise hero-rise-1">
+                <h1
+                  className="hero-grad-text font-black leading-[1.1] md:leading-[1.03] tracking-tight pb-1"
+                  style={{ fontSize: "clamp(1.95rem, 5vw, 3.8rem)" }}
+                >
+                  Build a Digital Presence {"\u2014"}
+                </h1>
                 </div>
 
-                <div style={{ overflow: "hidden" }}>
-                  <motion.h1
-                    variants={lineUp}
-                    className="font-black leading-[1.1] md:leading-[1.03] tracking-tight text-white"
-                    style={{ fontSize: "clamp(1.95rem, 5vw, 3.8rem)" }}
-                  >
-                    That Makes People Trust You Before They Even Contact You.
-                  </motion.h1>
+                <div className="hero-rise hero-rise-2">
+                <h1
+                  className="font-black leading-[1.1] md:leading-[1.03] tracking-tight text-white"
+                  style={{ fontSize: "clamp(1.95rem, 5vw, 3.8rem)" }}
+                >
+                  That Makes People Trust You Before They Even Contact You.
+                </h1>
                 </div>
-              </motion.div>
+              </div>
 
               {/* Brand name */}
-              <motion.h2
-                variants={fadeUp(0.72)}
-                initial="hidden"
-                animate="visible"
-                className="hero-pink-text font-black uppercase tracking-widest text-[15px] sm:text-lg md:text-xl lg:text-2xl"
-              >
+              <div className="hero-rise hero-rise-3">
+              <h2 className="hero-pink-text font-black uppercase tracking-widest text-[15px] sm:text-lg md:text-xl lg:text-2xl">
                 ⚡ Young Architects
-              </motion.h2>
+              </h2>
+              </div>
 
               {/* Paragraph Copywriting */}
-              <motion.p
-                variants={fadeUp(0.9)}
-                initial="hidden"
-                animate="visible"
-                className="max-w-[38rem] text-sm sm:text-base text-white/50 font-medium leading-relaxed"
-              >
+              <p className="hero-rise hero-rise-4 max-w-[38rem] text-sm sm:text-base text-white/50 font-medium leading-relaxed">
                 From{" "}
                 <strong>
                   websites and SaaS products plus SEO to authority positioning
@@ -258,7 +232,7 @@ const Hero = () => {
                 — Young Architects helps law firms, SaaS brands, investigators,
                 agencies, and growing businesses turn their online presence into
                 a predictable client acquisition engine.
-              </motion.p>
+              </p>
 
               {/* ── CTA BUTTONS — STACKED ON MOBILE, ROW ON DESKTOP ── */}
               <motion.div

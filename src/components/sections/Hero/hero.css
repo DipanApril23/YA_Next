@@ -49,3 +49,21 @@
   background-clip: text;
   animation: heroShimmer 3.5s linear infinite;
 }
+
+/*
+  Staggered entrance for the hero copy. Transform-only (no opacity fade) so the
+  text is painted on first render — keeps LCP fast — while still sliding in.
+  Runs from CSS at paint time, so it doesn't wait for JS/framer-motion to hydrate.
+*/
+@keyframes heroRise {
+  from { transform: translateY(26px); }
+  to { transform: translateY(0); }
+}
+.hero-rise {
+  animation: heroRise 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+  will-change: transform;
+}
+.hero-rise-1 { animation-delay: 0.04s; }
+.hero-rise-2 { animation-delay: 0.14s; }
+.hero-rise-3 { animation-delay: 0.26s; }
+.hero-rise-4 { animation-delay: 0.36s; }
