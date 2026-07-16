@@ -1,5 +1,10 @@
-/* ── FlipCard: glow, rings, shimmer, pulse keyframes ── */
+/* ═══════════════════════════════════════════════════════════════
+   FLIP CARD
+   All style rules live here. The component passes only data (via CSS
+   custom properties) and framer-motion runtime values (tilt/flip).
+   ═══════════════════════════════════════════════════════════════ */
 
+/* ── Keyframes ───────────────────────────────────────────────── */
 @keyframes fcGlow {
   0%, 100% { opacity: 0.32; transform: scale(1); }
   50% { opacity: 0.55; transform: scale(1.04); }
@@ -23,4 +28,339 @@
 @keyframes fcFlipHint {
   0%, 100% { opacity: 0.5; transform: translateY(0); }
   50% { opacity: 0.9; transform: translateY(-3px); }
+}
+
+/* ── Layout shell ────────────────────────────────────────────── */
+.fc-root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.fc-stage {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Ambient glow + rotating rings ───────────────────────────── */
+.fc-glow,
+.fc-ring-outer,
+.fc-ring-inner {
+  position: absolute;
+  pointer-events: none;
+}
+.fc-glow {
+  inset: -32px;
+  border-radius: 80px;
+  background: radial-gradient(
+    ellipse at 50% 40%,
+    rgba(6, 182, 212, 0.18) 0%,
+    rgba(168, 85, 247, 0.12) 55%,
+    transparent 75%
+  );
+  filter: blur(32px);
+  animation: fcGlow 5s ease-in-out infinite;
+}
+.fc-ring-outer,
+.fc-ring-inner {
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  padding: 1px;
+}
+.fc-ring-outer {
+  inset: -26px;
+  border-radius: 76px;
+  background: linear-gradient(
+    135deg,
+    #06b6d4 0%,
+    transparent 40%,
+    #a855f7 60%,
+    transparent 80%,
+    #06b6d4 100%
+  );
+  opacity: 0.42;
+  animation: fcRing1 9s linear infinite;
+}
+.fc-ring-inner {
+  inset: -10px;
+  border-radius: 62px;
+  background: linear-gradient(
+    135deg,
+    transparent 25%,
+    #ec4899 50%,
+    transparent 70%,
+    #3b82f6 90%
+  );
+  opacity: 0.28;
+  animation: fcRing2 13s linear infinite;
+}
+
+/* ── Tilt + flip containers ──────────────────────────────────── */
+.fc-tilt {
+  cursor: pointer;
+  width: clamp(295px, 33vw, 345px);
+  height: clamp(530px, 60vw, 610px);
+  transform-style: preserve-3d;
+}
+.fc-flip {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+}
+
+/* ── Card faces ──────────────────────────────────────────────── */
+.fc-face {
+  position: absolute;
+  inset: 0;
+  border-radius: 48px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 22px;
+  text-align: center;
+  /* CRITICAL — must be on every face */
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  background: linear-gradient(158deg, rgba(14, 14, 26, 0.97) 0%, rgba(7, 7, 18, 0.99) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.6),
+    0 50px 100px rgba(0, 0, 0, 0.85);
+}
+.fc-face--back {
+  transform: rotateY(180deg);
+}
+
+/* ── Edge lights ─────────────────────────────────────────────── */
+.fc-edge {
+  position: absolute;
+  height: 1px;
+}
+.fc-edge--top {
+  top: 0;
+  left: 10%;
+  right: 10%;
+}
+.fc-edge--bottom {
+  bottom: 0;
+  left: 12%;
+  right: 12%;
+}
+.fc-edge--cyan-purple {
+  background: linear-gradient(90deg, transparent, rgba(6, 182, 212, 0.7), rgba(168, 85, 247, 0.5), transparent);
+}
+.fc-edge--purple {
+  background: linear-gradient(90deg, transparent, rgba(168, 85, 247, 0.6), transparent);
+}
+.fc-edge--purple-soft {
+  background: linear-gradient(90deg, transparent, rgba(168, 85, 247, 0.4), transparent);
+}
+.fc-edge--cyan-soft {
+  background: linear-gradient(90deg, transparent, rgba(6, 182, 212, 0.4), transparent);
+}
+
+/* ── Holographic shimmer ─────────────────────────────────────── */
+.fc-shimmer {
+  position: absolute;
+  inset: 0;
+  border-radius: 48px;
+  pointer-events: none;
+  background-size: 300% 300%;
+}
+.fc-shimmer--front {
+  background: linear-gradient(125deg, transparent 25%, rgba(6, 182, 212, 0.06) 50%, transparent 75%);
+  animation: fcShim 5s linear infinite;
+}
+.fc-shimmer--back {
+  background: linear-gradient(125deg, transparent 25%, rgba(168, 85, 247, 0.05) 50%, transparent 75%);
+  animation: fcShim 6s linear infinite reverse;
+}
+
+/* ── Logo circles ────────────────────────────────────────────── */
+.fc-logo {
+  position: relative;
+  flex-shrink: 0;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.fc-logo--front {
+  width: 82%;
+  background: radial-gradient(circle, rgba(6, 182, 212, 0.07) 0%, transparent 70%);
+  box-shadow:
+    -6px -10px 12px rgba(255, 255, 255, 0.055),
+    6px 10px 14px rgba(0, 0, 0, 0.6),
+    0 0 50px rgba(6, 182, 212, 0.08),
+    inset 0 0 40px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+.fc-logo--back {
+  width: 78%;
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.07) 0%, transparent 70%);
+  box-shadow: 0 0 50px rgba(168, 85, 247, 0.1), inset 0 0 40px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(168, 85, 247, 0.1);
+}
+
+/* ── Contact block (front) ───────────────────────────────────── */
+.fc-contact {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.fc-contact-divider {
+  height: 1px;
+  margin: 0 18%;
+  background: linear-gradient(90deg, transparent, rgba(6, 182, 212, 0.35), transparent);
+}
+.fc-phone {
+  font-size: 1.05rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.88);
+  margin: 0;
+}
+.fc-email {
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0;
+}
+
+/* ── QR code ─────────────────────────────────────────────────── */
+.fc-qr {
+  position: relative;
+  flex-shrink: 0;
+  width: 144px;
+  height: 144px;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 0 30px rgba(236, 72, 153, 0.22), 0 0 0 1px rgba(236, 72, 153, 0.18);
+  background: rgba(236, 72, 153, 0.04);
+}
+.fc-qr-corner {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+}
+.fc-qr-corner--tl {
+  top: 5px;
+  left: 5px;
+  border-top: 2px solid rgba(236, 72, 153, 0.7);
+  border-left: 2px solid rgba(236, 72, 153, 0.7);
+}
+.fc-qr-corner--tr {
+  top: 5px;
+  right: 5px;
+  border-top: 2px solid rgba(236, 72, 153, 0.7);
+  border-right: 2px solid rgba(236, 72, 153, 0.7);
+}
+.fc-qr-corner--bl {
+  bottom: 5px;
+  left: 5px;
+  border-bottom: 2px solid rgba(236, 72, 153, 0.7);
+  border-left: 2px solid rgba(236, 72, 153, 0.7);
+}
+.fc-qr-corner--br {
+  bottom: 5px;
+  right: 5px;
+  border-bottom: 2px solid rgba(236, 72, 153, 0.7);
+  border-right: 2px solid rgba(236, 72, 153, 0.7);
+}
+
+/* ── Services block (back) ───────────────────────────────────── */
+.fc-services-header {
+  width: 100%;
+  text-align: center;
+  margin-top: 6px;
+}
+.fc-services-title {
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(168, 85, 247, 0.75);
+  font-weight: 600;
+  margin: 0;
+}
+.fc-services-divider {
+  height: 1px;
+  margin: 8px 18% 0;
+  background: linear-gradient(90deg, transparent, rgba(168, 85, 247, 0.35), transparent);
+}
+.fc-services-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+/* Per-service accent colours arrive as custom properties from FLIPCARD_SERVICES. */
+.fc-service {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 12px;
+  padding: 10px 13px;
+  background: linear-gradient(100deg, var(--svc-tint-bg) 0%, transparent 100%);
+  border: 1px solid var(--svc-tint-border);
+}
+.fc-service-icon {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--svc-tint-icon);
+  color: var(--svc-color);
+  font-size: 0.75rem;
+}
+.fc-service-label {
+  flex: 1;
+  text-align: left;
+  font-size: 0.83rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.82);
+}
+.fc-service-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: var(--svc-color);
+  box-shadow: 0 0 7px var(--svc-color);
+  animation: fcPulse var(--svc-pulse-duration) ease-in-out infinite;
+}
+
+/* ── Flip hint button ────────────────────────────────────────── */
+.fc-flip-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+  outline: none;
+  animation: fcFlipHint 2.8s ease-in-out infinite;
+}
+.fc-flip-icon {
+  stroke: rgba(6, 182, 212, 0.85);
+}
+.fc-flip-label {
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
 }

@@ -2,8 +2,15 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { Check } from "lucide-react";
 import { Container, FlipCard, Button } from "@/components/ui";
-import { HERO_STATS as STATS, HERO_TAGS as TAGS, HERO_PARTICLES as PARTICLES } from "@/data";
+import {
+  HERO_STATS as STATS,
+  HERO_BENEFITS as BENEFITS,
+  HERO_PARTICLES as PARTICLES,
+  HERO_CTAS as CTAS,
+  HERO_CONTENT as CONTENT,
+} from "@/data";
 import "./hero.css";
 
 /* ── Animation variants ── */
@@ -16,9 +23,26 @@ const fadeUp = (delay = 0) => ({
   },
 });
 
-/* ══════════════════════════════════
-    HERO COMPONENT
-══════════════════════════════════ */
+const flipCardIn = {
+  initial: { opacity: 0, y: 35, filter: "blur(12px)" },
+  animate: { opacity: 1, y: 0, filter: "blur(0px)" },
+  transition: { delay: 0.35, duration: 1.05, ease: [0.22, 1, 0.36, 1] },
+};
+
+/* Maps a particle from HERO_PARTICLES onto the custom properties `.hero-particle` reads. */
+const particleVars = (p) => ({
+  "--p-left": p.left,
+  "--p-top": p.top,
+  "--p-size": p.size,
+  "--p-color": p.color,
+  "--p-glow-blur": p.glowBlur,
+  "--p-glow-color": p.glowColor,
+  "--p-duration": p.duration,
+  "--p-delay": p.delay,
+  "--p-dx": p.dx,
+  "--p-dy": p.dy,
+});
+
 const Hero = () => {
   const sectionRef = useRef(null);
 
@@ -37,325 +61,186 @@ const Hero = () => {
     offset: ["start start", "end start"],
   });
 
-  /* Parallax values */
+  /* Parallax motion values (framer-motion runtime values, not style rules) */
   const gridY = useTransform(scrollYProgress, [0, 1], [0, 90]);
   const contentY = useTransform(scrollYProgress, [0, 0.6], [0, -45]);
   const blobY = useTransform(scrollYProgress, [0, 1], [0, 40]);
 
   return (
-    <>
-      <section
-        ref={sectionRef}
-        id="home"
-        className="relative min-h-screen w-full overflow-hidden pt-12 md:pt-4"
-        style={{ background: "#03030a" }}
+    <section
+      ref={sectionRef}
+      id="home"
+      className="hero relative min-h-screen w-full overflow-hidden pt-12 md:pt-4"
+    >
+      {/* ════════════════ BACKGROUND LAYERS ════════════════ */}
+      <motion.div
+        style={{ y: blobY }}
+        className="pointer-events-none absolute inset-0 overflow-hidden"
+        aria-hidden
       >
-        {/* ════════════════ BACKGROUND LAYERS ════════════════ */}
-        <motion.div
-          style={{ y: blobY }}
-          className="pointer-events-none absolute inset-0 overflow-hidden"
-          aria-hidden
-        >
-          <div
-            className="hero-aurora-1 absolute"
-            style={{
-              left: "5%",
-              top: "10%",
-              width: "clamp(360px,45vw,580px)",
-              height: "clamp(360px,45vw,580px)",
-              borderRadius: "50%",
-              background:
-                "radial-gradient(circle, rgba(6,182,212,0.75) 0%, transparent 68%)",
-              filter: "blur(72px)",
-              opacity: 0.18,
-            }}
-          />
-          <div
-            className="hero-aurora-2 absolute"
-            style={{
-              right: "8%",
-              top: "20%",
-              width: "clamp(400px,50vw,660px)",
-              height: "clamp(400px,50vw,660px)",
-              borderRadius: "50%",
-              background:
-                "radial-gradient(circle, rgba(59,130,246,0.9) 0%, transparent 65%)",
-              filter: "blur(90px)",
-              opacity: 0.14,
-            }}
-          />
-          <div
-            className="hero-aurora-3 absolute"
-            style={{
-              left: "25%",
-              bottom: "5%",
-              width: "clamp(340px,42vw,520px)",
-              height: "clamp(340px,42vw,520px)",
-              borderRadius: "50%",
-              background:
-                "radial-gradient(circle, rgba(168,85,247,0.75) 0%, rgba(236,72,153,0.5) 50%, transparent 70%)",
-              filter: "blur(80px)",
-              opacity: 0.17,
-            }}
-          />
-        </motion.div>
+        <div className="hero-aurora-1" />
+        <div className="hero-aurora-2" />
+        <div className="hero-aurora-3" />
+      </motion.div>
 
-        {/* Perspective grid floor */}
-        <motion.div
-          style={{ y: gridY }}
-          className="pointer-events-none absolute bottom-0 left-0 right-0 h-[52%]"
-          aria-hidden
-        >
-          <div
-            style={{
-              height: "100%",
-              width: "100%",
-              backgroundImage: [
-                "linear-gradient(rgba(6,182,212,0.35) 1px, transparent 1px)",
-                "linear-gradient(90deg, rgba(6,182,212,0.35) 1px, transparent 1px)",
-              ].join(","),
-              backgroundSize: "55px 55px",
-              transform: "perspective(550px) rotateX(56deg) translateY(12%)",
-              transformOrigin: "bottom center",
-              maskImage:
-                "linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 80%)",
-              WebkitMaskImage:
-                "linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 80%)",
-              opacity: 0.13,
-            }}
-          />
-        </motion.div>
+      {/* Perspective grid floor */}
+      <motion.div
+        style={{ y: gridY }}
+        className="pointer-events-none absolute bottom-0 left-0 right-0 h-[52%]"
+        aria-hidden
+      >
+        <div className="hero-grid" />
+      </motion.div>
 
-        {/* Noise grain overlay */}
+      {/* Noise grain overlay */}
+      <div aria-hidden className="hero-noise pointer-events-none absolute inset-0" />
+
+      {/* Floating particles */}
+      {PARTICLES.map((p, i) => (
         <div
+          key={i}
           aria-hidden
-          className="pointer-events-none absolute inset-0"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.68' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
-            backgroundRepeat: "repeat",
-            opacity: 0.035,
-            mixBlendMode: "soft-light",
-          }}
+          className="hero-particle pointer-events-none absolute rounded-full hidden sm:block"
+          style={particleVars(p)}
         />
+      ))}
 
-        {/* Floating particles */}
-        {PARTICLES.map((p, i) => (
-          <div
-            key={i}
-            aria-hidden
-            className="pointer-events-none absolute rounded-full hidden sm:block"
-            style={{
-              left: p.left,
-              top: p.top,
-              width: p.size,
-              height: p.size,
-              background: p.color,
-              boxShadow: `0 0 ${p.size * 2 + 3}px ${p.size}px ${p.color}33`,
-              animation: `heroParticle ${p.dur}s ease-in-out ${p.delay}s infinite`,
-              "--pdx": `${p.dx}px`,
-              "--pdy": `${p.dy}px`,
-            }}
-          />
-        ))}
-
-        {/* ════════════════ MAIN LAYOUT ════════════════ */}
-        <Container>
-          <div className="relative z-10 flex min-h-screen w-full flex-col items-center justify-center gap-12 py-20 md:flex-row md:gap-6 md:py-24">
-            {/* ── LEFT COMPONENT COLUMN ── */}
+      {/* ════════════════ MAIN LAYOUT ════════════════ */}
+      <Container>
+        <div className="relative z-10 flex min-h-screen w-full flex-col items-center justify-center gap-12 py-20 md:flex-row md:gap-6 md:py-24">
+          {/* ── LEFT COLUMN ── */}
+          <motion.div
+            style={{ y: isDesktop ? contentY : 0 }}
+            className="flex w-full flex-col items-center text-center gap-5 sm:gap-6 md:w-[55%] md:items-start md:text-left md:pr-6 lg:pr-12"
+          >
+            {/* Status chip */}
             <motion.div
-              style={{ y: isDesktop ? contentY : 0 }}
-              className="flex w-full flex-col items-center text-center gap-5 sm:gap-6 md:w-[55%] md:items-start md:text-left md:pr-6 lg:pr-12"
+              variants={fadeUp(0.1)}
+              initial="hidden"
+              animate="visible"
+              className="hero-chip inline-flex items-center gap-2.5 rounded-full border px-4 py-1.5 backdrop-blur-sm"
             >
-              {/* Status chip */}
-              <motion.div
-                variants={fadeUp(0.1)}
-                initial="hidden"
-                animate="visible"
-                className="inline-flex items-center gap-2.5 rounded-full border px-4 py-1.5 backdrop-blur-sm"
-                style={{
-                  borderColor: "rgba(6,182,212,0.28)",
-                  background: "rgba(6,182,212,0.07)",
-                }}
-              >
-                <span
-                  className="h-1.5 w-1.5 rounded-full"
-                  style={{
-                    background: "#06b6d4",
-                    boxShadow: "0 0 8px #06b6d4",
-                    animation: "heroPing 2.4s ease-in-out infinite",
-                  }}
-                />
-                <span className="text-[11px] xs:text-xs font-medium text-cyan-400/90 tracking-wider">
-                  AI-Powered Digital Agency · Kolkata
-                </span>
-              </motion.div>
+              <span className="hero-chip-dot h-1.5 w-1.5 rounded-full" />
+              <span className="text-[11px] xs:text-xs font-medium text-cyan-400/90 tracking-wider">
+                {CONTENT.eyebrow}
+              </span>
+            </motion.div>
 
-              {/*
-                Headline + brand + lead paragraph render statically (no JS-gated
-                entrance) so the LCP text paints on first server render instead of
-                waiting for framer-motion to hydrate. This is the LCP element.
-              */}
-              <div className="w-full flex flex-col gap-1">
-                <div className="hero-rise hero-rise-1">
-                <h1
-                  className="hero-grad-text font-black leading-[1.1] md:leading-[1.03] tracking-tight pb-1"
-                  style={{ fontSize: "clamp(1.95rem, 5vw, 3.8rem)" }}
-                >
-                  Build a Digital Presence {"\u2014"}
+            {/*
+              Headline + brand + lead paragraph paint on first server render (no
+              opacity:0 / JS-gated entrance), so the LCP text isn't delayed. Their
+              entrance is a CSS transform-only slide (`hero-rise`) that holds
+              opacity at 1 and runs at paint time.
+            */}
+            <div className="w-full flex flex-col gap-1">
+              <div className="hero-rise hero-rise-1">
+                <h1 className="hero-grad-text hero-headline font-black leading-[1.1] md:leading-[1.03] tracking-tight pb-1">
+                  {CONTENT.headlineLead}
                 </h1>
-                </div>
-
-                <div className="hero-rise hero-rise-2">
-                <h1
-                  className="font-black leading-[1.1] md:leading-[1.03] tracking-tight text-white"
-                  style={{ fontSize: "clamp(1.95rem, 5vw, 3.8rem)" }}
-                >
-                  That Makes People Trust You Before They Even Contact You.
-                </h1>
-                </div>
               </div>
 
-              {/* Brand name */}
-              <div className="hero-rise hero-rise-3">
+              <div className="hero-rise hero-rise-2">
+                <h1 className="hero-headline font-black leading-[1.1] md:leading-[1.03] tracking-tight text-white">
+                  {CONTENT.headlineMain}
+                </h1>
+              </div>
+            </div>
+
+            {/* Brand name */}
+            <div className="hero-rise hero-rise-3">
               <h2 className="hero-pink-text font-black uppercase tracking-widest text-[15px] sm:text-lg md:text-xl lg:text-2xl">
-                ⚡ Young Architects
+                {CONTENT.brand}
               </h2>
-              </div>
+            </div>
 
-              {/* Paragraph Copywriting */}
-              <p className="hero-rise hero-rise-4 max-w-[38rem] text-sm sm:text-base text-white/50 font-medium leading-relaxed">
-                From{" "}
-                <strong>
-                  websites and SaaS products plus SEO to authority positioning
-                  and lead generation systems
-                </strong>{" "}
-                — Young Architects helps law firms, SaaS brands, investigators,
-                agencies, and growing businesses turn their online presence into
-                a predictable client acquisition engine.
-              </p>
+            {/* Lead paragraph */}
+            <p className="hero-rise hero-rise-4 max-w-[38rem] text-sm sm:text-base text-white/75 font-medium leading-relaxed">
+              {CONTENT.leadBefore}
+              <strong>{CONTENT.leadStrong}</strong>
+              {CONTENT.leadAfter}
+            </p>
 
-              {/* ── CTA BUTTONS — STACKED ON MOBILE, ROW ON DESKTOP ── */}
-              <motion.div
-                variants={fadeUp(1.1)}
-                initial="hidden"
-                animate="visible"
-                className="w-full px-4 sm:px-0 flex flex-col sm:flex-row items-center justify-center md:justify-start gap-3 sm:gap-4"
-              >
-                <a
-                  href="https://calendly.com/yafoundations/45min"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full sm:w-auto sm:min-w-[210px]"
-                >
-                  {/* mt-0 overrides the default mt-4 inside your custom Button component */}
-                  <Button className="w-full mt-0">Book Consultation</Button>
-                </a>
-                <a
-                  href="https://youngarchitects.in/assets/YA_Policy.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full sm:w-auto sm:min-w-[180px]"
-                >
-                  <Button variant="secondary" className="w-full mt-0">
-                    View Policy
-                  </Button>
-                </a>
-              </motion.div>
-              <motion.div
-                variants={fadeUp(1.1)}
-                initial="hidden"
-                animate="visible"
-                className="w-full px-4 sm:px-0 flex flex-col sm:flex-row items-center justify-center md:justify-start gap-3 sm:gap-4 mt-[-18px]"
-              >
-                <a
-                  href="#"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full sm:w-auto sm:min-w-[210px]"
-                >
-                  {/* mt-0 overrides the default mt-4 inside your custom Button component */}
-                  <Button className="w-full mt-0">
-                    See How We Build Growth Systems
-                  </Button>
-                </a>
-              </motion.div>
-
-              {/* Service tags */}
-              <motion.div
-                variants={fadeUp(1.25)}
-                initial="hidden"
-                animate="visible"
-                className="flex flex-wrap justify-center md:justify-start gap-2 pt-2"
-              >
-                {TAGS.map((tag, i) => (
-                  <span
-                    key={i}
-                    className="text-[10px] sm:text-xs font-semibold uppercase tracking-wider px-3 py-1.5 rounded-full border border-white/10 background-white/5 text-white/40 backdrop-blur-md"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </motion.div>
-
-              {/* Stats row */}
-              <motion.div
-                variants={fadeUp(1.4)}
-                initial="hidden"
-                animate="visible"
-                className="flex gap-6 sm:gap-10 pt-4"
-              >
-                {STATS.map((s, i) => (
-                  <div
-                    key={i}
-                    className="flex flex-col items-center md:items-start"
-                  >
-                    <span
-                      className="font-black text-xl sm:text-2xl md:text-3xl"
-                      style={{
-                        background: "linear-gradient(135deg, #06b6d4, #a855f7)",
-                        WebkitBackgroundClip: "text",
-                        WebkitTextFillColor: "transparent",
-                        backgroundClip: "text",
-                      }}
-                    >
-                      {s.value}
-                    </span>
-                    <span className="text-[9px] sm:text-[10px] font-bold tracking-widest uppercase text-white/30 mt-1">
-                      {s.label}
-                    </span>
-                  </div>
-                ))}
-              </motion.div>
-              <motion.p
-                variants={fadeUp(0.9)}
-                initial="hidden"
-                animate="visible"
-                className="max-w-[38rem] text-sm sm:text-base text-white/50 font-medium leading-relaxed"
-              >
-                <strong>
-                  Helping businesses build authority, visibility, and
-                  conversion-focused digital ecosystems.
-                </strong>
-              </motion.p>
-            </motion.div>
-
-            {/* ── RIGHT COMPONENT COLUMN ── */}
+            {/* ── CTAs ── */}
             <motion.div
-              initial={{ opacity: 0, y: 35, filter: "blur(12px)" }}
-              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-              transition={{
-                delay: 0.35,
-                duration: 1.05,
-                ease: [0.22, 1, 0.36, 1],
-              }}
-              className="flex w-full items-center justify-center md:w-[45%] max-w-sm sm:max-w-md md:max-w-none px-4 sm:px-0"
+              variants={fadeUp(1.1)}
+              initial="hidden"
+              animate="visible"
+              className="w-full px-4 sm:px-0 flex flex-col sm:flex-row items-center justify-center md:justify-start gap-3 sm:gap-4"
             >
-              <FlipCard />
+              {CTAS.map((cta) => (
+                <a
+                  key={cta.label}
+                  href={cta.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={cta.narrow ? "hero-cta hero-cta--narrow" : "hero-cta"}
+                >
+                  <Button variant={cta.variant} className="w-full mt-0">
+                    {cta.label}
+                  </Button>
+                </a>
+              ))}
             </motion.div>
-          </div>
-        </Container>
-      </section>
-    </>
+
+            {/* Benefits checklist */}
+            <motion.ul
+              variants={fadeUp(1.25)}
+              initial="hidden"
+              animate="visible"
+              className="hero-benefits pt-2"
+            >
+              {BENEFITS.map((benefit) => (
+                <li key={benefit} className="hero-benefit">
+                  <span className="hero-benefit-check" aria-hidden>
+                    <Check strokeWidth={3.5} />
+                  </span>
+                  <span className="hero-benefit-text">{benefit}</span>
+                </li>
+              ))}
+            </motion.ul>
+
+            {/* Stats row */}
+            <motion.div
+              variants={fadeUp(1.4)}
+              initial="hidden"
+              animate="visible"
+              className="flex gap-6 sm:gap-10 pt-4"
+            >
+              {STATS.map((s) => (
+                <div key={s.label} className="flex flex-col items-center md:items-start">
+                  <span className="hero-stat-value font-black text-xl sm:text-2xl md:text-3xl">
+                    {s.value}
+                  </span>
+                  <span className="text-[9px] sm:text-[10px] font-bold tracking-widest uppercase text-white/30 mt-1">
+                    {s.label}
+                  </span>
+                </div>
+              ))}
+            </motion.div>
+
+            {/* Closing line */}
+            <motion.p
+              variants={fadeUp(0.9)}
+              initial="hidden"
+              animate="visible"
+              className="max-w-[38rem] text-sm sm:text-base text-white/50 font-medium leading-relaxed"
+            >
+              <strong>{CONTENT.closing}</strong>
+            </motion.p>
+          </motion.div>
+
+          {/* ── RIGHT COLUMN ── */}
+          <motion.div
+            initial={flipCardIn.initial}
+            animate={flipCardIn.animate}
+            transition={flipCardIn.transition}
+            className="flex w-full items-center justify-center md:w-[45%] max-w-sm sm:max-w-md md:max-w-none px-4 sm:px-0"
+          >
+            <FlipCard />
+          </motion.div>
+        </div>
+      </Container>
+    </section>
   );
 };
 

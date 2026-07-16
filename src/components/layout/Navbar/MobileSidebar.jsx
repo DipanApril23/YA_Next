@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, ArrowUpRight, Sparkles } from "lucide-react";
-import { NAV_ITEMS } from "@/data";
+import { NAV_ITEMS, NAV_CONTENT } from "@/data";
 
 const SMOOTH_EASE = [0.16, 1, 0.3, 1];
 
@@ -280,7 +280,7 @@ export default function MobileSideBar({ isOpen, onClose }) {
             <motion.a
               whileTap={{ scale: 0.98 }}
               transition={FAST_SPRING}
-              href="#contact"
+              href={NAV_CONTENT.cta.href}
               onClick={onClose}
               className="
                 group
@@ -320,7 +320,7 @@ export default function MobileSideBar({ isOpen, onClose }) {
               />
 
               <span className="relative z-10">
-                Contact Us
+                {NAV_CONTENT.cta.label}
               </span>
 
               <Sparkles className="relative z-10 h-3 w-3 text-pink-300" />

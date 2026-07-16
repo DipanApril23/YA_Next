@@ -1,0 +1,700 @@
+/* ═══════════════════════════════════════════════════════════════
+   MAIN SERVICES — 3D interface cards, light theme
+   Desktop ≥1024px : bento grid (6 cols, tall + wide slots)
+   Below 1024px    : vertical snap auto-scroller with progress rail
+   3D mechanics: perspective shell → rotate3d card → glass at Z25 →
+   concentric circles climbing the Z-axis → CTA popping to Z40.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Section shell ───────────────────────────────────────────── */
+.ms-section {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: linear-gradient(170deg, #f4f8fd 0%, #eaf1fa 55%, #f2f7fc 100%);
+  scroll-margin-top: 96px;
+}
+
+.ms-network {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.55;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cg fill='none' stroke='%233b82f6' stroke-opacity='0.16' stroke-width='1'%3E%3Cpath d='M24 40 L118 92 L212 32 M118 92 L92 196 M212 32 L236 142 L92 196 M24 40 L36 158 L92 196'/%3E%3C/g%3E%3Cg fill='%233b82f6' fill-opacity='0.28'%3E%3Ccircle cx='24' cy='40' r='2.5'/%3E%3Ccircle cx='118' cy='92' r='3'/%3E%3Ccircle cx='212' cy='32' r='2.5'/%3E%3Ccircle cx='92' cy='196' r='3'/%3E%3Ccircle cx='236' cy='142' r='2'/%3E%3Ccircle cx='36' cy='158' r='2'/%3E%3C/g%3E%3C/svg%3E");
+  background-repeat: repeat;
+}
+
+.ms-glow {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(90px);
+}
+.ms-glow--left {
+  top: -10%;
+  left: -8%;
+  width: clamp(320px, 40vw, 560px);
+  height: clamp(320px, 40vw, 560px);
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.16) 0%, transparent 70%);
+}
+.ms-glow--right {
+  bottom: -12%;
+  right: -8%;
+  width: clamp(300px, 36vw, 520px);
+  height: clamp(300px, 36vw, 520px);
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.12) 0%, transparent 70%);
+}
+
+.ms-inner {
+  position: relative;
+  z-index: 1;
+  padding: clamp(56px, 8vw, 96px) 0;
+}
+
+/* ── Header ──────────────────────────────────────────────────── */
+.ms-header {
+  text-align: center;
+  margin-bottom: clamp(36px, 5vw, 60px);
+}
+.ms-heading {
+  font-size: clamp(1.35rem, 3.2vw, 2.5rem);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: #0b1728;
+  margin: 0 auto;
+  max-width: 22ch;
+  text-wrap: balance;
+}
+.ms-heading-lead {
+  font-weight: 800;
+}
+.ms-heading-rest {
+  font-weight: 600;
+  color: #1e3a5f;
+}
+.ms-sub {
+  margin: clamp(12px, 1.6vw, 18px) auto 0;
+  max-width: 60ch;
+  font-size: clamp(0.85rem, 1.1vw, 1rem);
+  line-height: 1.6;
+  color: #5b6b80;
+  text-wrap: balance;
+}
+@media (min-width: 768px) {
+  .ms-heading {
+    max-width: 34ch;
+  }
+}
+@media (min-width: 1280px) {
+  .ms-heading {
+    max-width: none;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SCROLLER SHELL
+   Below 1024px: fixed-height viewport, y-snap, hidden scrollbar,
+   progress rail on the right + counter underneath.
+   ≥1024px: shell dissolves, grid renders as a bento.
+   ═══════════════════════════════════════════════════════════════ */
+.ux-scroller {
+  position: relative;
+}
+
+.ux-scroll-vp {
+  position: relative;
+  overflow: visible;
+}
+
+@media (max-width: 1023px) {
+  .ux-scroll-vp {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    padding: 14px 0 30px;
+    scrollbar-width: none;
+    /* Soft fade at both edges so peeking cards read as slidable. */
+    mask-image: linear-gradient(
+      90deg,
+      transparent 0,
+      #000 22px,
+      #000 calc(100% - 22px),
+      transparent 100%
+    );
+    -webkit-mask-image: linear-gradient(
+      90deg,
+      transparent 0,
+      #000 22px,
+      #000 calc(100% - 22px),
+      transparent 100%
+    );
+  }
+  .ux-scroll-vp::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Status bar — fills as the slider advances (auto or manual). */
+  .ux-rail {
+    width: min(300px, 68%);
+    height: 4px;
+    margin: 4px auto 0;
+    border-radius: 999px;
+    background: rgba(13, 38, 76, 0.1);
+    overflow: hidden;
+  }
+  .ux-rail-fill {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #00e6c0, #6366f1, #ec4899);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.15s linear;
+  }
+
+  .ux-counter {
+    margin: 10px 0 0;
+    text-align: center;
+    font-size: 0.74rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    color: #33465f;
+  }
+}
+
+@media (min-width: 1024px) {
+  .ux-rail,
+  .ux-counter {
+    display: none;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   GRID
+   <1024px : single column inside the scroller, one card per snap
+   ≥1024px : 6-col bento — tall cards span 2 rows, wide span 4 cols
+   ═══════════════════════════════════════════════════════════════ */
+.ux-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(1.4rem, 3vw, 1.85rem);
+  align-items: stretch;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.ux-cell {
+  display: flex;
+}
+
+@media (max-width: 1023px) {
+  .ux-grid {
+    display: flex;
+    gap: 18px;
+    padding: 0 max(24px, calc((100% - 430px) / 2));
+  }
+  .ux-cell {
+    flex: 0 0 auto;
+    width: min(430px, calc(100vw - 72px));
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
+  }
+}
+
+@media (min-width: 1024px) {
+  .ux-grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    grid-auto-rows: 304px;
+  }
+  .ux-cell {
+    grid-column: span 2;
+  }
+  .ux-cell--wide {
+    grid-column: span 4;
+  }
+  .ux-cell--tall {
+    grid-row: span 2;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   3D SHELL — perspective wrapper + tilting card
+   ═══════════════════════════════════════════════════════════════ */
+.ux-parent {
+  width: 100%;
+  max-width: 430px;
+  height: 348px;
+  margin-inline: auto;
+  perspective: 1000px;
+  perspective-origin: 50% 50%;
+  filter: drop-shadow(0 26px 44px rgba(13, 38, 76, 0.18));
+}
+
+@media (min-width: 1024px) {
+  .ux-parent,
+  .ux-parent--wide {
+    max-width: none;
+    height: 100%;
+  }
+}
+
+.ux-card {
+  position: relative;
+  height: 100%;
+  border-radius: 50px;
+  background: var(--ux-grad);
+  transform-style: preserve-3d;
+  transition:
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.55s ease;
+  box-shadow:
+    rgba(13, 38, 76, 0) 40px 50px 25px -40px,
+    rgba(13, 38, 76, 0.16) 0 25px 25px -5px;
+}
+
+.ux-parent:hover .ux-card {
+  transform: rotate3d(1, 1, 0, 28deg);
+  box-shadow:
+    rgba(13, 38, 76, 0.28) 28px 48px 28px -38px,
+    rgba(13, 38, 76, 0.1) 0 25px 35px 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   THEMES
+   ═══════════════════════════════════════════════════════════════ */
+.ux-parent--mint {
+  --ux-grad: linear-gradient(135deg, #00e6c0 0%, #16d95e 100%);
+  --ux-title: #045235;
+  --ux-body: rgba(4, 82, 53, 0.85);
+  --ux-cta: #007a4d;
+  --ux-orbit: rgba(220, 255, 246, 0.3);
+  --ux-fill: #059669;
+}
+
+.ux-parent--violet {
+  --ux-grad: linear-gradient(145deg, #a855f7 0%, #6366f1 40%, #ec4899 100%);
+  --ux-title: #2a0350;
+  --ux-body: rgba(42, 3, 80, 0.88);
+  --ux-cta: #3b0764;
+  --ux-orbit: rgba(233, 213, 255, 0.32);
+  --ux-fill: #7c3aed;
+}
+
+.ux-parent--solar {
+  --ux-grad: linear-gradient(135deg, #fbbf24 0%, #f97316 55%, #ef4444 100%);
+  --ux-title: #611c07;
+  --ux-body: rgba(97, 28, 7, 0.9);
+  --ux-cta: #7c2d12;
+  --ux-orbit: rgba(255, 246, 214, 0.36);
+  --ux-fill: #ea580c;
+}
+
+.ux-parent--ocean {
+  --ux-grad: linear-gradient(155deg, #22d3ee 0%, #38a8ef 55%, #4f6ff0 100%);
+  --ux-title: #082f49;
+  --ux-body: rgba(8, 47, 73, 0.88);
+  --ux-cta: #075985;
+  --ux-orbit: rgba(207, 244, 255, 0.32);
+  --ux-fill: #0284c7;
+}
+
+.ux-parent--prism {
+  --ux-grad: conic-gradient(from 200deg at 65% 35%, #22d3ee, #818cf8, #f472b6, #facc15, #22d3ee);
+  --ux-title: #1e1b4b;
+  --ux-body: rgba(30, 27, 75, 0.88);
+  --ux-cta: #312e81;
+  --ux-orbit: rgba(255, 255, 255, 0.38);
+  --ux-fill: #4f46e5;
+}
+
+.ux-parent--void {
+  --ux-grad: linear-gradient(160deg, #1e293b 0%, #1e1b4b 50%, #4338ca 100%);
+  --ux-title: #99f6e4;
+  --ux-body: rgba(226, 232, 240, 0.85);
+  --ux-cta: #d8b4fe;
+  --ux-orbit: rgba(167, 139, 250, 0.28);
+  --ux-fill: #7c3aed;
+}
+
+.ux-parent--teal {
+  --ux-grad: linear-gradient(140deg, #2dd4bf 0%, #0d9488 60%, #115e59 100%);
+  --ux-title: #032622;
+  --ux-body: rgba(3, 38, 34, 0.86);
+  --ux-cta: #064e46;
+  --ux-orbit: rgba(204, 251, 241, 0.3);
+  --ux-fill: #0d9488;
+}
+
+.ux-parent--rose {
+  --ux-grad: linear-gradient(140deg, #fb7185 0%, #ec4899 55%, #d946ef 100%);
+  --ux-title: #4c0522;
+  --ux-body: rgba(76, 5, 34, 0.88);
+  --ux-cta: #831843;
+  --ux-orbit: rgba(255, 228, 238, 0.34);
+  --ux-fill: #db2777;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SHAPE MODIFIERS
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Chamfer cut — precision corners via clip-path */
+.ux-parent--cut .ux-card {
+  border-radius: 36px;
+  clip-path: polygon(
+    18px 0,
+    calc(100% - 18px) 0,
+    100% 18px,
+    100% calc(100% - 18px),
+    calc(100% - 18px) 100%,
+    18px 100%,
+    0 calc(100% - 18px),
+    0 18px
+  );
+}
+.ux-parent--cut .ux-glass {
+  border-radius: 32px;
+  border-top-right-radius: 78%;
+  clip-path: polygon(
+    14px 0,
+    calc(100% - 14px) 0,
+    100% 14px,
+    100% calc(100% - 14px),
+    calc(100% - 14px) 100%,
+    14px 100%,
+    0 calc(100% - 14px),
+    0 14px
+  );
+}
+
+/* Cinema wide — landscape canvas (desktop bento only) */
+.ux-parent--wide .ux-card {
+  border-radius: 44px;
+}
+.ux-parent--wide .ux-glass {
+  border-radius: 48px;
+  border-top-right-radius: 55%;
+}
+
+/* Featured — persistent accent ring */
+.ux-parent--featured .ux-card {
+  box-shadow:
+    0 0 0 2px rgba(249, 115, 22, 0.55),
+    0 0 44px rgba(249, 115, 22, 0.3),
+    rgba(13, 38, 76, 0.16) 0 25px 25px -5px;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   GLASS SHEET — floats at Z25
+   ═══════════════════════════════════════════════════════════════ */
+.ux-glass {
+  transform-style: preserve-3d;
+  position: absolute;
+  inset: 8px;
+  border-radius: 55px;
+  border-top-right-radius: 100%;
+  background: linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.38) 0%,
+    rgba(255, 255, 255, 0.82) 100%
+  );
+  transform: translate3d(0, 0, 25px);
+  border-left: 1px solid rgba(255, 255, 255, 0.85);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.75);
+  transition: all 0.5s ease-in-out;
+  pointer-events: none;
+}
+
+.ux-parent--void .ux-glass {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.14) 0%,
+    rgba(15, 23, 42, 0.55) 100%
+  );
+  border-color: rgba(148, 163, 184, 0.25);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CIRCLE STACK — rings hold Z depth; solid badge on top
+   ═══════════════════════════════════════════════════════════════ */
+.ux-logo {
+  position: absolute;
+  right: 0;
+  top: 0;
+  transform-style: preserve-3d;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.ux-circle {
+  display: block;
+  position: absolute;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  top: 0;
+  right: 0;
+  background: var(--ux-orbit);
+  box-shadow: rgba(100, 100, 111, 0.25) -10px 10px 24px 0;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  transition: all 0.5s ease-in-out;
+}
+
+.ux-circle:nth-child(1) {
+  width: 170px;
+  transform: translate3d(0, 0, 20px);
+  top: 8px;
+  right: 8px;
+}
+.ux-circle:nth-child(2) {
+  width: 140px;
+  transform: translate3d(0, 0, 40px);
+  top: 10px;
+  right: 10px;
+  backdrop-filter: blur(4px);
+  transition-delay: 0.05s;
+}
+.ux-circle:nth-child(3) {
+  width: 110px;
+  transform: translate3d(0, 0, 60px);
+  top: 17px;
+  right: 17px;
+  transition-delay: 0.1s;
+}
+.ux-circle:nth-child(4) {
+  width: 80px;
+  transform: translate3d(0, 0, 80px);
+  top: 23px;
+  right: 23px;
+  transition-delay: 0.15s;
+}
+
+/* Solid icon badge — clearly visible on the light theme */
+.ux-circle:nth-child(5) {
+  width: 52px;
+  transform: translate3d(0, 0, 100px);
+  top: 29px;
+  right: 29px;
+  display: grid;
+  place-content: center;
+  background: var(--ux-fill);
+  box-shadow:
+    0 0 0 3px rgba(255, 255, 255, 0.85),
+    rgba(13, 38, 76, 0.35) -8px 12px 22px 0;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  transition-delay: 0.2s;
+}
+
+.ux-circle:nth-child(5) svg {
+  width: 23px;
+  height: 23px;
+  color: #fff;
+}
+
+.ux-parent:hover .ux-circle:nth-child(2) {
+  transform: translate3d(0, 0, 60px);
+}
+.ux-parent:hover .ux-circle:nth-child(3) {
+  transform: translate3d(0, 0, 80px);
+}
+.ux-parent:hover .ux-circle:nth-child(4) {
+  transform: translate3d(0, 0, 100px);
+}
+.ux-parent:hover .ux-circle:nth-child(5) {
+  transform: translate3d(0, 0, 120px);
+}
+
+@media (min-width: 1024px) {
+  .ux-parent--wide .ux-circle:nth-child(1) {
+    width: 200px;
+  }
+  .ux-parent--wide .ux-circle:nth-child(2) {
+    transform: translate3d(0, 0, 38px);
+  }
+  .ux-parent--wide:hover .ux-circle:nth-child(2) {
+    transform: translate3d(0, 0, 60px);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CONTENT — floats at Z26 above the glass
+   ═══════════════════════════════════════════════════════════════ */
+.ux-content {
+  padding: 78px 1.9rem 0 1.7rem;
+  transform: translate3d(0, 0, 26px);
+  position: relative;
+  z-index: 3;
+}
+
+/* Invisible float reserving the circle-stack zone: text wraps around
+   it instead of running underneath the rings. */
+.ux-content::before {
+  content: "";
+  float: right;
+  width: 132px;
+  height: 118px;
+  shape-outside: ellipse(130px 120px at 100% 0%);
+}
+
+.ux-title {
+  display: block;
+  color: var(--ux-title);
+  font-weight: 800;
+  font-size: 1.08rem;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+}
+
+.ux-text {
+  display: block;
+  margin-top: 0.7rem;
+  color: var(--ux-body);
+  font-size: 0.8rem;
+  line-height: 1.5;
+  font-weight: 600;
+}
+.ux-text strong {
+  color: var(--ux-title);
+  font-weight: 800;
+}
+
+@media (min-width: 1024px) {
+  /* Wide bento cards: copy keeps clear of the enlarged circle field. */
+  .ux-parent--wide .ux-content {
+    padding: 2.4rem 46% 0 1.9rem;
+  }
+  .ux-parent--wide .ux-content::before {
+    display: none;
+  }
+  /* Tall bento cards: copy settles into the open middle, larger type. */
+  .ux-cell--tall .ux-content {
+    padding-top: 210px;
+  }
+  .ux-cell--tall .ux-content::before {
+    display: none;
+  }
+  .ux-cell--tall .ux-title {
+    font-size: 1.3rem;
+  }
+  .ux-cell--tall .ux-text {
+    font-size: 0.88rem;
+    max-width: 30ch;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   BOTTOM BAR — CTA pops toward the viewer on hover
+   ═══════════════════════════════════════════════════════════════ */
+.ux-bottom {
+  padding: 8px 10px;
+  transform-style: preserve-3d;
+  position: absolute;
+  bottom: 18px;
+  left: 18px;
+  right: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  transform: translate3d(0, 0, 26px);
+  z-index: 4;
+}
+
+.ux-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--ux-cta);
+  font-weight: 800;
+  font-size: 0.74rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: transform 0.25s ease;
+}
+.ux-more svg {
+  width: 16px;
+  height: 14px;
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.ux-parent:hover .ux-more {
+  transform: translate3d(0, 0, 40px);
+}
+.ux-more:hover svg {
+  transform: translateX(3px);
+}
+.ux-more:focus-visible {
+  outline: 2px solid var(--ux-cta);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+/* ── Coming soon ─────────────────────────────────────────────── */
+.ux-diamond {
+  width: 9px;
+  height: 9px;
+  border-radius: 2px;
+  background: linear-gradient(135deg, #fde047, #f59e0b);
+  transform: rotate(45deg);
+  flex-shrink: 0;
+}
+.ux-diamond--corner {
+  position: absolute;
+  z-index: 5;
+  top: 20px;
+  left: 24px;
+  width: 12px;
+  height: 12px;
+  box-shadow: 0 3px 10px rgba(245, 158, 11, 0.55);
+  transform: rotate(45deg) translateZ(30px);
+}
+.ux-soon {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fff;
+  text-shadow: 0 1px 6px rgba(76, 5, 34, 0.5);
+  transition: transform 0.25s ease;
+}
+.ux-parent:hover .ux-soon {
+  transform: translate3d(0, 0, 40px);
+}
+
+/* Touch devices: no hover tilt, cards stay flat and readable. */
+@media (hover: none) {
+  .ux-parent:hover .ux-card {
+    transform: none;
+  }
+}
+
+/* ── Reduced motion ──────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .ux-card,
+  .ux-circle,
+  .ux-glass,
+  .ux-more,
+  .ux-soon,
+  .ux-rail-fill {
+    transition: none !important;
+  }
+  .ux-parent:hover .ux-card {
+    transform: none;
+  }
+  .ux-parent:hover .ux-circle:nth-child(2),
+  .ux-parent:hover .ux-circle:nth-child(3),
+  .ux-parent:hover .ux-circle:nth-child(4),
+  .ux-parent:hover .ux-circle:nth-child(5) {
+    transform: inherit;
+  }
+  .ux-parent:hover .ux-more,
+  .ux-parent:hover .ux-soon {
+    transform: none;
+  }
+}

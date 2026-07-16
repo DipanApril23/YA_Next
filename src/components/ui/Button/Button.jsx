@@ -3,6 +3,7 @@
 import React, { useState, useRef } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import classNames from "classnames";
+import "./button.css";
 
 const Button = ({ children, className, variant = "primary", onClick, ...props }) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -91,19 +92,13 @@ const Button = ({ children, className, variant = "primary", onClick, ...props })
       {/* Gradient background */}
       <span
         aria-hidden
-        className="pointer-events-none absolute inset-0 rounded-xl"
-        style={{
-          background: "linear-gradient(135deg, #2563eb 0%, #7c3aed 50%, #db2777 100%)",
-        }}
+        className="btn-gradient pointer-events-none absolute inset-0 rounded-xl"
       />
 
       {/* Hover state — slightly lighter gradient */}
       <motion.span
         aria-hidden
-        className="pointer-events-none absolute inset-0 rounded-xl"
-        style={{
-          background: "linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #ec4899 100%)",
-        }}
+        className="btn-gradient-hover pointer-events-none absolute inset-0 rounded-xl"
         animate={{ opacity: isHovered ? 1 : 0 }}
         transition={{ duration: 0.3 }}
       />
@@ -119,10 +114,7 @@ const Button = ({ children, className, variant = "primary", onClick, ...props })
       {/* Outer glow */}
       <motion.span
         aria-hidden
-        className="pointer-events-none absolute -bottom-1 left-6 right-6 h-2 rounded-full blur-md"
-        style={{
-          background: "linear-gradient(90deg, #2563eb, #7c3aed, #db2777)",
-        }}
+        className="btn-glow pointer-events-none absolute -bottom-1 left-6 right-6 h-2 rounded-full blur-md"
         animate={{ opacity: isHovered ? 0 : 0.55, scaleX: isHovered ? 0.8 : 1 }}
         transition={{ duration: 0.3 }}
       />

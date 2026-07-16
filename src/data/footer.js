@@ -1,4 +1,28 @@
-// ─── Footer: links + contact details ──────────────────────────────────
+// ─── Footer: brand copy, links, contact details ───────────────────────
+
+export const FOOTER_CONTENT = {
+  brand: {
+    href: "#home",
+    ariaLabel: "Go to Home",
+    logo: "https://youngarchitects.in/assets/logo/brandlogo.webp",
+    logoAlt: "Young Architects logo",
+  },
+  // Rendered as separate lines (each followed by a line break).
+  blurbLines: [
+    "Drive your business forward with",
+    "expert consultancy, SaaS solutions, and digital transformation.",
+  ],
+  blurbStrong: "Let's build something impactful—connect with us today.",
+  trustLine: "Trusted by growing businesses across Kolkata & beyond.",
+  headings: {
+    quickLinks: "Quick Links",
+    others: "Others",
+    contact: "Contact Details",
+  },
+  addressLabel: "Address",
+  // `{year}` is replaced at render time with the current year.
+  copyright: "Copyright © {year} Young Architects. All Rights Reserved.",
+};
 
 export const FOOTER_QUICK_LINKS = [
   { href: "/about-us", label: "About Us" },

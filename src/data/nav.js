@@ -18,6 +18,14 @@ import {
   Landmark,
 } from "lucide-react";
 
+// Chrome around the menu: brand link, CTA and control labels.
+export const NAV_CONTENT = {
+  brandHref: "/",
+  brandLogoAlt: "Young Architects Logo",
+  menuToggleLabel: "Toggle Menu",
+  cta: { href: "#contact", label: "Contact Us" },
+};
+
 export const NAV_ITEMS = [
   {
     label: "Home",

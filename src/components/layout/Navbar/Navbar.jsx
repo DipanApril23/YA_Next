@@ -22,7 +22,7 @@ import {
   ChevronDown,
 } from "lucide-react";
 
-import { NAV_ITEMS } from "@/data";
+import { NAV_ITEMS, NAV_CONTENT } from "@/data";
 import MobileSideBar from "./MobileSidebar";
 import Button from "@/components/ui/Button/Button";
 import brandLogo from "@/assets/logo/brandlogo.webp";
@@ -201,7 +201,7 @@ export default function Navbar() {
           {/* ✅ LOGO SECTION UPDATED */}
 
           <Link
-            href="/"
+            href={NAV_CONTENT.brandHref}
             className="group relative z-20 flex items-center"
           >
             <motion.div
@@ -215,7 +215,7 @@ export default function Navbar() {
             >
               <Image
                 src={brandLogo}
-                alt="Young Architects Logo"
+                alt={NAV_CONTENT.brandLogoAlt}
                 priority
                 className={`
                   object-contain transition-all duration-300
@@ -285,7 +285,7 @@ export default function Navbar() {
           <div className="hidden items-center pr-0.5 min-[1100px]:flex">
             <Button
               as="a"
-              href="#contact"
+              href={NAV_CONTENT.cta.href}
               animate={{
                 paddingTop: scrolled ? "7px" : "9px",
                 paddingBottom: scrolled ? "7px" : "9px",
@@ -295,7 +295,7 @@ export default function Navbar() {
               className="group relative overflow-hidden !rounded-full bg-gradient-to-r from-blue-600 via-purple-500 to-pink-500 px-5 font-semibold text-white shadow-[0_4px_20px_rgba(139,92,246,0.4)] !mt-0 !w-auto"
             >
               <span className="relative z-10 flex items-center gap-1.5 whitespace-nowrap">
-                Contact Us
+                {NAV_CONTENT.cta.label}
                 <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
               </span>
             </Button>
@@ -305,7 +305,7 @@ export default function Navbar() {
 
           <button
             onClick={() => setMobileOpen((prev) => !prev)}
-            aria-label="Toggle Menu"
+            aria-label={NAV_CONTENT.menuToggleLabel}
             className="relative z-[90] flex h-8.5 w-8.5 items-center justify-center rounded-xl transition-all duration-300 hover:bg-white/5 min-[1100px]:hidden"
           >
             <div className="relative flex h-3 w-4 flex-col justify-between">
