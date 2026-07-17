@@ -12,6 +12,7 @@ export { default as testimonials } from "./json/testimonials.json";
 // Structured UI data
 export { NAV_ITEMS, NAV_CONTENT } from "./nav";
 export { MAIN_SERVICES, MAIN_SERVICES_CONTENT } from "./mainServices";
+export { OURPROCESS_CONTENT, OURPROCESS_STEPS, OURPROCESS_PARTICLES } from "./ourProcess";
 export { WHYCHOOSE_CONTENT } from "./whyChoose";
 export { NOT_FOUND_CONTENT } from "./notFound";
 export {

@@ -42,7 +42,7 @@ const WhyChoose = () => {
             <Segments parts={CONTENT.headingLine2} />
           </h2>
 
-          <h3 className="font-poppins mt-4 text-[16px] opacity-90 md:text-[18px]">
+          <h3 className="mt-4 text-[16px] opacity-90 md:text-[18px]">
             <Segments parts={CONTENT.body} />
           </h3>
         </section>

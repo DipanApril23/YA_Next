@@ -283,22 +283,22 @@ export default function Navbar() {
           {/* ✅ REUSABLE DYNAMIC CTA BUTTON - Breakpoint updated to 1100px */}
 
           <div className="hidden items-center pr-0.5 min-[1100px]:flex">
-            <Button
-              as="a"
-              href={NAV_CONTENT.cta.href}
-              animate={{
-                paddingTop: scrolled ? "7px" : "9px",
-                paddingBottom: scrolled ? "7px" : "9px",
-                fontSize: scrolled ? "12px" : "12.5px",
-              }}
-              transition={FAST_SPRING}
-              className="group relative overflow-hidden !rounded-full bg-gradient-to-r from-blue-600 via-purple-500 to-pink-500 px-5 font-semibold text-white shadow-[0_4px_20px_rgba(139,92,246,0.4)] !mt-0 !w-auto"
-            >
-              <span className="relative z-10 flex items-center gap-1.5 whitespace-nowrap">
-                {NAV_CONTENT.cta.label}
-                <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-              </span>
-            </Button>
+            <a href={NAV_CONTENT.cta.href} className="inline-flex">
+              <Button
+                animate={{
+                  paddingTop: scrolled ? "7px" : "9px",
+                  paddingBottom: scrolled ? "7px" : "9px",
+                  fontSize: scrolled ? "12px" : "12.5px",
+                }}
+                transition={FAST_SPRING}
+                className="group relative overflow-hidden !rounded-full bg-gradient-to-r from-blue-600 via-purple-500 to-pink-500 px-5 font-semibold text-white shadow-[0_4px_20px_rgba(139,92,246,0.4)] !mt-0 !w-auto"
+              >
+                <span className="relative z-10 flex items-center gap-1.5 whitespace-nowrap">
+                  {NAV_CONTENT.cta.label}
+                  <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                </span>
+              </Button>
+            </a>
           </div>
 
           {/* Mobile Toggle - Breakpoint updated to 1100px */}

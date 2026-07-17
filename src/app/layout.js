@@ -1,22 +1,10 @@
-import { Roboto, Fraunces, Outfit } from "next/font/google";
+import { Roboto } from "next/font/google";
 import "./globals.css";
 
 // Self-hosted via next/font — no render-blocking external stylesheet request.
+// Exposed as --font-roboto and consumed by `body` in globals.css.
 const roboto = Roboto({
   variable: "--font-roboto",
-  subsets: ["latin"],
-  display: "swap",
-});
-
-const fraunces = Fraunces({
-  variable: "--font-fraunces",
-  subsets: ["latin"],
-  display: "swap",
-  style: ["normal", "italic"],
-});
-
-const outfit = Outfit({
-  variable: "--font-outfit",
   subsets: ["latin"],
   display: "swap",
 });
@@ -35,7 +23,7 @@ export default function RootLayout({ children }) {
         <link rel="dns-prefetch" href="https://youngarchitects.in" />
       </head>
       <body
-        className={`${roboto.variable} ${fraunces.variable} ${outfit.variable} antialiased`}
+        className={`${roboto.variable} antialiased`}
         suppressHydrationWarning
       >
         {children}

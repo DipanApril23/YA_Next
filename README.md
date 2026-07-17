@@ -33,7 +33,7 @@ Built on the Next.js App Router with a strict separation between **markup**, **s
 | Styling | [Tailwind CSS v4](https://tailwindcss.com) + co-located plain CSS |
 | Animation | [Framer Motion](https://www.framer.com/motion/) |
 | Icons | [lucide-react](https://lucide.dev) |
-| Fonts | `next/font` — Roboto, Fraunces, Outfit (self-hosted) |
+| Fonts | `next/font` — Roboto (self-hosted) |
 | Utilities | [classnames](https://github.com/JedWatson/classnames) |
 | Hosting | [Vercel](https://vercel.com) |
 

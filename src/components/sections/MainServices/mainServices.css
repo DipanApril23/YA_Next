@@ -48,7 +48,8 @@
 .ms-inner {
   position: relative;
   z-index: 1;
-  padding: clamp(56px, 8vw, 96px) 0;
+  /* Tighter top padding so the header sits higher; roomier bottom kept. */
+  padding: clamp(20px, 3vw, 36px) 0 clamp(56px, 8vw, 96px);
 }
 
 /* ── Header ──────────────────────────────────────────────────── */
@@ -56,6 +57,39 @@
   text-align: center;
   margin-bottom: clamp(36px, 5vw, 60px);
 }
+
+/*
+  Eyebrow badge — same pill + pulsing-dot language as the hero chip
+  (.hero-chip), retuned for the light section so the cyan text stays readable.
+*/
+.ms-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-bottom: clamp(14px, 1.8vw, 20px);
+  padding: 0.4rem 1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(6, 182, 212, 0.3);
+  background: rgba(6, 182, 212, 0.08);
+  font-size: clamp(0.66rem, 0.9vw, 0.75rem);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #0e7490;
+}
+@keyframes msPing {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 0.85; transform: scale(1.45); }
+}
+.ms-badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #06b6d4;
+  box-shadow: 0 0 8px #06b6d4;
+  animation: msPing 2.4s ease-in-out infinite;
+}
+
 .ms-heading {
   font-size: clamp(1.35rem, 3.2vw, 2.5rem);
   line-height: 1.2;
@@ -65,8 +99,24 @@
   max-width: 22ch;
   text-wrap: balance;
 }
+
+/*
+  Gradient lead — same brand palette + shimmer as the hero headline
+  (.hero-grad-text), so the two sections read as one system.
+*/
+@keyframes msShimmer {
+  0% { background-position: -300% center; }
+  100% { background-position: 300% center; }
+}
 .ms-heading-lead {
   font-weight: 800;
+  background: linear-gradient(110deg, #06b6d4, #3b82f6, #a855f7, #ec4899, #06b6d4);
+  background-size: 300% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: msShimmer 5s linear infinite;
 }
 .ms-heading-rest {
   font-weight: 600;

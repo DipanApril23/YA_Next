@@ -1,8 +1,8 @@
 // ─── Main Services section (light theme) ──────────────────────────────
 
-// import webDesign from "@/assets/mainServices/web-design.webp";
-
 export const MAIN_SERVICES_CONTENT = {
+  // Eyebrow chip above the heading — echoes the hero badge for a consistent look.
+  badge: "Our Expertise · Kolkata & Beyond",
   headingLead: "OUR MAIN SERVICES",
   headingRest: "— Complete Digital Marketing Services in Kolkata",
   subheading:

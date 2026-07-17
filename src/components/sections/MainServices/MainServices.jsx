@@ -189,6 +189,11 @@ const MainServices = () => {
             whileInView="visible"
             viewport={{ once: true, margin: "-80px" }}
           >
+            <span className="ms-badge">
+              <span aria-hidden className="ms-badge-dot" />
+              {CONTENT.badge}
+            </span>
+
             <h2 className="ms-heading">
               <span className="ms-heading-lead">{CONTENT.headingLead}</span>{" "}
               <span className="ms-heading-rest">{CONTENT.headingRest}</span>
