@@ -13,6 +13,7 @@ export { default as testimonials } from "./json/testimonials.json";
 export { NAV_ITEMS, NAV_CONTENT } from "./nav";
 export { MAIN_SERVICES, MAIN_SERVICES_CONTENT } from "./mainServices";
 export { OURPROCESS_CONTENT, OURPROCESS_STEPS, OURPROCESS_PARTICLES } from "./ourProcess";
+export { CONSULTATION_CTA_CONTENT, CONSULTATION_CTA_FORM } from "./consultationCta";
 export { WHYCHOOSE_CONTENT } from "./whyChoose";
 export { NOT_FOUND_CONTENT } from "./notFound";
 export {

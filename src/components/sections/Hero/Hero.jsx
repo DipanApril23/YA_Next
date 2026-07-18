@@ -1,5 +1,10 @@
 "use client";
 
+// ─── Hero ─────────────────────────────────────────────────────────────
+// Dark landing section: headline, lead copy, CTAs, benefits checklist, the
+// FlipCard, and a deterministic particle field. Content → src/data/hero.js,
+// styles → hero.css. Client component (scroll parallax via Framer Motion).
+
 import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Check } from "lucide-react";

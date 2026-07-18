@@ -1,5 +1,10 @@
 "use client";
 
+// ─── Navbar ───────────────────────────────────────────────────────────
+// Desktop navigation + brand logo with animated dropdown menus. Menu tree and
+// labels → NAV_ITEMS / NAV_CONTENT (src/data/nav.js); styles → navbar.css.
+// Small screens are delegated to MobileSidebar.
+
 import Link from "next/link";
 import Image from "next/image";
 

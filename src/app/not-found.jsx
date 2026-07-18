@@ -1,3 +1,7 @@
+// ─── 404 page ─────────────────────────────────────────────────────────
+// Rendered by Next.js for unmatched routes. Copy comes from NOT_FOUND_CONTENT
+// (src/data/notFound.js).
+
 import Link from "next/link";
 import { Button } from "@/components/ui";
 import { NOT_FOUND_CONTENT as CONTENT } from "@/data";

@@ -1,5 +1,10 @@
 "use client";
 
+// ─── FlipCard ─────────────────────────────────────────────────────────
+// 3D flip business card used in the Hero. Front = brand + services list,
+// back = QR + contact. Content → FLIPCARD_* (src/data/flipCard.js); styles →
+// flipcard.css. Client component (pointer-tilt via Framer Motion).
+
 import { useState, useRef, useCallback } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import Image from "next/image";

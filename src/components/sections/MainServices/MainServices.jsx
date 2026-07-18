@@ -1,5 +1,10 @@
 "use client";
 
+// ─── Main Services ────────────────────────────────────────────────────
+// Light-theme services grid (3D interface cards). Content + per-card flags →
+// src/data/mainServices.js; styles → mainServices.css; icons resolved by
+// SERVICE_ICONS below. Client component (scroll/hover motion).
+
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import {

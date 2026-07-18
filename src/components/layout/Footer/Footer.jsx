@@ -1,3 +1,7 @@
+// ─── Footer ───────────────────────────────────────────────────────────
+// Site footer: brand blurb, quick/other link columns, social + contact
+// details — all sourced from FOOTER_* in src/data/footer.js.
+
 import { Fragment } from "react";
 import Image from "next/image";
 import Link from "next/link";

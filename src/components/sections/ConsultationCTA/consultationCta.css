@@ -1,0 +1,33 @@
+/* ═══════════════════════════════════════════════════════════════
+   MID-PAGE CTA — CONSULTATION BOOKING FORM
+   The section is laid out with Tailwind utilities in the component; this
+   file holds only what Tailwind shouldn't (a complex multi-gradient) and
+   the two rules that bridge *data* into CSS via custom properties.
+
+   Animation hooks: the `.ya-*` classes (ya-panel-item, ya-tick, ya-sk,
+   ya-sk-tip, ya-sk-label, ya-form-panel, ya-blob-a/b) are GSAP targets —
+   GSAP sets their transforms/opacity at runtime, so they need no rules here.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Blueprint grid sheet behind the left panel — a four-layer graph grid
+   (88px major + 22px minor). Complex gradient → lives in CSS, not inline.
+   The element keeps Tailwind's `opacity-0`; GSAP fades it in on scroll. */
+.ya-grid {
+  background-image:
+    linear-gradient(rgba(96, 165, 250, 0.09) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(96, 165, 250, 0.09) 1px, transparent 1px),
+    linear-gradient(rgba(96, 165, 250, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(96, 165, 250, 0.05) 1px, transparent 1px);
+  background-size: 88px 88px, 88px 88px, 22px 22px, 22px 22px;
+}
+
+/* Service-chip dot — colour arrives from data as the `--dot` custom prop. */
+.cta-dot {
+  background-color: var(--dot);
+}
+
+/* GoHighLevel form iframe — fixed height arrives from data (FORM.minHeight)
+   as the `--cta-form-min-h` custom prop. */
+.cta-form-iframe {
+  min-height: var(--cta-form-min-h);
+}

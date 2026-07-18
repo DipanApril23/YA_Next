@@ -1,5 +1,9 @@
 "use client";
 
+// ─── Mobile Sidebar ───────────────────────────────────────────────────
+// Slide-in navigation drawer for small screens (mobile counterpart to Navbar).
+// Same data source: NAV_ITEMS / NAV_CONTENT (src/data/nav.js).
+
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, ArrowUpRight, Sparkles } from "lucide-react";

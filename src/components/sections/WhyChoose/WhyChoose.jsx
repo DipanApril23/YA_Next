@@ -1,3 +1,8 @@
+// ─── Why Choose Us ────────────────────────────────────────────────────
+// Dark section, server component. Renders tone-tagged rich copy segments from
+// WHYCHOOSE_CONTENT plus the about images. Content → src/data/whyChoose.js
+// (+ about.json); scoped styles → WhyChoose.module.css.
+
 import { Fragment } from "react";
 import Image from "next/image";
 import { Container } from "@/components/ui";

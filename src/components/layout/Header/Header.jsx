@@ -1,3 +1,6 @@
+// ─── Header ───────────────────────────────────────────────────────────
+// App-shell banner: the black bar that hosts the Navbar on every page.
+
 import Navbar from "../Navbar/Navbar";
 
 const Header = () => {

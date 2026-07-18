@@ -1,3 +1,8 @@
+// ─── Root layout ──────────────────────────────────────────────────────
+// The shell wrapped around every route: self-hosted Roboto font, <html>/<body>,
+// site metadata, image-origin preconnect hints, and the modal portal root.
+// No page content lives here — sections are composed in app/page.js.
+
 import { Roboto } from "next/font/google";
 import "./globals.css";
 

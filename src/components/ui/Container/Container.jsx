@@ -1,6 +1,10 @@
-export default function Container({ 
-  children, 
-  size = "default", 
+// ─── Container ────────────────────────────────────────────────────────
+// Content-agnostic width wrapper: centres children and applies responsive
+// gutters. `size` selects a max-width (sm | default | lg | full).
+
+export default function Container({
+  children,
+  size = "default",
   className = "" 
 }) {
   const sizes = {

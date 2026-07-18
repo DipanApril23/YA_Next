@@ -1,3 +1,8 @@
+// ─── Navigation: menu tree + brand/CTA labels ─────────────────────────
+// NAV_ITEMS is the menu structure (each item's icon is a lucide component,
+// resolved here); NAV_CONTENT holds brand text and CTA labels. Consumed by
+// both Navbar (desktop) and MobileSidebar.
+
 import {
   Home,
   Sparkles,

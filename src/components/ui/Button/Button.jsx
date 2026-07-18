@@ -1,5 +1,9 @@
 "use client";
 
+// ─── Button ───────────────────────────────────────────────────────────
+// Animated CTA button (magnetic hover, light sweep, glow) in two variants:
+// "primary" (gradient) and "secondary" (glass). Gradient layers → button.css.
+
 import React, { useState, useRef } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import classNames from "classnames";

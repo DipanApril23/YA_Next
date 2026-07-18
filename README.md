@@ -31,7 +31,7 @@ Built on the Next.js App Router with a strict separation between **markup**, **s
 | Framework | [Next.js 16](https://nextjs.org) — App Router, Turbopack |
 | UI library | [React 19](https://react.dev) |
 | Styling | [Tailwind CSS v4](https://tailwindcss.com) + co-located plain CSS |
-| Animation | [Framer Motion](https://www.framer.com/motion/) |
+| Animation | [Framer Motion](https://www.framer.com/motion/) + [GSAP](https://gsap.com) ScrollTrigger |
 | Icons | [lucide-react](https://lucide.dev) |
 | Fonts | `next/font` — Roboto (self-hosted) |
 | Utilities | [classnames](https://github.com/JedWatson/classnames) |
@@ -87,9 +87,11 @@ src/
 │   │   └── index.js
 │   │
 │   ├── sections/               # Page sections — the composable page building blocks
-│   │   ├── Hero/               #   Hero.jsx + hero.css                (dark)
-│   │   ├── MainServices/       #   MainServices.jsx + mainServices.css (light)
-│   │   ├── WhyChoose/          #   WhyChoose.jsx + WhyChoose.module.css (dark)
+│   │   ├── Hero/               #   Hero.jsx + hero.css                       (dark)
+│   │   ├── MainServices/       #   MainServices.jsx + mainServices.css       (light)
+│   │   ├── OurProcess/         #   OurProcess.jsx + ourProcess.css           (dark)
+│   │   ├── ConsultationCTA/    #   ConsultationCTA.jsx + consultationCta.css (light)
+│   │   ├── WhyChoose/          #   WhyChoose.jsx + WhyChoose.module.css      (dark)
 │   │   └── index.js
 │   │
 │   └── index.js                # Top-level barrel (re-exports ui + layout + sections)
@@ -104,6 +106,8 @@ src/
 │   ├── nav.js                  # NAV_ITEMS (menu tree) + NAV_CONTENT (brand, CTA labels)
 │   ├── hero.js                 # HERO_CONTENT, HERO_CTAS, HERO_STATS, HERO_BENEFITS, HERO_PARTICLES
 │   ├── mainServices.js         # MAIN_SERVICES_CONTENT + MAIN_SERVICES (the 8 cards)
+│   ├── ourProcess.js           # OURPROCESS_CONTENT, OURPROCESS_STEPS, OURPROCESS_PARTICLES
+│   ├── consultationCta.js      # CONSULTATION_CTA_CONTENT + CONSULTATION_CTA_FORM (pure JSON-ready)
 │   ├── whyChoose.js            # WHYCHOOSE_CONTENT (rich copy segments)
 │   ├── flipCard.js             # FLIPCARD_SERVICES, FLIPCARD_QR_CORNERS, FLIPCARD_DEFAULTS
 │   ├── footer.js               # FOOTER_CONTENT, FOOTER_QUICK_LINKS, FOOTER_OTHER_LINKS, FOOTER_CONTACT
@@ -124,7 +128,9 @@ supplies the surrounding background:
 | ----- | ------- | ----- |
 | 1 | `Hero` | dark (`#03030a`) |
 | 2 | `MainServices` | **light** — owns its own gradient background |
-| 3 | `WhyChoose` | dark |
+| 3 | `OurProcess` | dark (`#05050c`) — scroll-drawn "blueprint spine" timeline |
+| 4 | `ConsultationCTA` | **light** (`#F5F7FE`) — mid-page consultation booking form |
+| 5 | `WhyChoose` | dark |
 
 ---
 
@@ -280,6 +286,24 @@ export const FLIPCARD_SERVICES = SERVICE_ENTRIES.map((svc, i) => ({
 **Rich copy is stored as segments** when parts of a sentence need different emphasis
 (`src/data/whyChoose.js`), keeping colour/bold decisions data-driven without embedding markup.
 
+### Headless-CMS readiness
+
+The data layer is structured so content can later be managed in a **headless CMS**
+(e.g. WordPress + ACF) and delivered to the frontend as JSON — the backend team never
+needs to read component code. Fields fall into two tiers:
+
+| Tier | Files | CMS mapping |
+| ---- | ----- | ----------- |
+| **Pure content** | `data/json/*.json`, `consultationCta.js` | 1:1 — only plain strings / numbers / arrays of objects, so they drop straight into a CMS record as JSON |
+| **Content + derived** | `hero.js`, `flipCard.js`, `mainServices.js`, `ourProcess.js`, `nav.js` | The editable *content* fields map to CMS; the rest is **computed in code** (particle math, accent tints, pulse timings) or **resolved from a key** (lucide icon names → `SERVICE_ICONS` / `PROCESS_ICONS`) and must not be authored in the CMS |
+
+**Rule of thumb for any field** — if a content editor would set it, it's content (→ CMS).
+If it's a colour tint, animation timing, class name, or an icon/SVG, it's presentation and
+stays in code; pass it a semantic *key* from the CMS instead (see [Architecture Rule 3](#architecture-rules)).
+To migrate a `data/*.js` file, split its plain content into `data/json/<name>.json` and keep the
+derived `.map(...)` transform in the `.js` file (or the component). `consultationCta.js` is the
+reference shape: no imports, no computed values — hand it to the backend as-is.
+
 > **Note:** `courses.json`, `students.json`, `testimonials.json`, and `works.json` are not
 > currently rendered — they're retained as ready-made content for upcoming sections.
 
@@ -390,8 +414,8 @@ new sections, and archived as a standalone, reusable library:
 ```
 
 To bring one back, follow the instructions in that folder's `README.md`. Notes:
-- **Capabilities** requires reinstalling `gsap` (`npm install gsap`) — it was removed from this
-  project's dependencies when the section was extracted.
+- **Capabilities** uses `gsap`, which is already a project dependency (used by the `OurProcess`
+  and `ConsultationCTA` sections), so no extra install is needed.
 - **Services** needs `Modal` copied into `src/components/ui/` and a `<div id="portal-modal-root" />`
   in the root layout (already present in `app/layout.js`).
 - Those files still contain inline `style={{}}` — they preserve the original design as shipped.
