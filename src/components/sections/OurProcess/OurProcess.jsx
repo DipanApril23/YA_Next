@@ -17,6 +17,7 @@ import { useEffect, useRef } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { SectionHeader } from "@/components/ui";
 import {
   OURPROCESS_CONTENT as CONTENT,
   OURPROCESS_STEPS,
@@ -66,20 +67,7 @@ const TICKS_PER_STEP = 5;
 /* ── Motion variants (animation behaviour, not content) ──────── */
 const EASE = [0.22, 1, 0.36, 1];
 
-const headerStagger = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.14, delayChildren: 0.1 } },
-};
-
-const blurUp = {
-  hidden: { opacity: 0, y: 34, filter: "blur(12px)" },
-  show: {
-    opacity: 1,
-    y: 0,
-    filter: "blur(0px)",
-    transition: { duration: 0.9, ease: EASE },
-  },
-};
+/* The header's own stagger/entrance now lives in <SectionHeader>. */
 
 const cardIn = (fromLeft) => ({
   hidden: { opacity: 0, y: 60, x: fromLeft ? -28 : 28, scale: 0.96, filter: "blur(14px)" },
@@ -205,30 +193,15 @@ export default function OurProcess() {
 
       <div className="op-container">
         {/* ── Header ── */}
-        <motion.div
+        <SectionHeader
           className="op-header"
-          variants={headerStagger}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.4 }}
-        >
-          <motion.span variants={blurUp} className="op-badge">
-            <span className="op-badge-pulse">
-              <span className="op-badge-ping" />
-              <span className="op-badge-dot" />
-            </span>
-            {CONTENT.badge}
-          </motion.span>
-
-          <motion.h2 variants={blurUp} id="process-heading" className="op-heading">
-            {CONTENT.headingLead}{" "}
-            <span className="op-heading-highlight">{CONTENT.headingHighlight}</span>
-          </motion.h2>
-
-          <motion.p variants={blurUp} className="op-sub">
-            {CONTENT.subheading}
-          </motion.p>
-        </motion.div>
+          theme="dark"
+          headingId="process-heading"
+          badge={CONTENT.badge}
+          headingLead={CONTENT.headingLead}
+          headingRest={CONTENT.headingHighlight}
+          subheading={CONTENT.subheading}
+        />
 
         {/* ── Blueprint timeline ── */}
         <div ref={timelineRef} className="op-timeline">

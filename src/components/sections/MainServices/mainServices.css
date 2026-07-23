@@ -1,9 +1,12 @@
 /* ═══════════════════════════════════════════════════════════════
-   MAIN SERVICES — 3D interface cards, light theme
-   Desktop ≥1024px : bento grid (6 cols, tall + wide slots)
-   Below 1024px    : vertical snap auto-scroller with progress rail
-   3D mechanics: perspective shell → rotate3d card → glass at Z25 →
-   concentric circles climbing the Z-axis → CTA popping to Z40.
+   MAIN SERVICES — "3 Houses", dark void 3D glass cards (v2 polish)
+   ≥1024px : [ Development | Creative ] over [ Marketing (wide, 2×2) ]
+   <1024px : single column stack; 3D fully flattened for pixel-crisp
+             text; Marketing groups collapse 2→1 col under 640px
+   Crispness rules:
+   · no `filter` on any ancestor of card text (rasterizes subtree)
+   · text layers sit at Z0; only decorative layers (glass, rings,
+     CTA) climb the Z-axis, and only on hover-capable desktops
    ═══════════════════════════════════════════════════════════════ */
 
 /* ── Section shell ───────────────────────────────────────────── */
@@ -48,429 +51,161 @@
 .ms-inner {
   position: relative;
   z-index: 1;
-  /* Tighter top padding so the header sits higher; roomier bottom kept. */
   padding: clamp(20px, 3vw, 36px) 0 clamp(56px, 8vw, 96px);
 }
 
-/* ── Header ──────────────────────────────────────────────────── */
+/* ── Header ──────────────────────────────────────────────────────
+   The badge / headline / subheading themselves now come from the shared
+   <SectionHeader theme="light"> (src/components/ui/SectionHeader) so this
+   section's header is identical to every other one. All that is left here
+   is the spacing that belongs to THIS section's layout. */
 .ms-header {
-  text-align: center;
   margin-bottom: clamp(36px, 5vw, 60px);
 }
 
-/*
-  Eyebrow badge — same pill + pulsing-dot language as the hero chip
-  (.hero-chip), retuned for the light section so the cyan text stays readable.
-*/
-.ms-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.55rem;
-  margin-bottom: clamp(14px, 1.8vw, 20px);
-  padding: 0.4rem 1rem;
-  border-radius: 999px;
-  border: 1px solid rgba(6, 182, 212, 0.3);
-  background: rgba(6, 182, 212, 0.08);
-  font-size: clamp(0.66rem, 0.9vw, 0.75rem);
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: #0e7490;
-}
-@keyframes msPing {
-  0%, 100% { opacity: 0.4; transform: scale(1); }
-  50% { opacity: 0.85; transform: scale(1.45); }
-}
-.ms-badge-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #06b6d4;
-  box-shadow: 0 0 8px #06b6d4;
-  animation: msPing 2.4s ease-in-out infinite;
-}
-
-.ms-heading {
-  font-size: clamp(1.35rem, 3.2vw, 2.5rem);
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-  color: #0b1728;
-  margin: 0 auto;
-  max-width: 22ch;
-  text-wrap: balance;
-}
-
-/*
-  Gradient lead — same brand palette + shimmer as the hero headline
-  (.hero-grad-text), so the two sections read as one system.
-*/
-@keyframes msShimmer {
-  0% { background-position: -300% center; }
-  100% { background-position: 300% center; }
-}
-.ms-heading-lead {
-  font-weight: 800;
-  background: linear-gradient(110deg, #06b6d4, #3b82f6, #a855f7, #ec4899, #06b6d4);
-  background-size: 300% auto;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
-  animation: msShimmer 5s linear infinite;
-}
-.ms-heading-rest {
-  font-weight: 600;
-  color: #1e3a5f;
-}
-.ms-sub {
-  margin: clamp(12px, 1.6vw, 18px) auto 0;
-  max-width: 60ch;
-  font-size: clamp(0.85rem, 1.1vw, 1rem);
-  line-height: 1.6;
-  color: #5b6b80;
-  text-wrap: balance;
-}
-@media (min-width: 768px) {
-  .ms-heading {
-    max-width: 34ch;
-  }
-}
-@media (min-width: 1280px) {
-  .ms-heading {
-    max-width: none;
-  }
-}
-
 /* ═══════════════════════════════════════════════════════════════
-   SCROLLER SHELL
-   Below 1024px: fixed-height viewport, y-snap, hidden scrollbar,
-   progress rail on the right + counter underneath.
-   ≥1024px: shell dissolves, grid renders as a bento.
+   GRID — 3 houses
    ═══════════════════════════════════════════════════════════════ */
-.ux-scroller {
-  position: relative;
-}
-
-.ux-scroll-vp {
-  position: relative;
-  overflow: visible;
-}
-
-@media (max-width: 1023px) {
-  .ux-scroll-vp {
-    overflow-x: auto;
-    overflow-y: hidden;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior-x: contain;
-    padding: 14px 0 30px;
-    scrollbar-width: none;
-    /* Soft fade at both edges so peeking cards read as slidable. */
-    mask-image: linear-gradient(
-      90deg,
-      transparent 0,
-      #000 22px,
-      #000 calc(100% - 22px),
-      transparent 100%
-    );
-    -webkit-mask-image: linear-gradient(
-      90deg,
-      transparent 0,
-      #000 22px,
-      #000 calc(100% - 22px),
-      transparent 100%
-    );
-  }
-  .ux-scroll-vp::-webkit-scrollbar {
-    display: none;
-  }
-
-  /* Status bar — fills as the slider advances (auto or manual). */
-  .ux-rail {
-    width: min(300px, 68%);
-    height: 4px;
-    margin: 4px auto 0;
-    border-radius: 999px;
-    background: rgba(13, 38, 76, 0.1);
-    overflow: hidden;
-  }
-  .ux-rail-fill {
-    display: block;
-    width: 100%;
-    height: 100%;
-    border-radius: 999px;
-    background: linear-gradient(90deg, #00e6c0, #6366f1, #ec4899);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.15s linear;
-  }
-
-  .ux-counter {
-    margin: 10px 0 0;
-    text-align: center;
-    font-size: 0.74rem;
-    font-weight: 800;
-    letter-spacing: 0.14em;
-    color: #33465f;
-  }
-}
-
-@media (min-width: 1024px) {
-  .ux-rail,
-  .ux-counter {
-    display: none;
-  }
-}
-
-/* ═══════════════════════════════════════════════════════════════
-   GRID
-   <1024px : single column inside the scroller, one card per snap
-   ≥1024px : 6-col bento — tall cards span 2 rows, wide span 4 cols
-   ═══════════════════════════════════════════════════════════════ */
-.ux-grid {
+.house-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: clamp(1.4rem, 3vw, 1.85rem);
+  gap: clamp(1.6rem, 3.2vw, 2.1rem);
   align-items: stretch;
   margin: 0;
   padding: 0;
   list-style: none;
 }
-.ux-cell {
+.house-cell {
   display: flex;
-}
-
-@media (max-width: 1023px) {
-  .ux-grid {
-    display: flex;
-    gap: 18px;
-    padding: 0 max(24px, calc((100% - 430px) / 2));
-  }
-  .ux-cell {
-    flex: 0 0 auto;
-    width: min(430px, calc(100vw - 72px));
-    scroll-snap-align: center;
-    scroll-snap-stop: always;
-  }
+  min-width: 0;
 }
 
 @media (min-width: 1024px) {
-  .ux-grid {
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-    grid-auto-rows: 304px;
+  .house-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  .ux-cell {
-    grid-column: span 2;
-  }
-  .ux-cell--wide {
-    grid-column: span 4;
-  }
-  .ux-cell--tall {
-    grid-row: span 2;
+  .house-cell--wide {
+    grid-column: 1 / -1;
   }
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   3D SHELL — perspective wrapper + tilting card
+   3D SHELL — perspective wrapper + tilting card (void style)
+   NOTE: no `filter` here — a filter on this wrapper rasterizes the
+   whole card and blurs every glyph inside it.
    ═══════════════════════════════════════════════════════════════ */
-.ux-parent {
+.house {
   width: 100%;
-  max-width: 430px;
-  height: 348px;
-  margin-inline: auto;
-  perspective: 1000px;
-  perspective-origin: 50% 50%;
-  filter: drop-shadow(0 26px 44px rgba(13, 38, 76, 0.18));
+  display: flex;
+  perspective: 1600px;
+  perspective-origin: 50% 38%;
 }
 
-@media (min-width: 1024px) {
-  .ux-parent,
-  .ux-parent--wide {
-    max-width: none;
-    height: 100%;
-  }
+@property --hx-angle {
+  syntax: "<angle>";
+  initial-value: 210deg;
+  inherits: false;
+}
+@keyframes houseRing {
+  to { --hx-angle: 570deg; }
 }
 
-.ux-card {
+.house-card {
+  /* Exact palette of the reference "void" purple card */
+  --hx-grad: linear-gradient(160deg, #1e293b 0%, #1e1b4b 50%, #4338ca 100%);
+  --hx-title: #99f6e4;
+  --hx-body: #dbe3f0;
+  --hx-cta: #d8b4fe;
+  --hx-orbit: rgba(167, 139, 250, 0.28);
+  --hx-fill: #7c3aed;
+
   position: relative;
-  height: 100%;
+  width: 100%;
   border-radius: 50px;
-  background: var(--ux-grad);
+  /* Faint star specks over the void gradient — quiet galaxy texture */
+  background-image:
+    radial-gradient(1.4px 1.4px at 18% 34%, rgba(255, 255, 255, 0.22), transparent 55%),
+    radial-gradient(1.2px 1.2px at 62% 14%, rgba(255, 255, 255, 0.16), transparent 55%),
+    radial-gradient(1.6px 1.6px at 82% 68%, rgba(216, 180, 254, 0.2), transparent 55%),
+    radial-gradient(1.2px 1.2px at 34% 78%, rgba(153, 246, 228, 0.14), transparent 55%),
+    radial-gradient(1.1px 1.1px at 8% 60%, rgba(255, 255, 255, 0.12), transparent 55%),
+    var(--hx-grad);
   transform-style: preserve-3d;
   transition:
     transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
     box-shadow 0.55s ease;
   box-shadow:
-    rgba(13, 38, 76, 0) 40px 50px 25px -40px,
-    rgba(13, 38, 76, 0.16) 0 25px 25px -5px;
+    0 30px 60px -18px rgba(13, 38, 76, 0.35),
+    0 12px 24px -8px rgba(30, 27, 75, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.09);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-.ux-parent:hover .ux-card {
-  transform: rotate3d(1, 1, 0, 28deg);
-  box-shadow:
-    rgba(13, 38, 76, 0.28) 28px 48px 28px -38px,
-    rgba(13, 38, 76, 0.1) 0 25px 35px 0;
-}
-
-/* ═══════════════════════════════════════════════════════════════
-   THEMES
-   ═══════════════════════════════════════════════════════════════ */
-.ux-parent--mint {
-  --ux-grad: linear-gradient(135deg, #00e6c0 0%, #16d95e 100%);
-  --ux-title: #045235;
-  --ux-body: rgba(4, 82, 53, 0.85);
-  --ux-cta: #007a4d;
-  --ux-orbit: rgba(220, 255, 246, 0.3);
-  --ux-fill: #059669;
-}
-
-.ux-parent--violet {
-  --ux-grad: linear-gradient(145deg, #a855f7 0%, #6366f1 40%, #ec4899 100%);
-  --ux-title: #2a0350;
-  --ux-body: rgba(42, 3, 80, 0.88);
-  --ux-cta: #3b0764;
-  --ux-orbit: rgba(233, 213, 255, 0.32);
-  --ux-fill: #7c3aed;
-}
-
-.ux-parent--solar {
-  --ux-grad: linear-gradient(135deg, #fbbf24 0%, #f97316 55%, #ef4444 100%);
-  --ux-title: #611c07;
-  --ux-body: rgba(97, 28, 7, 0.9);
-  --ux-cta: #7c2d12;
-  --ux-orbit: rgba(255, 246, 214, 0.36);
-  --ux-fill: #ea580c;
-}
-
-.ux-parent--ocean {
-  --ux-grad: linear-gradient(155deg, #22d3ee 0%, #38a8ef 55%, #4f6ff0 100%);
-  --ux-title: #082f49;
-  --ux-body: rgba(8, 47, 73, 0.88);
-  --ux-cta: #075985;
-  --ux-orbit: rgba(207, 244, 255, 0.32);
-  --ux-fill: #0284c7;
-}
-
-.ux-parent--prism {
-  --ux-grad: conic-gradient(from 200deg at 65% 35%, #22d3ee, #818cf8, #f472b6, #facc15, #22d3ee);
-  --ux-title: #1e1b4b;
-  --ux-body: rgba(30, 27, 75, 0.88);
-  --ux-cta: #312e81;
-  --ux-orbit: rgba(255, 255, 255, 0.38);
-  --ux-fill: #4f46e5;
-}
-
-.ux-parent--void {
-  --ux-grad: linear-gradient(160deg, #1e293b 0%, #1e1b4b 50%, #4338ca 100%);
-  --ux-title: #99f6e4;
-  --ux-body: rgba(226, 232, 240, 0.85);
-  --ux-cta: #d8b4fe;
-  --ux-orbit: rgba(167, 139, 250, 0.28);
-  --ux-fill: #7c3aed;
-}
-
-.ux-parent--teal {
-  --ux-grad: linear-gradient(140deg, #2dd4bf 0%, #0d9488 60%, #115e59 100%);
-  --ux-title: #032622;
-  --ux-body: rgba(3, 38, 34, 0.86);
-  --ux-cta: #064e46;
-  --ux-orbit: rgba(204, 251, 241, 0.3);
-  --ux-fill: #0d9488;
-}
-
-.ux-parent--rose {
-  --ux-grad: linear-gradient(140deg, #fb7185 0%, #ec4899 55%, #d946ef 100%);
-  --ux-title: #4c0522;
-  --ux-body: rgba(76, 5, 34, 0.88);
-  --ux-cta: #831843;
-  --ux-orbit: rgba(255, 228, 238, 0.34);
-  --ux-fill: #db2777;
-}
-
-/* ═══════════════════════════════════════════════════════════════
-   SHAPE MODIFIERS
-   ═══════════════════════════════════════════════════════════════ */
-
-/* Chamfer cut — precision corners via clip-path */
-.ux-parent--cut .ux-card {
-  border-radius: 36px;
-  clip-path: polygon(
-    18px 0,
-    calc(100% - 18px) 0,
-    100% 18px,
-    100% calc(100% - 18px),
-    calc(100% - 18px) 100%,
-    18px 100%,
-    0 calc(100% - 18px),
-    0 18px
+/* Slow-rotating conic edge light — the card's premium signature */
+.house-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: conic-gradient(
+    from var(--hx-angle),
+    rgba(153, 246, 228, 0.55),
+    rgba(124, 58, 237, 0.12) 28%,
+    rgba(216, 180, 254, 0.5) 52%,
+    rgba(67, 56, 202, 0.12) 78%,
+    rgba(153, 246, 228, 0.55)
   );
-}
-.ux-parent--cut .ux-glass {
-  border-radius: 32px;
-  border-top-right-radius: 78%;
-  clip-path: polygon(
-    14px 0,
-    calc(100% - 14px) 0,
-    100% 14px,
-    100% calc(100% - 14px),
-    calc(100% - 14px) 100%,
-    14px 100%,
-    0 calc(100% - 14px),
-    0 14px
-  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0.85;
+  animation: houseRing 16s linear infinite;
 }
 
-/* Cinema wide — landscape canvas (desktop bento only) */
-.ux-parent--wide .ux-card {
-  border-radius: 44px;
-}
-.ux-parent--wide .ux-glass {
-  border-radius: 48px;
-  border-top-right-radius: 55%;
-}
-
-/* Featured — persistent accent ring */
-.ux-parent--featured .ux-card {
+.house:hover .house-card {
+  transform: rotate3d(1, 1, 0, 9deg);
   box-shadow:
-    0 0 0 2px rgba(249, 115, 22, 0.55),
-    0 0 44px rgba(249, 115, 22, 0.3),
-    rgba(13, 38, 76, 0.16) 0 25px 25px -5px;
+    26px 48px 60px -30px rgba(13, 38, 76, 0.4),
+    0 25px 40px -12px rgba(67, 56, 202, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+.house--wide:hover .house-card {
+  transform: rotate3d(1, 0.55, 0, 5.5deg);
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   GLASS SHEET — floats at Z25
-   ═══════════════════════════════════════════════════════════════ */
-.ux-glass {
+/* ── Glass sheet — floats at Z25 (void variant) ──────────────── */
+.house-glass {
   transform-style: preserve-3d;
   position: absolute;
-  inset: 8px;
-  border-radius: 55px;
+  inset: 9px;
+  z-index: 1;
+  border-radius: 44px;
   border-top-right-radius: 100%;
   background: linear-gradient(
-    0deg,
-    rgba(255, 255, 255, 0.38) 0%,
-    rgba(255, 255, 255, 0.82) 100%
+    180deg,
+    rgba(255, 255, 255, 0.13) 0%,
+    rgba(15, 23, 42, 0.5) 100%
   );
   transform: translate3d(0, 0, 25px);
-  border-left: 1px solid rgba(255, 255, 255, 0.85);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.75);
+  border-left: 1px solid rgba(148, 163, 184, 0.25);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.22);
   transition: all 0.5s ease-in-out;
   pointer-events: none;
 }
-
-.ux-parent--void .ux-glass {
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.14) 0%,
-    rgba(15, 23, 42, 0.55) 100%
-  );
-  border-color: rgba(148, 163, 184, 0.25);
+.house--wide .house-glass {
+  border-top-right-radius: 62%;
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   CIRCLE STACK — rings hold Z depth; solid badge on top
-   ═══════════════════════════════════════════════════════════════ */
-.ux-logo {
+/* ── Circle stack — rings hold Z depth; solid badge on top ─────
+   .house-orb    (plain span)  → CSS translateZ depth + hover climbs
+   .house-circle (motion span) → visual skin + entrance spring-pop
+   Split on purpose: Framer's inline transform on .house-circle can
+   never clobber the orb's 3D positioning. */
+.house-logo {
   position: absolute;
   right: 0;
   top: 0;
@@ -479,173 +214,320 @@
   z-index: 2;
 }
 
-.ux-circle {
+.house-orb {
   display: block;
   position: absolute;
   aspect-ratio: 1;
-  border-radius: 50%;
   top: 0;
   right: 0;
-  background: var(--ux-orbit);
-  box-shadow: rgba(100, 100, 111, 0.25) -10px 10px 24px 0;
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  transition: all 0.5s ease-in-out;
+  transition: transform 0.5s ease-in-out;
 }
-
-.ux-circle:nth-child(1) {
-  width: 170px;
+.house-orb:nth-child(1) {
+  width: 178px;
   transform: translate3d(0, 0, 20px);
   top: 8px;
   right: 8px;
 }
-.ux-circle:nth-child(2) {
-  width: 140px;
+.house-orb:nth-child(2) {
+  width: 146px;
   transform: translate3d(0, 0, 40px);
   top: 10px;
   right: 10px;
-  backdrop-filter: blur(4px);
   transition-delay: 0.05s;
 }
-.ux-circle:nth-child(3) {
-  width: 110px;
+.house-orb:nth-child(3) {
+  width: 114px;
   transform: translate3d(0, 0, 60px);
   top: 17px;
   right: 17px;
   transition-delay: 0.1s;
 }
-.ux-circle:nth-child(4) {
-  width: 80px;
+.house-orb:nth-child(4) {
+  width: 84px;
   transform: translate3d(0, 0, 80px);
   top: 23px;
   right: 23px;
   transition-delay: 0.15s;
 }
-
-/* Solid icon badge — clearly visible on the light theme */
-.ux-circle:nth-child(5) {
-  width: 52px;
+.house-orb:nth-child(5) {
+  width: 54px;
   transform: translate3d(0, 0, 100px);
-  top: 29px;
-  right: 29px;
-  display: grid;
-  place-content: center;
-  background: var(--ux-fill);
-  box-shadow:
-    0 0 0 3px rgba(255, 255, 255, 0.85),
-    rgba(13, 38, 76, 0.35) -8px 12px 22px 0;
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
+  top: 30px;
+  right: 30px;
   transition-delay: 0.2s;
 }
 
-.ux-circle:nth-child(5) svg {
-  width: 23px;
-  height: 23px;
+.house-circle {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: var(--hx-orbit);
+  box-shadow: rgba(2, 6, 23, 0.35) -10px 10px 24px 0;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  transform-origin: 50% 50%;
+}
+.house-orb:nth-child(2) .house-circle {
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+.house-orb:nth-child(5) .house-circle {
+  display: grid;
+  place-content: center;
+  background:
+    radial-gradient(120% 120% at 30% 25%, rgba(216, 180, 254, 0.55), transparent 55%),
+    var(--hx-fill);
+  box-shadow:
+    0 0 0 3px rgba(216, 180, 254, 0.45),
+    0 0 26px rgba(124, 58, 237, 0.55),
+    rgba(2, 6, 23, 0.5) -8px 12px 22px 0;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+.house-orb:nth-child(5) svg {
+  width: 24px;
+  height: 24px;
   color: #fff;
 }
 
-.ux-parent:hover .ux-circle:nth-child(2) {
-  transform: translate3d(0, 0, 60px);
-}
-.ux-parent:hover .ux-circle:nth-child(3) {
-  transform: translate3d(0, 0, 80px);
-}
-.ux-parent:hover .ux-circle:nth-child(4) {
-  transform: translate3d(0, 0, 100px);
-}
-.ux-parent:hover .ux-circle:nth-child(5) {
-  transform: translate3d(0, 0, 120px);
-}
-
-@media (min-width: 1024px) {
-  .ux-parent--wide .ux-circle:nth-child(1) {
-    width: 200px;
-  }
-  .ux-parent--wide .ux-circle:nth-child(2) {
-    transform: translate3d(0, 0, 38px);
-  }
-  .ux-parent--wide:hover .ux-circle:nth-child(2) {
-    transform: translate3d(0, 0, 60px);
-  }
-}
+.house:hover .house-orb:nth-child(2) { transform: translate3d(0, 0, 60px); }
+.house:hover .house-orb:nth-child(3) { transform: translate3d(0, 0, 80px); }
+.house:hover .house-orb:nth-child(4) { transform: translate3d(0, 0, 100px); }
+.house:hover .house-orb:nth-child(5) { transform: translate3d(0, 0, 120px); }
 
 /* ═══════════════════════════════════════════════════════════════
-   CONTENT — floats at Z26 above the glass
+   CONTENT — flat (Z0) so every glyph rasterizes pixel-crisp.
+   z-index keeps it painted above the glass sheet.
    ═══════════════════════════════════════════════════════════════ */
-.ux-content {
-  padding: 78px 1.9rem 0 1.7rem;
-  transform: translate3d(0, 0, 26px);
+.house-content {
   position: relative;
   z-index: 3;
+  padding: clamp(1.8rem, 4vw, 2.6rem) clamp(1.3rem, 3vw, 2.2rem)
+    92px clamp(1.3rem, 3vw, 2.2rem);
 }
 
-/* Invisible float reserving the circle-stack zone: text wraps around
-   it instead of running underneath the rings. */
-.ux-content::before {
+/* Invisible float reserving the circle-stack zone so the kicker,
+   title and tagline wrap around the rings. */
+.house-content::before {
   content: "";
   float: right;
-  width: 132px;
-  height: 118px;
-  shape-outside: ellipse(130px 120px at 100% 0%);
+  width: 150px;
+  height: 132px;
+  shape-outside: ellipse(152px 134px at 100% 0%);
 }
 
-.ux-title {
-  display: block;
-  color: var(--ux-title);
+.house-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0 0 0.7rem;
+  font-size: 0.64rem;
   font-weight: 800;
-  font-size: 1.08rem;
-  line-height: 1.25;
-  letter-spacing: -0.015em;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(216, 180, 254, 0.85);
+}
+.house-kicker::after {
+  content: "";
+  width: 34px;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(216, 180, 254, 0.6), transparent);
 }
 
-.ux-text {
+.house-title {
+  margin: 0;
+  font-weight: 800;
+  font-size: clamp(1.3rem, 2vw, 1.55rem);
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  background: linear-gradient(95deg, #99f6e4 0%, #67e8f9 60%, #a5b4fc 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.house-tagline {
+  margin: 0.85rem 0 0;
+  color: var(--hx-body);
+  font-size: clamp(0.84rem, 1vw, 0.92rem);
+  line-height: 1.65;
+  font-weight: 500;
+  max-width: 62ch;
+}
+.house-tagline strong {
   display: block;
-  margin-top: 0.7rem;
-  color: var(--ux-body);
-  font-size: 0.8rem;
+  margin-bottom: 0.35rem;
+  color: #ffffff;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+/* ── Checklist (Development & Creative houses) ───────────────── */
+.house-list {
+  clear: both;
+  margin: 1.5rem 0 0;
+  padding: 1.35rem 0 0;
+  border-top: 1px solid rgba(148, 163, 184, 0.16);
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.7rem 1.4rem;
+}
+@media (min-width: 640px) {
+  .house-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.house-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  color: var(--hx-body);
+  font-size: 0.85rem;
   line-height: 1.5;
   font-weight: 600;
 }
-.ux-text strong {
-  color: var(--ux-title);
-  font-weight: 800;
+
+.house-tick {
+  flex-shrink: 0;
+  width: 7px;
+  height: 7px;
+  margin-top: 0.44em;
+  border-radius: 2px;
+  background: linear-gradient(135deg, #2dd4bf, #99f6e4);
+  transform: rotate(45deg);
+  box-shadow: 0 0 8px rgba(45, 212, 191, 0.55);
 }
 
-@media (min-width: 1024px) {
-  /* Wide bento cards: copy keeps clear of the enlarged circle field. */
-  .ux-parent--wide .ux-content {
-    padding: 2.4rem 46% 0 1.9rem;
-  }
-  .ux-parent--wide .ux-content::before {
-    display: none;
-  }
-  /* Tall bento cards: copy settles into the open middle, larger type. */
-  .ux-cell--tall .ux-content {
-    padding-top: 210px;
-  }
-  .ux-cell--tall .ux-content::before {
-    display: none;
-  }
-  .ux-cell--tall .ux-title {
-    font-size: 1.3rem;
-  }
-  .ux-cell--tall .ux-text {
-    font-size: 0.88rem;
-    max-width: 30ch;
-  }
+/* Coming soon pill — inline on the CRM item */
+@keyframes soonGlow {
+  0%, 100% { box-shadow: 0 0 0 rgba(245, 158, 11, 0); }
+  50% { box-shadow: 0 0 14px rgba(245, 158, 11, 0.35); }
+}
+.house-soon {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 8px;
+  padding: 2.5px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(251, 191, 36, 0.45);
+  background: rgba(251, 191, 36, 0.14);
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fde68a;
+  white-space: nowrap;
+  vertical-align: middle;
+  animation: soonGlow 2.8s ease-in-out infinite;
+}
+.house-diamond {
+  width: 7px;
+  height: 7px;
+  border-radius: 2px;
+  background: linear-gradient(135deg, #fde047, #f59e0b);
+  transform: rotate(45deg);
+  flex-shrink: 0;
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   BOTTOM BAR — CTA pops toward the viewer on hover
+   MARKETING HOUSE — 2×2 nested sub-group panels
+   Panels stay flat for crisp text; only elevation cue is a lift.
    ═══════════════════════════════════════════════════════════════ */
-.ux-bottom {
+.house-groups {
+  clear: both;
+  margin-top: 1.6rem;
+  padding-top: 1.45rem;
+  border-top: 1px solid rgba(148, 163, 184, 0.16);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(0.9rem, 1.6vw, 1.2rem);
+}
+@media (min-width: 640px) {
+  .house-groups {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.house-group {
+  position: relative;
+  border-radius: 24px;
+  padding: 1.2rem 1.25rem 1.35rem;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.08) 0%,
+    rgba(15, 23, 42, 0.32) 100%
+  );
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  transition:
+    transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.4s ease,
+    box-shadow 0.4s ease;
+}
+/* Teal accent seam on the left edge of each panel */
+.house-group::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 22px;
+  bottom: 22px;
+  width: 2px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(153, 246, 228, 0.55), rgba(124, 58, 237, 0.35));
+  opacity: 0.7;
+  transition: opacity 0.4s ease;
+}
+.house-group:hover {
+  transform: translateY(-4px);
+  border-color: rgba(153, 246, 228, 0.4);
+  box-shadow: 0 16px 34px -14px rgba(2, 6, 23, 0.6);
+}
+.house-group:hover::before {
+  opacity: 1;
+}
+
+.house-group-label {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin: 0 0 0.9rem;
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--hx-cta);
+}
+.house-group-icon {
+  width: 15px;
+  height: 15px;
+  color: var(--hx-title);
+}
+
+.house-list--group {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+  grid-template-columns: 1fr;
+  gap: 0.55rem;
+}
+.house-list--group .house-item {
+  font-size: 0.82rem;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   BOTTOM BAR — CTA pops toward the viewer on hover (desktop)
+   ═══════════════════════════════════════════════════════════════ */
+.house-bottom {
   padding: 8px 10px;
   transform-style: preserve-3d;
   position: absolute;
-  bottom: 18px;
-  left: 18px;
-  right: 18px;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -653,98 +535,230 @@
   z-index: 4;
 }
 
-.ux-more {
+/* Motion wrapper (entrance) — the 3D hover pop lives here, not on <a>,
+   so Framer's inline transform never fights the CSS translateZ. */
+.house-more-anim {
+  display: inline-flex;
+  transform-style: preserve-3d;
+  transition: transform 0.25s ease;
+}
+.house:hover .house-more-anim {
+  transform: translate3d(0, 0, 42px) !important;
+}
+
+.house-more {
+  position: relative;
+  overflow: hidden;
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  color: var(--ux-cta);
+  justify-content: center;
+  gap: 6px;
+  padding: 0.6rem 1.2rem;
+  border-radius: 999px;
+  border: 1px solid rgba(216, 180, 254, 0.4);
+  background: linear-gradient(120deg, rgba(124, 58, 237, 0.4), rgba(67, 56, 202, 0.3));
+  box-shadow:
+    0 10px 26px -10px rgba(124, 58, 237, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  color: #ede9fe;
   font-weight: 800;
   font-size: 0.74rem;
   letter-spacing: 0.09em;
   text-transform: uppercase;
   text-decoration: none;
-  transition: transform 0.25s ease;
+  transition:
+    transform 0.25s ease,
+    background 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
 }
-.ux-more svg {
+/* Shine sweep across the pill on hover */
+.house-more::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -70%;
+  width: 45%;
+  height: 100%;
+  background: linear-gradient(
+    105deg,
+    transparent,
+    rgba(255, 255, 255, 0.28),
+    transparent
+  );
+  transform: skewX(-18deg);
+  transition: left 0.55s ease;
+}
+.house-more:hover::after {
+  left: 125%;
+}
+.house-more svg {
   width: 16px;
   height: 14px;
   transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.ux-parent:hover .ux-more {
-  transform: translate3d(0, 0, 40px);
+.house:hover .house-more {
+  border-color: rgba(216, 180, 254, 0.7);
+  box-shadow:
+    0 16px 34px -10px rgba(124, 58, 237, 0.75),
+    inset 0 1px 0 rgba(255, 255, 255, 0.24);
 }
-.ux-more:hover svg {
+.house-more:hover svg {
   transform: translateX(3px);
 }
-.ux-more:focus-visible {
-  outline: 2px solid var(--ux-cta);
+.house-more:focus-visible {
+  outline: 2px solid var(--hx-title);
   outline-offset: 4px;
-  border-radius: 4px;
 }
 
-/* ── Coming soon ─────────────────────────────────────────────── */
-.ux-diamond {
-  width: 9px;
-  height: 9px;
-  border-radius: 2px;
-  background: linear-gradient(135deg, #fde047, #f59e0b);
-  transform: rotate(45deg);
-  flex-shrink: 0;
-}
-.ux-diamond--corner {
-  position: absolute;
-  z-index: 5;
-  top: 20px;
-  left: 24px;
-  width: 12px;
-  height: 12px;
-  box-shadow: 0 3px 10px rgba(245, 158, 11, 0.55);
-  transform: rotate(45deg) translateZ(30px);
-}
-.ux-soon {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #fff;
-  text-shadow: 0 1px 6px rgba(76, 5, 34, 0.5);
-  transition: transform 0.25s ease;
-}
-.ux-parent:hover .ux-soon {
-  transform: translate3d(0, 0, 40px);
-}
-
-/* Touch devices: no hover tilt, cards stay flat and readable. */
-@media (hover: none) {
-  .ux-parent:hover .ux-card {
+/* ═══════════════════════════════════════════════════════════════
+   SMALL SCREENS & TOUCH — flatten every 3D layer.
+   translateZ inside perspective is what softens text on phones;
+   removing it (plus no tilt) renders the whole card pixel-crisp.
+   ═══════════════════════════════════════════════════════════════ */
+@media (hover: none), (max-width: 1023.98px) {
+  .house {
+    perspective: none;
+  }
+  .house-card,
+  .house-glass,
+  .house-logo,
+  .house-bottom,
+  .house-more-anim {
+    transform-style: flat;
+  }
+  .house-glass,
+  .house-bottom,
+  .house-orb:nth-child(1),
+  .house-orb:nth-child(2),
+  .house-orb:nth-child(3),
+  .house-orb:nth-child(4),
+  .house-orb:nth-child(5) {
     transform: none;
+  }
+  .house:hover .house-card,
+  .house--wide:hover .house-card {
+    transform: none;
+  }
+  .house:hover .house-more-anim {
+    transform: none !important;
+  }
+}
+
+@media (max-width: 639.98px) {
+  .house-card {
+    border-radius: 38px;
+  }
+  .house-glass {
+    border-radius: 32px;
+    border-top-right-radius: 90%;
+  }
+  .house-orb:nth-child(1) { width: 136px; }
+  .house-orb:nth-child(2) { width: 110px; }
+  .house-orb:nth-child(3) { width: 88px; }
+  .house-orb:nth-child(4) { width: 64px; }
+  .house-orb:nth-child(5) {
+    width: 46px;
+    top: 24px;
+    right: 24px;
+  }
+  .house-orb:nth-child(5) svg {
+    width: 20px;
+    height: 20px;
+  }
+  .house-content::before {
+    width: 112px;
+    height: 96px;
+    shape-outside: ellipse(114px 98px at 100% 0%);
+  }
+  .house-content {
+    padding-bottom: 104px;
+  }
+  /* Full-width CTA = comfortable thumb target */
+  .house-bottom {
+    left: 16px;
+    right: 16px;
+    bottom: 18px;
+  }
+  .house-more {
+    flex: 1;
+    padding: 0.75rem 1.2rem;
+  }
+  .house-soon {
+    margin-left: 0;
+    margin-top: 4px;
+    display: inline-flex;
+  }
+  .house-item > span {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 2px 8px;
   }
 }
 
 /* ── Reduced motion ──────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
-  .ux-card,
-  .ux-circle,
-  .ux-glass,
-  .ux-more,
-  .ux-soon,
-  .ux-rail-fill {
+  .house-card,
+  .house-orb,
+  .house-circle,
+  .house-glass,
+  .house-group,
+  .house-more,
+  .house-more-anim,
+  .house-more::after {
     transition: none !important;
+    animation: none !important;
   }
-  .ux-parent:hover .ux-card {
+  .house-card::before,
+  .house-soon {
+    animation: none !important;
+  }
+  .house:hover .house-card,
+  .house--wide:hover .house-card {
     transform: none;
   }
-  .ux-parent:hover .ux-circle:nth-child(2),
-  .ux-parent:hover .ux-circle:nth-child(3),
-  .ux-parent:hover .ux-circle:nth-child(4),
-  .ux-parent:hover .ux-circle:nth-child(5) {
+  .house:hover .house-more-anim {
+    transform: none !important;
+  }
+  .house:hover .house-orb:nth-child(2),
+  .house:hover .house-orb:nth-child(3),
+  .house:hover .house-orb:nth-child(4),
+  .house:hover .house-orb:nth-child(5) {
     transform: inherit;
   }
-  .ux-parent:hover .ux-more,
-  .ux-parent:hover .ux-soon {
+  .house-group:hover {
     transform: none;
   }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ENTRANCE — "Raising the Houses" support styles
+   The sheen lives inside its own clipped overlay so the card can
+   keep `overflow: visible` (overflow:hidden would flatten the 3D).
+   ═══════════════════════════════════════════════════════════════ */
+.house-sheen-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  border-radius: inherit;
+  overflow: hidden;
+  pointer-events: none;
+}
+.house-sheen {
+  position: absolute;
+  top: -25%;
+  bottom: -25%;
+  left: 0;
+  width: 34%;
+  background: linear-gradient(
+    100deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.22) 38%,
+    rgba(153, 246, 228, 0.28) 52%,
+    rgba(216, 180, 254, 0.18) 64%,
+    transparent 100%
+  );
+  transform: skewX(-16deg);
+  will-change: transform, opacity;
 }

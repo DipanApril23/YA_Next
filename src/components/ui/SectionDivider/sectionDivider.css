@@ -1,0 +1,195 @@
+/* ═══════════════════════════════════════════════════════════════
+   SECTION DIVIDER — "blueprint seam"
+   The join between two sections, drawn the way a draughtsman marks a
+   sheet: a hairline rule, measurement ticks stepping away from centre,
+   and a gem-cut node on the axis, with a light sweep running the rule.
+
+   ▸ IT SITS *ON* THE SEAM, NOT BETWEEN THE SECTIONS ◂
+   The root is `height: 0` — it consumes NO space in the page flow, so
+   the two sections still butt directly against each other and the
+   boundary never moves. Everything inside is absolutely positioned and
+   centred on that zero-height line, so the rule straddles the join with
+   exactly half bleeding into the section above and half into the one
+   below. A background band here would push the sections apart and
+   relocate the very edge this is meant to mark.
+
+   Because it overlaps both neighbours it needs `z-index` (a later
+   sibling section would otherwise paint straight over it) and
+   `pointer-events: none` (it is decorative and must never eat a click).
+
+   EVERYTHING IS BRAND-COLOURED, NEVER NEUTRAL. The seam has a dark
+   section on one side and a light one on the other, so any grey/white
+   rule would be invisible against one of them. The gradient beam,
+   violet ticks and gem node all read against black and off-white alike
+   — which is why this component needs no theme prop.
+
+   CADENCE — borrowed from the rest of the site so the page feels like
+   one instrument: the node ring pulses on the same 2.4s as every badge
+   dot, and the sweep runs the same 5s as the headline shimmer
+   (sectionHeader.css / hero.css).
+   ═══════════════════════════════════════════════════════════════ */
+
+.ya-div {
+  position: relative;
+  z-index: 30;
+  width: 100%;
+  height: 0;
+  overflow: visible;
+  pointer-events: none;
+}
+
+/* Zero-height too, so every `top: 50%` below resolves to the seam itself. */
+.ya-div-inner {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  width: min(1180px, 86%);
+  height: 0;
+}
+
+/* ── 1 · bloom — soft halo bleeding into both sections ───────── */
+.ya-div-bloom {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: clamp(200px, 30vw, 380px);
+  height: 58px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(ellipse at center, rgba(168, 85, 247, 0.26), transparent 70%);
+  filter: blur(14px);
+}
+
+/* ── 2–3 · the rule ──────────────────────────────────────────── */
+/* Static wrapper owns the vertical centring so the motion layer inside
+   is free to own `transform` (scaleX) without the two fighting. */
+.ya-div-lineWrap {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  margin-top: -0.5px;
+}
+.ya-div-line {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-origin: center;
+  overflow: hidden;
+}
+
+.ya-div-beam {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    #06b6d4 20%,
+    #3b82f6 34%,
+    #a855f7 50%,
+    #ec4899 66%,
+    #06b6d4 80%,
+    transparent 100%
+  );
+  opacity: 0.85;
+}
+
+/* translateX percentages resolve against the SWEEP's own width (26% of the
+   rule), not the rule's — so a full edge-to-edge traverse needs
+   100% / 0.26 ≈ 385%, not 100%. Anything less and the highlight stalls
+   partway along the line. Kept as a transform (not background-position)
+   so it stays on the compositor. */
+@keyframes yaDivSweep {
+  0%   { transform: translateX(-110%); opacity: 0; }
+  15%  { opacity: 1; }
+  85%  { opacity: 1; }
+  100% { transform: translateX(390%); opacity: 0; }
+}
+.ya-div-sweep {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 26%;
+  /* White reads on both sides because it travels over the saturated beam,
+     never over the section background. */
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.95), transparent);
+  animation: yaDivSweep 5s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+
+/* ── 4 · centre node + drafting ticks ────────────────────────── */
+.ya-div-nodeWrap {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 13px;
+  height: 13px;
+  margin: -6.5px 0 0 -6.5px;
+}
+
+/* Rotation lives here, scale lives on the motion wrapper above it. */
+.ya-div-node {
+  position: absolute;
+  inset: 0;
+  border-radius: 2.5px;
+  transform: rotate(45deg);
+  background: linear-gradient(135deg, #06b6d4 0%, #a855f7 52%, #ec4899 100%);
+  box-shadow:
+    0 0 14px rgba(168, 85, 247, 0.7),
+    0 0 30px rgba(6, 182, 212, 0.4);
+}
+
+@keyframes yaDivPulse {
+  0%, 100% { transform: scale(1);   opacity: 0.55; }
+  50%      { transform: scale(2.1); opacity: 0; }
+}
+.ya-div-node-ring {
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 1px solid rgba(168, 85, 247, 0.75);
+  animation: yaDivPulse 2.4s ease-in-out infinite;
+}
+
+.ya-div-tick {
+  position: absolute;
+  top: 50%;
+  width: 1px;
+  /* Violet rather than a neutral — this straddles a dark/light boundary
+     and has to be legible on both halves. */
+  background: rgba(139, 92, 246, 0.55);
+}
+.ya-div-tick--near {
+  height: 8px;
+  margin-top: -4px;
+}
+.ya-div-tick--far {
+  height: 5px;
+  margin-top: -2.5px;
+  opacity: 0.6;
+}
+.ya-div-tick--l1 { left: calc(50% - 30px); }
+.ya-div-tick--r1 { left: calc(50% + 30px); }
+.ya-div-tick--l2 { left: calc(50% - 52px); }
+.ya-div-tick--r2 { left: calc(50% + 52px); }
+
+/* Hide the outer measurement pair on narrow screens — at phone width they
+   crowd the node instead of framing it. */
+@media (max-width: 480px) {
+  .ya-div-tick--far { display: none; }
+  .ya-div-tick--l1 { left: calc(50% - 24px); }
+  .ya-div-tick--r1 { left: calc(50% + 24px); }
+}
+
+/* ── Reduced motion — keep the drawing, drop the loops ───────── */
+@media (prefers-reduced-motion: reduce) {
+  .ya-div-sweep {
+    animation: none;
+    opacity: 0;
+  }
+  .ya-div-node-ring {
+    animation: none;
+    opacity: 0.4;
+  }
+}

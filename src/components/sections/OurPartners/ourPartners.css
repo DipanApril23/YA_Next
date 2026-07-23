@@ -1,0 +1,209 @@
+/* ═══════════════════════════════════════════════════════════════
+   OUR PARTNERS — "platforms we build with" logo strip
+   Embedded at the foot of the Consultation CTA (NOT a standalone
+   section). Transparent — inherits the CTA's light background. Dark
+   chips echo the navbar / blueprint-card aesthetic. Marquee =
+   track of N duplicate copies + translateX(-25%) → seamless at every width.
+   ═══════════════════════════════════════════════════════════════ */
+
+.yaPartners {
+  position: relative;
+  /* Embedded strip — no own background or section padding; just a top gap
+     to separate it from the blueprint card above it inside the CTA. */
+  margin-top: clamp(44px, 6vw, 80px);
+  overflow: hidden;
+}
+
+.yaPartners__inner {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0;
+}
+
+/* ── Headline block ─────────────────────────────────────────── */
+
+/* Title + subheading come from the shared
+   <SectionHeader theme="light" size="sm"> (src/components/ui/SectionHeader).
+   `size="sm"` because this strip is nested inside the Consultation CTA,
+   which already carries a full-size header. */
+.yaPartners__head {
+  max-width: 640px;
+  margin: 0 auto clamp(26px, 4vw, 38px);
+}
+
+/* ── Marquee frame ──────────────────────────────────────────── */
+
+.yaPartners__marquees {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(14px, 2vw, 20px);
+}
+
+.yaPartners__row {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  /* soft fade at both edges — degrades gracefully where
+     mask-image is unsupported */
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 clamp(40px, 8vw, 140px),
+    #000 calc(100% - clamp(40px, 8vw, 140px)),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 clamp(40px, 8vw, 140px),
+    #000 calc(100% - clamp(40px, 8vw, 140px)),
+    transparent 100%
+  );
+}
+
+/* The track holds several identical groups (MARQUEE_COPIES in the JSX).
+   Animating to -25% (= one copy-width = -100% / 4) lands exactly on the
+   start of the next copy → no visible seam, no width math, no resize
+   listeners. Multiple copies keep the strip full on wide viewports where
+   a single copy is narrower than the container (prevents the blank gap). */
+.yaPartners__track {
+  display: flex;
+  width: max-content;
+  animation: yaPartnersScroll var(--marquee-duration, 38s) linear infinite;
+  will-change: transform;
+}
+
+/* Per-row speed + direction — all timing lives here, never in the JSX.
+   Each row's --marquee-duration feeds the .yaPartners__track animation above
+   (and the mobile speed-up below). */
+.yaPartners__row--1 {
+  --marquee-duration: 38s;
+}
+.yaPartners__row--2 {
+  --marquee-duration: 46s;
+}
+.yaPartners__row--2 .yaPartners__track {
+  animation-direction: reverse;
+}
+
+/* Pause when the user hovers or keyboard-focuses a chip */
+.yaPartners__row:hover .yaPartners__track,
+.yaPartners__row:focus-within .yaPartners__track {
+  animation-play-state: paused;
+}
+
+@keyframes yaPartnersScroll {
+  to { transform: translateX(-25%); }
+}
+
+/* Each copy of the list. Spacing lives INSIDE the group
+   (gap + matching padding-right) so the loop point
+   keeps identical rhythm between last and first chip. */
+.yaPartners__group {
+  display: flex;
+  align-items: center;
+  gap: clamp(10px, 1.6vw, 18px);
+  padding: 4px clamp(10px, 1.6vw, 18px) 4px 0;
+  margin: 0;
+  list-style: none;
+}
+
+/* ── Logo chips (dark cards, matches blueprint panel) ───────── */
+
+.yaPartners__chip {
+  display: flex;
+  align-items: center;
+  gap: clamp(9px, 1.2vw, 13px);
+  flex-shrink: 0;
+  padding: clamp(11px, 1.5vw, 15px) clamp(16px, 2.2vw, 26px);
+  border-radius: 16px;
+  background: linear-gradient(160deg, #14162b 0%, #1a1d38 100%);
+  border: 1px solid rgba(140, 130, 255, 0.16);
+  box-shadow:
+    0 4px 18px rgba(22, 24, 43, 0.10),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition: transform 0.28s ease, border-color 0.28s ease,
+    box-shadow 0.28s ease;
+  cursor: default;
+}
+
+.yaPartners__chip:hover {
+  transform: translateY(-3px);
+  border-color: rgba(168, 85, 247, 0.5);
+  box-shadow:
+    0 10px 28px rgba(88, 60, 200, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.yaPartners__monogram {
+  display: grid;
+  place-items: center;
+  width: clamp(30px, 3.4vw, 38px);
+  height: clamp(30px, 3.4vw, 38px);
+  border-radius: 10px;
+  font-size: clamp(0.68rem, 1vw, 0.8rem);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: var(--chip-accent, #a855f7);
+  background:
+    linear-gradient(150deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.02));
+  border: 1px solid
+    color-mix(in srgb, var(--chip-accent, #a855f7) 45%, transparent);
+  box-shadow: 0 0 14px
+    color-mix(in srgb, var(--chip-accent, #a855f7) 22%, transparent);
+}
+
+.yaPartners__logoWrap {
+  display: grid;
+  place-items: center;
+  width: clamp(30px, 3.4vw, 38px);
+  height: clamp(30px, 3.4vw, 38px);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.94);
+  padding: 5px;
+}
+
+.yaPartners__logoImg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.yaPartners__chipName {
+  font-size: clamp(0.86rem, 1.3vw, 1rem);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: #e8e9f6;
+  white-space: nowrap;
+}
+
+/* ── Small screens: faster feel, tighter chrome ─────────────── */
+
+@media (max-width: 640px) {
+  .yaPartners__track {
+    /* shorter track distance on mobile reads too slow at 38s */
+    animation-duration: calc(var(--marquee-duration, 38s) * 0.72);
+  }
+  .yaPartners__chip {
+    border-radius: 13px;
+  }
+}
+
+/* ── Accessibility: honor reduced-motion ────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .yaPartners__track {
+    animation: none;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: center;
+  }
+  /* hide the duplicate copy when static */
+  .yaPartners__group[aria-hidden="true"] {
+    display: none;
+  }
+  .yaPartners__row {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+}

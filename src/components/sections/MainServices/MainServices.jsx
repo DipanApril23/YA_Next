@@ -1,182 +1,213 @@
 "use client";
 
-// ─── Main Services ────────────────────────────────────────────────────
-// Light-theme services grid (3D interface cards). Content + per-card flags →
-// src/data/mainServices.js; styles → mainServices.css; icons resolved by
-// SERVICE_ICONS below. Client component (scroll/hover motion).
+// ─── Main Services — "3 Houses" ───────────────────────────────────────
+// Development House + Creative House side by side, Marketing House spanning
+// full width with a 2×2 grid of nested sub-groups. Dark "void" 3D glass
+// style on every card.
+//
+// LOADING / ENTRANCE — "Raising the Houses":
+//   1. Card tips up from the ground (rotateX 26° → 0) while rising + fading
+//   2. Orbit rings spring-pop, ring by ring, ending on the icon badge
+//   3. Kicker → title → tagline → list items cascade in
+//   4. A light-beam sheen sweeps across the card once to "seal" it
+// Transform/opacity only (GPU-cheap, no filters = no text blur); runs once
+// per card on scroll into view; collapses to plain fades under
+// prefers-reduced-motion.
+//
+// ARCHITECTURE NOTE: Framer writes inline `transform`, which would override
+// the CSS translateZ() that gives rings/CTA their 3D depth + hover climbs.
+// So every 3D-positioned element (.house-orb, .house-more) stays a plain
+// element, and Framer animates a separate inner/outer wrapper.
+//
+// Content → src/data/mainServices.js · styles → mainServices.css
 
-import { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import {
-  Bot,
-  Database,
-  Facebook,
-  LayoutTemplate,
+  Code2,
+  Megaphone,
+  Palette,
   PenTool,
   Search,
   Target,
   Users,
 } from "lucide-react";
-import { Container } from "@/components/ui";
+import { Container, SectionHeader } from "@/components/ui";
 import { MAIN_SERVICES, MAIN_SERVICES_CONTENT as CONTENT } from "@/data";
 import "./mainServices.css";
 
-/* Resolves the `icon` name from the data onto a component. */
+/* Resolves `icon` names from the data onto components. */
 const SERVICE_ICONS = {
-  LayoutTemplate,
+  Code2,
+  Palette,
+  Megaphone,
   Search,
-  Bot,
-  PenTool,
-  Facebook,
   Target,
+  PenTool,
   Users,
-  Database,
 };
 
-/*
-  Theme + bento config per card, in data order.
-  theme → gradient/text palette      cut  → chamfered clip-path corners
-  tall  → spans 2 rows on desktop    wide → spans 4 of 6 columns on desktop
+const EASE = [0.22, 1, 0.36, 1];
 
-  Desktop bento rhythm (6 cols):
-  [ c1(2) | c2(2) | c3(2, tall) ]
-  [ c4(4, wide)   |  ...c3      ]
-  [ c5(2) | c6(2) | c7(2, tall) ]
-  [ c8(4, wide)   |  ...c7      ]
-*/
-const CARD_CONFIG = [
-  { theme: "mint" },
-  { theme: "violet", cut: true },
-  { theme: "solar", tall: true },
-  { theme: "ocean", wide: true },
-  { theme: "prism" },
-  { theme: "void" },
-  { theme: "teal", tall: true },
-  { theme: "rose", cut: true, wide: true },
-];
+/* The header's own entrance now lives in <SectionHeader>. */
 
-const AUTOPLAY_MS = 3400;
-const RESUME_AFTER_MS = 5000;
-
-/* ── Entry animation ── */
-const fadeUp = {
-  hidden: { y: 26, opacity: 0 },
-  visible: {
-    y: 0,
-    opacity: 1,
-    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
-  },
-};
-
+/* ── Grid: stagger the three houses ── */
 const gridStagger = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.08, delayChildren: 0.1 } },
+  visible: { transition: { staggerChildren: 0.22, delayChildren: 0.1 } },
 };
 
-const cardIn = {
-  hidden: { y: 36, opacity: 0 },
+/* ── 1) The house is "raised" — tips up from the ground plane ── */
+const cardRaise = {
+  hidden: {
+    opacity: 0,
+    y: 90,
+    rotateX: 26,
+    scale: 0.94,
+    transformPerspective: 1300,
+  },
   visible: {
-    y: 0,
     opacity: 1,
-    transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] },
+    y: 0,
+    rotateX: 0,
+    scale: 1,
+    transformPerspective: 1300,
+    transition: { duration: 0.95, ease: EASE },
   },
 };
 
+/* ── 2) Orbit rings spring-pop, outermost first, badge last ── */
+const ringPop = {
+  hidden: { scale: 0, opacity: 0 },
+  visible: (i) => ({
+    scale: 1,
+    opacity: 1,
+    transition: {
+      delay: 0.4 + i * 0.1,
+      type: "spring",
+      stiffness: 240,
+      damping: 19,
+    },
+  }),
+};
+
+/* ── 3) Copy cascade ── */
+const copyIn = (delay) => ({
+  hidden: { opacity: 0, y: 18 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { delay, duration: 0.55, ease: EASE },
+  },
+});
+
+const listStagger = (delay) => ({
+  hidden: {},
+  visible: { transition: { delayChildren: delay, staggerChildren: 0.045 } },
+});
+
+const itemIn = {
+  hidden: { opacity: 0, x: -14 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.45, ease: EASE } },
+};
+
+const groupIn = {
+  hidden: { opacity: 0, y: 26, scale: 0.97 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.6, ease: EASE },
+  },
+};
+
+/* ── 4) Light-beam sheen seals the card ── */
+const sheenSweep = {
+  hidden: { x: "-160%", opacity: 0 },
+  visible: {
+    x: "340%",
+    opacity: [0, 0.9, 0],
+    transition: { delay: 0.85, duration: 1.05, ease: "easeInOut" },
+  },
+};
+
+/* Plain-fade fallbacks for prefers-reduced-motion */
+const justFade = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { duration: 0.5 } },
+};
+const noop = { hidden: {}, visible: {} };
+
+/*
+  Concentric circle stack + solid icon badge.
+  .house-orb  (plain)  → owns CSS translateZ depth + hover climbs
+  .house-circle (motion, fills orb) → owns the entrance spring-pop
+*/
+const CircleStack = ({ Icon, ring }) => (
+  <div aria-hidden className="house-logo">
+    {[0, 1, 2, 3].map((i) => (
+      <span key={i} className="house-orb">
+        <motion.span className="house-circle" variants={ring} custom={i} />
+      </span>
+    ))}
+    <span className="house-orb">
+      <motion.span className="house-circle" variants={ring} custom={4}>
+        <Icon strokeWidth={2} />
+      </motion.span>
+    </span>
+  </div>
+);
+
+/*
+  Bottom bar. The <a> stays plain so the CSS hover pop (translateZ 42px)
+  survives; the motion wrapper only handles the entrance fade-up.
+*/
+const ExploreCta = ({ href, label, variants }) => (
+  <div className="house-bottom">
+    <motion.span className="house-more-anim" variants={variants}>
+      <a href={href} className="house-more">
+        {label}
+        <svg
+          aria-hidden
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="3"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M5 12h14M13 6l6 6-6 6" />
+        </svg>
+      </a>
+    </motion.span>
+  </div>
+);
+
+const ServiceItem = ({ item, variants }) => (
+  <motion.li className="house-item" variants={variants}>
+    <span aria-hidden className="house-tick" />
+    <span>
+      {item.label}
+      {item.comingSoon && (
+        <span className="house-soon">
+          <span aria-hidden className="house-diamond" />
+          {CONTENT.comingSoonLabel}
+        </span>
+      )}
+    </span>
+  </motion.li>
+);
+
 const MainServices = () => {
-  const scrollerRef = useRef(null);
-  const railFillRef = useRef(null);
-  const [counter, setCounter] = useState(1);
-  const total = MAIN_SERVICES.length;
+  const reduceMotion = useReducedMotion();
 
-  /*
-    Mobile/tablet vertical auto-scroller.
-    - Snap-scrolls one card at a time every AUTOPLAY_MS.
-    - Any user interaction pauses it; it resumes after RESUME_AFTER_MS idle.
-    - Only runs while the scroller is on screen, only below 1024px,
-      and never when the user prefers reduced motion.
-    - The progress rail + counter track manual scrolling too.
-  */
-  useEffect(() => {
-    const el = scrollerRef.current;
-    const fill = railFillRef.current;
-    if (!el || !fill) return;
-
-    const mqMobile = window.matchMedia("(max-width: 1023px)");
-    const mqReduced = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const cells = Array.from(el.querySelectorAll(".ux-cell"));
-    if (!cells.length) return;
-
-    let paused = false;
-    let idleTimer = null;
-    let inView = false;
-    let raf = 0;
-
-    const nearestIndex = () => {
-      const center = el.scrollLeft + el.clientWidth / 2;
-      let best = 0;
-      let bestD = Infinity;
-      cells.forEach((c, i) => {
-        const d = Math.abs(c.offsetLeft + c.clientWidth / 2 - center);
-        if (d < bestD) {
-          bestD = d;
-          best = i;
-        }
-      });
-      return best;
-    };
-
-    const onScroll = () => {
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => {
-        const max = el.scrollWidth - el.clientWidth;
-        fill.style.transform = `scaleX(${max > 0 ? el.scrollLeft / max : 0})`;
-        setCounter(nearestIndex() + 1);
-      });
-    };
-
-    const pause = () => {
-      paused = true;
-      clearTimeout(idleTimer);
-      idleTimer = setTimeout(() => {
-        paused = false;
-      }, RESUME_AFTER_MS);
-    };
-
-    const io = new IntersectionObserver(
-      (entries) => {
-        inView = entries[0]?.isIntersecting ?? false;
-      },
-      { threshold: 0.3 }
-    );
-    io.observe(el);
-
-    const interactionEvents = ["pointerdown", "wheel", "touchstart", "keydown"];
-    el.addEventListener("scroll", onScroll, { passive: true });
-    interactionEvents.forEach((ev) =>
-      el.addEventListener(ev, pause, { passive: true })
-    );
-
-    const timer = setInterval(() => {
-      if (!mqMobile.matches || mqReduced.matches || paused || !inView) return;
-      const next = (nearestIndex() + 1) % cells.length;
-      const card = cells[next];
-      el.scrollTo({
-        left: card.offsetLeft - (el.clientWidth - card.clientWidth) / 2,
-        behavior: "smooth",
-      });
-    }, AUTOPLAY_MS);
-
-    onScroll();
-
-    return () => {
-      clearInterval(timer);
-      clearTimeout(idleTimer);
-      cancelAnimationFrame(raf);
-      io.disconnect();
-      el.removeEventListener("scroll", onScroll);
-      interactionEvents.forEach((ev) => el.removeEventListener(ev, pause));
-    };
-  }, []);
+  /* Swap the choreography for plain fades under reduced motion. */
+  const vCard = reduceMotion ? justFade : cardRaise;
+  const vRing = reduceMotion ? justFade : ringPop;
+  const vItem = reduceMotion ? justFade : itemIn;
+  const vGroup = reduceMotion ? justFade : groupIn;
+  const vSheen = reduceMotion ? noop : sheenSweep;
+  const vCopy = (d) => (reduceMotion ? justFade : copyIn(d));
+  const vList = (d) => (reduceMotion ? noop : listStagger(d));
 
   return (
     <section id="services" className="ms-section">
@@ -187,136 +218,142 @@ const MainServices = () => {
       <div className="ms-inner">
         <Container>
           {/* ── Header ── */}
-          <motion.header
+          <SectionHeader
             className="ms-header"
-            variants={fadeUp}
+            theme="light"
+            badge={CONTENT.badge}
+            headingLead={CONTENT.headingLead}
+            headingRest={CONTENT.headingRest}
+            subheading={CONTENT.subheading}
+          />
+
+          {/* ── 3-house grid ── */}
+          <motion.ul
+            className="house-grid"
+            variants={reduceMotion ? noop : gridStagger}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: "-80px" }}
+            viewport={{ once: true, margin: "-60px" }}
           >
-            <span className="ms-badge">
-              <span aria-hidden className="ms-badge-dot" />
-              {CONTENT.badge}
-            </span>
+            {MAIN_SERVICES.map((service) => {
+              const Icon = SERVICE_ICONS[service.icon] || Code2;
+              const isWide = Boolean(service.wide);
 
-            <h2 className="ms-heading">
-              <span className="ms-heading-lead">{CONTENT.headingLead}</span>{" "}
-              <span className="ms-heading-rest">{CONTENT.headingRest}</span>
-            </h2>
-            <p className="ms-sub">{CONTENT.subheading}</p>
-          </motion.header>
+              return (
+                <motion.li
+                  key={service.id}
+                  variants={vCard}
+                  className={
+                    isWide ? "house-cell house-cell--wide" : "house-cell"
+                  }
+                >
+                  <div className={isWide ? "house house--wide" : "house"}>
+                    <div className="house-card">
+                      <div aria-hidden className="house-glass" />
+                      <CircleStack Icon={Icon} ring={vRing} />
 
-          {/* ── Bento grid (desktop) / vertical auto-scroller (mobile & tablet) ── */}
-          <div className="ux-scroller">
-            <div className="ux-scroll-vp" ref={scrollerRef}>
-              <motion.ul
-                className="ux-grid"
-                variants={gridStagger}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-60px" }}
-              >
-                {MAIN_SERVICES.map((service, i) => {
-                  const cfg = CARD_CONFIG[i % CARD_CONFIG.length];
-                  const Icon = SERVICE_ICONS[service.icon] || LayoutTemplate;
+                      {/* Copy — flat (Z0) so glyphs stay pixel-crisp */}
+                      <div className="house-content">
+                        <motion.span
+                          className="house-kicker"
+                          variants={vCopy(0.25)}
+                        >
+                          {service.kicker}
+                        </motion.span>
+                        <motion.h3
+                          className="house-title"
+                          variants={vCopy(0.32)}
+                        >
+                          {service.title}
+                        </motion.h3>
+                        <motion.p
+                          className="house-tagline"
+                          variants={vCopy(0.4)}
+                        >
+                          <strong>{service.taglineStrong}</strong>{" "}
+                          {service.tagline}
+                        </motion.p>
 
-                  const cellClasses = [
-                    "ux-cell",
-                    cfg.wide ? "ux-cell--wide" : "",
-                    cfg.tall ? "ux-cell--tall" : "",
-                  ]
-                    .filter(Boolean)
-                    .join(" ");
+                        {/* Development & Creative — cascading checklist */}
+                        {service.items && (
+                          <motion.ul
+                            className="house-list"
+                            variants={vList(0.5)}
+                          >
+                            {service.items.map((item) => (
+                              <ServiceItem
+                                key={item.label}
+                                item={item}
+                                variants={vItem}
+                              />
+                            ))}
+                          </motion.ul>
+                        )}
 
-                  const parentClasses = [
-                    "ux-parent",
-                    `ux-parent--${cfg.theme}`,
-                    cfg.cut ? "ux-parent--cut" : "",
-                    cfg.wide ? "ux-parent--wide" : "",
-                    service.featured ? "ux-parent--featured" : "",
-                  ]
-                    .filter(Boolean)
-                    .join(" ");
-
-                  return (
-                    <motion.li key={service.id} variants={cardIn} className={cellClasses}>
-                      <div className={parentClasses}>
-                        <div className="ux-card">
-                          <div aria-hidden className="ux-glass" />
-
-                          {service.comingSoon && (
-                            <span
-                              aria-hidden
-                              className="ux-diamond ux-diamond--corner"
-                            />
-                          )}
-
-                          {/* Copy floats at Z26 above the glass */}
-                          <div className="ux-content">
-                            <span className="ux-title">{service.title}</span>
-                            <span className="ux-text">
-                              {service.description}
-                              {service.note && (
-                                <>
-                                  {" "}
-                                  <strong>{service.note.strong}</strong>
-                                  {service.note.rest}
-                                </>
-                              )}
-                            </span>
-                          </div>
-
-                          {/* Concentric circle stack — solid badge on top */}
-                          <div aria-hidden className="ux-logo">
-                            <span className="ux-circle" />
-                            <span className="ux-circle" />
-                            <span className="ux-circle" />
-                            <span className="ux-circle" />
-                            <span className="ux-circle">
-                              <Icon strokeWidth={2} />
-                            </span>
-                          </div>
-
-                          {/* Bottom bar — CTA pops toward the viewer on hover */}
-                          <div className="ux-bottom">
-                            {service.comingSoon ? (
-                              <span className="ux-soon">
-                                <span aria-hidden className="ux-diamond" />
-                                {CONTENT.comingSoonLabel}
-                              </span>
-                            ) : (
-                              <a href={service.href} className="ux-more">
-                                {CONTENT.exploreLabel}
-                                <svg
-                                  aria-hidden
-                                  viewBox="0 0 24 24"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  strokeWidth="3"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
+                        {/* Marketing — 2×2 sub-group panels rise in turn */}
+                        {service.groups && (
+                          <motion.div
+                            className="house-groups"
+                            variants={vList(0.45)}
+                          >
+                            {service.groups.map((group) => {
+                              const GroupIcon =
+                                SERVICE_ICONS[group.icon] || Search;
+                              return (
+                                <motion.div
+                                  key={group.label}
+                                  className="house-group"
+                                  variants={vGroup}
+                                  whileHover={
+                                    reduceMotion ? undefined : { y: -4 }
+                                  }
                                 >
-                                  <path d="M5 12h14M13 6l6 6-6 6" />
-                                </svg>
-                              </a>
-                            )}
-                          </div>
-                        </div>
+                                  <p className="house-group-label">
+                                    <GroupIcon
+                                      aria-hidden
+                                      strokeWidth={2.2}
+                                      className="house-group-icon"
+                                    />
+                                    {group.label}
+                                  </p>
+                                  <motion.ul
+                                    className="house-list house-list--group"
+                                    variants={vList(0.1)}
+                                  >
+                                    {group.items.map((label) => (
+                                      <ServiceItem
+                                        key={label}
+                                        item={{ label }}
+                                        variants={vItem}
+                                      />
+                                    ))}
+                                  </motion.ul>
+                                </motion.div>
+                              );
+                            })}
+                          </motion.div>
+                        )}
                       </div>
-                    </motion.li>
-                  );
-                })}
-              </motion.ul>
-            </div>
 
-            {/* Progress rail + counter — mobile/tablet scroller only */}
-            <div aria-hidden className="ux-rail">
-              <span className="ux-rail-fill" ref={railFillRef} />
-            </div>
-            <p className="ux-counter" aria-live="polite">
-              {counter} / {total}
-            </p>
-          </div>
+                      <ExploreCta
+                        href={service.href}
+                        label={service.ctaLabel}
+                        variants={vCopy(0.6)}
+                      />
+
+                      {/* Light-beam sheen — sweeps once to seal the card */}
+                      <div aria-hidden className="house-sheen-wrap">
+                        <motion.span
+                          className="house-sheen"
+                          variants={vSheen}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </motion.li>
+              );
+            })}
+          </motion.ul>
         </Container>
       </div>
     </section>

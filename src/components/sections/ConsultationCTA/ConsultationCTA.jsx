@@ -12,14 +12,17 @@
 
 import { useEffect, useRef } from "react";
 import Script from "next/script";
-import { motion, useReducedMotion } from "framer-motion";
+import { useReducedMotion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { SectionHeader } from "@/components/ui";
 import {
   CONSULTATION_CTA_CONTENT as CONTENT,
   CONSULTATION_CTA_FORM as FORM,
 } from "@/data";
 import "./consultationCta.css";
+// Rendered at the foot of this section (not a standalone page section).
+import OurPartners from "../OurPartners/OurPartners";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -125,32 +128,14 @@ export default function ConsultationCTA() {
 
       <div className="mx-auto max-w-7xl">
         {/* ------------------------------ heading ----------------------------- */}
-        <motion.div
-          initial={prefersReducedMotion ? false : { opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          className="mx-auto max-w-3xl text-center"
-        >
-          <span className="inline-flex items-center gap-2 rounded-full border border-cyan-400/40 bg-cyan-50/80 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.2em] text-cyan-600 shadow-[0_0_20px_-6px_rgba(34,211,238,0.5)]">
-            <span className="relative flex h-1.5 w-1.5">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-cyan-400 opacity-75" />
-              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-cyan-500" />
-            </span>
-            {CONTENT.badge}
-          </span>
-
-          <h2 className="mt-5 text-3xl font-extrabold leading-tight tracking-tight text-[#14162B] sm:text-4xl lg:text-[2.9rem]">
-            {CONTENT.headingLead}{" "}
-            <span className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">
-              {CONTENT.headingHighlight}
-            </span>
-          </h2>
-
-          <p className="mx-auto mt-4 max-w-xl text-[15px] leading-relaxed text-slate-500 sm:text-base">
-            {CONTENT.subheading}
-          </p>
-        </motion.div>
+        <SectionHeader
+          className="mx-auto max-w-3xl"
+          theme="light"
+          badge={CONTENT.badge}
+          headingLead={CONTENT.headingLead}
+          headingRest={CONTENT.headingHighlight}
+          subheading={CONTENT.subheading}
+        />
 
         {/* --------------------------- blueprint card -------------------------- */}
         <div className="relative mx-auto mt-12 max-w-6xl md:mt-16">
@@ -331,6 +316,10 @@ export default function ConsultationCTA() {
             </div>
           </div>
         </div>
+
+        {/* Agency-style "platforms we build with" logo strip — lives at the
+            foot of this section rather than as its own page block. */}
+        <OurPartners />
       </div>
     </section>
   );

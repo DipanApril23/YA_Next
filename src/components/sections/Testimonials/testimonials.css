@@ -1,0 +1,56 @@
+/* ═══════════════════════════════════════════════════════════════
+   TESTIMONIALS — infinite marquee rows
+   Ported from the Elogix/Expendesk TestimonialsSection design. All the
+   card styling lives in Tailwind classes inside Testimonials.jsx; the
+   only thing that has to be real CSS is the keyframe loop, because
+   Tailwind can't express a continuous linear-infinite translate.
+
+   HOW THE SEAMLESS LOOP WORKS
+   The JSX renders each row's items TWICE ([...items, ...items]), so the
+   track is exactly two identical halves. Animating to translateX(-50%)
+   therefore lands precisely on the start of the second copy — the jump
+   back to 0% is invisible, at any card count or screen width, with no
+   width math and no resize listeners.
+
+   Duration is set per row from the data (inline animationDuration), and
+   hover/touch pauses a row via inline animationPlayState — that is why
+   the classes below deliberately declare no duration of their own.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* The badge / headline / subheading come from the shared
+   <SectionHeader theme="light"> (src/components/ui/SectionHeader) — the
+   Hero's chip, gradient headline and sub-paragraph, shared by every
+   section. Only the marquee below is specific to this section. */
+
+/* ═══════════════════════════════════════════════════════════════
+   MARQUEE
+   ═══════════════════════════════════════════════════════════════ */
+
+@keyframes yaMarqueeLeft {
+  from { transform: translateX(0%); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes yaMarqueeRight {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0%); }
+}
+
+.ya-marquee-left  { animation: yaMarqueeLeft  linear infinite; }
+.ya-marquee-right { animation: yaMarqueeRight linear infinite; }
+
+/* Promote the track to its own layer — without this, Chrome re-rasterises
+   the (fairly heavy) card shadows every frame and the text shimmers. */
+.ya-marquee-left,
+.ya-marquee-right {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+
+/* Motion-sensitive users get a static, readable row instead of a loop. */
+@media (prefers-reduced-motion: reduce) {
+  .ya-marquee-left,
+  .ya-marquee-right {
+    animation: none !important;
+  }
+}

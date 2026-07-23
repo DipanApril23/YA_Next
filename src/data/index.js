@@ -14,6 +14,13 @@ export { NAV_ITEMS, NAV_CONTENT } from "./nav";
 export { MAIN_SERVICES, MAIN_SERVICES_CONTENT } from "./mainServices";
 export { OURPROCESS_CONTENT, OURPROCESS_STEPS, OURPROCESS_PARTICLES } from "./ourProcess";
 export { CONSULTATION_CTA_CONTENT, CONSULTATION_CTA_FORM } from "./consultationCta";
+export {
+  OURPARTNERS_CONTENT,
+  OURPARTNERS_ROW_ONE,
+  OURPARTNERS_ROW_TWO,
+} from "./ourPartners";
+export { CASESTUDIES_CONTENT, CASESTUDIES_ITEMS } from "./caseStudies";
+export { TESTIMONIALS_CONTENT, TESTIMONIALS_ITEMS } from "./testimonials";
 export { WHYCHOOSE_CONTENT } from "./whyChoose";
 export { NOT_FOUND_CONTENT } from "./notFound";
 export {

@@ -90,7 +90,9 @@ src/
 │   │   ├── Hero/               #   Hero.jsx + hero.css                       (dark)
 │   │   ├── MainServices/       #   MainServices.jsx + mainServices.css       (light)
 │   │   ├── OurProcess/         #   OurProcess.jsx + ourProcess.css           (dark)
+│   │   ├── CaseStudies/        #   CaseStudies.jsx + caseStudies.css         (theme: your choice)
 │   │   ├── ConsultationCTA/    #   ConsultationCTA.jsx + consultationCta.css (light)
+│   │   ├── OurPartners/        #   OurPartners.jsx + ourPartners.css  (embedded in ConsultationCTA)
 │   │   ├── WhyChoose/          #   WhyChoose.jsx + WhyChoose.module.css      (dark)
 │   │   └── index.js
 │   │
@@ -107,7 +109,9 @@ src/
 │   ├── hero.js                 # HERO_CONTENT, HERO_CTAS, HERO_STATS, HERO_BENEFITS, HERO_PARTICLES
 │   ├── mainServices.js         # MAIN_SERVICES_CONTENT + MAIN_SERVICES (the 8 cards)
 │   ├── ourProcess.js           # OURPROCESS_CONTENT, OURPROCESS_STEPS, OURPROCESS_PARTICLES
+│   ├── caseStudies.js          # CASESTUDIES_CONTENT + CASESTUDIES_ITEMS
 │   ├── consultationCta.js      # CONSULTATION_CTA_CONTENT + CONSULTATION_CTA_FORM (pure JSON-ready)
+│   ├── ourPartners.js          # OURPARTNERS_CONTENT + OURPARTNERS_ROW_ONE/TWO (pure JSON-ready)
 │   ├── whyChoose.js            # WHYCHOOSE_CONTENT (rich copy segments)
 │   ├── flipCard.js             # FLIPCARD_SERVICES, FLIPCARD_QR_CORNERS, FLIPCARD_DEFAULTS
 │   ├── footer.js               # FOOTER_CONTENT, FOOTER_QUICK_LINKS, FOOTER_OTHER_LINKS, FOOTER_CONTACT
@@ -129,8 +133,9 @@ supplies the surrounding background:
 | 1 | `Hero` | dark (`#03030a`) |
 | 2 | `MainServices` | **light** — owns its own gradient background |
 | 3 | `OurProcess` | dark (`#05050c`) — scroll-drawn "blueprint spine" timeline |
-| 4 | `ConsultationCTA` | **light** (`#F5F7FE`) — mid-page consultation booking form |
-| 5 | `WhyChoose` | dark |
+| 4 | `CaseStudies` | proof / results — theme TBD by the section |
+| 5 | `ConsultationCTA` | **light** (`#F5F7FE`) — mid-page booking form; embeds the `OurPartners` logo strip at its foot |
+| 6 | `WhyChoose` | dark |
 
 ---
 

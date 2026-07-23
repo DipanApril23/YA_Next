@@ -13,7 +13,7 @@
 export const OURPROCESS_CONTENT = {
   badge: "Our Process",
   headingLead: "Simple Process for",
-  // Rendered inside the shimmering gradient span (.op-heading-highlight).
+  // Passed to SectionHeader as `headingRest` — the solid half of the headline.
   headingHighlight: "Seamless Results",
   subheading:
     "Follow our easy, step-by-step approach to get the perfect solution for your needs. From understanding your goals to delivering results, we make it quick and hassle-free.",
