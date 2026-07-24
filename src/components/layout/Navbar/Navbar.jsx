@@ -9,10 +9,9 @@ import Link from "next/link";
 import Image from "next/image";
 
 import {
-  motion,
+  m,
   AnimatePresence,
   useScroll,
-  useMotionValueEvent,
 } from "framer-motion";
 
 import {
@@ -50,7 +49,7 @@ function NavDropdown({ items, isOpen }) {
   return (
     <AnimatePresence mode="wait">
       {isOpen && (
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 14, scale: 0.95 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 8, scale: 0.97 }}
@@ -64,7 +63,7 @@ function NavDropdown({ items, isOpen }) {
               const Icon = item.icon;
 
               return (
-                <motion.a
+                <m.a
                   key={item.label}
                   href={item.href}
                   initial={{ opacity: 0, x: -6 }}
@@ -87,11 +86,11 @@ function NavDropdown({ items, isOpen }) {
                   </div>
 
                   <ArrowUpRight className="ml-auto h-3.5 w-3.5 -translate-x-1 translate-y-1 text-purple-400 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:translate-y-0 group-hover:opacity-100" />
-                </motion.a>
+                </m.a>
               );
             })}
           </div>
-        </motion.div>
+        </m.div>
       )}
     </AnimatePresence>
   );
@@ -103,16 +102,13 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(null);
-  const [scrollPct, setScrollPct] = useState(0);
 
   const navRef = useRef(null);
   const dropdownTimeout = useRef(null);
 
+  /* Bound straight to the progress bar's scaleX below — framer writes the
+     transform without a React re-render per scroll frame. */
   const { scrollYProgress } = useScroll();
-
-  useMotionValueEvent(scrollYProgress, "change", (value) => {
-    setScrollPct(value);
-  });
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -169,22 +165,18 @@ export default function Navbar() {
     <>
       {/* Scroll Progress Bar */}
 
-      <motion.div
+      <m.div
         className="fixed inset-x-0 top-0 z-[100] h-[2.5px] origin-left bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"
-        style={{ scaleX: scrollPct }}
+        style={{ scaleX: scrollYProgress }}
       />
 
-      <motion.header
+      {/* Entrance is a CSS animation (nav-drop, navbar.css) so the bar is
+          painted from the server HTML instead of waiting for hydration. */}
+      <header
         ref={navRef}
-        initial={{ y: -80, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{
-          duration: 0.5,
-          ease: SMOOTH_EASE,
-        }}
-        className="fixed inset-x-0 top-0 z-50 px-4 pt-3 sm:px-6 lg:px-8"
+        className="nav-drop fixed inset-x-0 top-0 z-50 px-4 pt-3 sm:px-6 lg:px-8"
       >
-        <motion.div
+        <m.div
           animate={{
             height: scrolled ? 54 : 66,
 
@@ -209,7 +201,7 @@ export default function Navbar() {
             href={NAV_CONTENT.brandHref}
             className="group relative z-20 flex items-center"
           >
-            <motion.div
+            <m.div
               animate={{
                 scale: scrolled ? 0.93 : 1,
               }}
@@ -222,6 +214,11 @@ export default function Navbar() {
                 src={brandLogo}
                 alt={NAV_CONTENT.brandLogoAlt}
                 priority
+                /* The source file is 5448px wide but the bar renders it
+                   ~95px. Without `sizes`, next/image preloads the 3840px
+                   variant (~54KB) on the critical path; this pins it to a
+                   variant sized for the real slot. Same rendered pixels. */
+                sizes="120px"
                 className={`
                   object-contain transition-all duration-300
                   ${scrolled
@@ -229,7 +226,7 @@ export default function Navbar() {
                     : "h-[42px] w-auto"}
                 `}
               />
-            </motion.div>
+            </m.div>
           </Link>
 
           {/* Desktop Nav - Breakpoint updated to 1100px */}
@@ -251,14 +248,14 @@ export default function Navbar() {
                     <button className="nav-underline-item group relative flex items-center gap-1 rounded-full px-3.5 py-1.5 text-[13px] font-medium text-white/70 transition-colors duration-200 hover:text-white">
                       <span>{item.label}</span>
 
-                      <motion.div
+                      <m.div
                         animate={{
                           rotate: isOpen ? 180 : 0,
                         }}
                         transition={FAST_SPRING}
                       >
                         <ChevronDown className="h-3.5 w-3.5 text-white/40 transition-colors duration-200 group-hover:text-purple-400" />
-                      </motion.div>
+                      </m.div>
                     </button>
                   ) : (
                     <a
@@ -314,7 +311,7 @@ export default function Navbar() {
             className="relative z-[90] flex h-8.5 w-8.5 items-center justify-center rounded-xl transition-all duration-300 hover:bg-white/5 min-[1100px]:hidden"
           >
             <div className="relative flex h-3 w-4 flex-col justify-between">
-              <motion.span
+              <m.span
                 animate={
                   mobileOpen
                     ? { rotate: 45, y: 5 }
@@ -323,7 +320,7 @@ export default function Navbar() {
                 className="h-[2px] w-4 origin-center rounded-full bg-white"
               />
 
-              <motion.span
+              <m.span
                 animate={
                   mobileOpen
                     ? { opacity: 0, scale: 0 }
@@ -332,7 +329,7 @@ export default function Navbar() {
                 className="h-[2px] w-4 rounded-full bg-white"
               />
 
-              <motion.span
+              <m.span
                 animate={
                   mobileOpen
                     ? { rotate: -45, y: -5 }
@@ -342,8 +339,8 @@ export default function Navbar() {
               />
             </div>
           </button>
-        </motion.div>
-      </motion.header>
+        </m.div>
+      </header>
 
       {/* Mobile Sidebar */}
 

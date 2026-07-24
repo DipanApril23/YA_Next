@@ -262,3 +262,35 @@
 .hero-rise-2 { animation-delay: 0.14s; }
 .hero-rise-3 { animation-delay: 0.26s; }
 .hero-rise-4 { animation-delay: 0.36s; }
+
+/*
+  Fade-up entrance for the chip / CTAs / benefits / stats / closing line.
+  Same values the old Framer `fadeUp` variant used — y:28→0, opacity 0→1,
+  0.75s, cubic-bezier(0.22,1,0.36,1), per-element delays — but as a CSS
+  animation it starts at paint time instead of waiting for hydration, which
+  is what keeps mobile LCP fast on slow connections.
+*/
+@keyframes heroFadeUp {
+  from { transform: translateY(28px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+.hero-fade {
+  animation: heroFadeUp 0.75s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.hero-fade--chip { animation-delay: 0.1s; }
+.hero-fade--closing { animation-delay: 0.9s; }
+.hero-fade--ctas { animation-delay: 1.1s; }
+.hero-fade--benefits { animation-delay: 1.25s; }
+.hero-fade--stats { animation-delay: 1.4s; }
+
+/*
+  FlipCard column entrance — the old Framer `flipCardIn`: y:35→0 with a
+  12px blur resolving over 1.05s after a 0.35s delay.
+*/
+@keyframes heroCardIn {
+  from { transform: translateY(35px); opacity: 0; filter: blur(12px); }
+  to { transform: translateY(0); opacity: 1; filter: blur(0px); }
+}
+.hero-card-in {
+  animation: heroCardIn 1.05s cubic-bezier(0.22, 1, 0.36, 1) 0.35s both;
+}

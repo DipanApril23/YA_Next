@@ -6,7 +6,7 @@
 // flipcard.css. Client component (pointer-tilt via Framer Motion).
 
 import { useState, useRef, useCallback } from "react";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { m, useMotionValue, useSpring, useTransform } from "framer-motion";
 import Image from "next/image";
 import {
   FLIPCARD_SERVICES as SERVICES,
@@ -84,7 +84,7 @@ const FlipCard = ({
         <div aria-hidden className="fc-ring-outer" />
         <div aria-hidden className="fc-ring-inner" />
 
-        <motion.div
+        <m.div
           ref={tiltRef}
           className="fc-tilt"
           onClick={handleFlip}
@@ -95,7 +95,7 @@ const FlipCard = ({
           transition={FLOAT.transition}
         >
           {/* ── Flip container ────────────────────────────── */}
-          <motion.div
+          <m.div
             className="fc-flip"
             animate={{ rotateY: isFlipped ? 180 : 0 }}
             transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
@@ -163,7 +163,7 @@ const FlipCard = ({
               {/* Services list */}
               <div className="fc-services-list">
                 {SERVICES.map((svc) => (
-                  <motion.div
+                  <m.div
                     key={svc.label}
                     className="fc-service"
                     style={serviceVars(svc)}
@@ -173,18 +173,18 @@ const FlipCard = ({
                     <span className="fc-service-icon">{svc.icon}</span>
                     <span className="fc-service-label">{svc.label}</span>
                     <span className="fc-service-dot" />
-                  </motion.div>
+                  </m.div>
                 ))}
               </div>
 
               <div aria-hidden className="fc-edge fc-edge--bottom fc-edge--cyan-soft" />
             </div>
-          </motion.div>
-        </motion.div>
+          </m.div>
+        </m.div>
       </div>
 
       {/* ── "Tap to flip" indicator ─────────────────────────── */}
-      <motion.button
+      <m.button
         onClick={handleFlip}
         className="fc-flip-btn"
         initial={{ opacity: 0, y: 8 }}
@@ -210,7 +210,7 @@ const FlipCard = ({
           <path d="M8 16H3v5" />
         </svg>
         <span className="fc-flip-label">{isFlipped ? "Flip Back" : "Flip Card"}</span>
-      </motion.button>
+      </m.button>
     </div>
   );
 };

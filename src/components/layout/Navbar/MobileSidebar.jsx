@@ -5,7 +5,7 @@
 // Same data source: NAV_ITEMS / NAV_CONTENT (src/data/nav.js).
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import { ChevronDown, ArrowUpRight, Sparkles } from "lucide-react";
 import { NAV_ITEMS, NAV_CONTENT } from "@/data";
 
@@ -37,7 +37,7 @@ export default function MobileSideBar({ isOpen, onClose }) {
   return (
     <AnimatePresence>
       {isOpen && (
-        <motion.div
+        <m.div
   data-mobile-menu="true"
   onClick={(e) => e.stopPropagation()}
   initial={{ opacity: 0, y: 12, scale: 0.96 }}
@@ -72,7 +72,7 @@ export default function MobileSideBar({ isOpen, onClose }) {
               const isSubOpen = activeDropdown === item.label;
 
               return (
-                <motion.div
+                <m.div
                   key={item.label}
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -117,7 +117,7 @@ export default function MobileSideBar({ isOpen, onClose }) {
                           {item.label}
                         </span>
 
-                        <motion.div
+                        <m.div
                           animate={{
                             rotate: isSubOpen ? 180 : 0,
                           }}
@@ -137,12 +137,12 @@ export default function MobileSideBar({ isOpen, onClose }) {
                           `}
                         >
                           <ChevronDown className="h-3 w-3" />
-                        </motion.div>
+                        </m.div>
                       </button>
 
                       <AnimatePresence initial={false}>
                         {isSubOpen && (
-                          <motion.div
+                          <m.div
                             initial={{
                               height: 0,
                               opacity: 0,
@@ -225,7 +225,7 @@ export default function MobileSideBar({ isOpen, onClose }) {
                                 );
                               })}
                             </div>
-                          </motion.div>
+                          </m.div>
                         )}
                       </AnimatePresence>
                     </div>
@@ -274,14 +274,14 @@ export default function MobileSideBar({ isOpen, onClose }) {
                       />
                     </a>
                   )}
-                </motion.div>
+                </m.div>
               );
             })}
           </div>
 
           {/* Bottom CTA */}
           <div className="mt-1.5 border-t border-white/10 pt-1.5">
-            <motion.a
+            <m.a
               whileTap={{ scale: 0.98 }}
               transition={FAST_SPRING}
               href={NAV_CONTENT.cta.href}
@@ -328,9 +328,9 @@ export default function MobileSideBar({ isOpen, onClose }) {
               </span>
 
               <Sparkles className="relative z-10 h-3 w-3 text-pink-300" />
-            </motion.a>
+            </m.a>
           </div>
-        </motion.div>
+        </m.div>
       )}
     </AnimatePresence>
   );

@@ -3,14 +3,15 @@
 
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
+import MotionProvider from "../MotionProvider/MotionProvider";
 
 const Layout = ({ children }) => {
   return (
-    <>
+    <MotionProvider>
       <Header />
       <main>{children}</main>
       <Footer />
-    </>
+    </MotionProvider>
   );
 };
 

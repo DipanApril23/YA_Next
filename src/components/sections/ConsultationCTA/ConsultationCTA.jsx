@@ -285,6 +285,7 @@ export default function ConsultationCTA() {
             <div className="ya-form-panel relative flex flex-col p-3 sm:p-6 lg:p-8">
               <iframe
                 src={GHL_FORM_URL}
+                loading="lazy"
                 id={`inline-${FORM.id}`}
                 title={FORM.title}
                 className="cta-form-iframe w-full flex-1 rounded-2xl border-0"

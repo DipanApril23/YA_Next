@@ -5,7 +5,7 @@
 // "primary" (gradient) and "secondary" (glass). Gradient layers → button.css.
 
 import React, { useState, useRef } from "react";
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import { m, useMotionValue, useSpring } from "framer-motion";
 import classNames from "classnames";
 import "./button.css";
 
@@ -34,7 +34,7 @@ const Button = ({ children, className, variant = "primary", onClick, ...props })
   /* ─── SECONDARY / GLASS ─── */
   if (variant === "secondary") {
     return (
-      <motion.button
+      <m.button
         ref={ref}
         style={{ x: springX, y: springY }}
         onMouseMove={handleMouseMove}
@@ -53,7 +53,7 @@ const Button = ({ children, className, variant = "primary", onClick, ...props })
         <span className="relative z-10 tracking-wide">{children}</span>
 
         {/* Hover sweep */}
-        <motion.span
+        <m.span
           aria-hidden
           className="pointer-events-none absolute inset-0 bg-gradient-to-r from-transparent via-white/12 to-transparent"
           animate={{ x: isHovered ? "200%" : "-100%" }}
@@ -61,7 +61,7 @@ const Button = ({ children, className, variant = "primary", onClick, ...props })
         />
 
         {/* Cyan border glow on hover */}
-        <motion.span
+        <m.span
           aria-hidden
           className="pointer-events-none absolute inset-0 rounded-xl"
           animate={{
@@ -71,13 +71,13 @@ const Button = ({ children, className, variant = "primary", onClick, ...props })
           }}
           transition={{ duration: 0.3 }}
         />
-      </motion.button>
+      </m.button>
     );
   }
 
   /* ─── PRIMARY / GRADIENT ─── */
   return (
-    <motion.button
+    <m.button
       ref={ref}
       style={{ x: springX, y: springY }}
       onMouseMove={handleMouseMove}
@@ -100,7 +100,7 @@ const Button = ({ children, className, variant = "primary", onClick, ...props })
       />
 
       {/* Hover state — slightly lighter gradient */}
-      <motion.span
+      <m.span
         aria-hidden
         className="btn-gradient-hover pointer-events-none absolute inset-0 rounded-xl"
         animate={{ opacity: isHovered ? 1 : 0 }}
@@ -108,7 +108,7 @@ const Button = ({ children, className, variant = "primary", onClick, ...props })
       />
 
       {/* Light sweep */}
-      <motion.span
+      <m.span
         aria-hidden
         className="pointer-events-none absolute inset-0 bg-gradient-to-r from-transparent via-white/25 to-transparent"
         animate={{ x: isHovered ? "220%" : "-100%" }}
@@ -116,7 +116,7 @@ const Button = ({ children, className, variant = "primary", onClick, ...props })
       />
 
       {/* Outer glow */}
-      <motion.span
+      <m.span
         aria-hidden
         className="btn-glow pointer-events-none absolute -bottom-1 left-6 right-6 h-2 rounded-full blur-md"
         animate={{ opacity: isHovered ? 0 : 0.55, scaleX: isHovered ? 0.8 : 1 }}
@@ -124,7 +124,7 @@ const Button = ({ children, className, variant = "primary", onClick, ...props })
       />
 
       <span className="relative z-10 tracking-wide">{children}</span>
-    </motion.button>
+    </m.button>
   );
 };
 

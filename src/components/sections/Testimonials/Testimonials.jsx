@@ -18,7 +18,7 @@
  */
 
 import { useRef, useState } from "react";
-import { motion, useInView } from "framer-motion";
+import { m, useInView } from "framer-motion";
 import { SectionHeader } from "@/components/ui";
 import {
   TESTIMONIALS_CONTENT as CONTENT,
@@ -320,7 +320,7 @@ export default function Testimonials() {
           Mobile/tablet get side gutters via px-5 / sm:px-8 so the cards
           don't run edge-to-edge; lg returns to px-4 because max-w-7xl
           already creates the desktop gutter. */}
-      <motion.div
+      <m.div
         initial={{ opacity: 0 }}
         animate={isInView ? { opacity: 1 } : {}}
         transition={{ duration: 0.9, delay: 0.42 }}
@@ -348,10 +348,10 @@ export default function Testimonials() {
           style={{ backgroundImage: `linear-gradient(to left, ${surface}, transparent)` }}
           aria-hidden="true"
         />
-      </motion.div>
+      </m.div>
 
       {/* ─────────────────── BOTTOM CTA ────────────────────────────────── */}
-      <motion.div
+      <m.div
         initial={{ opacity: 0, y: 22 }}
         animate={isInView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.65, delay: 0.56 }}
@@ -377,7 +377,7 @@ export default function Testimonials() {
             {CONTENT.bottomCta.post}
           </p>
         </div>
-      </motion.div>
+      </m.div>
     </section>
   );
 }

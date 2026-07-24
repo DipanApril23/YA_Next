@@ -14,7 +14,7 @@
    ============================================================ */
 
 import { useEffect, useRef } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { m, useReducedMotion } from "framer-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SectionHeader } from "@/components/ui";
@@ -229,7 +229,7 @@ export default function OurProcess() {
                   </div>
 
                   {/* Ghost numeral + phase annotation (desktop) */}
-                  <motion.div
+                  <m.div
                     className={`op-ghost ${cardOnLeft ? "op-ghost--left" : "op-ghost--right"}`}
                     aria-hidden="true"
                     variants={numeralIn(cardOnLeft)}
@@ -242,17 +242,17 @@ export default function OurProcess() {
                       <span className="op-ghost-line" />
                       {step.phase}
                     </span>
-                  </motion.div>
+                  </m.div>
 
                   {/* Step card: glass + border-beam */}
-                  <motion.div
+                  <m.div
                     className={`op-card-col ${cardOnLeft ? "op-card-col--left" : "op-card-col--right"}`}
                     variants={cardIn(cardOnLeft)}
                     initial="hidden"
                     whileInView="show"
                     viewport={{ once: true, amount: 0.35 }}
                   >
-                    <motion.article
+                    <m.article
                       className="op-card"
                       whileHover={prefersReduced ? {} : { y: -7 }}
                       transition={{ type: "spring", stiffness: 300, damping: 22 }}
@@ -289,8 +289,8 @@ export default function OurProcess() {
                           </span>
                         </div>
                       </div>
-                    </motion.article>
-                  </motion.div>
+                    </m.article>
+                  </m.div>
                 </li>
               );
             })}

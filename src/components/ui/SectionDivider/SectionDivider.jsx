@@ -22,7 +22,7 @@
 // The draw-in re-runs every time the seam re-enters the viewport
 // (`viewport.once: false`), so scrubbing the page keeps re-drawing it.
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import "./sectionDivider.css";
 
 const EASE = [0.22, 1, 0.36, 1];
@@ -39,7 +39,7 @@ export default function SectionDivider({ className = "" }) {
   return (
     <div aria-hidden="true" className={`ya-div ${className}`.trim()}>
       <div className="ya-div-inner">
-        <motion.span
+        <m.span
           className="ya-div-bloom"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -49,7 +49,7 @@ export default function SectionDivider({ className = "" }) {
 
         {/* The rule — draws outward from the centre */}
         <div className="ya-div-lineWrap">
-          <motion.div
+          <m.div
             className="ya-div-line"
             initial={{ scaleX: 0, opacity: 0 }}
             whileInView={{ scaleX: 1, opacity: 1 }}
@@ -58,12 +58,12 @@ export default function SectionDivider({ className = "" }) {
           >
             <span className="ya-div-beam" />
             <span className="ya-div-sweep" />
-          </motion.div>
+          </m.div>
         </div>
 
         {/* Measurement ticks — step outward after the rule lands */}
         {TICKS.map(([pos, weight], i) => (
-          <motion.span
+          <m.span
             key={pos}
             className={`ya-div-tick ya-div-tick--${weight} ya-div-tick--${pos}`}
             initial={{ opacity: 0, scaleY: 0 }}
@@ -74,7 +74,7 @@ export default function SectionDivider({ className = "" }) {
         ))}
 
         {/* The node — scale lives here, rotation lives on the child */}
-        <motion.span
+        <m.span
           className="ya-div-nodeWrap"
           initial={{ scale: 0, opacity: 0 }}
           whileInView={{ scale: 1, opacity: 1 }}
@@ -83,7 +83,7 @@ export default function SectionDivider({ className = "" }) {
         >
           <span className="ya-div-node" />
           <span className="ya-div-node-ring" />
-        </motion.span>
+        </m.span>
       </div>
     </div>
   );

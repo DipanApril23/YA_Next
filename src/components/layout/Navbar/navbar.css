@@ -8,6 +8,19 @@ html {
   scroll-behavior: smooth;
 }
 
+/*
+  Navbar entrance — same slide-down the old Framer initial/animate pair
+  produced (y:-80 → 0, opacity 0 → 1, 0.5s, cubic-bezier(0.16,1,0.3,1)),
+  but run from CSS at paint time so the bar is visible before JS hydrates.
+*/
+@keyframes navDrop {
+  from { transform: translateY(-80px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+.nav-drop {
+  animation: navDrop 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
 .nav-underline-item {
   position: relative;
 }

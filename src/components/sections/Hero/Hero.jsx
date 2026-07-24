@@ -3,10 +3,17 @@
 // ─── Hero ─────────────────────────────────────────────────────────────
 // Dark landing section: headline, lead copy, CTAs, benefits checklist, the
 // FlipCard, and a deterministic particle field. Content → src/data/hero.js,
-// styles → hero.css. Client component (scroll parallax via Framer Motion).
+// styles → hero.css. Client component (scroll parallax).
+//
+// PERFORMANCE — no framer-motion here. Every entrance is a CSS animation
+// (`hero-rise` / `hero-fade` / `hero-card-in` in hero.css) with the same
+// distances, durations, easings and delays the old Framer variants used, so
+// the choreography is identical — but it runs at paint time instead of
+// waiting for JS to hydrate. That is what fixes the mobile LCP: the copy no
+// longer sits at opacity:0 until the bundle arrives. The scroll parallax is
+// a ~20-line rAF handler writing transforms straight to the layer refs.
 
-import { useEffect, useRef, useState } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { useEffect, useRef } from "react";
 import { Check } from "lucide-react";
 import { Container, FlipCard, Button } from "@/components/ui";
 import {
@@ -17,22 +24,6 @@ import {
   HERO_CONTENT as CONTENT,
 } from "@/data";
 import "./hero.css";
-
-/* ── Animation variants ── */
-const fadeUp = (delay = 0) => ({
-  hidden: { y: 28, opacity: 0 },
-  visible: {
-    y: 0,
-    opacity: 1,
-    transition: { duration: 0.75, ease: [0.22, 1, 0.36, 1], delay },
-  },
-});
-
-const flipCardIn = {
-  initial: { opacity: 0, y: 35, filter: "blur(12px)" },
-  animate: { opacity: 1, y: 0, filter: "blur(0px)" },
-  transition: { delay: 0.35, duration: 1.05, ease: [0.22, 1, 0.36, 1] },
-};
 
 /* Maps a particle from HERO_PARTICLES onto the custom properties `.hero-particle` reads. */
 const particleVars = (p) => ({
@@ -50,26 +41,56 @@ const particleVars = (p) => ({
 
 const Hero = () => {
   const sectionRef = useRef(null);
+  const blobRef = useRef(null);
+  const gridRef = useRef(null);
+  const contentRef = useRef(null);
 
-  /* Desktop parallax is only applied after mount so server and client render
-     identically (avoids a hydration mismatch from reading window during render). */
-  const [isDesktop, setIsDesktop] = useState(false);
+  /* Scroll parallax. Same mapping the Framer motion-values produced:
+     progress p = scrollY / sectionHeight (section starts at page top), then
+     blobs 0→40px, grid 0→90px, content 0→-45px over the first 60% (desktop
+     only, as before). Transform-only writes inside rAF — no layout reads on
+     the scroll path, so no forced reflows. */
   useEffect(() => {
-    const check = () => setIsDesktop(window.innerWidth > 768);
-    check();
-    window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
+    const section = sectionRef.current;
+    if (!section) return;
+
+    let height = Math.max(section.offsetHeight, 1);
+    let raf = 0;
+
+    const apply = () => {
+      raf = 0;
+      const p = Math.min(Math.max(window.scrollY / height, 0), 1);
+      if (blobRef.current) {
+        blobRef.current.style.transform = `translate3d(0, ${p * 40}px, 0)`;
+      }
+      if (gridRef.current) {
+        gridRef.current.style.transform = `translate3d(0, ${p * 90}px, 0)`;
+      }
+      if (contentRef.current) {
+        const y =
+          window.innerWidth > 768 ? Math.min(p / 0.6, 1) * -45 : 0;
+        contentRef.current.style.transform = `translate3d(0, ${y}px, 0)`;
+      }
+    };
+
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(apply);
+    };
+    const onResize = () => {
+      height = Math.max(section.offsetHeight, 1);
+      onScroll();
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onResize);
+    apply();
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onResize);
+      if (raf) cancelAnimationFrame(raf);
+    };
   }, []);
-
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start start", "end start"],
-  });
-
-  /* Parallax motion values (framer-motion runtime values, not style rules) */
-  const gridY = useTransform(scrollYProgress, [0, 1], [0, 90]);
-  const contentY = useTransform(scrollYProgress, [0, 0.6], [0, -45]);
-  const blobY = useTransform(scrollYProgress, [0, 1], [0, 40]);
 
   return (
     <section
@@ -78,24 +99,24 @@ const Hero = () => {
       className="hero relative min-h-screen w-full overflow-hidden pt-12 md:pt-4"
     >
       {/* ════════════════ BACKGROUND LAYERS ════════════════ */}
-      <motion.div
-        style={{ y: blobY }}
+      <div
+        ref={blobRef}
         className="pointer-events-none absolute inset-0 overflow-hidden"
         aria-hidden
       >
         <div className="hero-aurora-1" />
         <div className="hero-aurora-2" />
         <div className="hero-aurora-3" />
-      </motion.div>
+      </div>
 
       {/* Perspective grid floor */}
-      <motion.div
-        style={{ y: gridY }}
+      <div
+        ref={gridRef}
         className="pointer-events-none absolute bottom-0 left-0 right-0 h-[52%]"
         aria-hidden
       >
         <div className="hero-grid" />
-      </motion.div>
+      </div>
 
       {/* Noise grain overlay */}
       <div aria-hidden className="hero-noise pointer-events-none absolute inset-0" />
@@ -114,22 +135,17 @@ const Hero = () => {
       <Container>
         <div className="relative z-10 flex min-h-screen w-full flex-col items-center justify-center gap-12 py-20 md:flex-row md:gap-6 md:py-24">
           {/* ── LEFT COLUMN ── */}
-          <motion.div
-            style={{ y: isDesktop ? contentY : 0 }}
+          <div
+            ref={contentRef}
             className="flex w-full flex-col items-center text-center gap-5 sm:gap-6 md:w-[55%] md:items-start md:text-left md:pr-6 lg:pr-12"
           >
             {/* Status chip */}
-            <motion.div
-              variants={fadeUp(0.1)}
-              initial="hidden"
-              animate="visible"
-              className="hero-chip inline-flex items-center gap-2.5 rounded-full border px-4 py-1.5 backdrop-blur-sm"
-            >
+            <div className="hero-fade hero-fade--chip hero-chip inline-flex items-center gap-2.5 rounded-full border px-4 py-1.5 backdrop-blur-sm">
               <span className="hero-chip-dot h-1.5 w-1.5 rounded-full" />
               <span className="text-[11px] xs:text-xs font-medium text-cyan-400/90 tracking-wider">
                 {CONTENT.eyebrow}
               </span>
-            </motion.div>
+            </div>
 
             {/*
               Headline + brand + lead paragraph paint on first server render (no
@@ -166,12 +182,7 @@ const Hero = () => {
             </p>
 
             {/* ── CTAs ── */}
-            <motion.div
-              variants={fadeUp(1.1)}
-              initial="hidden"
-              animate="visible"
-              className="w-full px-4 sm:px-0 flex flex-col sm:flex-row items-center justify-center md:justify-start gap-3 sm:gap-4"
-            >
+            <div className="hero-fade hero-fade--ctas w-full px-4 sm:px-0 flex flex-col sm:flex-row items-center justify-center md:justify-start gap-3 sm:gap-4">
               {CTAS.map((cta) => (
                 <a
                   key={cta.label}
@@ -185,15 +196,10 @@ const Hero = () => {
                   </Button>
                 </a>
               ))}
-            </motion.div>
+            </div>
 
             {/* Benefits checklist */}
-            <motion.ul
-              variants={fadeUp(1.25)}
-              initial="hidden"
-              animate="visible"
-              className="hero-benefits pt-2"
-            >
+            <ul className="hero-fade hero-fade--benefits hero-benefits pt-2">
               {BENEFITS.map((benefit) => (
                 <li key={benefit} className="hero-benefit">
                   <span className="hero-benefit-check" aria-hidden>
@@ -202,15 +208,10 @@ const Hero = () => {
                   <span className="hero-benefit-text">{benefit}</span>
                 </li>
               ))}
-            </motion.ul>
+            </ul>
 
             {/* Stats row */}
-            <motion.div
-              variants={fadeUp(1.4)}
-              initial="hidden"
-              animate="visible"
-              className="flex gap-6 sm:gap-10 pt-4"
-            >
+            <div className="hero-fade hero-fade--stats flex gap-6 sm:gap-10 pt-4">
               {STATS.map((s) => (
                 <div key={s.label} className="flex flex-col items-center md:items-start">
                   <span className="hero-stat-value font-black text-xl sm:text-2xl md:text-3xl">
@@ -221,28 +222,18 @@ const Hero = () => {
                   </span>
                 </div>
               ))}
-            </motion.div>
+            </div>
 
             {/* Closing line */}
-            <motion.p
-              variants={fadeUp(0.9)}
-              initial="hidden"
-              animate="visible"
-              className="max-w-[38rem] text-sm sm:text-base text-white/50 font-medium leading-relaxed"
-            >
+            <p className="hero-fade hero-fade--closing max-w-[38rem] text-sm sm:text-base text-white/50 font-medium leading-relaxed">
               <strong>{CONTENT.closing}</strong>
-            </motion.p>
-          </motion.div>
+            </p>
+          </div>
 
           {/* ── RIGHT COLUMN ── */}
-          <motion.div
-            initial={flipCardIn.initial}
-            animate={flipCardIn.animate}
-            transition={flipCardIn.transition}
-            className="flex w-full items-center justify-center md:w-[45%] max-w-sm sm:max-w-md md:max-w-none px-4 sm:px-0"
-          >
+          <div className="hero-card-in flex w-full items-center justify-center md:w-[45%] max-w-sm sm:max-w-md md:max-w-none px-4 sm:px-0">
             <FlipCard />
-          </motion.div>
+          </div>
         </div>
       </Container>
     </section>

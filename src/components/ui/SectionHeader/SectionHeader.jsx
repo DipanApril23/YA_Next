@@ -27,7 +27,7 @@
 //   />
 // Every field is optional — omit `badge` for a section with no chip.
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import "./sectionHeader.css";
 
 // Identical to the Hero's fadeUp (Hero.jsx) — same distance, duration, ease.
@@ -53,34 +53,34 @@ export default function SectionHeader({
   className = "",
 }) {
   return (
-    <motion.div
+    <m.div
       className={`ya-sh ya-sh--${theme} ya-sh--${align} ya-sh--${size} ${className}`.trim()}
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.4 }}
     >
       {badge && (
-        <motion.span variants={fadeUp(0.05)} className="ya-sh-badge">
+        <m.span variants={fadeUp(0.05)} className="ya-sh-badge">
           <span aria-hidden="true" className="ya-sh-badge-dot" />
           {badge}
-        </motion.span>
+        </m.span>
       )}
 
       {(headingLead || headingRest) && (
-        <motion.div variants={fadeUp(0.15)}>
+        <m.div variants={fadeUp(0.15)}>
           <Heading id={headingId} className="ya-sh-heading">
             {headingLead && <span className="ya-sh-lead">{headingLead}</span>}
             {headingLead && headingRest ? " " : null}
             {headingRest && <span className="ya-sh-rest">{headingRest}</span>}
           </Heading>
-        </motion.div>
+        </m.div>
       )}
 
       {subheading && (
-        <motion.p variants={fadeUp(0.25)} className="ya-sh-sub">
+        <m.p variants={fadeUp(0.25)} className="ya-sh-sub">
           {subheading}
-        </motion.p>
+        </m.p>
       )}
-    </motion.div>
+    </m.div>
   );
 }

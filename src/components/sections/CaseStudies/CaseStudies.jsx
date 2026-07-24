@@ -38,7 +38,7 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { SectionHeader } from "@/components/ui";
 import { CASESTUDIES_CONTENT as CONTENT, CASESTUDIES_ITEMS as ITEMS } from "@/data";
 import "./caseStudies.css";
@@ -561,7 +561,7 @@ function LeftPanel({ activeIndex, onJumpTo }) {
           {CONTENT.indexLabel}
         </p>
 
-        <motion.div
+        <m.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
@@ -569,7 +569,7 @@ function LeftPanel({ activeIndex, onJumpTo }) {
           style={{ display: "flex", flexDirection: "column", gap: 9 }}
         >
           {ITEMS.map((item, i) => (
-            <motion.button
+            <m.button
               key={item.id}
               type="button"
               variants={indexRowVariants}
@@ -607,13 +607,13 @@ function LeftPanel({ activeIndex, onJumpTo }) {
                   {item.label}
                 </p>
               </div>
-            </motion.button>
+            </m.button>
           ))}
-        </motion.div>
+        </m.div>
       </div>
 
       {/* trust pill */}
-      <motion.div
+      <m.div
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
@@ -652,7 +652,7 @@ function LeftPanel({ activeIndex, onJumpTo }) {
           {CONTENT.trust.lead} <strong style={{ color: C.ink }}>{CONTENT.trust.strong}</strong>{" "}
           {CONTENT.trust.tail}
         </span>
-      </motion.div>
+      </m.div>
     </div>
   );
 }
@@ -844,7 +844,7 @@ export default function CaseStudies() {
                   style={{ top: STICKY_TOP, zIndex: i + 1 }}
                 >
                   {i === 0 ? (
-                    <motion.div
+                    <m.div
                       initial={{ opacity: 0, scale: 0.94, y: 20 }}
                       whileInView={{ opacity: 1, scale: 1, y: 0 }}
                       viewport={{ once: true }}
@@ -852,7 +852,7 @@ export default function CaseStudies() {
                       style={{ width: "100%", maxWidth: 620 }}
                     >
                       <Card item={item} />
-                    </motion.div>
+                    </m.div>
                   ) : (
                     <div style={{ width: "100%", maxWidth: 620 }}>
                       <Card item={item} />

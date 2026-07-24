@@ -12,7 +12,7 @@
 // partner-badge claims. Real logos: drop an SVG/PNG in /public/partners/ and
 // set `logo` on the entry in the data file; until then a monogram shows.
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import Image from "next/image";
 import { SectionHeader } from "@/components/ui";
 import {
@@ -102,7 +102,7 @@ export default function OurPartners() {
         />
 
         {/* ── Scrolling logo strip ────────────────────────── */}
-        <motion.div
+        <m.div
           className="yaPartners__marquees"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -111,7 +111,7 @@ export default function OurPartners() {
         >
           <MarqueeRow items={OURPARTNERS_ROW_ONE} rowClass="yaPartners__row--1" />
           <MarqueeRow items={OURPARTNERS_ROW_TWO} rowClass="yaPartners__row--2" />
-        </motion.div>
+        </m.div>
       </div>
     </div>
   );

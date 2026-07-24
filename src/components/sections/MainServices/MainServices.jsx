@@ -12,7 +12,7 @@
 //   4. A light-beam sheen sweeps across the card once to "seal" it
 // Transform/opacity only (GPU-cheap, no filters = no text blur); runs once
 // per card on scroll into view; collapses to plain fades under
-// prefers-reduced-motion.
+// prefers-reduced-m.
 //
 // ARCHITECTURE NOTE: Framer writes inline `transform`, which would override
 // the CSS translateZ() that gives rings/CTA their 3D depth + hover climbs.
@@ -21,7 +21,7 @@
 //
 // Content → src/data/mainServices.js · styles → mainServices.css
 
-import { motion, useReducedMotion } from "framer-motion";
+import { m, useReducedMotion } from "framer-motion";
 import {
   Code2,
   Megaphone,
@@ -146,13 +146,13 @@ const CircleStack = ({ Icon, ring }) => (
   <div aria-hidden className="house-logo">
     {[0, 1, 2, 3].map((i) => (
       <span key={i} className="house-orb">
-        <motion.span className="house-circle" variants={ring} custom={i} />
+        <m.span className="house-circle" variants={ring} custom={i} />
       </span>
     ))}
     <span className="house-orb">
-      <motion.span className="house-circle" variants={ring} custom={4}>
+      <m.span className="house-circle" variants={ring} custom={4}>
         <Icon strokeWidth={2} />
-      </motion.span>
+      </m.span>
     </span>
   </div>
 );
@@ -163,7 +163,7 @@ const CircleStack = ({ Icon, ring }) => (
 */
 const ExploreCta = ({ href, label, variants }) => (
   <div className="house-bottom">
-    <motion.span className="house-more-anim" variants={variants}>
+    <m.span className="house-more-anim" variants={variants}>
       <a href={href} className="house-more">
         {label}
         <svg
@@ -178,12 +178,12 @@ const ExploreCta = ({ href, label, variants }) => (
           <path d="M5 12h14M13 6l6 6-6 6" />
         </svg>
       </a>
-    </motion.span>
+    </m.span>
   </div>
 );
 
 const ServiceItem = ({ item, variants }) => (
-  <motion.li className="house-item" variants={variants}>
+  <m.li className="house-item" variants={variants}>
     <span aria-hidden className="house-tick" />
     <span>
       {item.label}
@@ -194,13 +194,13 @@ const ServiceItem = ({ item, variants }) => (
         </span>
       )}
     </span>
-  </motion.li>
+  </m.li>
 );
 
 const MainServices = () => {
   const reduceMotion = useReducedMotion();
 
-  /* Swap the choreography for plain fades under reduced motion. */
+  /* Swap the choreography for plain fades under reduced m. */
   const vCard = reduceMotion ? justFade : cardRaise;
   const vRing = reduceMotion ? justFade : ringPop;
   const vItem = reduceMotion ? justFade : itemIn;
@@ -228,7 +228,7 @@ const MainServices = () => {
           />
 
           {/* ── 3-house grid ── */}
-          <motion.ul
+          <m.ul
             className="house-grid"
             variants={reduceMotion ? noop : gridStagger}
             initial="hidden"
@@ -240,7 +240,7 @@ const MainServices = () => {
               const isWide = Boolean(service.wide);
 
               return (
-                <motion.li
+                <m.li
                   key={service.id}
                   variants={vCard}
                   className={
@@ -254,29 +254,29 @@ const MainServices = () => {
 
                       {/* Copy — flat (Z0) so glyphs stay pixel-crisp */}
                       <div className="house-content">
-                        <motion.span
+                        <m.span
                           className="house-kicker"
                           variants={vCopy(0.25)}
                         >
                           {service.kicker}
-                        </motion.span>
-                        <motion.h3
+                        </m.span>
+                        <m.h3
                           className="house-title"
                           variants={vCopy(0.32)}
                         >
                           {service.title}
-                        </motion.h3>
-                        <motion.p
+                        </m.h3>
+                        <m.p
                           className="house-tagline"
                           variants={vCopy(0.4)}
                         >
                           <strong>{service.taglineStrong}</strong>{" "}
                           {service.tagline}
-                        </motion.p>
+                        </m.p>
 
                         {/* Development & Creative — cascading checklist */}
                         {service.items && (
-                          <motion.ul
+                          <m.ul
                             className="house-list"
                             variants={vList(0.5)}
                           >
@@ -287,12 +287,12 @@ const MainServices = () => {
                                 variants={vItem}
                               />
                             ))}
-                          </motion.ul>
+                          </m.ul>
                         )}
 
                         {/* Marketing — 2×2 sub-group panels rise in turn */}
                         {service.groups && (
-                          <motion.div
+                          <m.div
                             className="house-groups"
                             variants={vList(0.45)}
                           >
@@ -300,7 +300,7 @@ const MainServices = () => {
                               const GroupIcon =
                                 SERVICE_ICONS[group.icon] || Search;
                               return (
-                                <motion.div
+                                <m.div
                                   key={group.label}
                                   className="house-group"
                                   variants={vGroup}
@@ -316,7 +316,7 @@ const MainServices = () => {
                                     />
                                     {group.label}
                                   </p>
-                                  <motion.ul
+                                  <m.ul
                                     className="house-list house-list--group"
                                     variants={vList(0.1)}
                                   >
@@ -327,11 +327,11 @@ const MainServices = () => {
                                         variants={vItem}
                                       />
                                     ))}
-                                  </motion.ul>
-                                </motion.div>
+                                  </m.ul>
+                                </m.div>
                               );
                             })}
-                          </motion.div>
+                          </m.div>
                         )}
                       </div>
 
@@ -343,17 +343,17 @@ const MainServices = () => {
 
                       {/* Light-beam sheen — sweeps once to seal the card */}
                       <div aria-hidden className="house-sheen-wrap">
-                        <motion.span
+                        <m.span
                           className="house-sheen"
                           variants={vSheen}
                         />
                       </div>
                     </div>
                   </div>
-                </motion.li>
+                </m.li>
               );
             })}
-          </motion.ul>
+          </m.ul>
         </Container>
       </div>
     </section>

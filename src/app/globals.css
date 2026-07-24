@@ -40,10 +40,32 @@
   }
 }
 
+/*
+  The page uses seven decorative glyphs — ⚡ ★ (hero) and ✦ ◈ ▲ ⟳ ◉ (FlipCard
+  service list). They sit outside Roboto's "latin" subset, so serving them from
+  Roboto costs two extra webfont downloads (~52KB) that exist purely for those
+  seven characters.
+
+  This face claims exactly those codepoints and resolves them from a font
+  already on the device, so Roboto is never asked for them and the two extra
+  subset files are never fetched. `unicode-range` limits it strictly to these
+  codepoints — every other character still falls through to Roboto below. If a
+  device has none of the listed families the face simply fails to match and the
+  glyphs fall back to Roboto exactly as before, so nothing can break.
+*/
+@font-face {
+  font-family: "YAGlyphs";
+  src: local("Segoe UI Symbol"), local("Apple Symbols"), local("Noto Sans Symbols 2"),
+       local("Noto Sans Symbols"), local("Segoe UI Emoji"), local("DejaVu Sans");
+  unicode-range: U+25B2, U+25C8, U+25C9, U+2605, U+26A1, U+2726, U+27F3;
+  font-display: swap;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-roboto), "Roboto", sans-serif;
+  /* "YAGlyphs" is first but only claims the seven codepoints above. */
+  font-family: "YAGlyphs", var(--font-roboto), "Roboto", sans-serif;
 }
 
 /*
