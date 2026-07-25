@@ -195,7 +195,7 @@ export default function OurProcess() {
         {/* ── Header ── */}
         <SectionHeader
           className="op-header"
-          theme="dark"
+          theme="light"
           headingId="process-heading"
           badge={CONTENT.badge}
           headingLead={CONTENT.headingLead}

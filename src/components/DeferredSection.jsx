@@ -30,7 +30,7 @@
 import { useEffect, useRef, useState } from "react";
 
 const LOADERS = {
-  MainServices: () => import("./sections/MainServices/MainServices"),
+  Services: () => import("./sections/Services/Service"),
   OurProcess: () => import("./sections/OurProcess/OurProcess"),
   ConsultationCTA: () => import("./sections/ConsultationCTA/ConsultationCTA"),
   CaseStudies: () => import("./sections/CaseStudies/CaseStudies"),

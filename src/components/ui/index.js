@@ -6,3 +6,5 @@ export { default as FlipCard } from "./FlipCard/FlipCard";
 export { default as SectionHeader } from "./SectionHeader/SectionHeader";
 // The "blueprint seam" rule drawn between two sections.
 export { default as SectionDivider } from "./SectionDivider/SectionDivider";
+// Portal-rendered dialog — used by the Services section's "Learn More".
+export { default as Modal } from "./Modal/Modal";

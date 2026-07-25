@@ -21,6 +21,7 @@ import { Layout } from "@/components/layout";
 import { SectionDivider } from "@/components/ui";
 import DeferredSection from "@/components/DeferredSection";
 import Hero from "@/components/sections/Hero/Hero";
+import ServicesSeo from "@/components/sections/Services/ServicesSeo";
 import WhyChoose from "@/components/sections/WhyChoose/WhyChoose";
 
 export default function Home() {
@@ -31,21 +32,25 @@ export default function Home() {
       </div>
 
       <SectionDivider />
-      {/* Light-theme section — owns its own background */}
-      <DeferredSection
-        name="MainServices"
-        id="services"
-        minHeight="1900px"
-        background="linear-gradient(170deg, #f4f8fd 0%, #eaf1fa 55%, #f2f7fc 100%)"
-      />
-
-      <SectionDivider />
-      {/* Section owns its own background/theme — wrap in a bg div if it's dark */}
+      {/* Light-theme "blueprint spine" process section — owns its own background */}
       <DeferredSection
         name="OurProcess"
         id="our-process"
         minHeight="2350px"
-        background="#05050c"
+        background="linear-gradient(180deg,#f4f7fd 0%,#e9eff8 60%,#f4f7fd 100%)"
+      />
+
+      <SectionDivider />
+      {/* Dark-theme services section — owns its own gradient background.
+          The interactive deck is deferred/client and shows one card at a time,
+          so <ServicesSeo> renders the full catalogue as server-side, visually
+          hidden, crawlable content + Schema.org data (zero visual change). */}
+      <ServicesSeo />
+      <DeferredSection
+        name="Services"
+        id="services"
+        minHeight="2100px"
+        background="linear-gradient(180deg,#010208 0%,#060612 60%,#010208 100%)"
       />
 
       <SectionDivider />

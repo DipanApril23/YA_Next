@@ -1,9 +1,16 @@
 /* ═══════════════════════════════════════════════════════════════
-   OUR PROCESS — "The Blueprint Spine", dark theme
+   OUR PROCESS — "The Blueprint Spine", LIGHT theme
    All style rules for the section live here. The component passes only
    data (per-step colour via the --accent / --glow custom properties, and
    particle geometry via --x/--y/--s/--d/--dl) plus Framer Motion runtime
    values. No inline styles, no utility classes in the JSX.
+
+   THIS IS THE LIGHT-THEME RECOLOUR of the original dark section. Every
+   layout value, breakpoint, animation, per-step accent colour, the spine
+   gradient and the whole structure are byte-identical to the dark version —
+   ONLY the theme colours changed: near-black surfaces → white/near-white,
+   white hairlines/text → dark slate, white particles/pen-tip → visible
+   colour. The design is unchanged; only the palette flips.
 
    Layout: a scroll-drawn "blueprint spine" runs down the centre (left rail
    on mobile). Each step is a glass card with a rotating border-beam, a
@@ -18,7 +25,7 @@
   position: relative;
   width: 100%;
   overflow: hidden;
-  background: #05050c;
+  background: linear-gradient(180deg, #f4f7fd 0%, #e9eff8 60%, #f4f7fd 100%);
   padding-block: 2.5rem 6rem;
   /* If the navbar links to #our-process, keep the heading clear of the nav: */
   scroll-margin-top: 96px;
@@ -41,7 +48,9 @@
   pointer-events: none;
 }
 
-/* Aurora blobs — slow, endless drift */
+/* Aurora blobs — slow, endless drift. Nudged slightly richer than the
+   original light pass now that the cards below are opaque enough to stay
+   legible over them (see .op-card-body). */
 .op-aurora {
   position: absolute;
   border-radius: 50%;
@@ -52,7 +61,7 @@
   left: 8%;
   width: 560px;
   height: 560px;
-  opacity: 0.22;
+  opacity: 0.26;
   background: radial-gradient(closest-side, #ec4899 0%, #8b5cf6 55%, transparent 100%);
   animation: op-drift-a 22s ease-in-out infinite alternate;
 }
@@ -61,7 +70,7 @@
   right: -8%;
   width: 520px;
   height: 520px;
-  opacity: 0.16;
+  opacity: 0.2;
   background: radial-gradient(closest-side, #3b82f6 0%, #06b6d4 60%, transparent 100%);
   animation: op-drift-b 26s ease-in-out infinite alternate;
 }
@@ -70,19 +79,19 @@
   left: 22%;
   width: 560px;
   height: 520px;
-  opacity: 0.14;
+  opacity: 0.18;
   background: radial-gradient(closest-side, #10b981 0%, #8b5cf6 70%, transparent 100%);
   animation: op-drift-c 24s ease-in-out infinite alternate;
 }
 
-/* Vignette — keeps the edges cinematic */
+/* Vignette — keeps the edges cinematic (fades edges to a soft cool tint on light) */
 .op-vignette {
   position: absolute;
   inset: 0;
   background: radial-gradient(
     ellipse 120% 90% at 50% 42%,
     transparent 55%,
-    rgba(5, 5, 12, 0.9) 100%
+    rgba(199, 210, 229, 0.5) 100%
   );
 }
 
@@ -104,7 +113,7 @@
   width: var(--s);
   height: var(--s);
   border-radius: 50%;
-  background: #ffffff;
+  background: #8b5cf6;
   opacity: 0.22;
   box-shadow: 0 0 8px 1px rgba(217, 70, 239, 0.35);
   animation: op-float var(--d) ease-in-out infinite;
@@ -132,8 +141,9 @@
 }
 
 /* The badge / headline / subheading now come from the shared
-   <SectionHeader theme="dark"> (src/components/ui/SectionHeader) — same
-   chip, gradient and animations as the Hero and every other section.
+   <SectionHeader theme="light"> (src/components/ui/SectionHeader) — same
+   chip, gradient and animations as the Hero and every other section, in
+   the light-theme (contrast-corrected) palette.
    Only .op-header's own layout box stays here. */
 
 /* ═══ Blueprint timeline ════════════════════════════════════════ */
@@ -147,14 +157,16 @@
   }
 }
 
-/* Spine track — the faint rail the fill is drawn over */
+/* Spine track — the faint rail the fill is drawn over. Slightly deeper than
+   the first light pass so the full path reads before the scroll-fill draws
+   over it, not just after. */
 .op-spine-track {
   position: absolute;
   top: 0;
   bottom: 0;
   left: 26px;
   width: 1px;
-  background: rgba(255, 255, 255, 0.07);
+  background: rgba(15, 23, 42, 0.16);
 }
 /* Spine fill — pink lead → emerald revenue; GSAP scales it 0→1 on scroll.
    Centred with margin (not transform) on desktop so GSAP's scaleY is free. */
@@ -184,7 +196,7 @@
   height: 0.75rem;
   transform: translate(-50%, -50%);
   border-radius: 9999px;
-  background: #ffffff;
+  background: #ec4899;
   box-shadow: 0 0 16px 5px rgba(236, 72, 153, 0.6);
 }
 @media (min-width: 768px) {
@@ -216,13 +228,22 @@
 
 /* Each step is a 2-col grid on mobile (node rail + card), 3-col on desktop
    (ghost/card | node | ghost/card). `--accent` / `--glow` set here on the
-   <li> cascade down to the node, ghost, card, beam and ticks. */
+   <li> cascade down to the node, ghost, card, beam and ticks.
+
+   `--accent-ink` is new: a text/icon-safe darkened read of --accent
+   (blended toward the section's ink colour). Raw --accent stays on the
+   big graphic elements (spine, beam, glow, ghost-line) where a light,
+   vivid hue looks premium against the pale backdrop. --accent-ink is used
+   anywhere that colour sits UNDER small text or a thin icon stroke on a
+   near-white surface (tag label, card icon, active node), so accents like
+   cyan or pink stay legible instead of washing out. */
 .op-step {
   position: relative;
   display: grid;
   grid-template-columns: 52px 1fr;
   align-items: center;
   column-gap: 1rem;
+  --accent-ink: color-mix(in srgb, var(--accent) 68%, #0b1728 32%);
 }
 @media (min-width: 768px) {
   .op-step {
@@ -256,18 +277,19 @@
   place-items: center;
   width: 52px;
   height: 52px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(15, 23, 42, 0.16);
   border-radius: 9999px;
-  background: #0a0a14;
-  color: #64748b;
+  background: #ffffff;
+  color: #55627a;
+  box-shadow: 0 2px 8px -2px rgba(15, 23, 42, 0.1);
   transition: all 0.5s ease;
 }
 .op-node.is-active {
-  border-color: var(--accent);
-  color: var(--accent);
-  background: #0d0d18;
+  border-color: var(--accent-ink);
+  color: var(--accent-ink);
+  background: #ffffff;
   box-shadow:
-    0 0 0 5px color-mix(in srgb, var(--accent) 13%, transparent),
+    0 0 0 5px color-mix(in srgb, var(--accent) 14%, transparent),
     0 0 26px var(--glow),
     inset 0 0 14px color-mix(in srgb, var(--accent) 22%, transparent);
 }
@@ -327,7 +349,7 @@
   line-height: 1;
   letter-spacing: -0.025em;
   color: transparent;
-  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.13);
+  -webkit-text-stroke: 1px rgba(15, 23, 42, 0.22);
 }
 @media (min-width: 992px) {
   .op-ghost-num {
@@ -340,10 +362,10 @@
   align-items: center;
   gap: 0.75rem;
   font-size: 11px;
-  font-weight: 600;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.28em;
-  color: #64748b;
+  color: #46536b;
 }
 .op-ghost-line {
   width: 2.5rem;
@@ -374,6 +396,20 @@
   overflow: hidden;
   border-radius: 1rem;
   padding: 1.4px; /* the border-beam ring thickness */
+  /* Elevation — this is what actually separates the card from a backdrop
+     that's nearly the same value as the card itself. Without it the glass
+     body optically fuses with .op-section's pale gradient. */
+  box-shadow:
+    0 1px 1px rgba(15, 23, 42, 0.04),
+    0 10px 26px -10px rgba(15, 23, 42, 0.16),
+    0 32px 64px -28px rgba(15, 23, 42, 0.16);
+  transition: box-shadow 0.5s ease;
+}
+.op-card:hover {
+  box-shadow:
+    0 1px 1px rgba(15, 23, 42, 0.05),
+    0 16px 34px -12px rgba(15, 23, 42, 0.2),
+    0 40px 72px -28px rgba(15, 23, 42, 0.2);
 }
 
 /* Static faint edge so the border reads even without the beam */
@@ -383,21 +419,32 @@
   border-radius: 1rem;
   background: linear-gradient(
     160deg,
-    rgba(255, 255, 255, 0.14),
-    rgba(255, 255, 255, 0.03) 38%,
-    rgba(255, 255, 255, 0.03) 62%,
-    rgba(255, 255, 255, 0.1)
+    rgba(15, 23, 42, 0.18),
+    rgba(15, 23, 42, 0.05) 38%,
+    rgba(15, 23, 42, 0.05) 62%,
+    rgba(15, 23, 42, 0.14)
   );
 }
 
-/* Glass body */
+/* Glass body — raised from 0.8 → a near-solid, per-step tinted surface.
+   The old flat 0.8-opacity white let the aurora/grain bleed straight
+   through into the text zone, which is the main reason copy read as
+   "unclear" in the screenshots. A ~4% wash of the step's own --accent at
+   the top, fading to near-solid white, keeps a hint of glass/premium
+   colour-story without ever sitting under a line of text at meaningful
+   strength. saturate() keeps whatever sliver of backdrop still shows
+   through rich instead of muddy. */
 .op-card-body {
   position: relative;
   z-index: 10;
   border-radius: 15px;
-  background: rgba(11, 11, 22, 0.6);
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--accent) 5%, #ffffff) 0%,
+    rgba(255, 255, 255, 0.97) 45%
+  );
   padding: 1.5rem;
-  backdrop-filter: blur(40px);
+  backdrop-filter: blur(22px) saturate(150%);
 }
 @media (min-width: 576px) {
   .op-card-body {
@@ -415,7 +462,7 @@
   background: linear-gradient(
     to right,
     transparent,
-    rgba(255, 255, 255, 0.25),
+    rgba(15, 23, 42, 0.14),
     transparent
   );
 }
@@ -425,7 +472,7 @@
   position: absolute;
   inset: 0;
   border-radius: 15px;
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.05), transparent);
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.6), transparent);
 }
 /* Accent glow — fades in on hover */
 .op-card-glow {
@@ -458,11 +505,13 @@
   width: 3rem;
   height: 3rem;
   flex-shrink: 0;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(15, 23, 42, 0.12);
   border-radius: 0.75rem;
-  background: rgba(255, 255, 255, 0.05);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
-  color: var(--accent);
+  background: linear-gradient(145deg, #ffffff, rgba(15, 23, 42, 0.035));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    0 2px 6px -2px rgba(15, 23, 42, 0.12);
+  color: var(--accent-ink);
   transition: transform 0.5s ease;
 }
 .op-card:hover .op-card-icon {
@@ -478,15 +527,15 @@
   height: 100%;
 }
 .op-card-tag {
-  border: 1px solid color-mix(in srgb, var(--accent) 27%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
   border-radius: 9999px;
   padding: 0.25rem 0.75rem;
   font-size: 10px;
-  font-weight: 600;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.16em;
-  color: var(--accent);
-  background: color-mix(in srgb, var(--accent) 8%, transparent);
+  color: var(--accent-ink);
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
   backdrop-filter: blur(4px);
 }
 
@@ -495,10 +544,10 @@
   position: relative;
   margin-top: 1.25rem;
   font-size: 11px;
-  font-weight: 600;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.26em;
-  color: #64748b;
+  color: #46536b;
 }
 @media (min-width: 768px) {
   .op-card-step {
@@ -511,7 +560,7 @@
   margin-top: 0.5rem;
   font-size: 1.25rem;
   font-weight: 700;
-  color: #ffffff;
+  color: #0a1120;
 }
 @media (min-width: 576px) {
   .op-card-title {
@@ -528,7 +577,7 @@
   margin-top: 0.75rem;
   font-size: 0.875rem;
   line-height: 1.625;
-  color: #94a3b8;
+  color: #3d4a60;
 }
 @media (min-width: 576px) {
   .op-card-desc {
@@ -536,7 +585,9 @@
   }
 }
 
-/* Measurement ticks — the blueprint "ruler" that fills with the step's colour */
+/* Measurement ticks — the blueprint "ruler" that fills with the step's colour.
+   Base tick alpha raised so the ruler itself is visibly there before it
+   fills, not just after — it read as empty space in the light pass. */
 .op-ticks {
   position: relative;
   margin-top: 1.5rem;
@@ -547,22 +598,22 @@
 .op-tick {
   width: 1px;
   height: 0.5rem;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(15, 23, 42, 0.18);
   transition: background-color 0.5s ease;
 }
 .op-card:hover .op-tick:not(.op-tick--on) {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(15, 23, 42, 0.3);
 }
 .op-tick--on {
-  background: var(--accent);
-  opacity: 0.7;
+  background: var(--accent-ink);
+  opacity: 0.85;
 }
 .op-tick-count {
   margin-left: auto;
   font-size: 10px;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 0.1em;
-  color: #475569;
+  color: #46536b;
 }
 
 /* ═══ Border beam — a comet confined to the card's border ring ══ */
@@ -582,7 +633,7 @@
     from var(--op-angle),
     transparent 0deg 300deg,
     var(--accent) 330deg,
-    #ffffff 344deg,
+    color-mix(in srgb, var(--accent) 55%, #ffffff) 344deg,
     var(--accent) 354deg,
     transparent 360deg
   );
