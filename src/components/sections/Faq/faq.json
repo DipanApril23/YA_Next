@@ -1,0 +1,56 @@
+{
+  "badge": "FAQ",
+  "headline": {
+    "plain": "Frequently Asked",
+    "accent": "Questions"
+  },
+  "subheading": "Everything you need to know about working with Young Architects — straight answers, no jargon.",
+  "faqs": [
+    {
+      "id": "ai-agency-difference",
+      "question": "What does an AI digital marketing agency actually do differently?",
+      "answer": "Everything a traditional agency does — websites, SEO, ads, content — but wired with intelligent automation: instant lead responses, 24/7 booking bots, automated follow-up sequences, and smarter campaign optimization. The result is marketing that reacts in seconds instead of days, and a business that never misses an enquiry. That's the \"AI\" in our approach — practical, not buzzword."
+    },
+    {
+      "id": "services-offered",
+      "question": "What services do Young Architects offer?",
+      "answer": "The complete growth stack: custom website design & development, SEO, AI automation, content marketing, Facebook & Instagram ads, Google Ads, and social media marketing — with custom CRM solutions launching soon. Most clients start with one service and expand as results compound; everything is designed to work together."
+    },
+    {
+      "id": "pricing",
+      "question": "How much do your services cost?",
+      "answer": "It depends entirely on your goals, market, and scope — a local visibility campaign and a full growth engine are very different builds. What we promise: transparent recommendations sized to your budget on your free consultation call, and honesty if something isn't worth your money yet."
+    },
+    {
+      "id": "results-timeline",
+      "question": "How soon will I see results?",
+      "answer": "Channel by channel, honestly: websites and automation deliver impact within weeks; paid ads generate data immediately and profitability as we optimize; SEO compounds over 3–6 months into your most valuable long-term asset. Any **digital marketing firm in Kolkata** promising overnight rankings is telling you what you want to hear — we'd rather tell you the truth and then beat the timeline."
+    },
+    {
+      "id": "kolkata-only",
+      "question": "Do you only work with businesses in Kolkata?",
+      "answer": "Kolkata is home and local businesses are our core — but we also run national and global campaigns, including dedicated programs for SaaS companies and specialised sectors like legal & compliance. If you can grow online, we can build the engine."
+    },
+    {
+      "id": "why-young-architects",
+      "question": "Why choose Young Architects over other agencies?",
+      "answer": "Three reasons clients give us: everything under one roof (no juggling five vendors), AI-powered systems that most agencies here don't offer yet, and reporting that talks about leads and revenue instead of impressions. As a **Kolkata digital marketing company**, we win when your numbers grow — and we build like it."
+    },
+    {
+      "id": "referrals-walkins",
+      "question": "I already get customers through referrals and walk-ins. Do I really need digital marketing?",
+      "answer": "Your next referral will Google you before calling — what they find decides whether they follow through. Digital marketing doesn't replace what's working; it multiplies it: capturing the searches, scrolls, and midnight enquiries your current setup silently misses."
+    },
+    {
+      "id": "how-to-start",
+      "question": "How do we get started?",
+      "answer": "Book a free consultation — a brief, honest call about your business and goals. You'll leave with a clear picture of your opportunities and a recommended plan, whether or not you work with us. No pressure, no jargon, no obligations."
+    }
+  ],
+  "support": {
+    "heading": "Still have questions?",
+    "subtext": "Our team is one message away — no bots, no runaround.",
+    "buttonLabel": "Contact Us",
+    "buttonHref": "#book-consultation"
+  }
+}

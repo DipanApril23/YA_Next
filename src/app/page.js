@@ -71,11 +71,13 @@ export default function Home() {
       />
 
       <SectionDivider />
-      {/* Client testimonials — light section; owns its own background. */}
+      {/* Client testimonials — light section; owns its own background. It also
+          renders the FAQ accordion (#faq) at its foot, so the reserved height
+          covers both before the chunk mounts. */}
       <DeferredSection
         name="Testimonials"
         id="testimonials"
-        minHeight="1200px"
+        minHeight="2000px"
         background="#ECECF4"
       />
 

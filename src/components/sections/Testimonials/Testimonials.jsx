@@ -24,6 +24,7 @@ import {
   TESTIMONIALS_CONTENT as CONTENT,
   TESTIMONIALS_ITEMS as ITEMS,
 } from "@/data";
+import FaqSection from "../Faq/FaqSection";
 import "./testimonials.css";
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -274,6 +275,7 @@ export default function Testimonials() {
   const surface = CONTENT.surface;
 
   return (
+    <>
     <section
       ref={sectionRef}
       id="testimonials"
@@ -379,5 +381,12 @@ export default function Testimonials() {
         </div>
       </m.div>
     </section>
+
+    {/* FAQ accordion — rendered right after the testimonials section, per the
+        page composition. It owns its own #faq anchor + FAQPage JSON-LD, and its
+        background opens on #ECECF4 (the testimonials surface) so the seam is
+        seamless before its own ScrollBeamDivider draws the accent line. */}
+    <FaqSection />
+    </>
   );
 }
