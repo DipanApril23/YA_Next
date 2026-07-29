@@ -14,15 +14,15 @@
 // <DeferredSection>, which loads its code (and the booking iframe) only when
 // the visitor scrolls near it. Each placeholder carries the section's anchor
 // id, approximate height and background so nothing visibly changes. The Hero
-// (above the fold) and WhyChoose/Footer (server components, near-zero JS)
-// render normally.
+// (above the fold) and the Footer (server components, near-zero JS) render
+// normally.
 
 import { Layout } from "@/components/layout";
 import { SectionDivider } from "@/components/ui";
 import DeferredSection from "@/components/DeferredSection";
 import Hero from "@/components/sections/Hero/Hero";
 import ServicesSeo from "@/components/sections/Services/ServicesSeo";
-import WhyChoose from "@/components/sections/WhyChoose/WhyChoose";
+import BrandMark from "@/components/sections/BrandMark/BrandMark";
 
 export default function Home() {
   return (
@@ -82,9 +82,12 @@ export default function Home() {
       />
 
       <SectionDivider />
-      <div className="bg-black">
-        <WhyChoose />
-      </div>
+      {/* Closing brand statement — giant "Young Architects" wordmark with a
+          cursor-spotlight gradient fill. Owns its own dark background. The seam
+          above gets the same <SectionDivider> as every other boundary: the FAQ
+          ends on pure white and this block opens near-black, and an unmarked
+          hard cut there read as a dead slab rather than a deliberate edge. */}
+      <BrandMark />
     </Layout>
   );
 }

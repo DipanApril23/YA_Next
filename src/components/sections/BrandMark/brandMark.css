@@ -1,0 +1,389 @@
+/* ─── BrandMark ─────────────────────────────────────────────────────────
+   Giant outlined wordmark with a cursor-spotlight gradient fill. The fill is
+   a separate overlay masked by a radial gradient at the pointer; a second
+   overlay auto-sweeps for touch devices. Kept off the main thread: only
+   `transform`, `opacity`, `mask-position` and a handful of registered custom
+   properties (which the browser is allowed to animate on the compositor)
+   ever change. */
+
+/* Registered so the spotlight radius can grow/shrink smoothly on hover.
+   (Unsupported browsers simply snap the radius; the opacity fade still reads.) */
+@property --spot {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 0px;
+}
+
+/* Registered so pointer position and tilt glide to their target instead of
+   snapping. This is the single biggest lever for "premium" here — a spotlight
+   that eases half a beat behind the cursor reads as expensive; one that jumps
+   to the exact pixel reads as a debug tool. Supported in all current evergreen
+   browsers (Chromium/Safari since 2021–22, Firefox since 128 / mid-2024);
+   anywhere older it degrades to an instant snap with no error. */
+@property --mx {
+  syntax: "<length-percentage>";
+  inherits: true;
+  initial-value: 50%;
+}
+@property --my {
+  syntax: "<length-percentage>";
+  inherits: true;
+  initial-value: 50%;
+}
+@property --rx {
+  syntax: "<angle>";
+  inherits: true;
+  initial-value: 0deg;
+}
+@property --ry {
+  syntax: "<angle>";
+  inherits: true;
+  initial-value: 0deg;
+}
+
+.ya-brand {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* No forced min-height. The section used to be pinned to clamp(520px, 80vh,
+     900px) and vertically centre its content inside that box — on most
+     screens the wordmark + kicker + tagline don't fill 900px, so the leftover
+     space got split above and below by the centring, showing up as a slab of
+     flat black before the kicker ever appears (the gap you flagged). Sizing
+     off the content + padding instead means the section is exactly as tall
+     as what's in it, on every viewport, with no dead zone possible.
+
+     TOP PADDING IS ZERO — ON PURPOSE, AND IT IS THE WHOLE FIX. This section
+     paints its own dark gradient across the entire padding box, so every pixel
+     of top padding is a strip of empty near-black hanging directly under the
+     FAQ's white edge, and it reads as a separate black band rather than as
+     breathing room. Three passes of "just make it smaller" (9rem symmetric →
+     4.5rem → 2.25rem) were each still visible as a gap, so there is none left:
+     the kicker is now the first thing in the section and starts on the seam
+     itself, where the <SectionDivider> bloom from page.js haloes it.
+     ANY value here reintroduces the band — if this ever needs loosening, do it
+     by giving the kicker its own margin, not by putting padding back on the
+     section, so the space belongs to the text instead of to the background.
+     The bottom keeps a small pad so the tagline doesn't butt into the footer. */
+  padding: 0 1rem clamp(1.75rem, 3.5vw, 2.75rem);
+  scroll-margin: 0;
+  background:
+    radial-gradient(ellipse 110% 90% at 50% 38%, #0b0d17 0%, #06070d 52%, #000 100%);
+}
+
+/* Phones: same zero top edge, slightly tighter side/bottom. */
+@media (max-width: 640px) {
+  .ya-brand {
+    padding: 0 1.25rem clamp(1.25rem, 4.5vw, 1.75rem);
+  }
+}
+
+/* ── ambient background ── */
+.ya-brand__bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+.ya-orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(100px);
+  opacity: 0.4;
+  mix-blend-mode: screen;
+  will-change: transform;
+}
+.ya-orb--a {
+  left: -8vw;
+  top: -14vw;
+  width: 46vw;
+  height: 46vw;
+  background: radial-gradient(circle, rgba(37, 99, 235, 0.5), transparent 62%);
+  animation: ya-float-a 17s ease-in-out infinite;
+}
+.ya-orb--b {
+  right: -10vw;
+  bottom: -16vw;
+  width: 42vw;
+  height: 42vw;
+  background: radial-gradient(circle, rgba(190, 56, 135, 0.42), transparent 62%);
+  animation: ya-float-b 21s ease-in-out infinite;
+}
+
+/* Faint film grain so the dark radial gradient reads as a material surface
+   instead of a flat CSS fill — the kind of quiet texture premium dark sites
+   (Linear, Vercel, Stripe) use so black backgrounds don't look empty. Static,
+   so it costs nothing and needs no reduced-motion handling. */
+.ya-grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.045;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
+
+.ya-brand__inner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(1.5rem, 4vw, 2.75rem);
+  width: 100%;
+  max-width: min(100%, 1600px);
+}
+
+/* ── kicker ── */
+.ya-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: clamp(0.7rem, 1.5vw, 0.85rem);
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+}
+.ya-kicker__dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, #38bdf8, #8b5cf6, #ec4899);
+  box-shadow: 0 0 14px rgba(139, 92, 246, 0.85);
+}
+
+/* ── stage + wordmark ── */
+.ya-stage {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  /* Perspective lives on the outer stage; the actual tilt transform lives one
+     level down on .ya-stage__tilt. Framer-motion writes its own inline
+     `transform` on this element for the entrance animation — putting our
+     rotate here too would just get clobbered by that inline style. */
+  perspective: 1400px;
+  transition:
+    --mx 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    --my 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    --rx 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+    --ry 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* The tilt/spotlight layer. Everything visual (glow, outline, both fill
+   overlays) sits inside this, so a single rotate applies to the whole
+   composition as one coherent object rather than each piece moving alone. */
+.ya-stage__tilt {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+@media (hover: none) {
+  .ya-stage__tilt {
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ya-stage__tilt {
+    transform: none;
+  }
+}
+
+.ya-mark {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(0.1rem, 0.4vw, 0.4rem);
+  font-weight: 900;
+  line-height: 0.82;
+  letter-spacing: -0.02em;
+  text-align: center;
+  user-select: none;
+}
+.ya-mark__line {
+  display: block;
+  font-size: clamp(2.4rem, 14vw, 15rem);
+  white-space: nowrap;
+}
+
+/* base outline (the visible default state) */
+.ya-mark--outline {
+  color: transparent;
+  -webkit-text-stroke: clamp(1px, 0.18vw, 2px) rgba(255, 255, 255, 0.26);
+  transition: -webkit-text-stroke-color 0.45s ease;
+}
+.ya-stage:hover .ya-mark--outline {
+  -webkit-text-stroke-color: rgba(255, 255, 255, 0.42);
+}
+
+/* the two gradient-fill overlays sit exactly over the outline */
+.ya-layer {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+.ya-mark--fill {
+  color: transparent;
+}
+/* The gradient sits on each LINE (the direct text node), not the container:
+   background-clip:text only reliably clips to a box's own text, and the two
+   words are separate blocks. Per-line means each word spans the full spectrum. */
+.ya-mark--fill .ya-mark__line {
+  background: linear-gradient(
+    115deg,
+    #38bdf8 0%,
+    #3b82f6 24%,
+    #8b5cf6 50%,
+    #d946ef 74%,
+    #ec4899 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* cursor spotlight reveal — the mask is a soft circle at the pointer, with a
+   feathered rather than hard edge so the reveal reads as "light" and not
+   "clipping mask". */
+.ya-layer--cursor {
+  opacity: 0;
+  transition: opacity 0.4s ease, --spot 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  -webkit-mask-image: radial-gradient(
+    circle var(--spot, 0px) at var(--mx, 50%) var(--my, 50%),
+    #000 0%,
+    #000 42%,
+    rgba(0, 0, 0, 0.55) 70%,
+    transparent 100%
+  );
+  mask-image: radial-gradient(
+    circle var(--spot, 0px) at var(--mx, 50%) var(--my, 50%),
+    #000 0%,
+    #000 42%,
+    rgba(0, 0, 0, 0.55) 70%,
+    transparent 100%
+  );
+}
+
+/* auto sweep for touch — a gradient band travels across the wordmark */
+.ya-layer--sweep {
+  -webkit-mask-image: linear-gradient(100deg, transparent 32%, #000 45%, #000 55%, transparent 68%);
+  mask-image: linear-gradient(100deg, transparent 32%, #000 45%, #000 55%, transparent 68%);
+  -webkit-mask-size: 260% 100%;
+  mask-size: 260% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  animation: ya-sweep 5s linear infinite;
+}
+
+/* cursor-following glow behind the letters — now a two-stop brand-colour
+   aura (cyan core, violet bleed) instead of a single flat blob, so it reads
+   as a light source rather than a solid-colour smudge. Position glides via
+   the same eased --mx/--my as the spotlight, so glow and reveal move as one. */
+.ya-stage__glow {
+  position: absolute;
+  inset: -25%;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+  background: radial-gradient(
+    circle 360px at var(--mx, 50%) var(--my, 50%),
+    rgba(139, 92, 246, 0.22),
+    rgba(56, 189, 248, 0.1) 45%,
+    transparent 72%
+  );
+}
+
+/* Pointer devices: enable the interactive spotlight, drop the auto sweep. */
+@media (hover: hover) and (pointer: fine) {
+  .ya-stage:hover .ya-layer--cursor {
+    opacity: 1;
+    --spot: clamp(120px, 15vw, 240px);
+  }
+  .ya-stage:hover .ya-stage__glow {
+    opacity: 1;
+  }
+  .ya-layer--sweep {
+    display: none;
+  }
+}
+
+/* Touch / no-hover devices: no cursor layer, keep the auto sweep. */
+@media (hover: none) {
+  .ya-layer--cursor,
+  .ya-stage__glow {
+    display: none;
+  }
+}
+
+/* ── tagline ── */
+.ya-tagline {
+  font-size: clamp(0.9rem, 2.2vw, 1.2rem);
+  font-weight: 500;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.55);
+}
+.ya-tagline span {
+  font-weight: 700;
+  background: linear-gradient(120deg, #60a5fa, #a78bfa, #f472b6);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* ── keyframes ── */
+@keyframes ya-sweep {
+  0% {
+    -webkit-mask-position: 145% 0;
+    mask-position: 145% 0;
+  }
+  100% {
+    -webkit-mask-position: -55% 0;
+    mask-position: -55% 0;
+  }
+}
+@keyframes ya-float-a {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(4vw, 3vw, 0) scale(1.08);
+  }
+}
+@keyframes ya-float-b {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(-4vw, -3vw, 0) scale(1.1);
+  }
+}
+
+/* Respect reduced-motion: freeze the ambient/sweep loops and the tilt (the
+   static outline + gradient still look intentional). */
+@media (prefers-reduced-motion: reduce) {
+  .ya-orb--a,
+  .ya-orb--b,
+  .ya-layer--sweep {
+    animation: none;
+  }
+  .ya-stage {
+    transition: none;
+  }
+  /* Give no-hover users a gentle static fill instead of a frozen band. */
+  .ya-layer--sweep {
+    -webkit-mask-image: none;
+    mask-image: none;
+    opacity: 0.9;
+  }
+}
