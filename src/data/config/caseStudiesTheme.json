@@ -1,0 +1,22 @@
+{
+  "$comment": "Case Studies dark-glass design tokens. DEVELOPER CONFIG, not editable copy — do NOT hand this to the CMS. `gradientText` is a React inline-style object (camelCase CSS keys) applied to the gradient headline.",
+  "tokens": {
+    "bg": "#060610",
+    "surface": "#0b0b16",
+    "ink": "#f4f4fb",
+    "body": "#a7abc2",
+    "muted": "#5c6080",
+    "accent1": "#a855f7",
+    "accent2": "#ec4899",
+    "accent3": "#38bdf8",
+    "tagText": "#cbb6f2"
+  },
+  "gradient": "linear-gradient(135deg, #4f46e5 0%, #a855f7 50%, #ec4899 100%)",
+  "gradientText": {
+    "background": "linear-gradient(135deg, #818cf8 0%, #c084fc 50%, #f472b6 100%)",
+    "WebkitBackgroundClip": "text",
+    "backgroundClip": "text",
+    "WebkitTextFillColor": "transparent",
+    "color": "transparent"
+  }
+}

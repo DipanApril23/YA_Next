@@ -1,0 +1,21 @@
+{
+  "$comment": "Copy for the VISIBLE Services section (the interactive card deck) — distinct from services.json, which is the catalogue of individual services, and from servicesSeo.json, which is the hidden crawlable version. Editable content — safe for a CMS. Headings are split into parts because each part carries a different gradient; keep the trailing space on `headingLeadTrail` (it separates the two halves when they wrap onto one line).",
+  "content": {
+    "badge": "Our Expertise",
+    "headingLead": "Premium Services",
+    "headingLeadTrail": " ",
+    "headingRest": "Built to Scale",
+    "intro": "Streamline development, marketing, and design operations with our custom-made solutions engineered for enterprise-grade growth.",
+    "tagline": {
+      "line1": "Create a new way",
+      "line2": "to enhance your",
+      "line3": "business needs"
+    },
+    "description": "Stay organised and improve. Streamline custom development, marketing, design, and other business operations of your enterprise. Let us help enhance the bottom line with our custom-made solutions.",
+    "ctaLabel": "Click to Explore →",
+    "viewModes": {
+      "stack": "Desktop View",
+      "grid": "Mobile View"
+    }
+  }
+}

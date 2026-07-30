@@ -23,10 +23,12 @@
 // (`viewport.once: false`), so scrubbing the page keeps re-drawing it.
 
 import { m } from "framer-motion";
+import { EASE_ENTRANCE, VIEWPORT_REPEAT } from "@/data";
 import "./sectionDivider.css";
 
-const EASE = [0.22, 1, 0.36, 1];
-const VIEWPORT = { once: false, margin: "-80px" };
+/* Shared motion tokens — see src/data/motion.js. */
+const EASE = EASE_ENTRANCE;
+const VIEWPORT = VIEWPORT_REPEAT;
 
 const TICKS = [
   ["l1", "near"],

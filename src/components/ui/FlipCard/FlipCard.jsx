@@ -12,8 +12,12 @@ import {
   FLIPCARD_SERVICES as SERVICES,
   FLIPCARD_QR_CORNERS as QR_CORNERS,
   FLIPCARD_DEFAULTS,
+  SPRING_SNAPPY,
 } from "@/data";
 import "./flipcard.css";
+
+/* Alt text / labels come from the same defaults object as the imagery. */
+const DEFAULTS = FLIPCARD_DEFAULTS;
 
 /* Idle float applied to the whole card */
 const FLOAT = {
@@ -109,7 +113,7 @@ const FlipCard = ({
               <div className="fc-logo fc-logo--front">
                 <Image
                   src={frontLogo}
-                  alt="Young Architects"
+                  alt={DEFAULTS.frontLogoAlt}
                   fill
                   sizes="(max-width: 768px) 60vw, 283px"
                   className="object-cover"
@@ -129,7 +133,7 @@ const FlipCard = ({
 
               {/* QR */}
               <div className="fc-qr">
-                <Image src={qrCode} alt="QR Code" fill sizes="144px" className="object-cover" />
+                <Image src={qrCode} alt={DEFAULTS.qrAlt} fill sizes="144px" className="object-cover" />
                 {QR_CORNERS.map((corner) => (
                   <span key={corner} aria-hidden className={`fc-qr-corner fc-qr-corner--${corner}`} />
                 ))}
@@ -147,7 +151,7 @@ const FlipCard = ({
               <div className="fc-logo fc-logo--back">
                 <Image
                   src={backLogo}
-                  alt="Young Architects"
+                  alt={DEFAULTS.backLogoAlt}
                   fill
                   sizes="(max-width: 768px) 60vw, 270px"
                   className="object-cover"
@@ -168,7 +172,7 @@ const FlipCard = ({
                     className="fc-service"
                     style={serviceVars(svc)}
                     whileHover={{ x: 6, scale: 1.02 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 28 }}
+                    transition={SPRING_SNAPPY}
                   >
                     <span className="fc-service-icon">{svc.icon}</span>
                     <span className="fc-service-label">{svc.label}</span>
@@ -192,7 +196,7 @@ const FlipCard = ({
         transition={{ delay: 1.5, duration: 0.6 }}
         whileHover={{ scale: 1.06 }}
         whileTap={{ scale: 0.95 }}
-        aria-label="Click to flip card"
+        aria-label={DEFAULTS.flipAriaLabel}
       >
         <svg
           className="fc-flip-icon"

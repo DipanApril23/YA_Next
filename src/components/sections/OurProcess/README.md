@@ -11,7 +11,9 @@ spine node that lights up with the step's colour as the spine passes it.
 | ---- | ---- |
 | [`OurProcess.jsx`](./OurProcess.jsx) | Structure, GSAP scroll animation, Framer Motion variants, and the `PROCESS_ICONS` lookup. |
 | [`ourProcess.css`](./ourProcess.css) | **Every** style rule (all `op-` prefixed). |
-| [`../../../data/ourProcess.js`](../../../data/ourProcess.js) | All content: header copy, the five steps, and the backdrop particles. |
+| [`../../../data/content/ourProcess.json`](../../../data/content/ourProcess.json) | **Editable copy** — header text and the five steps. Safe to hand to a CMS. |
+| [`../../../data/config/ourProcessParticles.json`](../../../data/config/ourProcessParticles.json) | Developer config — the backdrop particle positions. Not CMS content. |
+| [`../../../data/ourProcess.js`](../../../data/ourProcess.js) | Thin loader that re-exports the two JSON files under the names the component imports. |
 
 Nothing is inline. The component ships **no** utility classes and **no** inline
 styles beyond the handful of CSS custom properties it uses to hand *data* to the
@@ -19,7 +21,7 @@ stylesheet (see below).
 
 ## The data layer
 
-Everything the section says or lists comes from
+Everything the section says or lists comes from JSON, surfaced by the thin loader
 [`src/data/ourProcess.js`](../../../data/ourProcess.js):
 
 - **`OURPROCESS_CONTENT`** — the badge, the two-part heading (`headingLead` +

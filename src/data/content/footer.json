@@ -1,0 +1,192 @@
+{
+  "$comment": "Site-wide footer: brand block, link columns, socials, contact details and legal links. Editable content — safe for a CMS. Every in-page target is written as \"/#anchor\" (root-relative), NOT a bare \"#anchor\", because the footer renders on every route and a bare hash would do nothing from a non-home page. `socials[].iconKey` selects an inline brand SVG from SOCIAL_ICONS in Footer.jsx.",
+  "content": {
+    "brand": {
+      "href": "/",
+      "name": "Young Architects",
+      "ariaLabel": "Young Architects — go to home",
+      "logoAlt": "Young Architects — Aspiring to be the best",
+      "subheading": "The AI Digital Marketing Agency in Kolkata tailored for local businesses.",
+      "tagline": "Websites that convert, SEO that gets you found, Ads that pay for themselves, and AI automation that follows up with every lead.",
+      "followLabel": "Follow Us"
+    },
+    "copyright": "© {year} Young Architects. All rights reserved."
+  },
+  "columns": [
+    {
+      "heading": "Solutions",
+      "links": [
+        {
+          "label": "Digital Launch Engine",
+          "href": "/#digital-launch-engine"
+        },
+        {
+          "label": "Digital Growth Engine",
+          "href": "/#digital-growth-engine"
+        },
+        {
+          "label": "Digital Authority Engine",
+          "href": "/#digital-authority-engine"
+        },
+        {
+          "label": "Digital Conversion Engine",
+          "href": "/#digital-conversion-engine"
+        },
+        {
+          "label": "Digital Lead Engine",
+          "href": "/#digital-lead-engine"
+        }
+      ]
+    },
+    {
+      "heading": "Our Services",
+      "links": [
+        {
+          "label": "Website Development",
+          "href": "/#service-web"
+        },
+        {
+          "label": "SEO Agency",
+          "href": "/#service-seo"
+        },
+        {
+          "label": "Marketing Automation",
+          "href": "/#service-automation"
+        },
+        {
+          "label": "Creative Designing",
+          "href": "/#service-design"
+        },
+        {
+          "label": "Content Marketing",
+          "href": "/#service-content"
+        },
+        {
+          "label": "Facebook Ads",
+          "href": "/#service-facebook"
+        },
+        {
+          "label": "Google Ads",
+          "href": "/#service-google"
+        },
+        {
+          "label": "Social Media Marketing",
+          "href": "/#service-social"
+        }
+      ]
+    },
+    {
+      "heading": "Industries",
+      "links": [
+        {
+          "label": "Law Firms",
+          "href": "/#law-firms"
+        },
+        {
+          "label": "Law Firm Websites",
+          "href": "/#law-firms-web"
+        },
+        {
+          "label": "Law Firm SEO",
+          "href": "/#law-firms-seo"
+        },
+        {
+          "label": "Security Companies",
+          "href": "/#security-companies"
+        },
+        {
+          "label": "Investigators",
+          "href": "/#investigators"
+        },
+        {
+          "label": "SaaS Marketing",
+          "href": "/#saas-web"
+        }
+      ]
+    },
+    {
+      "heading": "Company",
+      "links": [
+        {
+          "label": "Home",
+          "href": "/#home"
+        },
+        {
+          "label": "Our Vision",
+          "href": "/#vision"
+        },
+        {
+          "label": "Our Mission",
+          "href": "/#mission"
+        },
+        {
+          "label": "Our Team",
+          "href": "/#team"
+        },
+        {
+          "label": "Case Studies",
+          "href": "/#case-studies"
+        },
+        {
+          "label": "Blog",
+          "href": "/#blog"
+        },
+        {
+          "label": "News & Events",
+          "href": "/#news"
+        },
+        {
+          "label": "Contact Us",
+          "href": "/#book-consultation"
+        }
+      ]
+    }
+  ],
+  "socials": [
+    {
+      "iconKey": "linkedin",
+      "label": "LinkedIn",
+      "href": "https://www.linkedin.com/company/young-aarchitects"
+    },
+    {
+      "iconKey": "facebook",
+      "label": "Facebook",
+      "href": "#"
+    },
+    {
+      "iconKey": "instagram",
+      "label": "Instagram",
+      "href": "#"
+    }
+  ],
+  "contact": {
+    "phones": [
+      {
+        "href": "tel:+919883952010",
+        "label": "+91 9883952010"
+      },
+      {
+        "href": "tel:+919432274587",
+        "label": "+91 9432274587"
+      }
+    ],
+    "email": {
+      "href": "mailto:yafoundations@gmail.com",
+      "label": "yafoundations@gmail.com"
+    }
+  },
+  "legal": [
+    {
+      "label": "Disclaimer",
+      "href": "/disclaimer"
+    },
+    {
+      "label": "Terms & Conditions",
+      "href": "/terms-and-conditions"
+    },
+    {
+      "label": "Privacy Policy",
+      "href": "/privacy-policy"
+    }
+  ]
+}

@@ -1,29 +1,19 @@
-// ─── Why Choose Us section: rich copy ─────────────────────────────────
+// ─── Why Choose Us — data loader ──────────────────────────────────────
 //
-// The copy is stored as text segments rather than a single string so the
-// coloured/bold emphasis stays data-driven. `tone` is semantic — the component
-// maps it to a class, so no styling leaks into this file.
-//   tone: "blue" | "dark" | "primary"   strong: renders inside <strong>
+// A thin adapter over ./content/whyChoose.json.
+//
+// The copy is stored as an array of tone-tagged SEGMENTS rather than one
+// string, so the coloured/bold emphasis inside a sentence stays data-driven
+// instead of being hardcoded as JSX. Each segment is
+// `{ text, tone?, strong? }` where `tone` is semantic ("blue" | "dark" |
+// "primary") and is mapped to a CSS class by TONE_CLASS in WhyChoose.jsx —
+// so no styling leaks into the data.
+//
+// NOTE: this section is not currently mounted on any page (see the README's
+// "Component inventory"). Data and component are kept ready to drop back in.
+//
+// Consumed by: src/components/sections/WhyChoose/WhyChoose.jsx.
 
-export const WHYCHOOSE_CONTENT = {
-  headingLine1: [{ text: "Why choose Us ?", tone: "blue" }],
-  headingLine2: [
-    { text: " - ", tone: "dark" },
-    { text: "Young Architects", tone: "primary" },
-  ],
-  body: [
-    { text: "Choose " },
-    { text: "Young Architects", tone: "primary", strong: true },
-    {
-      text: " for a client-centric approach where your vision is our priority. We offer tailored solutions through ",
-    },
-    { text: "deep business analysis", tone: "blue", strong: true },
-    { text: ", " },
-    { text: "collaborative consultancy", tone: "blue", strong: true },
-    { text: ", and a " },
-    { text: "commitment to perfection", tone: "blue", strong: true },
-    { text: ". With us, you're not just a client — " },
-    { text: "you're family", tone: "primary", strong: true },
-    { text: "." },
-  ],
-};
+import whyChooseContent from "./content/whyChoose.json";
+
+export const WHYCHOOSE_CONTENT = whyChooseContent.content;

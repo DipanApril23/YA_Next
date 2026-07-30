@@ -6,7 +6,12 @@ import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import ServiceCards from "./ServiceCards";
 // Host-app dependency — swap for your own Container/Button if re-using elsewhere.
 import { Container, Button } from "@/components/ui";
-import { SERVICE_STATS, SERVICE_PARTICLES } from "./serviceSection.data";
+import {
+  SERVICE_STATS,
+  SERVICE_PARTICLES,
+  SERVICE_SECTION,
+  SERVICES_SECTION_CONTENT as CONTENT,
+} from "@/data";
 import serviceWire from "@/assets/image/service-wire.webp";
 
 // ── Floating Particle ─────────────────────────────────────────────────────────
@@ -90,22 +95,22 @@ const Service = () => {
               style={{ color: "#00f5d4", borderColor: "rgba(0,245,212,0.3)", background: "rgba(0,245,212,0.07)" }}
             >
               <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: "#00f5d4", boxShadow: "0 0 6px #00f5d4" }} />
-              Our Expertise
+              {CONTENT.badge}
             </div>
 
             <h2 className="text-[30px] sm:text-[42px] md:text-[54px] font-black leading-[1.1] tracking-tight max-w-3xl">
               <span className="bg-gradient-to-r from-white via-neutral-200 to-neutral-500 bg-clip-text text-transparent">
-                Premium Services{" "}
+                {CONTENT.headingLead}
+                {CONTENT.headingLeadTrail}
               </span>
               <br className="hidden sm:block" />
               <span className="bg-gradient-to-r from-[#ff007f] via-purple-500 to-[#00f5d4] bg-clip-text text-transparent">
-                Built to Scale
+                {CONTENT.headingRest}
               </span>
             </h2>
 
             <p className="text-neutral-400 max-w-xl text-sm sm:text-base leading-relaxed">
-              Streamline development, marketing, and design operations with our
-              custom-made solutions engineered for enterprise-grade growth.
+              {CONTENT.intro}
             </p>
           </motion.div>
 
@@ -133,21 +138,18 @@ const Service = () => {
               <div className="space-y-3 text-center lg:text-left">
                 <h3 className="text-2xl sm:text-[28px] md:text-[34px] font-black leading-tight font-poppins">
                   <span className="bg-gradient-to-r from-[#00b4db] to-[#00f5d4] bg-clip-text text-transparent">
-                    Create a new way
+                    {CONTENT.tagline.line1}
                   </span>
                   <br />
-                  <span className="text-white">to enhance your</span>
+                  <span className="text-white">{CONTENT.tagline.line2}</span>
                   <br />
                   <span className="bg-gradient-to-r from-[#ff007f] via-purple-400 to-[#a855f7] bg-clip-text text-transparent">
-                    business needs
+                    {CONTENT.tagline.line3}
                   </span>
                 </h3>
 
                 <p className="text-neutral-400 leading-relaxed text-sm sm:text-[15px] max-w-md mx-auto lg:mx-0">
-                  Stay organised and improve. Streamline custom development,
-                  marketing, design, and other business operations of your
-                  enterprise. Let us help enhance the bottom line with our
-                  custom-made solutions.
+                  {CONTENT.description}
                 </p>
               </div>
 
@@ -162,7 +164,7 @@ const Service = () => {
               <Button
                 className="!w-auto !mt-0 self-center lg:self-start px-5 py-2 text-sm"
               >
-                Click to Explore →
+                {CONTENT.ctaLabel}
               </Button>
             </motion.div>
 
@@ -186,7 +188,7 @@ const Service = () => {
                 />
                 <Image
                   src={serviceWire}
-                  alt="Young Architects service network"
+                  alt={SERVICE_SECTION.wireImageAlt}
                   width={480}
                   height={480}
                   sizes="(max-width: 1024px) 0px, 460px"

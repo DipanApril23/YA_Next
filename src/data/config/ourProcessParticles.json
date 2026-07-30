@@ -1,0 +1,15 @@
+{
+  "$comment": "Our Process backdrop particles. DEVELOPER CONFIG, not editable copy — do NOT hand this to the CMS. Positions are fixed (never random) so the server and client render identical markup and hydration never mismatches. Each field is forwarded to the particle span as a CSS custom property: x → --x, y → --y, s → --s (diameter px), d → --d (float duration), dl → --dl (float delay).",
+  "particles": [
+    { "x": "8%", "y": "18%", "s": 3, "d": "9s", "dl": "0s" },
+    { "x": "22%", "y": "72%", "s": 2, "d": "12s", "dl": "1.2s" },
+    { "x": "36%", "y": "34%", "s": 2, "d": "10s", "dl": "2.4s" },
+    { "x": "58%", "y": "12%", "s": 3, "d": "11s", "dl": "0.8s" },
+    { "x": "71%", "y": "58%", "s": 2, "d": "13s", "dl": "3.1s" },
+    { "x": "84%", "y": "26%", "s": 3, "d": "9.5s", "dl": "1.8s" },
+    { "x": "91%", "y": "76%", "s": 2, "d": "12.5s", "dl": "0.4s" },
+    { "x": "14%", "y": "48%", "s": 2, "d": "10.5s", "dl": "2.9s" },
+    { "x": "47%", "y": "86%", "s": 3, "d": "11.5s", "dl": "1.5s" },
+    { "x": "66%", "y": "40%", "s": 2, "d": "9.8s", "dl": "3.6s" }
+  ]
+}

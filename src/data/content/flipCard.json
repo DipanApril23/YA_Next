@@ -1,0 +1,45 @@
+{
+  "$comment": "Digital business card (FlipCard): the service list and the card's default contact details. Editable content — safe for a CMS. The accent tints and pulse timings shown on screen are DERIVED from `color` and the entry index by src/data/flipCard.js, so only the base colour is authored here.",
+  "services": [
+    {
+      "icon": "✦",
+      "label": "AI Solutions & Automation",
+      "color": "#06b6d4"
+    },
+    {
+      "icon": "◈",
+      "label": "Web & App Development",
+      "color": "#3b82f6"
+    },
+    {
+      "icon": "▲",
+      "label": "Digital Marketing & SEO",
+      "color": "#a855f7"
+    },
+    {
+      "icon": "⟳",
+      "label": "Digital Transformation",
+      "color": "#ec4899"
+    },
+    {
+      "icon": "◉",
+      "label": "Cloud & Infrastructure",
+      "color": "#22d3ee"
+    }
+  ],
+  "defaults": {
+    "frontLogo": "https://youngarchitects.in/assets/image/logo.webp",
+    "backLogo": "https://youngarchitects.in/assets/image/logo2.webp",
+    "qrCode": "https://youngarchitects.in/assets/image/qr.webp",
+    "phoneNumbers": [
+      "+91 9883952010",
+      "+91 9804569051"
+    ],
+    "email": "yafoundations@gmail.com",
+    "servicesTitle": "Our Services",
+    "frontLogoAlt": "Young Architects",
+    "backLogoAlt": "Young Architects",
+    "qrAlt": "QR Code",
+    "flipAriaLabel": "Click to flip card"
+  }
+}

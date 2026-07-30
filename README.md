@@ -1,8 +1,11 @@
 # Young Architects — Official Website
 
-The marketing site for **Young Architects**, an AI-powered digital agency.
+The marketing site for **Young Architects**, an AI-powered digital agency in Kolkata.
+
 Built on the Next.js App Router with a strict separation between **markup**, **styling**, and
-**content** — so new sections can be added quickly without touching existing code.
+**content**. The rule that drives the whole codebase: *no editable copy lives inside a component.*
+Every string a visitor reads comes from a JSON file in `src/data/content/`, so the site's text can
+be changed — or later served by a headless CMS — without touching a line of React.
 
 🔗 **Live:** [ya-next.vercel.app](https://ya-next.vercel.app/)
 
@@ -13,433 +16,283 @@ Built on the Next.js App Router with a strict separation between **markup**, **s
 1. [Tech Stack](#tech-stack)
 2. [Getting Started](#getting-started)
 3. [Project Structure](#project-structure)
-4. [Architecture Rules](#architecture-rules)
-5. [Adding a New Section](#adding-a-new-section)
-6. [The Data Layer](#the-data-layer)
+4. [The Data Layer](#the-data-layer) ← **start here if you are editing copy**
+5. [Handover to a Headless CMS (WordPress / ACF)](#handover-to-a-headless-cms-wordpress--acf)
+6. [Architecture Rules](#architecture-rules)
 7. [The Styling Layer](#the-styling-layer)
-8. [Performance](#performance)
-9. [Images & Assets](#images--assets)
-10. [Extracted Sections Library](#extracted-sections-library)
-11. [Deployment](#deployment)
+8. [Page Composition & the App Shell](#page-composition--the-app-shell)
+9. [Adding a New Section](#adding-a-new-section)
+10. [Performance](#performance)
+11. [Component Inventory](#component-inventory)
+12. [Deployment](#deployment)
 
 ---
 
 ## Tech Stack
 
-| Area | Choice |
-| ---- | ------ |
-| Framework | [Next.js 16](https://nextjs.org) — App Router, Turbopack |
-| UI library | [React 19](https://react.dev) |
-| Styling | [Tailwind CSS v4](https://tailwindcss.com) + co-located plain CSS |
-| Animation | [Framer Motion](https://www.framer.com/motion/) + [GSAP](https://gsap.com) ScrollTrigger |
-| Icons | [lucide-react](https://lucide.dev) |
-| Fonts | `next/font` — Roboto (self-hosted) |
-| Utilities | [classnames](https://github.com/JedWatson/classnames) |
-| Hosting | [Vercel](https://vercel.com) |
+| Concern   | Choice                                                          |
+| --------- | --------------------------------------------------------------- |
+| Framework | **Next.js 16** (App Router, Turbopack), **React 19**            |
+| Styling   | **Tailwind CSS v4** + scoped per-section `.css` files           |
+| Animation | **framer-motion** (via `LazyMotion`), **GSAP + ScrollTrigger**  |
+| Icons     | **lucide-react**                                                 |
+| Fonts     | **next/font** (self-hosted Roboto)                               |
+| Language  | JavaScript (JSX). No TypeScript.                                 |
 
 ---
 
 ## Getting Started
 
-**Prerequisites:** Node.js 18.18+ (Node 20 LTS recommended) and npm.
-
 ```bash
-npm install     # install dependencies
-npm run dev     # start dev server → http://localhost:3000
+npm install
+npm run dev     # http://localhost:3000
+npm run build   # production build
+npm run lint
 ```
-
-### Scripts
-
-| Script | Description |
-| ------ | ----------- |
-| `npm run dev` | Start the local development server |
-| `npm run build` | Create an optimized production build |
-| `npm run start` | Serve the production build locally |
-| `npm run lint` | Run ESLint |
 
 ---
 
 ## Project Structure
 
-All source lives under `src/`. The `@/*` import alias maps to `src/*` (see `jsconfig.json`).
-
 ```
 src/
-├── app/                        # Next.js App Router — ROUTES ONLY
-│   ├── layout.js               # Root layout: fonts, metadata, <html>/<body>
-│   ├── page.js                 # Home page — composes sections
-│   ├── not-found.jsx           # 404 page
-│   ├── globals.css             # Tailwind import, theme tokens, global rules
-│   └── favicon.ico
+├─ app/                       Next.js App Router
+│  ├─ layout.js               root layout — fonts, metadata, and the app shell
+│  ├─ page.js                 the home page: section order only
+│  ├─ not-found.jsx           404 route
+│  ├─ globals.css             the ONLY global stylesheet (tokens + 2 utilities)
+│  └─ favicon.ico
 │
-├── components/
-│   ├── ui/                     # Reusable, content-agnostic primitives
-│   │   ├── Button/             #   Button.jsx + button.css
-│   │   ├── Container/          #   Container.jsx
-│   │   ├── FlipCard/           #   FlipCard.jsx + flipcard.css
-│   │   └── index.js            #   barrel → import { Button } from "@/components/ui"
-│   │
-│   ├── layout/                 # App shell — present on every page
-│   │   ├── Header/             #   Header.jsx
-│   │   ├── Navbar/             #   Navbar.jsx, MobileSidebar.jsx + navbar.css
-│   │   ├── Footer/             #   Footer.jsx
-│   │   ├── Layout/             #   Layout.jsx (Header + <main> + Footer)
-│   │   └── index.js
-│   │
-│   ├── sections/               # Page sections — the composable page building blocks
-│   │   ├── Hero/               #   Hero.jsx + hero.css                       (dark)
-│   │   ├── MainServices/       #   MainServices.jsx + mainServices.css       (light)
-│   │   ├── OurProcess/         #   OurProcess.jsx + ourProcess.css           (dark)
-│   │   ├── CaseStudies/        #   CaseStudies.jsx + caseStudies.css         (theme: your choice)
-│   │   ├── ConsultationCTA/    #   ConsultationCTA.jsx + consultationCta.css (light)
-│   │   ├── OurPartners/        #   OurPartners.jsx + ourPartners.css  (embedded in ConsultationCTA)
-│   │   ├── WhyChoose/          #   WhyChoose.jsx + WhyChoose.module.css      (dark)
-│   │   └── index.js
-│   │
-│   └── index.js                # Top-level barrel (re-exports ui + layout + sections)
+├─ assets/                    images imported by components (next/image optimises them)
 │
-├── data/                       # ALL content & configuration — no data lives in components
-│   ├── json/                   # Content collections
-│   │   ├── about.json          #   → rendered by WhyChoose
-│   │   ├── courses.json        #   ┐
-│   │   ├── students.json       #   ├ available for upcoming sections
-│   │   ├── testimonials.json   #   │
-│   │   └── works.json          #   ┘
-│   ├── nav.js                  # NAV_ITEMS (menu tree) + NAV_CONTENT (brand, CTA labels)
-│   ├── hero.js                 # HERO_CONTENT, HERO_CTAS, HERO_STATS, HERO_BENEFITS, HERO_PARTICLES
-│   ├── mainServices.js         # MAIN_SERVICES_CONTENT + MAIN_SERVICES (the 8 cards)
-│   ├── ourProcess.js           # OURPROCESS_CONTENT, OURPROCESS_STEPS, OURPROCESS_PARTICLES
-│   ├── caseStudies.js          # CASESTUDIES_CONTENT + CASESTUDIES_ITEMS
-│   ├── consultationCta.js      # CONSULTATION_CTA_CONTENT + CONSULTATION_CTA_FORM (pure JSON-ready)
-│   ├── ourPartners.js          # OURPARTNERS_CONTENT + OURPARTNERS_ROW_ONE/TWO (pure JSON-ready)
-│   ├── whyChoose.js            # WHYCHOOSE_CONTENT (rich copy segments)
-│   ├── flipCard.js             # FLIPCARD_SERVICES, FLIPCARD_QR_CORNERS, FLIPCARD_DEFAULTS
-│   ├── footer.js               # FOOTER_CONTENT, FOOTER_QUICK_LINKS, FOOTER_OTHER_LINKS, FOOTER_CONTACT
-│   ├── notFound.js             # NOT_FOUND_CONTENT
-│   └── index.js                # Central barrel → import { HERO_STATS } from "@/data"
+├─ components/
+│  ├─ index.js                barrel → re-exports ui + layout + sections
+│  ├─ DeferredSection.jsx     lazy-mounts heavy below-the-fold sections
+│  │
+│  ├─ layout/                 the app shell, rendered on every route
+│  │  ├─ Layout/              Header + <main> + BrandMark + Footer
+│  │  ├─ Header/  Navbar/     the recursive, infinite-depth silo menu
+│  │  ├─ Footer/              magnetic social dock + link columns
+│  │  └─ MotionProvider/      <LazyMotion> wrapper
+│  │
+│  ├─ sections/               one folder per page section: Component + its .css
+│  │  ├─ Hero/  OurProcess/  Services/  ConsultationCTA/  OurPartners/
+│  │  ├─ CaseStudies/  Testimonials/  Faq/  BrandMark/
+│  │  └─ MainServices/  WhyChoose/          (built, not currently mounted)
+│  │
+│  └─ ui/                     reusable primitives
+│     └─ Button/  Container/  FlipCard/  MagneticButton/
+│        Modal/  SectionDivider/  SectionHeader/
 │
-└── assets/                     # Locally imported images
-    ├── logo/brandlogo.webp     #   → imported by Navbar
-    └── mainServices/           #   → drop the 8 service illustrations here (see its README)
+└─ data/                      ← ALL CONTENT LIVES HERE (see next section)
+   ├─ index.js                the single import surface: `import { … } from "@/data"`
+   ├─ content/*.json          editable copy      (17 files — the CMS handover)
+   ├─ config/*.json           developer config   (8 files — NOT for the CMS)
+   ├─ *.js                    thin loaders that join JSON to the components
+   └─ json/                   legacy image manifests (see the barrel's note)
 ```
 
-### Page composition
-
-`app/page.js` mounts the sections in order. Sections own their own theme, so the page just
-supplies the surrounding background:
-
-| Order | Section | Theme |
-| ----- | ------- | ----- |
-| 1 | `Hero` | dark (`#03030a`) |
-| 2 | `MainServices` | **light** — owns its own gradient background |
-| 3 | `OurProcess` | dark (`#05050c`) — scroll-drawn "blueprint spine" timeline |
-| 4 | `CaseStudies` | proof / results — theme TBD by the section |
-| 5 | `ConsultationCTA` | **light** (`#F5F7FE`) — mid-page booking form; embeds the `OurPartners` logo strip at its foot |
-| 6 | `WhyChoose` | dark |
-
----
-
-## Architecture Rules
-
-These are the conventions that keep the project clean. **Please follow them when adding code.**
-
-### 1. Components hold markup and behaviour — never content
-
-No strings, arrays, config objects, or copy live inside a component. Everything renderable
-comes from `@/data`.
-
-```jsx
-// ❌ Don't
-const TAGS = ["SEO", "Web Dev"];
-<h1>Build a Digital Presence</h1>
-
-// ✅ Do
-import { HERO_TAGS, HERO_CONTENT } from "@/data";
-<h1>{HERO_CONTENT.headlineLead}</h1>
-```
-
-### 2. No inline style rules
-
-Every CSS declaration lives in a stylesheet — a co-located `.css` file or a Tailwind utility
-class. The `style` prop is used for exactly two things:
-
-| Allowed use | Why |
-| ----------- | --- |
-| **Framer Motion values** — `style={{ y: blobY }}`, `style={{ rotateX }}` | Runtime values driven by scroll/mouse; this is the Motion API, not styling |
-| **CSS custom properties** — `style={particleVars(p)}` | Bridges *data* into CSS; the actual rules stay in the stylesheet |
-
-```jsx
-// ❌ Don't — a style rule inline
-<div style={{ background: "#03030a", borderRadius: "50%" }} />
-
-// ✅ Do — rule in hero.css, class on the element
-<div className="hero-aurora-1" />
-
-// ✅ Do — dynamic data via custom properties, rule in CSS
-<div className="hero-particle" style={{ "--p-left": p.left }} />
-```
-
-### 3. Styling choices belong in CSS, not data
-
-Data carries **intent**; the stylesheet decides what that looks like.
-
-```js
-// ❌ Don't — Tailwind classes in data
-{ label: "View Policy", widthClass: "sm:min-w-[180px]" }
-
-// ✅ Do — semantic flag; hero.css owns `.hero-cta--narrow`
-{ label: "View Policy", narrow: true }
-```
-
-Same pattern for `WHYCHOOSE_CONTENT`, where segments carry a semantic
-`tone: "blue" | "dark" | "primary"` that the component maps to a class.
-
-### 4. Server components by default
-
-Add `"use client"` **only** when a component needs state, effects, event handlers, or
-Framer Motion. `Layout`, `Header`, `Footer`, and `WhyChoose` are server components.
-
-### 5. Import through barrels
-
-```js
-import { Button, Container } from "@/components/ui";
-import { Hero, WhyChoose }   from "@/components/sections";
-import { HERO_STATS }        from "@/data";
-```
-
----
-
-## Adding a New Section
-
-The structure is designed to make this a mechanical, four-step process.
-
-**1. Create the folder** — `src/components/sections/YourSection/`
-
-```
-src/components/sections/YourSection/
-├── YourSection.jsx
-└── yourSection.css        # only if Tailwind utilities aren't enough
-```
-
-**2. Create its data** — `src/data/yourSection.js`
-
-```js
-export const YOURSECTION_CONTENT = {
-  heading: "Your heading",
-  body: "Your paragraph copy.",
-};
-
-export const YOURSECTION_ITEMS = [
-  { title: "First", description: "…" },
-];
-```
-
-**3. Register the exports**
-
-```js
-// src/data/index.js
-export { YOURSECTION_CONTENT, YOURSECTION_ITEMS } from "./yourSection";
-
-// src/components/sections/index.js
-export { default as YourSection } from "./YourSection/YourSection";
-```
-
-**4. Mount it on the page** — `src/app/page.js`
-
-```jsx
-import { Layout } from "@/components/layout";
-import { Hero, WhyChoose, YourSection } from "@/components/sections";
-
-export default function Home() {
-  return (
-    <Layout>
-      <div className="bg-black"><Hero /></div>
-      <div className="bg-black"><YourSection /></div>
-      <div className="bg-black"><WhyChoose /></div>
-    </Layout>
-  );
-}
-```
-
-**Section checklist**
-- [ ] No literal copy or arrays inside the `.jsx`
-- [ ] No inline style rules (Motion values / CSS vars only)
-- [ ] `"use client"` only if genuinely interactive
-- [ ] Data exported from `src/data/index.js`
-- [ ] Component exported from `src/components/sections/index.js`
-- [ ] Section has a stable `id` if the navbar links to it (see `NAV_ITEMS`)
+**Path alias:** `@/*` → `src/*` (configured in `jsconfig.json`).
 
 ---
 
 ## The Data Layer
 
-Everything the UI renders is in `src/data` and re-exported from `src/data/index.js`.
+This is the most important part of the codebase to understand.
 
-**Derived values are computed in data, not in components.** For example
-`HERO_PARTICLES` pre-computes each particle's glow blur/colour, and `FLIPCARD_SERVICES`
-pre-computes its accent tints — so the component only forwards values into CSS variables:
+Components import **only** from the `@/data` barrel. They never read a JSON file directly, and they
+never contain a hardcoded sentence, label, link or `alt` text.
 
-```js
-// src/data/flipCard.js
-export const FLIPCARD_SERVICES = SERVICE_ENTRIES.map((svc, i) => ({
-  ...svc,
-  tintBg: `${svc.color}12`,
-  pulseDuration: `${2 + i * 0.3}s`,
-}));
+```
+src/data/
+├─ content/     EDITABLE COPY — safe to hand to a marketer or a CMS
+├─ config/      DEVELOPER CONFIG — design tokens, animation timings, particles
+├─ *.js         THIN LOADERS — import the JSON, re-export under stable names
+└─ index.js     the barrel every component imports from
 ```
 
-**Rich copy is stored as segments** when parts of a sentence need different emphasis
-(`src/data/whyChoose.js`), keeping colour/bold decisions data-driven without embedding markup.
+### Why the content / config split
 
-### Headless-CMS readiness
+An editor should never meet a hex value or a cubic-bezier curve, and a CMS record should never carry
+a Tailwind class. So the two are stored apart:
 
-The data layer is structured so content can later be managed in a **headless CMS**
-(e.g. WordPress + ACF) and delivered to the frontend as JSON — the backend team never
-needs to read component code. Fields fall into two tiers:
+|                            | `content/`                                                              | `config/`                                                                     |
+| -------------------------- | ----------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| Contains                   | headlines, body copy, links, catalogue entries, testimonials, `alt` text | colours, gradients, easing curves, springs, particle positions, tab ids        |
+| Owner                      | marketing / CMS                                                          | developers                                                                     |
+| Goes to the backend team?  | **Yes**                                                                  | **No**                                                                         |
+| Files                      | 17                                                                       | 8                                                                              |
 
-| Tier | Files | CMS mapping |
-| ---- | ----- | ----------- |
-| **Pure content** | `data/json/*.json`, `consultationCta.js` | 1:1 — only plain strings / numbers / arrays of objects, so they drop straight into a CMS record as JSON |
-| **Content + derived** | `hero.js`, `flipCard.js`, `mainServices.js`, `ourProcess.js`, `nav.js` | The editable *content* fields map to CMS; the rest is **computed in code** (particle math, accent tints, pulse timings) or **resolved from a key** (lucide icon names → `SERVICE_ICONS` / `PROCESS_ICONS`) and must not be authored in the CMS |
+Every JSON file opens with a **`$comment`** key describing its shape, its owner, and any gotcha
+(for example: "values wrapped in `[XX]` are placeholders — replace before publishing"). That comment
+is the file's documentation and travels with it into the handover.
 
-**Rule of thumb for any field** — if a content editor would set it, it's content (→ CMS).
-If it's a colour tint, animation timing, class name, or an icon/SVG, it's presentation and
-stays in code; pass it a semantic *key* from the CMS instead (see [Architecture Rule 3](#architecture-rules)).
-To migrate a `data/*.js` file, split its plain content into `data/json/<name>.json` and keep the
-derived `.map(...)` transform in the `.js` file (or the component). `consultationCta.js` is the
-reference shape: no imports, no computed values — hand it to the backend as-is.
+### Why there are loader `.js` files at all
 
-> **Note:** `courses.json`, `students.json`, `testimonials.json`, and `works.json` are not
-> currently rendered — they're retained as ready-made content for upcoming sections.
+JSON cannot express three things the UI needs, so a thin module bridges the gap. Each loader does
+one small job and nothing else:
+
+| Loader           | What it does beyond re-exporting                                                                            |
+| ---------------- | ----------------------------------------------------------------------------------------------------------- |
+| `nav.js`         | resolves each node's `icon` **string** into a real lucide-react component via `navIcons.js` — React components cannot live in JSON |
+| `hero.js`        | expands a 14-particle backdrop from a small formula, so nobody hand-maintains 140 derived CSS values          |
+| `flipCard.js`    | derives four tint/pulse values per service from its one authored `color`                                      |
+| `caseStudies.js` | merges the editorial copy with the dark-glass design tokens the component expects as one object               |
+| `services.js`    | joins the tab config to the catalogue (`SERVICE_TABS[].id` ⇄ a key in `services.json`)                        |
+| `motion.js`      | exposes the shared easing/spring tokens                                                                       |
+
+Everything else is a one-line pass-through. **The exported names are the contract the components code
+against — keep them stable.**
+
+### To change any text on the site
+
+1. Find the file in `src/data/content/` (they are named after the section).
+2. Edit the string.
+3. Save. That is the whole process — no component, no CSS, nothing else to touch.
 
 ---
 
-## Main Services Section
+## Handover to a Headless CMS (WordPress / ACF)
 
-The light-theme services grid ([`MainServices`](src/components/sections/MainServices/)) is fully
-data-driven from [`src/data/mainServices.js`](src/data/mainServices.js).
+The `src/data/content/` folder **is** the handover package. Give the backend team that folder and
+nothing else.
 
-**Responsive grid** — 1 column → 2 columns (≥640px) → 4 columns (≥1024px), giving two clean rows
-of four on desktop.
+**How it maps:**
 
-**Per-card flags** (set in the data, no JSX changes needed):
+* One JSON file → one ACF **field group** (or one options page).
+* A top-level object (`content`) → a **group** field.
+* A top-level array (`items`, `columns`, `steps`, `faqs`, `services`) → a **repeater**, one sub-field
+  per key in the array's objects.
+* The `$comment` key at the top of each file documents the intended shape and any editorial warning.
+  It is a plain string and can be ignored by the importer.
 
-| Field | Effect |
-| ----- | ------ |
-| `image` | Renders the illustration. When `null`, falls back to a gradient tile with `icon` |
-| `icon` | A lucide-react name, resolved by `SERVICE_ICONS` in `MainServices.jsx` |
-| `featured` | Draws the persistent cyan glow ring (currently on *AI Automation*) |
-| `comingSoon` | Adds the amber diamond badge and swaps *Explore* for the "Coming Soon" marker |
-| `note` | `{ strong, rest }` — appended to the description (e.g. "**Launching Soon** — ask us…") |
+**Rules the backend team should know:**
 
-### Adding the card illustrations
+* **`$comment` is documentation, not data.** Do not create a field for it.
+* **`icon` fields are keys, not images.** They hold a lucide-react component *name* (e.g. `"Gavel"`).
+  Expose them as a select whose options come from `NAV_ICONS` in `src/data/navIcons.js`, not as a
+  free-text or upload field.
+* **In-page links must stay root-relative** — `"/#services"`, never `"#services"`. The navbar and
+  footer render on every route, and a bare hash resolves against the current route, so it would do
+  nothing for a visitor who is not already on the home page.
+* **`services.json` keys must match `config/serviceTabs.json`.** A tab finds its cards by that id.
+* **Do not migrate `src/data/config/`.** It is developer configuration with no editorial meaning.
 
-The cards currently render **icon tiles as a placeholder**. To use the real artwork, drop the
-files into [`src/assets/mainServices/`](src/assets/mainServices/) and set the `image` field —
-full instructions and suggested filenames are in that folder's `README.md`.
+**Swapping JSON for the CMS later** touches only the loader files: change
+`import x from "./content/hero.json"` into a fetch, keep the exported names identical, and no
+component changes at all.
 
-> The section links from the navbar (`#services`), so `.ms-section` carries a
-> `scroll-margin-top` to keep the heading clear of the fixed navbar on anchor jumps.
-> Any future section the navbar links to needs the same.
+---
+
+## Architecture Rules
+
+1. **No copy inside components.** Every visitor-facing string — including `alt` and `aria-label` —
+   comes from `@/data`. This is easy to audit: grep the components for a quoted sentence and you
+   should find none.
+2. **No data files inside component folders.** All data lives in `src/data/`. A section folder holds
+   its component and its stylesheet, nothing else.
+3. **Components import from the barrel**, i.e. `from "@/data"` — never a deep path into a JSON file.
+   That indirection is what makes the CMS migration a one-file change.
+4. **Icons are keys in data, components in code.** The registry (`navIcons.js`, or a `*_ICONS` map
+   beside a section) is the only place data meets React.
+5. **Colour reaches CSS as data.** Per-item accents are forwarded as CSS custom properties
+   (`--accent`, `--dot`, `--chip-accent`), so theming is a data edit, not a stylesheet edit.
+6. **Shared motion tokens.** Easing curves and springs come from `@/data` (`EASE_SMOOTH`,
+   `EASE_ENTRANCE`, `SPRING_FAST`, `SPRING_SNAPPY`, `SPRING_DOCK`). They were previously re-declared
+   in five components, which is how a design language silently drifts.
+7. **Every file opens with a header comment** saying what it is and why it exists.
 
 ---
 
 ## The Styling Layer
 
-Three complementary tools, used deliberately:
+* **`src/app/globals.css` is the only global stylesheet.** It holds the Tailwind entry point, brand
+  tokens, breakpoints, the `body` rule, and exactly two cross-cutting utilities (`.cv-section` and
+  the `prefers-reduced-motion` guard). Section rules must not be added here.
+* **Each section owns a sibling `.css` file** (`hero.css`, `ourProcess.css`, …) imported by its
+  component, with a prefixed class namespace (`hero-`, `ya-`, `fc-`, `ms-`, `house-`).
+* **`WhyChoose.module.css` is the one CSS Module**, because its two class names are generic enough
+  to collide.
+* **There is no CSS-in-JS and no inline `<style>` block** anywhere in the project.
+* Brand tokens are defined once in `:root` and bridged into Tailwind via `@theme inline`, so
+  `text-primary` and `var(--primary)` can never disagree.
 
-| Tool | Use for | Example |
-| ---- | ------- | ------- |
-| **Tailwind utilities** | Layout, spacing, typography, responsive behaviour | `className="flex gap-4 md:w-1/2"` |
-| **Co-located `.css`** | Keyframes, complex gradients, animation classes — anything global to a component | `hero.css`, `flipcard.css` |
-| **CSS Modules** (`*.module.css`) | Scoped classes where a generic name could collide | `WhyChoose.module.css` |
+---
 
-**Why plain `.css` and not Modules everywhere?** Some class names must stay global and stable —
-keyframe names referenced from other rules, and classes like `.hero-grad-text` used alongside
-CSS custom properties. Modules hash those names, which breaks the reference.
+## Page Composition & the App Shell
 
-**Theme tokens** live in `src/app/globals.css` under `@theme inline` (Tailwind v4's CSS-based
-config) — that's where `text-primary`, `text-primary-blue`, `text-secondary-light` etc. come from.
+`src/app/layout.js` wraps every route in `<Layout>`, which renders:
+
+```
+Header (Navbar)  →  <main>{page}</main>  →  SectionDivider  →  BrandMark  →  Footer
+```
+
+So the **navbar, the closing BrandMark statement and the footer appear on every route** — including
+`not-found.jsx` and any page added later — with no wiring. A new page only returns its own sections.
+
+> ⚠️ **Do not wrap a new page in `<Layout>` again.** That used to be the pattern here, so it is an
+> easy habit to repeat, but it would now render two navbars, two BrandMarks and two footers.
+
+`src/app/page.js` therefore contains only the section order and each section's placeholder height —
+no content and no markup of its own.
+
+---
+
+## Adding a New Section
+
+1. **Content** → create `src/data/content/mySection.json` with a `$comment` describing its shape.
+2. **Loader** → create `src/data/mySection.js` re-exporting it under a stable name.
+3. **Barrel** → add that export to `src/data/index.js`.
+4. **Component** → create `src/components/sections/MySection/MySection.jsx` + `mySection.css`,
+   importing its content from `@/data`.
+5. **Mount** → add it to `src/app/page.js`; if it is heavy and below the fold, register it in
+   `LOADERS` in `DeferredSection.jsx` and mount it as `<DeferredSection name="MySection" … />`.
+
+No existing file needs to change beyond steps 3 and 5.
 
 ---
 
 ## Performance
 
-The site is tuned for Core Web Vitals on mobile (PageSpeed: 70 → 90+).
-
-| Technique | Where |
-| --------- | ----- |
-| **Self-hosted fonts** via `next/font` — removes a render-blocking external stylesheet (~2.4s) | `app/layout.js` |
-| **LCP-safe hero entrance** — headline/lead paragraph paint on first server render; the entrance is a *transform-only* CSS slide holding `opacity: 1`, so it animates without delaying LCP | `hero.css` → `.hero-rise` |
-| **Compositor-friendly animation** — entrance animates `transform` only | `hero.css` |
-| **Optimized images** — `next/image` serving resized AVIF/WebP with explicit `sizes` | `next.config.mjs` |
-| **`content-visibility`** — defers off-screen section rendering | `globals.css` → `.cv-section` |
-| **Reduced motion** — honoured globally | `globals.css` |
-
-> ⚠️ **Don't reintroduce an `opacity: 0` entrance on the hero headline or lead paragraph.**
-> That's the LCP element — hiding it behind JS hydration previously cost ~3s of LCP.
-
----
-
-## Images & Assets
-
-Images are served through the Next.js image optimizer. Allowed remote hosts are declared in
-[`next.config.mjs`](next.config.mjs):
-
-```js
-images: {
-  remotePatterns: [{ protocol: "https", hostname: "youngarchitects.in" }],
-  formats: ["image/avif", "image/webp"],
-  qualities: [75, 100],
-}
-```
-
-**Two sources of images:**
-- **Remote** — every `src/data/json/*.json` entry points at `https://youngarchitects.in/assets/…`.
-  This is how the site actually loads its content imagery.
-- **Local** — `src/assets/`, used via static import. Only `logo/brandlogo.webp` is currently
-  imported (by the Navbar).
-
-To add a new remote host, extend `remotePatterns`.
+* **Deferred mounting.** Every heavy below-the-fold section loads its JavaScript only when the
+  visitor scrolls near it (`DeferredSection`), with a placeholder holding the section's height and
+  background so nothing shifts. Chunks are also prefetched on the first real interaction.
+* **Crawler safeguard.** Search-engine renderers do not scroll — they render once with a very tall
+  viewport. `DeferredSection` detects that (`innerHeight > 2000`) and mounts everything immediately,
+  so the whole page is indexable without costing a visitor a byte.
+* **Hidden SEO catalogue.** The Services deck shows one card at a time, so `ServicesSeo.jsx`
+  server-renders the entire catalogue as `sr-only` semantic markup plus Schema.org `ItemList`. The
+  FAQ likewise emits `FAQPage` structured data. Both read the same JSON the visible UI does, so they
+  can never drift out of sync.
+* **`LazyMotion`.** Components use framer-motion's lightweight `m.*` elements, roughly halving the
+  animation runtime payload.
+* **`content-visibility`.** The `.cv-section` utility skips rendering off-screen sections.
+* **Deterministic decoration.** Particle and star positions come from fixed data or a *seeded* PRNG,
+  never `Math.random()` — random values would differ between the server and client renders and cause
+  a hydration mismatch.
+* **`prefers-reduced-motion`** is honoured globally and per-section.
 
 ---
 
-## Extracted Sections Library
+## Component Inventory
 
-The **Capabilities** and **Services** sections were removed from this project to make room for
-new sections, and archived as a standalone, reusable library:
+Sections currently mounted on the home page, in order:
 
-```
-~/Desktop/ya-sections-library/
-├── README.md          # full re-import instructions
-├── capabilities/      # CapabilitiesSection.jsx + css + data
-├── services/          # Service.jsx, ServiceCards.jsx + css + data + services.json
-├── shared/Modal.jsx   # dependency of ServiceCards
-└── assets/            # service-wire.webp
-```
+`Hero` → `OurProcess` → `ServicesSeo` + `Services` → `ConsultationCTA` (embeds `OurPartners`) →
+`CaseStudies` → `Testimonials` (embeds `Faq`) → `BrandMark` → `Footer`
 
-To bring one back, follow the instructions in that folder's `README.md`. Notes:
-- **Capabilities** uses `gsap`, which is already a project dependency (used by the `OurProcess`
-  and `ConsultationCTA` sections), so no extra install is needed.
-- **Services** needs `Modal` copied into `src/components/ui/` and a `<div id="portal-modal-root" />`
-  in the root layout (already present in `app/layout.js`).
-- Those files still contain inline `style={{}}` — they preserve the original design as shipped.
-  If you re-import them, migrate their styles to match this project's
-  [no-inline-styles rule](#2-no-inline-style-rules).
+**Built but not currently mounted:** `MainServices` and `WhyChoose`. Their components, stylesheets
+and data are complete and kept in place so they can be dropped into `page.js` at any time. They are
+labelled as unmounted in their own file headers and in the data barrel.
+
+**Legacy, unreferenced:** `src/data/json/students.json`, `works.json`, `courses.json` and
+`testimonials.json` are no longer read by any component (`about.json` still is, by `WhyChoose`).
+They are kept so nothing is silently deleted, and can be removed once you have confirmed no upcoming
+page needs them.
 
 ---
 
 ## Deployment
 
-Deployed on **Vercel**. Pushes to `main` trigger a production deployment; pull-request branches
-get preview deployments automatically.
-
-```bash
-npm run build && npm run start   # verify a production build locally
-```
-
----
-
-## License
-
-Proprietary — © Young Architects. All rights reserved.
+Deployed on Vercel. `npm run build` produces a fully static prerender of `/` and `/_not-found`
+(`next build` reports both as ○ Static), so there is no server runtime to provision.

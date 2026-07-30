@@ -1,0 +1,29 @@
+{
+  "$comment": "Hero backdrop particle generator inputs. DEVELOPER CONFIG, not editable copy — do NOT hand this to the CMS. src/data/hero.js expands these into HERO_PARTICLES with a deterministic formula (no Math.random) so the server and client render identical markup and hydration never mismatches. Each generated value is consumed by the `.hero-particle` rule in hero.css as a CSS custom property.",
+  "count": 14,
+  "sizes": [3, 2, 4, 2, 3],
+  "colors": ["#06b6d4", "#a855f7", "#3b82f6", "#22d3ee", "#ec4899"],
+  "formula": {
+    "$comment": "left = leftBase + (i * leftStep) % leftRange, and so on. Kept as data so the spread can be retuned without touching code.",
+    "leftBase": 10,
+    "leftStep": 6.2,
+    "leftRange": 82,
+    "topBase": 12,
+    "topStep": 9.7,
+    "topRange": 75,
+    "glowBlurOffset": 3,
+    "glowBlurSizeFactor": 2,
+    "glowAlphaHex": "33",
+    "durationBase": 12,
+    "durationStep": 1.9,
+    "durationRange": 11,
+    "delayStep": 1.4,
+    "delayRange": 8,
+    "dxStep": 18,
+    "dxModulo": 5,
+    "dxCentre": 2,
+    "dyStep": 14,
+    "dyModulo": 4,
+    "dyCentre": 2
+  }
+}

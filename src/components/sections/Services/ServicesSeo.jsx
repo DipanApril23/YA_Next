@@ -18,33 +18,37 @@
 //
 // It is NOT cloaking: every word here is the same content a visitor can reach
 // by clicking through the tabs and "Learn More" — this just also exposes it
-// to crawlers and assistive tech. Edit the copy in services.json only.
+// to crawlers and assistive tech.
+//
+// ALL COPY COMES FROM THE DATA LAYER: the catalogue from
+// data/content/services.json and this block's own headings from
+// data/content/servicesSeo.json. Nothing to edit in this file.
 
-import servicesData from "./services.json";
-import { SERVICE_TABS } from "./serviceCards.data";
-
-// Flatten all tabs into one ordered list, tagging each with its category label.
-const ALL_SERVICES = SERVICE_TABS.flatMap((tab) =>
-  (servicesData[tab.id] || []).map((s) => ({ ...s, categoryLabel: tab.label }))
-);
+import {
+  SERVICE_TABS,
+  ALL_SERVICES,
+  getServicesByTab,
+  SERVICES_SEO_CONTENT as SEO,
+  SERVICES_SEO_ORGANIZATION as ORG,
+} from "@/data";
 
 // Schema.org ItemList of Service entries — one structured record per service.
 const SERVICES_JSONLD = {
   "@context": "https://schema.org",
   "@type": "ItemList",
-  name: "Young Architects — Services",
-  itemListElement: ALL_SERVICES.map((s, i) => ({
+  name: SEO.itemListName,
+  itemListElement: ALL_SERVICES.map((service, i) => ({
     "@type": "ListItem",
     position: i + 1,
     item: {
       "@type": "Service",
-      name: s.title,
-      category: s.categoryLabel,
-      description: s.description,
+      name: service.title,
+      category: service.categoryLabel,
+      description: service.description,
       provider: {
         "@type": "Organization",
-        name: "Young Architects",
-        url: "https://youngarchitects.in",
+        name: ORG.name,
+        url: ORG.url,
       },
     },
   })),
@@ -61,17 +65,14 @@ export default function ServicesSeo() {
 
       {/* Visually-hidden linear catalogue: indexed by crawlers, read by
           screen readers, invisible to sighted users. */}
-      <section className="sr-only" aria-label="Our services in full">
-        <h2>Premium Services Built to Scale</h2>
-        <p>
-          Streamline development, marketing, and design operations with our
-          custom-made solutions engineered for enterprise-grade growth.
-        </p>
+      <section className="sr-only" aria-label={SEO.ariaLabel}>
+        <h2>{SEO.heading}</h2>
+        <p>{SEO.intro}</p>
 
         {SERVICE_TABS.map((tab) => (
           <div key={tab.id}>
-            <h3>{`${tab.label} Services`}</h3>
-            {(servicesData[tab.id] || []).map((service) => (
+            <h3>{`${tab.label}${SEO.categoryHeadingSuffix}`}</h3>
+            {getServicesByTab(tab.id).map((service) => (
               <article key={service.title}>
                 <h4>{service.title}</h4>
                 <p>{service.description}</p>

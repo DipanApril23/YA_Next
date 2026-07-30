@@ -8,7 +8,7 @@
  * Buttons carry aria-expanded/aria-controls for accessibility, and a FAQPage
  * JSON-LD script is emitted for rich search results. A "Still have questions?"
  * row linking to the consultation form closes the section. All copy comes from
- * `./faq.json`.
+ * the data layer (src/data/content/faq.json, via @/data) — nothing to edit here.
  *
  * JSX port of the original TSX, using framer-motion's lightweight `m` element
  * (the app is wrapped in a <LazyMotion> provider) — same design, smaller runtime.
@@ -19,9 +19,7 @@ import { m, AnimatePresence, useInView } from "framer-motion";
 import { Sparkles, Plus, MessageCircle } from "lucide-react";
 import ScrollBeamDivider from "./ScrollBeamDivider";
 import MagneticButton from "@/components/ui/MagneticButton/MagneticButton";
-import faqData from "./faq.json";
-
-const EASE = [0.22, 1, 0.36, 1];
+import { FAQ_CONTENT, FAQ_ITEMS, FAQ_SUPPORT, EASE_ENTRANCE as EASE } from "@/data";
 
 /* Answers may contain **bold** keyword phrases. Split on the markers and wrap
    the emphasised segments in <strong>; everything else renders as plain text. */
@@ -42,7 +40,7 @@ function renderAnswer(text) {
 const FAQ_JSON_LD = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
-  mainEntity: faqData.faqs.map((f) => ({
+  mainEntity: FAQ_ITEMS.map((f) => ({
     "@type": "Question",
     name: f.question,
     acceptedAnswer: { "@type": "Answer", text: f.answer.replace(/\*\*/g, "") },
@@ -86,7 +84,7 @@ export default function FaqSection() {
           >
             <Sparkles className="h-3.5 w-3.5 text-violet-600" />
             <span className="text-xs font-bold tracking-wide text-violet-800">
-              {faqData.badge}
+              {FAQ_CONTENT.badge}
             </span>
           </m.div>
 
@@ -96,9 +94,9 @@ export default function FaqSection() {
             transition={{ delay: 0.08, duration: 0.55, ease: EASE }}
             className="mt-5 text-3xl font-extrabold leading-[1.1] tracking-tight text-slate-900 sm:text-4xl lg:text-[2.9rem]"
           >
-            {faqData.headline.plain}{" "}
+            {FAQ_CONTENT.headline.plain}{" "}
             <span className="bg-gradient-to-r from-violet-600 via-fuchsia-600 to-indigo-600 bg-clip-text text-transparent">
-              {faqData.headline.accent}
+              {FAQ_CONTENT.headline.accent}
             </span>
           </m.h2>
 
@@ -108,13 +106,13 @@ export default function FaqSection() {
             transition={{ delay: 0.16, duration: 0.5, ease: EASE }}
             className="mx-auto mt-4 max-w-md text-sm font-medium leading-relaxed text-slate-500 sm:text-base"
           >
-            {faqData.subheading}
+            {FAQ_CONTENT.subheading}
           </m.p>
         </div>
 
         {/* ── Accordion ── */}
         <div className="mt-10 flex flex-col gap-3 md:mt-12">
-          {faqData.faqs.map((faq, i) => {
+          {FAQ_ITEMS.map((faq, i) => {
             const isOpen = openIndex === i;
             return (
               <m.div
@@ -230,19 +228,19 @@ export default function FaqSection() {
             </span>
             <div>
               <p className="text-[15px] font-extrabold tracking-tight text-slate-900">
-                {faqData.support.heading}
+                {FAQ_SUPPORT.heading}
               </p>
               <p className="mt-0.5 text-[12.5px] font-medium text-slate-500">
-                {faqData.support.subtext}
+                {FAQ_SUPPORT.subtext}
               </p>
             </div>
           </div>
           <MagneticButton
-            href={faqData.support.buttonHref}
+            href={FAQ_SUPPORT.buttonHref}
             variant="primary"
             className="shrink-0 rounded-full px-6 py-3 text-sm shadow-lg shadow-violet-300/40"
           >
-            {faqData.support.buttonLabel}
+            {FAQ_SUPPORT.buttonLabel}
           </MagneticButton>
         </m.div>
 

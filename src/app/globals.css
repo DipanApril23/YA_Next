@@ -1,3 +1,21 @@
+/* ─── globals.css ──────────────────────────────────────────────────────
+   The only global stylesheet. Everything else is scoped: each section owns a
+   sibling .css file (or a .module.css) imported by its component.
+
+   What lives here, and nothing else:
+     1. the Tailwind v4 entry point
+     2. brand design tokens (:root custom properties) + the @theme bridge that
+        exposes them to Tailwind as utilities such as `text-primary`
+     3. responsive breakpoints
+     4. the YAGlyphs @font-face shim (see the note above it)
+     5. the `body` base rule
+     6. two cross-cutting utilities: `.cv-section` (content-visibility) and the
+        global prefers-reduced-motion guard
+
+   Section-specific rules must NOT be added here — put them in the section's
+   own stylesheet so the cascade stays predictable and dead CSS is obvious.
+   ───────────────────────────────────────────────────────────────────── */
+
 @import "tailwindcss";
 
 :root {

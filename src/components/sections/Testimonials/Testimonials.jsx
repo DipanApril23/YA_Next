@@ -12,9 +12,9 @@
  * Cards are equal-height (an `h-full` chain) and render a gradient-initial
  * `Avatar` unless an optional `avatarImage` is provided.
  *
- * Content → src/data/testimonials.js. The display-only `avatarGradient` is
- * assigned here from TESTIMONIAL_GRADIENTS, keyed by id, because it is a
- * styling concern rather than something a CMS/backend would ever own.
+ * Content → src/data/content/testimonials.json. The display-only avatar
+ * gradients live apart in src/data/config/testimonialsTheme.json, keyed by id,
+ * because they are styling a CMS/backend would never own — this file joins the two.
  */
 
 import { useRef, useState } from "react";
@@ -23,34 +23,20 @@ import { SectionHeader } from "@/components/ui";
 import {
   TESTIMONIALS_CONTENT as CONTENT,
   TESTIMONIALS_ITEMS as ITEMS,
+  TESTIMONIALS_AVATARS as AVATARS,
 } from "@/data";
 import FaqSection from "../Faq/FaqSection";
 import "./testimonials.css";
 
 // ─────────────────────────────────────────────────────────────────────────────
-// DATA  —  content from @/data; gradients are a display concern kept here.
+// DATA  —  content + display theming, both from the @/data barrel.
 // ─────────────────────────────────────────────────────────────────────────────
-
-const TESTIMONIAL_GRADIENTS = {
-  "1":  "from-violet-500 to-purple-700",
-  "2":  "from-fuchsia-500 to-pink-600",
-  "3":  "from-indigo-500 to-blue-600",
-  "4":  "from-emerald-500 to-teal-600",
-  "5":  "from-orange-500 to-amber-600",
-  "6":  "from-violet-500 to-indigo-600",
-  "7":  "from-rose-500 to-pink-600",
-  "8":  "from-cyan-500 to-blue-600",
-  "9":  "from-purple-500 to-violet-700",
-  "10": "from-violet-600 to-fuchsia-600",
-  "11": "from-teal-500 to-emerald-600",
-  "12": "from-amber-500 to-orange-600",
-};
 
 const testimonialsData = ITEMS.map((t) => ({
   ...t,
   avatarImage: t.avatarImage ?? undefined,
   metric: t.metric ?? undefined,
-  avatarGradient: TESTIMONIAL_GRADIENTS[t.id] ?? "from-slate-500 to-slate-700",
+  avatarGradient: AVATARS.gradients[t.id] ?? AVATARS.fallbackGradient,
 }));
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -250,12 +236,7 @@ function MarqueeRow({ items, direction, duration }) {
 
 // Decorative avatar cluster for the bottom "Join 100+ businesses" pill —
 // gradient + initials so the circles read as real customers, not empty dots.
-const AVATAR_BADGES = [
-  { gradient: "from-violet-500 to-purple-700", initials: "AS" },
-  { gradient: "from-fuchsia-500 to-pink-600", initials: "RB" },
-  { gradient: "from-emerald-500 to-teal-600", initials: "SG" },
-  { gradient: "from-orange-500 to-amber-600", initials: "IQ" },
-];
+const AVATAR_BADGES = AVATARS.badges;
 
 // ─────────────────────────────────────────────────────────────────────────────
 // MAIN SECTION

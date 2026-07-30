@@ -1,49 +1,25 @@
-// ─── Footer: brand copy, links, contact details ───────────────────────
+// ─── Site footer — data loader ────────────────────────────────────────
+//
+// A thin adapter over ./content/footer.json. The footer renders on EVERY
+// route (it is mounted in the app shell, src/components/layout/Layout), so
+// two rules matter here:
+//
+//   1. Every in-page target is written as "/#anchor" — root-relative — never
+//      a bare "#anchor". A bare hash resolves against the current route, so it
+//      would do nothing for a visitor who is not already on the home page.
+//   2. The link columns mirror the navbar silo (./content/nav.json) so the
+//      menu and the footer can never drift apart.
+//
+// `socials[].iconKey` selects an inline brand SVG from SOCIAL_ICONS in
+// Footer.jsx (lucide-react no longer ships brand marks), which keeps the data
+// free of JSX.
+//
+// Consumed by: src/components/layout/Footer/Footer.jsx (via the @/data barrel).
 
-export const FOOTER_CONTENT = {
-  brand: {
-    href: "#home",
-    ariaLabel: "Go to Home",
-    logo: "https://youngarchitects.in/assets/logo/brandlogo.webp",
-    logoAlt: "Young Architects logo",
-  },
-  // Rendered as separate lines (each followed by a line break).
-  blurbLines: [
-    "Drive your business forward with",
-    "expert consultancy, SaaS solutions, and digital transformation.",
-  ],
-  blurbStrong: "Let's build something impactful—connect with us today.",
-  trustLine: "Trusted by growing businesses across Kolkata & beyond.",
-  headings: {
-    quickLinks: "Quick Links",
-    others: "Others",
-    contact: "Contact Details",
-  },
-  addressLabel: "Address",
-  // `{year}` is replaced at render time with the current year.
-  copyright: "Copyright © {year} Young Architects. All Rights Reserved.",
-};
+import footerContent from "./content/footer.json";
 
-export const FOOTER_QUICK_LINKS = [
-  { href: "/about-us", label: "About Us" },
-  { href: "/services", label: "Our Services" },
-  { href: "/contact-us", label: "Contact Us" },
-];
-
-export const FOOTER_OTHER_LINKS = [
-  { href: "/disclaimer", label: "Disclaimer" },
-  { href: "/terms-and-conditions", label: "Terms & Conditions" },
-];
-
-export const FOOTER_CONTACT = {
-  phones: [
-    { href: "tel:+919883952010", label: "+91 9883952010" },
-    { href: "tel:+919432274587", label: "+91 9432274587" },
-  ],
-  email: { href: "mailto:yafoundations@gmail.com", label: "yafoundations@gmail.com" },
-  socials: [
-    { href: "https://www.linkedin.com/company/young-aarchitects", label: "LinkedIn", icon: "Linkedin" },
-    { href: "#", label: "Facebook", icon: "Facebook" },
-    { href: "#", label: "Instagram", icon: "Instagram" },
-  ],
-};
+export const FOOTER_CONTENT = footerContent.content;
+export const FOOTER_COLUMNS = footerContent.columns;
+export const FOOTER_SOCIALS = footerContent.socials;
+export const FOOTER_CONTACT = footerContent.contact;
+export const FOOTER_LEGAL = footerContent.legal;

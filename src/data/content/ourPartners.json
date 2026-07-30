@@ -1,0 +1,85 @@
+{
+  "$comment": "Our Partners strip: header copy and the two scrolling platform rows. Editable content — safe for a CMS. Each platform: `monogram` is the fallback glyph shown while `logo` is null, `accent` is the brand colour forwarded to CSS as --chip-accent. NOTE the framing is \"Platforms We Build With\", NOT \"Certified Partners\" — only claim a partner badge you actually hold, and client logos need permission.",
+  "content": {
+    "titleLead": "Platforms & Partners",
+    "titleHighlight": "We Build With",
+    "subheading": "We work on the world's leading marketing platforms — so your business runs on the best.",
+    "ariaLabel": "Platforms we build with"
+  },
+  "rowOne": [
+    {
+      "name": "Google",
+      "monogram": "G",
+      "accent": "#4285F4",
+      "logo": null
+    },
+    {
+      "name": "Meta",
+      "monogram": "M",
+      "accent": "#0081FB",
+      "logo": null
+    },
+    {
+      "name": "GoHighLevel",
+      "monogram": "GH",
+      "accent": "#3ABEFF",
+      "logo": null
+    },
+    {
+      "name": "WordPress",
+      "monogram": "W",
+      "accent": "#21759B",
+      "logo": null
+    },
+    {
+      "name": "Next.js",
+      "monogram": "N",
+      "accent": "#7C7FF2",
+      "logo": null
+    },
+    {
+      "name": "Meta Ads",
+      "monogram": "∞",
+      "accent": "#E94CA8",
+      "logo": null
+    }
+  ],
+  "rowTwo": [
+    {
+      "name": "Supabase",
+      "monogram": "S",
+      "accent": "#3ECF8E",
+      "logo": null
+    },
+    {
+      "name": "n8n",
+      "monogram": "n8n",
+      "accent": "#EA4B71",
+      "logo": null
+    },
+    {
+      "name": "OpenAI",
+      "monogram": "AI",
+      "accent": "#8B7CF6",
+      "logo": null
+    },
+    {
+      "name": "Cloudflare",
+      "monogram": "C",
+      "accent": "#F6821F",
+      "logo": null
+    },
+    {
+      "name": "Hostinger",
+      "monogram": "H",
+      "accent": "#673DE6",
+      "logo": null
+    },
+    {
+      "name": "Google Ads",
+      "monogram": "Ad",
+      "accent": "#34A853",
+      "logo": null
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "$comment": "Services section developer config: the three category tabs and the card-stack fanning offsets. Not editable copy. `tabs[].id` MUST match a top-level key in src/data/content/services.json — that is how a tab finds its cards. `color`/`glow` are forwarded to the stylesheet. `cardOffsets` positions the fanned stack behind the front card (index 0 = front, 3 = furthest back) and is consumed directly by framer-motion.",
+  "tabs": [
+    { "id": "marketing", "label": "Marketing", "color": "#AD449A", "glow": "rgba(255,0,127,0.35)" },
+    { "id": "development", "label": "Development", "color": "#59B2E6", "glow": "rgba(89,178,230,0.35)" },
+    { "id": "designing", "label": "Designing", "color": "#AD449A", "glow": "rgba(168,85,247,0.35)" }
+  ],
+  "cardOffsets": [
+    { "x": 0, "y": 0, "rotate": 0, "scale": 1, "zIndex": 50, "opacity": 1 },
+    { "x": 18, "y": 14, "rotate": 5, "scale": 0.95, "zIndex": 40, "opacity": 0.85 },
+    { "x": 32, "y": 24, "rotate": 9, "scale": 0.9, "zIndex": 30, "opacity": 0.65 },
+    { "x": 44, "y": 32, "rotate": 12, "scale": 0.85, "zIndex": 20, "opacity": 0.45 }
+  ]
+}

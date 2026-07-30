@@ -1,9 +1,11 @@
 // ─── Root layout ──────────────────────────────────────────────────────
 // The shell wrapped around every route: self-hosted Roboto font, <html>/<body>,
-// site metadata, image-origin preconnect hints, and the modal portal root.
-// No page content lives here — sections are composed in app/page.js.
+// site metadata, image-origin preconnect hints, the modal portal root, and the
+// app shell (<Layout> → Navbar + BrandMark + Footer) so those three render on
+// every page. No page content lives here — sections are composed in app/page.js.
 
 import { Roboto } from "next/font/google";
+import { Layout } from "@/components/layout";
 import "./globals.css";
 
 // Self-hosted via next/font — no render-blocking external stylesheet request.
@@ -38,7 +40,9 @@ export default function RootLayout({ children }) {
         className={`${roboto.variable} antialiased`}
         suppressHydrationWarning
       >
-        {children}
+        {/* The app shell — Navbar, closing BrandMark and Footer — lives here so
+            every route (including not-found) renders inside the same frame. */}
+        <Layout>{children}</Layout>
         <div id="portal-modal-root" />
       </body>
     </html>

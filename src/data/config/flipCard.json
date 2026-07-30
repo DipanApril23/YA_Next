@@ -1,0 +1,16 @@
+{
+  "$comment": "FlipCard developer config. Not editable copy. `qrCorners` are the decorative bracket markers overlaid on the QR code; the tint/pulse formula expands each service colour into the CSS custom properties consumed by `.fc-service*` in flipcard.css.",
+  "qrCorners": [
+    "tl",
+    "tr",
+    "bl",
+    "br"
+  ],
+  "tintFormula": {
+    "bgAlphaHex": "12",
+    "borderAlphaHex": "22",
+    "iconAlphaHex": "20",
+    "pulseBaseSeconds": 2,
+    "pulseStepSeconds": 0.3
+  }
+}

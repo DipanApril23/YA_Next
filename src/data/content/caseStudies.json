@@ -1,0 +1,105 @@
+{
+  "$comment": "Case Studies section: header copy and the case-study cards. Editable content — safe for a CMS. WARNING: values wrapped in [XX] are placeholders from the approved copy deck; replace them with real, verifiable results before publishing. Add a 4th/5th study by appending to `items` — the results index, card stack and mobile slider all read this array's length.",
+  "content": {
+    "eyebrow": "Case Studies",
+    "title": {
+      "line1": "Growth We've Built for",
+      "emphasis": "Businesses Like Yours"
+    },
+    "intro": "Real problems, engineered systems, measurable outcomes — see how three very different businesses grew with one connected system.",
+    "mobileIntro": "Real problems, engineered systems, measurable outcomes — three businesses we've helped grow.",
+    "indexLabel": "Results Index",
+    "swipeLabel": "Swipe to explore →",
+    "trust": {
+      "lead": "Trusted by",
+      "strong": "local businesses",
+      "tail": "across Kolkata"
+    }
+  },
+  "items": [
+    {
+      "id": "01",
+      "label": "Dental Clinic",
+      "industry": "Healthcare · Local Business",
+      "title": "From Missed Calls\nto Full Calendar",
+      "challenge": "Strong reputation offline, invisible online — missed calls and zero Google presence meant patients quietly went elsewhere.",
+      "built": "A conversion-focused website, local SEO, Google Ads for treatment searches, and AI-powered WhatsApp booking that answers 24/7.",
+      "stats": [
+        {
+          "value": "[XX]",
+          "label": "Appointment enquiries / month"
+        },
+        {
+          "value": "[XX]%",
+          "label": "Booked outside clinic hours"
+        },
+        {
+          "value": "Page 1",
+          "label": "Rankings for [XX] keywords"
+        }
+      ],
+      "tags": [
+        "Website",
+        "Local SEO",
+        "Google Ads",
+        "AI WhatsApp"
+      ]
+    },
+    {
+      "id": "02",
+      "label": "Fashion Retailer",
+      "industry": "E-commerce · D2C",
+      "title": "Turning Followers\nInto Sales",
+      "challenge": "A loyal Instagram following that liked everything and bought nothing — no funnel connecting content to checkout.",
+      "built": "A full funnel: refreshed e-commerce site, catalogue ads with retargeting, story-driven social content, and abandoned-cart automation.",
+      "stats": [
+        {
+          "value": "+[XX]%",
+          "label": "Online sales in [XX] months"
+        },
+        {
+          "value": "[X.X]x",
+          "label": "Return on ad spend"
+        },
+        {
+          "value": "[XX]%",
+          "label": "Abandoned carts recovered"
+        }
+      ],
+      "tags": [
+        "E-commerce",
+        "Retargeting",
+        "Social Content",
+        "Automation"
+      ]
+    },
+    {
+      "id": "03",
+      "label": "B2B Services Firm",
+      "industry": "B2B · Professional Services",
+      "title": "Finds Its\nSecond Engine",
+      "challenge": "Two decades of referral-driven growth had plateaued — and every referral now Googled them first, finding almost nothing.",
+      "built": "An authority website, bottom-funnel SEO, LinkedIn thought leadership, and automated lead nurture for every enquiry.",
+      "stats": [
+        {
+          "value": "[XX]",
+          "label": "Inbound enquiries / month"
+        },
+        {
+          "value": "[XX]%",
+          "label": "Converting to proposals"
+        },
+        {
+          "value": "2nd",
+          "label": "Growth engine beside referrals"
+        }
+      ],
+      "tags": [
+        "Authority Site",
+        "SEO",
+        "LinkedIn",
+        "Lead Nurture"
+      ]
+    }
+  ]
+}

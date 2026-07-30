@@ -1,0 +1,14 @@
+{
+  "$comment": "Copy for the visually-hidden, server-rendered services catalogue (ServicesSeo.jsx) and the Schema.org publisher identity attached to every Service record. Editable content — safe for a CMS. This block is sr-only: crawlers and screen readers get it, sighted users never see it, and the interactive deck above is unchanged. It is NOT cloaking — every word is the same copy a visitor can reach by clicking the tabs and 'Learn More'.",
+  "content": {
+    "ariaLabel": "Our services in full",
+    "heading": "Premium Services Built to Scale",
+    "intro": "Streamline development, marketing, and design operations with our custom-made solutions engineered for enterprise-grade growth.",
+    "categoryHeadingSuffix": " Services",
+    "itemListName": "Young Architects — Services"
+  },
+  "organization": {
+    "name": "Young Architects",
+    "url": "https://youngarchitects.in"
+  }
+}

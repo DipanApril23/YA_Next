@@ -1,0 +1,61 @@
+{
+  "$comment": "Our Process section copy and the five process steps. Editable content — safe for a CMS. `icon` is a KEY resolved to a React component by PROCESS_ICONS in OurProcess.jsx; keep the spelling in sync when adding a step. `accent`/`glow` are per-step brand colours forwarded to CSS as the --accent/--glow custom properties.",
+  "content": {
+    "badge": "Our Process",
+    "headingLead": "Simple Process for",
+    "headingHighlight": "Seamless Results",
+    "subheading": "Follow our easy, step-by-step approach to get the perfect solution for your needs. From understanding your goals to delivering results, we make it quick and hassle-free."
+  },
+  "steps": [
+    {
+      "num": "01",
+      "phase": "PHASE 01 · DISCOVERY",
+      "title": "Initial Business Consultation Call",
+      "desc": "A brief call with our marketing experts to understand your business goals in depth.",
+      "tag": "Free · 30 min",
+      "icon": "consult",
+      "accent": "#ec4899",
+      "glow": "rgba(236,72,153,0.4)"
+    },
+    {
+      "num": "02",
+      "phase": "PHASE 02 · STRATEGY",
+      "title": "Customized Marketing Plan",
+      "desc": "A tailored marketing plan is created and shared during a consultation call — built around your goals, market, and budget.",
+      "tag": "Your growth blueprint",
+      "icon": "plan",
+      "accent": "#a855f7",
+      "glow": "rgba(168,85,247,0.4)"
+    },
+    {
+      "num": "03",
+      "phase": "PHASE 03 · BUILD",
+      "title": "Deploying the Marketing Funnel",
+      "desc": "A fail-proof marketing funnel is developed and deployed in the business to meet its goals — website, campaigns, and automation working as one.",
+      "tag": "Web · Ads · Automation",
+      "icon": "funnel",
+      "accent": "#3b82f6",
+      "glow": "rgba(59,130,246,0.4)"
+    },
+    {
+      "num": "04",
+      "phase": "PHASE 04 · OPTIMIZE",
+      "title": "Optimization and Scaling",
+      "desc": "The deployed funnel is optimized regularly with an aim to scale the results — winners get budget, waste gets cut.",
+      "tag": "Data-driven, weekly",
+      "icon": "scale",
+      "accent": "#06b6d4",
+      "glow": "rgba(6,182,212,0.4)"
+    },
+    {
+      "num": "05",
+      "phase": "PHASE 05 · REVENUE",
+      "title": "Closing More Sales",
+      "desc": "Once the system is set and optimized, focus shifts to closing more sales — with every lead captured, followed up, and accounted for.",
+      "tag": "Leads → Customers",
+      "icon": "close",
+      "accent": "#10b981",
+      "glow": "rgba(16,185,129,0.4)"
+    }
+  ]
+}

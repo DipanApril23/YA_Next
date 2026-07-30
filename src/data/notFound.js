@@ -1,12 +1,10 @@
-// ─── 404 page copy ────────────────────────────────────────────────────
+// ─── 404 page — data loader ───────────────────────────────────────────
+//
+// A thin adapter over ./content/notFound.json. Each action carries
+// `external: true` when it should open in a new tab.
+//
+// Consumed by: src/app/not-found.jsx.
 
-export const NOT_FOUND_CONTENT = {
-  code: "404",
-  title: "oops! Page not found",
-  description:
-    "Oops! The page you are looking for does not exist. It might have been moved or deleted.",
-  actions: [
-    { label: "HOME", href: "/", external: false },
-    { label: "Book Consultation", href: "https://calendly.com/yafoundations/45min", external: true },
-  ],
-};
+import notFoundContent from "./content/notFound.json";
+
+export const NOT_FOUND_CONTENT = notFoundContent.content;

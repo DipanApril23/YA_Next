@@ -1,4 +1,19 @@
 "use client";
+
+// ─── Modal ────────────────────────────────────────────────────────────
+// Portal-rendered dialog, used by the Services section's "Learn More".
+//
+// It renders into #portal-modal-root (declared in src/app/layout.js) rather
+// than in place, so the dialog escapes any ancestor's `overflow: hidden`,
+// `transform` or stacking context — a card deck that clips its own children
+// would otherwise clip the modal too.
+//
+// The open/close API is IMPERATIVE, exposed through a ref
+// (`toggle` / `open` / `close`) via useImperativeHandle, so a parent can drive
+// it without threading state down. `mounted` guards the portal: document.body
+// does not exist during the server render, so the portal is only created after
+// the first client effect.
+
 import { useRef, useImperativeHandle, forwardRef, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 

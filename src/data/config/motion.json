@@ -1,0 +1,45 @@
+{
+  "$comment": "Shared animation tokens. DEVELOPER CONFIG, not editable copy — do NOT hand this to the CMS. These cubic-bezier curves and spring settings were previously re-declared as a local `EASE` const in five different components, which meant a timing tweak had to be repeated five times and silently drifted. They are consumed through src/data/motion.js. Values are exactly the ones the components already used, so centralising them changes no animation.",
+  "easing": {
+    "smooth": [
+      0.16,
+      1,
+      0.3,
+      1
+    ],
+    "entrance": [
+      0.22,
+      1,
+      0.36,
+      1
+    ]
+  },
+  "springs": {
+    "fast": {
+      "type": "spring",
+      "stiffness": 400,
+      "damping": 30,
+      "mass": 0.6
+    },
+    "dock": {
+      "mass": 0.22,
+      "stiffness": 150,
+      "damping": 15
+    },
+    "snappy": {
+      "type": "spring",
+      "stiffness": 400,
+      "damping": 28
+    }
+  },
+  "viewport": {
+    "once": {
+      "once": true,
+      "margin": "-80px"
+    },
+    "repeat": {
+      "once": false,
+      "margin": "-80px"
+    }
+  }
+}

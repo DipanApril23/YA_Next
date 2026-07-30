@@ -1,8 +1,9 @@
 // ─── Home page ────────────────────────────────────────────────────────
-// Composes the single-page site: mounts each section in order inside <Layout>.
-// Sections own their own theme/background; this file only sets the order, the
-// surrounding black wrappers, and the seam between each pair.
-// See README → "Page composition".
+// Composes the single-page site: mounts each section in order. Sections own
+// their own theme/background; this file only sets the order, the surrounding
+// black wrappers, and the seam between each pair.
+// The app shell (Navbar + closing BrandMark + Footer) is NOT here — it wraps
+// every route from src/app/layout.js. See README → "Page composition".
 //
 // SEAMS — <SectionDivider> marks every section boundary. It is height:0 and
 // sits ON the seam rather than between the sections, so it adds no vertical
@@ -17,16 +18,14 @@
 // (above the fold) and the Footer (server components, near-zero JS) render
 // normally.
 
-import { Layout } from "@/components/layout";
 import { SectionDivider } from "@/components/ui";
 import DeferredSection from "@/components/DeferredSection";
 import Hero from "@/components/sections/Hero/Hero";
 import ServicesSeo from "@/components/sections/Services/ServicesSeo";
-import BrandMark from "@/components/sections/BrandMark/BrandMark";
 
 export default function Home() {
   return (
-    <Layout>
+    <>
       <div className="bg-black">
         <Hero />
       </div>
@@ -81,13 +80,6 @@ export default function Home() {
         background="#ECECF4"
       />
 
-      <SectionDivider />
-      {/* Closing brand statement — giant "Young Architects" wordmark with a
-          cursor-spotlight gradient fill. Owns its own dark background. The seam
-          above gets the same <SectionDivider> as every other boundary: the FAQ
-          ends on pure white and this block opens near-black, and an unmarked
-          hard cut there read as a dead slab rather than a deliberate edge. */}
-      <BrandMark />
-    </Layout>
+    </>
   );
 }

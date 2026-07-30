@@ -1,0 +1,91 @@
+{
+  "$comment": "Mid-page consultation CTA: section copy plus the GoHighLevel booking-form embed settings. Editable content — safe for a CMS. Per-item brand colours (`services[].color`) are content and are forwarded to CSS as the --dot custom property. The blueprint SVG illustrations are presentation and live in the component, not here.",
+  "form": {
+    "id": "eXiJlucpqyxkUimRwzww",
+    "widgetBaseUrl": "https://link.youngarchitects.in/widget/form",
+    "embedScript": "https://link.youngarchitects.in/js/form_embed.js",
+    "title": "YA Services Form",
+    "name": "YA Services Form",
+    "minHeight": 919
+  },
+  "content": {
+    "badge": "Book your free consultation",
+    "headingLead": "Your Competitors Are Already Online.",
+    "headingHighlight": "Let’s Make Sure You’re Ahead of Them.",
+    "subheading": "Fill in the form below to book your free consultation — we’ll review your business and show you the fastest paths to more customers.",
+    "panel": {
+      "ref": "Growth Blueprint · Ref 3A",
+      "badge": "Free · 30 min",
+      "headingLine1": "One call. A clear plan",
+      "headingLine2": "for",
+      "headingHighlight": "your growth."
+    },
+    "points": [
+      {
+        "num": "01",
+        "title": "Business review",
+        "desc": "We look at your current online presence, honestly."
+      },
+      {
+        "num": "02",
+        "title": "Fastest paths mapped",
+        "desc": "The 2–3 quickest routes to more customers, for you."
+      },
+      {
+        "num": "03",
+        "title": "Your growth blueprint",
+        "desc": "A clear plan you keep — whether we work together or not."
+      }
+    ],
+    "growthCard": {
+      "caption": "Growth Curve · Fig 01",
+      "legend": "You, month 6",
+      "stackLabel": "Everything under one roof"
+    },
+    "services": [
+      {
+        "color": "#38BDF8",
+        "label": "Websites"
+      },
+      {
+        "color": "#67E8F9",
+        "label": "SEO"
+      },
+      {
+        "color": "#818CF8",
+        "label": "Google Ads"
+      },
+      {
+        "color": "#A855F7",
+        "label": "Meta Ads"
+      },
+      {
+        "color": "#D946EF",
+        "label": "Social Media"
+      },
+      {
+        "color": "#EC4899",
+        "label": "AI Automation"
+      }
+    ],
+    "stats": [
+      {
+        "value": "10+",
+        "label": "Projects Delivered"
+      },
+      {
+        "value": "30+",
+        "label": "Happy Clients"
+      },
+      {
+        "value": "4.1★",
+        "label": "Client Rating"
+      }
+    ],
+    "socialProof": {
+      "strong": "30+ local businesses",
+      "rest": "already growing with their blueprint."
+    },
+    "trustNote": "Your details are safe with us. No spam, no pushy sales calls — just a genuine conversation about growing your business."
+  }
+}

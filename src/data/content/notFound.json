@@ -1,0 +1,20 @@
+{
+  "$comment": "404 page copy. Editable content — safe for a CMS.",
+  "content": {
+    "code": "404",
+    "title": "oops! Page not found",
+    "description": "Oops! The page you are looking for does not exist. It might have been moved or deleted.",
+    "actions": [
+      {
+        "label": "HOME",
+        "href": "/",
+        "external": false
+      },
+      {
+        "label": "Book Consultation",
+        "href": "https://calendly.com/yafoundations/45min",
+        "external": true
+      }
+    ]
+  }
+}

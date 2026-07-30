@@ -1,0 +1,66 @@
+{
+  "$comment": "Why Choose Us copy, stored as tone-tagged segments rather than one string so the coloured/bold emphasis stays data-driven. `tone` is semantic (\"blue\" | \"dark\" | \"primary\") and is mapped to a CSS class by TONE_CLASS in WhyChoose.jsx; `strong: true` wraps the segment in <strong>. NOTE: this section is currently not mounted on any page.",
+  "content": {
+    "headingLine1": [
+      {
+        "text": "Why choose Us ?",
+        "tone": "blue"
+      }
+    ],
+    "headingLine2": [
+      {
+        "text": " - ",
+        "tone": "dark"
+      },
+      {
+        "text": "Young Architects",
+        "tone": "primary"
+      }
+    ],
+    "body": [
+      {
+        "text": "Choose "
+      },
+      {
+        "text": "Young Architects",
+        "tone": "primary",
+        "strong": true
+      },
+      {
+        "text": " for a client-centric approach where your vision is our priority. We offer tailored solutions through "
+      },
+      {
+        "text": "deep business analysis",
+        "tone": "blue",
+        "strong": true
+      },
+      {
+        "text": ", "
+      },
+      {
+        "text": "collaborative consultancy",
+        "tone": "blue",
+        "strong": true
+      },
+      {
+        "text": ", and a "
+      },
+      {
+        "text": "commitment to perfection",
+        "tone": "blue",
+        "strong": true
+      },
+      {
+        "text": ". With us, you're not just a client — "
+      },
+      {
+        "text": "you're family",
+        "tone": "primary",
+        "strong": true
+      },
+      {
+        "text": "."
+      }
+    ]
+  }
+}

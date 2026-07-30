@@ -11,15 +11,17 @@
 //   • touch / no-hover → a gradient band sweeps across the wordmark on a
 //     loop, so the effect is alive without a hover.
 // Fully responsive (clamp sizing, no wrap), reduced-motion aware, and the
-// wordmark is real, readable DOM text (accessible + crawlable). Styles →
-// brandMark.css.
+// wordmark is real, readable DOM text (accessible + crawlable).
+// Copy → src/data/content/brandMark.json (via @/data); styles → brandMark.css.
 
 import { useRef, useCallback } from "react";
 import { m, useReducedMotion } from "framer-motion";
+import { BRANDMARK_CONTENT as CONTENT, EASE_SMOOTH as EASE } from "@/data";
 import "./brandMark.css";
 
-const WORDS = ["Young", "Architects"];
-const EASE = [0.16, 1, 0.3, 1];
+/* One line of the wordmark per entry — the component makes no assumption about
+   how many there are, so the lockup is a data edit. */
+const WORDS = CONTENT.words;
 const MAX_TILT = 6; // degrees — a whisper of depth, not a gimmick
 
 /* One copy of the wordmark. The outline copy is the real, in-flow text that
@@ -60,9 +62,13 @@ export default function BrandMark() {
         el.style.setProperty("--my", `${y}px`);
 
         if (!reduce) {
-          // Magnetic tilt: pointer offset from stage centre, normalised to [-1, 1]
-          const nx = (x / r.width) * 2 - 1;
-          const ny = (y / r.height) * 2 - 1;
+          // Magnetic tilt: pointer offset from stage centre, normalised to
+          // [-1, 1]. CLAMPED because the pointer now roams the whole section,
+          // so it is regularly outside the stage box (above the wordmark, or
+          // down by the tagline) where the raw ratio exceeds ±1 and would
+          // swing the tilt past MAX_TILT into a visible lurch.
+          const nx = Math.max(-1, Math.min(1, (x / r.width) * 2 - 1));
+          const ny = Math.max(-1, Math.min(1, (y / r.height) * 2 - 1));
           el.style.setProperty("--ry", `${(nx * MAX_TILT).toFixed(2)}deg`);
           el.style.setProperty("--rx", `${(-ny * MAX_TILT).toFixed(2)}deg`);
         }
@@ -79,7 +85,19 @@ export default function BrandMark() {
   }, []);
 
   return (
-    <section className="ya-brand cv-section" aria-label="Young Architects">
+    // The POINTER SURFACE IS THE WHOLE SECTION, not just the wordmark box.
+    // When these handlers lived on .ya-stage, the spotlight died the instant
+    // the cursor left that box — crossing the tagline or the strip above the
+    // footer snapped the fill off mid-glide, which read as the effect being
+    // broken rather than as "you left the target". Tracking at section level
+    // means the light keeps following the cursor anywhere in the block and
+    // simply falls off the letters naturally when it is no longer over them.
+    <section
+      className="ya-brand cv-section"
+      aria-label={CONTENT.ariaLabel}
+      onPointerMove={onMove}
+      onPointerLeave={onLeave}
+    >
       {/* Ambient background: a deep solid-dark base with two soft drifting
           brand glows for depth, plus a faint film-grain layer so the dark
           gradient reads as material, not flat CSS. */}
@@ -93,8 +111,6 @@ export default function BrandMark() {
         <m.div
           ref={stageRef}
           className="ya-stage"
-          onPointerMove={onMove}
-          onPointerLeave={onLeave}
           initial={reduce ? false : { opacity: 0, y: 42 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-8% 0px" }}
@@ -122,7 +138,8 @@ export default function BrandMark() {
           viewport={{ once: true, margin: "-12% 0px" }}
           transition={{ duration: 0.6, ease: EASE, delay: 0.15 }}
         >
-          Digital marketing, <span>engineered in Kolkata.</span>
+          {CONTENT.tagline.lead}
+          <span>{CONTENT.tagline.accent}</span>
         </m.p>
       </div>
     </section>

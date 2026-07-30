@@ -22,6 +22,7 @@ import {
   OURPROCESS_CONTENT as CONTENT,
   OURPROCESS_STEPS,
   OURPROCESS_PARTICLES,
+  EASE_ENTRANCE,
 } from "@/data";
 import "./ourProcess.css";
 
@@ -65,7 +66,8 @@ const TICK_COUNT = 24;
 const TICKS_PER_STEP = 5;
 
 /* ── Motion variants (animation behaviour, not content) ──────── */
-const EASE = [0.22, 1, 0.36, 1];
+/* Shared motion token — see src/data/motion.js. */
+const EASE = EASE_ENTRANCE;
 
 /* The header's own stagger/entrance now lives in <SectionHeader>. */
 

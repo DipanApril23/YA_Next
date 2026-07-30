@@ -67,17 +67,24 @@
      ANY value here reintroduces the band — if this ever needs loosening, do it
      by giving the kicker its own margin, not by putting padding back on the
      section, so the space belongs to the text instead of to the background.
-     The bottom keeps a small pad so the tagline doesn't butt into the footer. */
-  padding: 0 1rem clamp(1.75rem, 3.5vw, 2.75rem);
+
+     THE BOTTOM IS NOW ZERO TOO, for exactly the same reason. A pad there was a
+     strip of empty near-black sitting between the tagline and the footer's own
+     dark block — two different darks stacked with nothing in them, which read
+     as a gap rather than as spacing. The tagline's line-box already carries its
+     own descender room, so the seam closes cleanly without the text touching
+     the footer. Space below the tagline belongs to .ya-tagline's margin, never
+     to this padding. */
+  padding: 0 1rem;
   scroll-margin: 0;
   background:
     radial-gradient(ellipse 110% 90% at 50% 38%, #0b0d17 0%, #06070d 52%, #000 100%);
 }
 
-/* Phones: same zero top edge, slightly tighter side/bottom. */
+/* Phones: same flush top/bottom edges, slightly wider side gutter. */
 @media (max-width: 640px) {
   .ya-brand {
-    padding: 0 1.25rem clamp(1.25rem, 4.5vw, 1.75rem);
+    padding: 0 1.25rem;
   }
 }
 
@@ -218,7 +225,10 @@
   -webkit-text-stroke: clamp(1px, 0.18vw, 2px) rgba(255, 255, 255, 0.26);
   transition: -webkit-text-stroke-color 0.45s ease;
 }
-.ya-stage:hover .ya-mark--outline {
+/* Hover state is driven by the SECTION, not the stage — see the pointer-surface
+   note in BrandMark.jsx. Anchoring it to .ya-stage meant the effect switched off
+   the moment the cursor crossed into the tagline or the strip above the footer. */
+.ya-brand:hover .ya-mark--outline {
   -webkit-text-stroke-color: rgba(255, 255, 255, 0.42);
 }
 
@@ -303,11 +313,11 @@
 
 /* Pointer devices: enable the interactive spotlight, drop the auto sweep. */
 @media (hover: hover) and (pointer: fine) {
-  .ya-stage:hover .ya-layer--cursor {
+  .ya-brand:hover .ya-layer--cursor {
     opacity: 1;
     --spot: clamp(120px, 15vw, 240px);
   }
-  .ya-stage:hover .ya-stage__glow {
+  .ya-brand:hover .ya-stage__glow {
     opacity: 1;
   }
   .ya-layer--sweep {

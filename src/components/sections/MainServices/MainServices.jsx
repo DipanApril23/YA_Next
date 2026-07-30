@@ -32,7 +32,7 @@ import {
   Users,
 } from "lucide-react";
 import { Container, SectionHeader } from "@/components/ui";
-import { MAIN_SERVICES, MAIN_SERVICES_CONTENT as CONTENT } from "@/data";
+import { MAIN_SERVICES, MAIN_SERVICES_CONTENT as CONTENT, EASE_ENTRANCE } from "@/data";
 import "./mainServices.css";
 
 /* Resolves `icon` names from the data onto components. */
@@ -46,7 +46,8 @@ const SERVICE_ICONS = {
   Users,
 };
 
-const EASE = [0.22, 1, 0.36, 1];
+/* Shared motion token — see src/data/motion.js. */
+const EASE = EASE_ENTRANCE;
 
 /* The header's own entrance now lives in <SectionHeader>. */
 

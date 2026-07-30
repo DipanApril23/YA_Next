@@ -1,0 +1,11 @@
+{
+  "$comment": "Closing brand statement (the giant outlined wordmark above the footer). Editable content — safe for a CMS. `words` renders one per line, so ['Young','Architects'] is a two-line lockup; each line is styled as a single unwrapped row, so keep lines short. `tagline.lead` is muted and `tagline.accent` receives the brand gradient. Rendered on every route via the app shell.",
+  "content": {
+    "ariaLabel": "Young Architects",
+    "words": ["Young", "Architects"],
+    "tagline": {
+      "lead": "Digital marketing, ",
+      "accent": "engineered in Kolkata."
+    }
+  }
+}

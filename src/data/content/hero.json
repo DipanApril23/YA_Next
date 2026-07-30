@@ -1,0 +1,39 @@
+{
+  "$comment": "Hero section copy. Editable content — safe to hand to a CMS/backend team. Rendered by src/components/sections/Hero/Hero.jsx via src/data/hero.js.",
+  "content": {
+    "eyebrow": "AI-Powered Digital Agency · Kolkata",
+    "headlineLead": "The AI Digital Marketing Agency",
+    "headlineMain": " in Kolkata tailored for Local Businesses",
+    "brand": "⚡ Young Architects",
+    "leadBefore": "Every ",
+    "leadStrong": "great structure starts with a blueprint — and so does every great business. Young Architects is a digital marketing agency in Kolkata",
+    "leadAfter": " that engineers your entire growth system: Websites that convert, SEO that gets you found, Ads that pay for themselves, and AI automation that follows up with every lead while you focus on your business. ",
+    "closing": "We're not here to sell you likes and impressions. We're here to build you customers — with the smartest tools of 2026 and the discipline of good architecture. Book a free consultation and let's draw up your growth blueprint."
+  },
+  "ctas": [
+    {
+      "label": "Book Consultation",
+      "href": "https://calendly.com/yafoundations/45min",
+      "variant": "primary"
+    },
+    {
+      "label": "View Policy",
+      "href": "https://youngarchitects.in/assets/YA_Policy.pdf",
+      "variant": "secondary",
+      "narrow": true
+    }
+  ],
+  "stats": [
+    { "value": "10+", "label": "Projects Delivered" },
+    { "value": "30+", "label": "Happy Clients" },
+    { "value": "4.1★", "label": "Client Rating" }
+  ],
+  "benefits": [
+    "AI-Powered Marketing — Smarter, Faster, Measurable",
+    "Everything Under One Roof: Web, SEO, Ads, Content & Automation",
+    "Built for Local Businesses — Strategies That Fit Kolkata's Market",
+    "Results You Can Count: Leads, Sales & ROI, Not Vanity Metrics",
+    "Transparent Reporting in Plain Language",
+    "No Long Lock-In Contracts"
+  ]
+}

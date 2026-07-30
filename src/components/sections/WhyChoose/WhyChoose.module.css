@@ -1,3 +1,18 @@
+/* ─── WhyChoose.module.css ─────────────────────────────────────────────
+   Scoped styles for the Why Choose Us section's floating image cards.
+
+   A CSS MODULE (not a plain .css like the other sections) because the two
+   class names here are deliberately generic — the hashed, locally-scoped names
+   a module generates stop them colliding with anything else on the page.
+
+   The two classes drive the same bob animation in opposite phases, so
+   alternating them across the image grid makes the cards drift out of sync
+   instead of moving as one block. WhyChoose.jsx picks which class each image
+   gets by index.
+
+   NOTE: this section is not currently mounted on any page.
+   ───────────────────────────────────────────────────────────────────── */
+
 .pentagonCardCategory1 {
   animation: animation 1.2s infinite alternate linear;
 }

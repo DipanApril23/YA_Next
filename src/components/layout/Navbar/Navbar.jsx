@@ -37,12 +37,14 @@ import {
 } from "react";
 import { ArrowUpRight, ChevronDown, ChevronRight, Sparkles } from "lucide-react";
 
-import { NAV_ITEMS, NAV_CONTENT } from "@/data";
+import { NAV_ITEMS, NAV_CONTENT, EASE_SMOOTH, SPRING_FAST } from "@/data";
 import brandLogo from "@/assets/logo/brandlogo.webp";
 import "./navbar.css";
 
-const SMOOTH_EASE = [0.16, 1, 0.3, 1];
-const FAST_SPRING = { type: "spring", stiffness: 400, damping: 30, mass: 0.6 };
+/* Timing comes from the shared motion tokens (src/data/config/motion.json) so
+   every menu in the site eases identically. */
+const SMOOTH_EASE = EASE_SMOOTH;
+const FAST_SPRING = SPRING_FAST;
 
 const hasChildren = (n) => Boolean(n?.children?.length);
 

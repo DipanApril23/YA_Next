@@ -1,4 +1,5 @@
 {
+  "$comment": "FAQ section: header copy, the question/answer list and the support card. Editable content — safe for a CMS. Inside an answer, **text wrapped in double asterisks** renders bold; the same string is reused for the FAQPage structured data with the asterisks stripped, so keep them balanced.",
   "badge": "FAQ",
   "headline": {
     "plain": "Frequently Asked",

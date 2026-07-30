@@ -1,0 +1,24 @@
+{
+  "$comment": "Testimonials display-only styling. DEVELOPER CONFIG, not editable copy — do NOT hand this to the CMS. `avatarGradients` maps a testimonial id to the Tailwind gradient used for its initials disc; `fallbackGradient` covers any id not listed (so adding a testimonial can never crash). `avatarBadges` are the four decorative circles in the bottom 'Join 100+ businesses' pill — initials only, no real identity implied. These are Tailwind class fragments, so they must stay as complete static strings for the JIT to generate them.",
+  "avatarGradients": {
+    "1": "from-violet-500 to-purple-700",
+    "2": "from-fuchsia-500 to-pink-600",
+    "3": "from-indigo-500 to-blue-600",
+    "4": "from-emerald-500 to-teal-600",
+    "5": "from-orange-500 to-amber-600",
+    "6": "from-violet-500 to-indigo-600",
+    "7": "from-rose-500 to-pink-600",
+    "8": "from-cyan-500 to-blue-600",
+    "9": "from-purple-500 to-violet-700",
+    "10": "from-violet-600 to-fuchsia-600",
+    "11": "from-teal-500 to-emerald-600",
+    "12": "from-amber-500 to-orange-600"
+  },
+  "fallbackGradient": "from-slate-500 to-slate-700",
+  "avatarBadges": [
+    { "gradient": "from-violet-500 to-purple-700", "initials": "AS" },
+    { "gradient": "from-fuchsia-500 to-pink-600", "initials": "RB" },
+    { "gradient": "from-emerald-500 to-teal-600", "initials": "SG" },
+    { "gradient": "from-orange-500 to-amber-600", "initials": "IQ" }
+  ]
+}

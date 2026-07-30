@@ -1,10 +1,34 @@
 "use client";
 
+// ─── ServiceCards ─────────────────────────────────────────────────────
+// The interactive part of the Services section: a tabbed, swipeable deck of
+// service cards with a "Learn More" modal.
+//
+// TWO VIEW MODES
+//   stack  a fanned 3D card stack (four slots, 0 = front); advancing rotates
+//          the deck and AnimatePresence interpolates every card to its new slot
+//   grid   a flat responsive grid, used on smaller screens
+//
+// HOW THE STACK ANIMATION WORKS
+// Each card is keyed by its SERVICE INDEX, not its slot. So when the deck
+// advances, the surviving cards keep their key and simply animate to the next
+// slot's offset (framer-motion tweens x/y/rotate/scale for free); only the
+// departing front card runs `exit`, and only the new back card runs `initial`.
+// The slot offsets themselves are data — CARD_OFFSETS in
+// src/data/config/serviceTabs.json.
+//
+// Catalogue + tab definitions + copy all come from the @/data barrel; this
+// file owns structure and animation only.
+
 import { useRef, useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import services from "./services.json";
-import { SERVICE_TABS as TABS, CARD_OFFSETS as OFFSETS } from "./serviceCards.data";
+import {
+  SERVICES_CATALOGUE as services,
+  SERVICE_TABS as TABS,
+  CARD_OFFSETS as OFFSETS,
+  SERVICES_SECTION_CONTENT as CONTENT,
+} from "@/data";
 import { Modal } from "@/components/ui";
 
 // ─── Card content (only rendered for the front card) ─────────────────────────
@@ -416,12 +440,12 @@ const ServiceCards = () => {
             {
               mode: "stack",
               icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>,
-              label: "Desktop View"
+              label: CONTENT.viewModes.stack
             },
             {
               mode: "grid",
               icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>,
-              label: "Mobile View"
+              label: CONTENT.viewModes.grid
             }
           ].map(
             ({ mode, icon, label }) => (

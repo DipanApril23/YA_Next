@@ -89,7 +89,7 @@ function MarqueeRow({ items, rowClass }) {
 
 export default function OurPartners() {
   return (
-    <div className="yaPartners" id="partners" aria-label="Platforms we build with">
+    <div className="yaPartners" id="partners" aria-label={CONTENT.ariaLabel}>
       <div className="yaPartners__inner">
         {/* ── Headline block ─────────────────────────────── */}
         <SectionHeader

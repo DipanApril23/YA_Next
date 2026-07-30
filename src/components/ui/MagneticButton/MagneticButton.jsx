@@ -25,6 +25,7 @@
 import React, { useRef, useState, useCallback } from "react";
 import { m, useMotionValue, useSpring } from "framer-motion";
 import Link from "next/link";
+import { SPRING_SNAPPY } from "@/data";
 
 // Internal class utility (no external dep needed)
 const cx = (...c) => c.filter(Boolean).join(" ");
@@ -275,7 +276,7 @@ const MagneticButton = React.forwardRef(function MagneticButton(
           <m.span
             className="flex items-center"
             animate={{ x: hovered ? -1 : 0 }}
-            transition={{ type: "spring", stiffness: 400, damping: 28 }}
+            transition={SPRING_SNAPPY}
           >
             {icon}
           </m.span>
@@ -287,7 +288,7 @@ const MagneticButton = React.forwardRef(function MagneticButton(
           <m.span
             className="flex items-center"
             animate={{ x: hovered ? 2 : 0 }}
-            transition={{ type: "spring", stiffness: 400, damping: 28 }}
+            transition={SPRING_SNAPPY}
           >
             {icon}
           </m.span>
