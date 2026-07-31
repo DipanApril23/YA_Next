@@ -1,0 +1,201 @@
+/* ═══════════════════════════════════════════════════════════════
+   CUSTOM CURSOR — dual-layer pointer with blend-mode inversion
+   A 6px dot pinned to the pointer, plus a ring that trails it with
+   easing, stretches in the direction of travel, drifts toward the
+   buttons it passes and morphs onto the ones marked to hold it.
+   Both layers paint in `mix-blend-mode: difference`, so they invert
+   whatever is under them and stay legible over the near-black Hero,
+   the near-white OurProcess band and every image on the page without
+   a single per-section override.
+
+   ▸ TRANSFORM AND BLEND MUST SHARE ONE ELEMENT ◂
+   Do not split the ring into a positioned wrapper plus a styled
+   child. `mix-blend-mode` blends an element with the group formed by
+   its nearest stacking-context ancestor — and a wrapper carrying
+   `transform` (or `will-change: transform`) IS one. A child inside it
+   blends against an empty transparent box instead of the page, which
+   silently degrades `difference` into "just paint it white": correct-
+   looking on black, invisible on the light sections. That is why the
+   ring below owns its position, its deformation AND its blend on a
+   single element, and why the rAF loop writes the whole transform
+   string — translate, rotate, squash — rather than letting CSS own
+   any part of it.
+
+   ▸ WHAT CSS STILL OWNS ◂
+   Everything that is not `transform`: width, height, border-radius,
+   fill and border colour. Those transition freely without ever
+   colliding with the loop, which is what makes the hover expand, the
+   label pill and the stick-morph a matter of toggling a class.
+
+   ▸ WHY THIS FILE HOLDS GLOBAL SELECTORS ◂
+   Every other component stylesheet here is scoped to its own block.
+   This one has to reach `html` and `*` to hide the native cursor —
+   there is no way to replace a cursor from inside a subtree. It is
+   gated behind `.has-custom-cursor`, a class the component only adds
+   to <html> once it has confirmed a fine pointer, so on phones and
+   tablets not one rule below matches and the native cursor is
+   untouched. That gate is the whole containment story: without the
+   class this file is inert.
+
+   CADENCE — the expand curve is the same expo-out used across the
+   site (EASE_SMOOTH, [0.16, 1, 0.3, 1] in data/config/motion.json),
+   so the cursor eases like the menus and the section reveals rather
+   than inventing a seventh timing of its own.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── 0 · the gate — hide the native cursor ───────────────────── */
+/* `!important` because Tailwind's `cursor-pointer` utility sits on
+   most buttons here and would otherwise win on the elements that
+   matter most. */
+.has-custom-cursor,
+.has-custom-cursor * {
+  cursor: none !important;
+}
+
+/* Text entry is the one place a hidden cursor actively harms the
+   user: without the I-beam there is no caret placement affordance.
+   These keep the native cursor, and the component fades the custom
+   one out over them (`.is-hidden` below) so the two never overlap.
+   The `:not()` list is the button-like input types, which are not
+   text entry and stay on the custom cursor. */
+.has-custom-cursor textarea,
+.has-custom-cursor [contenteditable="true"],
+.has-custom-cursor input:not(
+    [type="button"],
+    [type="submit"],
+    [type="reset"],
+    [type="checkbox"],
+    [type="radio"],
+    [type="range"],
+    [type="color"],
+    [type="file"]
+  ) {
+  cursor: auto !important;
+}
+
+/* ── 1 · shared shell ────────────────────────────────────────── */
+.ya-cursor-dot,
+.ya-cursor-ring {
+  --ya-cursor-ease: cubic-bezier(0.16, 1, 0.3, 1);
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999; /* above Modal's z-2000 — the pointer is never occluded */
+  pointer-events: none;
+  /* Hidden until the first real mousemove. This is also what keeps
+     the pair invisible on touch devices, where the component bails
+     out before attaching anything and both layers would otherwise
+     sit parked in the top-left corner of the page forever. */
+  opacity: 0;
+  /* Both layers blend against the page itself. Neither may be given
+     a transformed ancestor — see the header note. */
+  mix-blend-mode: difference;
+  will-change: transform;
+  transition: opacity 0.25s ease;
+}
+
+.ya-cursor-dot.is-visible,
+.ya-cursor-ring.is-visible {
+  opacity: 1;
+}
+
+/* ── 2 · inner dot — the precision anchor, no easing ─────────── */
+.ya-cursor-dot {
+  width: 6px;
+  height: 6px;
+  /* Centred by margin, not by transform: on this element `transform`
+     belongs to the pointer position alone. */
+  margin: -3px 0 0 -3px;
+  border-radius: 50%;
+  background: #fff;
+}
+
+/* ── 3 · the ring — size and colour here, motion in JS ───────── */
+/* `transform` is deliberately absent from the transition list: the
+   loop rewrites it every frame and a transition on it would fight
+   the loop and lose. Size and colour are safe to hand to CSS. */
+.ya-cursor-ring {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 1.5px solid #fff;
+  border-radius: 999px;
+  transition:
+    width 0.35s var(--ya-cursor-ease),
+    height 0.35s var(--ya-cursor-ease),
+    border-radius 0.35s var(--ya-cursor-ease),
+    border-width 0.35s var(--ya-cursor-ease),
+    background-color 0.35s ease,
+    border-color 0.35s ease,
+    opacity 0.25s ease;
+}
+
+/* Hover — ring opens up and takes a faint fill */
+.ya-cursor-ring.is-hover {
+  width: 64px;
+  height: 64px;
+  background-color: rgba(255, 255, 255, 0.12);
+}
+
+/* Stuck — the ring has taken the shape of the element it is holding.
+   Width, height and radius come from that element as inline styles,
+   so all this contributes is the lighter treatment a large shape
+   needs: a hairline edge instead of a 1.5px one, at a size where the
+   original weight would read as a border rather than a cursor.
+   Inline width/height beat the `.is-hover` rule above on specificity,
+   which is what lets the two states share an element. */
+.ya-cursor-ring.is-stuck {
+  border-width: 1px;
+  background-color: rgba(255, 255, 255, 0.07);
+}
+
+/* Label — solid pill carrying a word ("Flip", "View", "Book").
+   Drops out of `difference` deliberately: an inverted fill behind
+   inverted text is unreadable on mid-tone backgrounds, and at this
+   size the pill has enough mass to read on its own. */
+.ya-cursor-ring.is-label {
+  width: 76px;
+  height: 76px;
+  background-color: #fff;
+  border-color: #fff;
+  mix-blend-mode: normal;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.18);
+}
+
+.ya-cursor-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #0a0a0a;
+  opacity: 0;
+  transform: scale(0.6);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.ya-cursor-ring.is-label .ya-cursor-label {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ── 4 · forced-hidden states ────────────────────────────────── */
+/* Same specificity as `.is-visible` (0,2,0), so these win purely on
+   source order — they must stay at the bottom of this file. */
+.ya-cursor-dot.is-hover {
+  opacity: 0; /* the ring alone reads better once it has opened up */
+}
+
+.ya-cursor-dot.is-hidden,
+.ya-cursor-ring.is-hidden {
+  opacity: 0;
+}
+
+/* ── 5 · reduced motion ──────────────────────────────────────── */
+/* Deliberately no @media block here. The three halves are already
+   covered: the global guard in globals.css collapses every
+   transition above to 0.001ms, and the component both sets its
+   easing factor to 1 (the ring is pinned to the pointer instead of
+   trailing it) and holds the squash/stretch at zero. Re-stating any
+   of that here would only be a second place to keep in sync. */

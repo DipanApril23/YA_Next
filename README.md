@@ -70,7 +70,7 @@ src/
 │  ├─ DeferredSection.jsx     lazy-mounts heavy below-the-fold sections
 │  │
 │  ├─ layout/                 the app shell, rendered on every route
-│  │  ├─ Layout/              Header + <main> + BrandMark + Footer
+│  │  ├─ Layout/              CustomCursor + Header + <main> + BrandMark + Footer
 │  │  ├─ Header/  Navbar/     the recursive, infinite-depth silo menu
 │  │  ├─ Footer/              magnetic social dock + link columns
 │  │  └─ MotionProvider/      <LazyMotion> wrapper
@@ -81,8 +81,8 @@ src/
 │  │  └─ MainServices/  WhyChoose/          (built, not currently mounted)
 │  │
 │  └─ ui/                     reusable primitives
-│     └─ Button/  Container/  FlipCard/  MagneticButton/
-│        Modal/  SectionDivider/  SectionHeader/
+│     └─ Button/  Container/  CustomCursor/  FlipCard/
+│        MagneticButton/  Modal/  SectionDivider/  SectionHeader/
 │
 └─ data/                      ← ALL CONTENT LIVES HERE (see next section)
    ├─ index.js                the single import surface: `import { … } from "@/data"`
@@ -213,6 +213,10 @@ component changes at all.
   component, with a prefixed class namespace (`hero-`, `ya-`, `fc-`, `ms-`, `house-`).
 * **`WhyChoose.module.css` is the one CSS Module**, because its two class names are generic enough
   to collide.
+* **`customCursor.css` is the one component stylesheet with global selectors** (`html`, `*`), because
+  a cursor cannot be replaced from inside a subtree. Every rule in it is gated behind
+  `.has-custom-cursor`, a class the component adds to `<html>` only after confirming a fine pointer —
+  so on touch devices the file matches nothing at all.
 * **There is no CSS-in-JS and no inline `<style>` block** anywhere in the project.
 * Brand tokens are defined once in `:root` and bridged into Tailwind via `@theme inline`, so
   `text-primary` and `var(--primary)` can never disagree.
@@ -229,6 +233,11 @@ Header (Navbar)  →  <main>{page}</main>  →  SectionDivider  →  BrandMark  
 
 So the **navbar, the closing BrandMark statement and the footer appear on every route** — including
 `not-found.jsx` and any page added later — with no wiring. A new page only returns its own sections.
+
+`<CustomCursor />` is mounted there too, but sits outside that chain: it renders two fixed-position,
+`pointer-events: none` layers that replace the native pointer, and occupies no space in the flow. Any
+element can put a word inside the ring with `data-cursor="Flip"`; links and buttons expand it with no
+markup change at all.
 
 > ⚠️ **Do not wrap a new page in `<Layout>` again.** That used to be the pattern here, so it is an
 > easy habit to repeat, but it would now render two navbars, two BrandMarks and two footers.

@@ -7,12 +7,17 @@
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import MotionProvider from "../MotionProvider/MotionProvider";
-import { SectionDivider } from "@/components/ui";
+import { CustomCursor, SectionDivider } from "@/components/ui";
 import BrandMark from "@/components/sections/BrandMark/BrandMark";
 
 const Layout = ({ children }) => {
   return (
     <MotionProvider>
+      {/* Fixed-position overlay, not part of the visual stack — mounted
+          here so the pointer is replaced on every route, and exactly
+          once. It self-disables on touch devices. */}
+      <CustomCursor />
+
       <Header />
       <main>{children}</main>
 

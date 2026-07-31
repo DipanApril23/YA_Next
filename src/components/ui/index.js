@@ -8,3 +8,5 @@ export { default as SectionHeader } from "./SectionHeader/SectionHeader";
 export { default as SectionDivider } from "./SectionDivider/SectionDivider";
 // Portal-rendered dialog — used by the Services section's "Learn More".
 export { default as Modal } from "./Modal/Modal";
+// Pointer replacement — mounted once in Layout, never per section.
+export { default as CustomCursor } from "./CustomCursor/CustomCursor";
