@@ -7,7 +7,7 @@
 // Structure:
 //  - Brand block: logo lockup, subheading, tagline, contact lines, and a
 //    magnetic social "dock".
-//  - Four link columns (Solutions / Our Services / Industries / Company),
+//  - Four link columns (Industries / Services / Resources / Quick Links),
 //    mirroring the navbar silo.
 //  - A bottom bar: copyright + legal links.
 //
@@ -205,8 +205,13 @@ function LinkColumn({ heading, links }) {
       <ul className="mt-4 space-y-3">
         {links.map((link) => (
           <li key={link.label}>
+            {/* A column link may be off-site (e.g. the WhatsApp chat link), so
+                external targets open in a new tab and keep the site loaded. */}
             <Link
               href={link.href}
+              {...(link.href.startsWith("http")
+                ? { target: "_blank", rel: "noopener noreferrer" }
+                : {})}
               className="group inline-flex items-center text-[13.5px] text-white/55 transition-colors duration-200 hover:text-white"
             >
               <span className="h-px w-0 bg-indigo-400 transition-all duration-300 group-hover:mr-2 group-hover:w-4" />

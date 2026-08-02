@@ -18,23 +18,31 @@
 // Opens on hover (with intent delay) AND on click, so it works for mouse,
 // trackpad and keyboard.
 //
+// HOW IT STAYS ON SCREEN AT EVERY WIDTH
+// The deepest branch of the silo (Industry → Legal & Compliance → a vertical →
+// its eight service pages) is THREE panels wide, which does not fit at 1180px
+// if every panel takes its full 19rem. So a panel is never sized on its own:
+// when a row is about to open, it measures the room left on the cascade side
+// and DIVIDES it between the panels still to come (`panelDepth` says how many),
+// clamped to a readable minimum. Every level therefore shrinks together and the
+// last one lands inside the viewport instead of flipping back over its own
+// ancestors. Only when even a shared slice would be unreadable does a panel
+// flip to the other side. A leaf list adds columns solely with room to spare,
+// and its height is capped to what is left below the row. All of it is measured
+// from the row BEFORE the panel mounts, so the panel is correct on its first
+// frame — no post-render reposition, no visible jump.
+//
 // On mobile the same tree renders as a nested ACCORDION with single-open
-// behaviour at every level: opening one item auto-closes its siblings.
+// behaviour at every level: opening one item auto-closes its siblings. Deeper
+// levels indent less and tighten their padding, so a fourth-level label still
+// gets a readable line on a small phone.
 //
 // Uses framer-motion's lightweight `m` (the app is wrapped in <LazyMotion>).
 
 import Link from "next/link";
 import Image from "next/image";
 import { m, AnimatePresence, useScroll } from "framer-motion";
-import {
-  useEffect,
-  useLayoutEffect,
-  useState,
-  useRef,
-  useCallback,
-  createContext,
-  useContext,
-} from "react";
+import { useEffect, useState, useRef, useCallback, createContext, useContext } from "react";
 import { ArrowUpRight, ChevronDown, ChevronRight, Sparkles } from "lucide-react";
 
 import { NAV_ITEMS, NAV_CONTENT, EASE_SMOOTH, SPRING_FAST } from "@/data";
@@ -48,9 +56,6 @@ const FAST_SPRING = SPRING_FAST;
 
 const hasChildren = (n) => Boolean(n?.children?.length);
 
-// useLayoutEffect on the client, useEffect on the server (avoids SSR warning).
-const useIsoLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
-
 /* Lets any leaf, at any depth, close the whole open menu tree when clicked. */
 const MenuCloseContext = createContext(() => {});
 
@@ -60,13 +65,53 @@ const MenuCloseContext = createContext(() => {});
    cascade is created by anchoring the first-level panel (see `align`). */
 const MenuSideContext = createContext("right");
 
-/* Max rows per column before a pure-leaf list wraps into the next column. */
-const COL_MAX = 4;
+/* ─────────────────────────── panel geometry ───────────────────────────
+   Pixels, because the panels are measured and placed in pixels. Keep these in
+   step with the classes they mirror — the comment on each says which. */
+const PANEL_MAX = 304; // 19rem  — a full-width single column
+const PANEL_MIN = 208; // 13rem  — narrower than this a row stops being readable
+const COL_W = 264; // 16.5rem — one column of a multi-column leaf panel
+const COL_GAP = 4; // gap-1 between those columns
+const SHELL_PAD = 16; // p-2, both sides
+const CASCADE_GAP = 6; // pl-1.5 / pr-1.5 — the hover bridge to a sub-panel
+const EDGE = 12; // breathing room against the viewport edge
+const COL_MAX = 4; // rows per column before a pure-leaf list wraps
+const MAX_VH = 0.78; // tallest a scrolling panel may get
+
+const clampW = (w) => Math.max(PANEL_MIN, Math.min(PANEL_MAX, Math.floor(w)));
+
+/* What one panel may take when `levels` panels have to share `room`. */
+const share = (room, levels) => (room - (levels - 1) * CASCADE_GAP) / levels;
+
+/* How many panels deep a branch goes. The cascade budgets width for all of them
+   up front so the last level never has to overlap its ancestors. Cached on the
+   items array — the silo is built once at module load, so this runs once. */
+const depthCache = new WeakMap();
+function panelDepth(items) {
+  const cached = depthCache.get(items);
+  if (cached) return cached;
+  let d = 1;
+  for (const item of items) {
+    if (hasChildren(item)) d = Math.max(d, 1 + panelDepth(item.children));
+  }
+  depthCache.set(items, d);
+  return d;
+}
+
 const toColumns = (arr, size) => {
   const cols = [];
   for (let i = 0; i < arr.length; i += size) cols.push(arr.slice(i, i + size));
   return cols;
 };
+
+/* Columns are a bonus, never a cause of overflow: a leaf list wraps into at
+   most ceil(n / COL_MAX) columns, and only as many as `room` actually holds. */
+function fitColumns(room, colW, count) {
+  const wanted = Math.ceil(count / COL_MAX);
+  if (wanted < 2) return 1;
+  const fits = Math.floor((room - SHELL_PAD + COL_GAP) / (colW + COL_GAP));
+  return Math.max(1, Math.min(wanted, fits));
+}
 
 /* ─────────────────────────── shared row content ─────────────────────────── */
 function RowInner({ item, branch, compact }) {
@@ -112,45 +157,74 @@ function RowInner({ item, branch, compact }) {
 
 /* ─────────────────────────── one recursive row ───────────────────────────
    A leaf (Link / inert coming-soon), or a branch that opens a nested flyout
-   on hover-intent + click, positioned to the side and flipped on overflow. */
+   on hover-intent + click, sized and sided from a measurement of the row. */
 function FlyoutRow({ item, depth }) {
   const branch = hasChildren(item);
   const close = useContext(MenuCloseContext);
   const side = useContext(MenuSideContext); // "left" | "right" — chosen at the top
 
   const [open, setOpen] = useState(false);
-  const [flip, setFlip] = useState(false);
-  const flyoutRef = useRef(null);
+  const [box, setBox] = useState(null); // { left, width, room, maxH }
+  const rowRef = useRef(null);
   const openT = useRef(null);
   const closeT = useRef(null);
-
-  // Base direction from the cascade side; `flip` inverts it only if that side
-  // would overflow the viewport.
-  const openLeft = side === "left" ? !flip : flip;
 
   const clearTimers = () => {
     clearTimeout(openT.current);
     clearTimeout(closeT.current);
   };
+
+  /* Measured from the ROW — which is already on screen — at the moment the menu
+     is asked to open, so the sub-panel is placed and sized on its first frame.
+     The room left on the cascade side is divided between every panel still to
+     come below this one, so the whole chain shrinks together and stays inside
+     the viewport rather than the last level flipping back over its ancestors. */
+  const place = useCallback(() => {
+    const el = rowRef.current;
+    if (!el || !branch) return;
+
+    const r = el.getBoundingClientRect();
+    const { innerWidth: vw, innerHeight: vh } = window;
+    const levels = panelDepth(item.children);
+
+    const roomRight = vw - r.right - CASCADE_GAP - EDGE;
+    const roomLeft = r.left - CASCADE_GAP - EDGE;
+    const preferLeft = side === "left";
+    const preferred = preferLeft ? roomLeft : roomRight;
+    const other = preferLeft ? roomRight : roomLeft;
+
+    // Flip only as a last resort: the cascade side cannot seat a readable panel
+    // and the other side genuinely does better.
+    const left =
+      share(preferred, levels) < PANEL_MIN && other > preferred ? !preferLeft : preferLeft;
+    const room = left ? roomLeft : roomRight;
+
+    setBox({
+      left,
+      room,
+      width: clampW(share(room, levels)),
+      maxH: Math.min(Math.round(vh * MAX_VH), vh - r.top - EDGE),
+    });
+  }, [branch, item.children, side]);
+
   const scheduleOpen = () => {
     if (!branch) return;
     clearTimers();
-    openT.current = setTimeout(() => setOpen(true), 70);
+    openT.current = setTimeout(() => {
+      place();
+      setOpen(true);
+    }, 70);
   };
   const scheduleClose = () => {
     if (!branch) return;
     clearTimers();
     closeT.current = setTimeout(() => setOpen(false), 120);
   };
+  const toggle = () => {
+    if (!open) place();
+    setOpen((o) => !o);
+  };
   useEffect(() => () => clearTimers(), []);
-
-  // If the chosen side overflows the viewport, flip to the other side (once).
-  useIsoLayoutEffect(() => {
-    if (!open || !flyoutRef.current) return;
-    const r = flyoutRef.current.getBoundingClientRect();
-    const overflow = side === "left" ? r.left < 8 : r.right > window.innerWidth - 8;
-    if (overflow) setFlip(true);
-  }, [open, side]);
 
   const rowCls =
     "group relative flex w-full items-start gap-2.5 rounded-[14px] px-2.5 py-2.5 text-left transition-colors duration-200 hover:bg-white/[0.06] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400/50 data-[open=true]:bg-white/[0.06]";
@@ -170,11 +244,14 @@ function FlyoutRow({ item, depth }) {
     );
   }
 
+  // Before the first measurement, fall back to the cascade side.
+  const openLeft = box ? box.left : side === "left";
+
   return (
-    <div className="relative" onMouseEnter={scheduleOpen} onMouseLeave={scheduleClose}>
+    <div ref={rowRef} className="relative" onMouseEnter={scheduleOpen} onMouseLeave={scheduleClose}>
       <button
         type="button"
-        onClick={() => setOpen((o) => !o)}
+        onClick={toggle}
         aria-haspopup="true"
         aria-expanded={open}
         data-open={open}
@@ -186,7 +263,6 @@ function FlyoutRow({ item, depth }) {
       <AnimatePresence>
         {open && (
           <m.div
-            ref={flyoutRef}
             initial={{ opacity: 0, x: openLeft ? 6 : -6, scale: 0.98 }}
             animate={{ opacity: 1, x: 0, scale: 1 }}
             exit={{ opacity: 0, x: openLeft ? 6 : -6, scale: 0.98 }}
@@ -195,7 +271,13 @@ function FlyoutRow({ item, depth }) {
             // padding is part of the element so there's no dead hover gap.
             className={`absolute top-0 z-50 ${openLeft ? "right-full pr-1.5" : "left-full pl-1.5"}`}
           >
-            <FlyoutPanel items={item.children} depth={depth + 1} />
+            <FlyoutPanel
+              items={item.children}
+              depth={depth + 1}
+              width={box?.width}
+              room={box?.room}
+              maxH={box?.maxH}
+            />
           </m.div>
         )}
       </AnimatePresence>
@@ -204,21 +286,24 @@ function FlyoutRow({ item, depth }) {
 }
 
 /* ─────────────────────────── one panel (a level) ───────────────────────────
+   `width` is the slice of the viewport this level was budgeted (see the header
+   note); `room` is everything still free on its side, which decides how many
+   columns a pure-leaf list may wrap into; `maxH` is what is left below the row.
+
    A panel that contains flyout rows may NOT clip (its children escape it), so
-   only leaf-only lists get a scroll cap — this keeps infinite depth working.
-   A pure-leaf list longer than COL_MAX rows becomes a multi-column mega-panel:
-   at most four rows per column, wrapping into the next column. */
-function FlyoutPanel({ items, depth }) {
+   only leaf-only lists get a scroll cap — this keeps infinite depth working. */
+function FlyoutPanel({ items, depth, width = PANEL_MAX, room = PANEL_MAX, maxH }) {
   const anyBranch = items.some(hasChildren);
-  const columned = !anyBranch && items.length > COL_MAX;
+  const colW = Math.min(width, COL_W);
+  const cols = anyBranch ? 1 : fitColumns(room, colW, items.length);
   const shell =
     "rounded-[20px] border border-white/10 bg-[#0d0d11] p-2 shadow-[0_20px_48px_rgba(139,92,246,0.16),0_10px_24px_rgba(0,0,0,0.55)]";
 
-  if (columned) {
+  if (cols > 1) {
     return (
       <div className={`${shell} flex max-w-[calc(100vw-1.5rem)] gap-1 overflow-visible`} role="menu">
-        {toColumns(items, COL_MAX).map((col, i) => (
-          <div key={i} className="flex w-[16.5rem] flex-col">
+        {toColumns(items, Math.ceil(items.length / cols)).map((col, i) => (
+          <div key={i} className="flex flex-col" style={{ width: colW }}>
             {col.map((child) => (
               <FlyoutRow key={child.label} item={child} depth={depth} />
             ))}
@@ -230,9 +315,10 @@ function FlyoutPanel({ items, depth }) {
 
   return (
     <div
-      className={`${shell} w-[min(19rem,calc(100vw-1.5rem))] ${
-        anyBranch ? "overflow-visible" : "max-h-[78vh] overflow-y-auto overscroll-contain"
+      className={`${shell} max-w-[calc(100vw-1.5rem)] ${
+        anyBranch ? "overflow-visible" : "overflow-y-auto overscroll-contain"
       }`}
+      style={{ width, maxHeight: anyBranch ? undefined : maxH }}
       role="menu"
     >
       {items.map((child) => (
@@ -246,8 +332,8 @@ function FlyoutPanel({ items, depth }) {
    The first level opens BELOW the nav item, anchored to its near edge: a
    right-of-centre trigger anchors RIGHT (panel extends left) so the rightward
    cascade has room; a left-of-centre trigger anchors LEFT. Deeper rows then
-   cascade to the right via FlyoutRow. */
-function TopDropdown({ item, isOpen, align }) {
+   cascade to the right via FlyoutRow. `box` is measured on the trigger. */
+function TopDropdown({ item, isOpen, box }) {
   return (
     <AnimatePresence mode="wait">
       {isOpen && (
@@ -256,9 +342,15 @@ function TopDropdown({ item, isOpen, align }) {
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 8, scale: 0.98 }}
           transition={{ duration: 0.22, ease: SMOOTH_EASE }}
-          className={`absolute top-full z-50 mt-3.5 ${align === "right" ? "right-0" : "left-0"}`}
+          className={`absolute top-full z-50 mt-3.5 ${box?.align === "right" ? "right-0" : "left-0"}`}
         >
-          <FlyoutPanel items={item.children} depth={0} />
+          <FlyoutPanel
+            items={item.children}
+            depth={0}
+            width={box?.width}
+            room={box?.room}
+            maxH={box?.maxH}
+          />
         </m.div>
       )}
     </AnimatePresence>
@@ -267,11 +359,17 @@ function TopDropdown({ item, isOpen, align }) {
 
 /* ─────────────────────────── mobile: single-open list ───────────────────────────
    Each level owns one `openKey`; opening a sibling closes the others. Recurses
-   for infinite depth. */
+   for infinite depth. Past the second level the indent tightens — four levels
+   down the label needs the width more than the tree needs its guide rail. */
 function MobileList({ items, depth, onNavigate }) {
   const [openKey, setOpenKey] = useState(null);
+  const nest =
+    depth === 0
+      ? "space-y-0.5"
+      : `mb-1.5 space-y-0.5 border-l border-white/10 pl-1.5 ${depth === 1 ? "ml-3" : "ml-1.5"}`;
+
   return (
-    <div className={depth === 0 ? "space-y-0.5" : "mb-1.5 ml-3 space-y-0.5 border-l border-white/10 pl-1.5"}>
+    <div className={nest}>
       {items.map((item) => (
         <MobileNode
           key={item.label}
@@ -290,11 +388,15 @@ function MobileNode({ item, depth, isOpen, onToggle, onNavigate }) {
   const Icon = item.icon;
   const branch = hasChildren(item);
 
+  // Deep rows trade padding and half a point of type for line length.
+  const pad = depth >= 2 ? "gap-2 px-2" : "gap-2.5 px-3";
+  const type = depth >= 3 ? "text-[12px]" : "text-[12.5px]";
+
   if (!branch) {
     const inner = (
       <>
         {Icon && <Icon className="h-3.5 w-3.5 shrink-0 text-violet-300/80" />}
-        <span className="flex-1 text-[12.5px] font-medium text-white/75">{item.label}</span>
+        <span className={`flex-1 font-medium leading-snug text-white/75 ${type}`}>{item.label}</span>
         {item.comingSoon ? (
           <span className="rounded-full border border-white/10 bg-white/5 px-1.5 py-px text-[8.5px] font-bold uppercase tracking-wider text-white/40">
             Soon
@@ -304,7 +406,7 @@ function MobileNode({ item, depth, isOpen, onToggle, onNavigate }) {
         )}
       </>
     );
-    const rowCls = "group flex items-center gap-2.5 rounded-xl px-3 py-2 transition-colors duration-200 hover:bg-white/5";
+    const rowCls = `group flex items-center rounded-xl py-2 transition-colors duration-200 hover:bg-white/5 ${pad}`;
     return item.comingSoon || !item.href ? (
       <div className={`${rowCls} cursor-default`}>{inner}</div>
     ) : (
@@ -320,16 +422,18 @@ function MobileNode({ item, depth, isOpen, onToggle, onNavigate }) {
         type="button"
         onClick={onToggle}
         aria-expanded={isOpen}
-        className="group flex w-full items-center gap-2.5 rounded-xl px-3 py-2.5 text-left transition-colors duration-200 hover:bg-white/5"
+        className={`group flex w-full items-center rounded-xl py-2.5 text-left transition-colors duration-200 hover:bg-white/5 ${pad}`}
       >
         {Icon && depth > 0 && <Icon className="h-3.5 w-3.5 shrink-0 text-violet-300/80" />}
-        <span className={`flex-1 font-semibold text-white/85 group-hover:text-white ${depth === 0 ? "text-[13px]" : "text-[12.5px]"}`}>
+        <span
+          className={`flex-1 font-semibold leading-snug text-white/85 group-hover:text-white ${depth === 0 ? "text-[13px]" : type}`}
+        >
           {item.label}
         </span>
         <m.span
           animate={{ rotate: isOpen ? 180 : 0 }}
           transition={FAST_SPRING}
-          className={`flex h-5 w-5 items-center justify-center rounded-full ${isOpen ? "bg-violet-500/20 text-violet-300" : "bg-white/5 text-white/40"}`}
+          className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full ${isOpen ? "bg-violet-500/20 text-violet-300" : "bg-white/5 text-white/40"}`}
         >
           <ChevronDown className="h-3 w-3" />
         </m.span>
@@ -358,18 +462,30 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(null);
-  const [align, setAlign] = useState("left");
+  const [box, setBox] = useState(null); // { align, width, room, maxH }
 
   const navRef = useRef(null);
   const dropdownTimeout = useRef(null);
   const { scrollYProgress } = useScroll();
 
-  // First-level panel anchoring: right-of-centre trigger anchors RIGHT (panel
-  // extends left, leaving room for the rightward cascade); else anchors LEFT.
-  const pickAlign = useCallback((el) => {
+  /* First-level anchoring, measured on the trigger. A right-of-centre trigger
+     anchors RIGHT: the panel then grows leftward and the whole gap between the
+     trigger and the viewport edge stays free for the rightward cascade, so that
+     panel may take its full width. Anchored LEFT it eats into that gap instead
+     and has to share it with the levels below (`panelDepth`). */
+  const measureTrigger = useCallback((el, item) => {
     if (!el) return;
     const r = el.getBoundingClientRect();
-    setAlign(r.left + r.width / 2 > window.innerWidth / 2 ? "right" : "left");
+    const { innerWidth: vw, innerHeight: vh } = window;
+    const alignRight = r.left + r.width / 2 > vw / 2;
+    const room = alignRight ? r.right - EDGE : vw - r.left - EDGE;
+
+    setBox({
+      align: alignRight ? "right" : "left",
+      room,
+      width: clampW(alignRight ? room : share(room, panelDepth(item.children))),
+      maxH: Math.min(Math.round(vh * MAX_VH), vh - r.bottom - 14 - EDGE),
+    });
   }, []);
 
   useEffect(() => {
@@ -402,19 +518,25 @@ export default function Navbar() {
     return () => document.removeEventListener("keydown", onKey);
   }, []);
 
-  // Auto-close the mobile drawer if the viewport grows to desktop width.
+  // A resize invalidates every measurement the open cascade was built from, and
+  // crossing into desktop makes the drawer redundant — drop both.
   useEffect(() => {
-    const mq = window.matchMedia("(min-width: 1180px)");
-    const onChange = (e) => e.matches && setMobileOpen(false);
-    mq.addEventListener("change", onChange);
-    return () => mq.removeEventListener("change", onChange);
+    const onResize = () => {
+      setOpenDropdown(null);
+      if (window.innerWidth >= 1180) setMobileOpen(false);
+    };
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
   }, []);
 
-  const openMenu = useCallback((label, el) => {
-    if (dropdownTimeout.current) clearTimeout(dropdownTimeout.current);
-    pickAlign(el);
-    setOpenDropdown(label);
-  }, [pickAlign]);
+  const openMenu = useCallback(
+    (item, el) => {
+      if (dropdownTimeout.current) clearTimeout(dropdownTimeout.current);
+      measureTrigger(el, item);
+      setOpenDropdown(item.label);
+    },
+    [measureTrigger],
+  );
   const closeMenu = useCallback(() => {
     dropdownTimeout.current = setTimeout(() => setOpenDropdown(null), 140);
   }, []);
@@ -466,13 +588,13 @@ export default function Navbar() {
                   <div
                     key={item.label}
                     className="relative"
-                    onMouseEnter={(e) => branch && openMenu(item.label, e.currentTarget)}
+                    onMouseEnter={(e) => branch && openMenu(item, e.currentTarget)}
                     onMouseLeave={closeMenu}
                   >
                     {branch ? (
                       <button
                         onClick={(e) => {
-                          pickAlign(e.currentTarget);
+                          measureTrigger(e.currentTarget, item);
                           setOpenDropdown((cur) => (cur === item.label ? null : item.label));
                         }}
                         aria-haspopup="true"
@@ -497,7 +619,7 @@ export default function Navbar() {
                     {branch && isOpen && (
                       <span className="pointer-events-none absolute left-1/2 top-full z-[60] mt-[9px] h-3 w-3 -translate-x-1/2 rotate-45 border-l border-t border-white/10 bg-[#0d0d11]" />
                     )}
-                    {branch && <TopDropdown item={item} isOpen={isOpen} align={align} />}
+                    {branch && <TopDropdown item={item} isOpen={isOpen} box={box} />}
                   </div>
                 );
               })}
@@ -545,7 +667,7 @@ export default function Navbar() {
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: 8, scale: 0.97 }}
                 transition={{ duration: 0.22, ease: SMOOTH_EASE }}
-                className="absolute right-0 top-[calc(100%+10px)] z-50 w-[min(20rem,calc(100vw-2rem))] overflow-hidden rounded-[24px] border border-white/10 bg-[#0d0d11f2] p-2.5 shadow-[0_20px_50px_rgba(139,92,246,0.16),0_6px_20px_rgba(0,0,0,0.6)] backdrop-blur-2xl min-[1180px]:hidden"
+                className="absolute right-0 top-[calc(100%+10px)] z-50 w-[min(22rem,calc(100vw-2rem))] overflow-hidden rounded-[24px] border border-white/10 bg-[#0d0d11f2] p-2.5 shadow-[0_20px_50px_rgba(139,92,246,0.16),0_6px_20px_rgba(0,0,0,0.6)] backdrop-blur-2xl min-[1180px]:hidden"
               >
                 <div className="max-h-[68vh] overflow-y-auto overscroll-contain pr-0.5">
                   <MobileList items={NAV_ITEMS} depth={0} onNavigate={closeDrawer} />

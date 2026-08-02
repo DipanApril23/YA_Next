@@ -1,5 +1,5 @@
 {
-  "$comment": "Navbar silo — the site's information architecture as a RECURSIVE tree. Editable content, safe for a CMS. Each node is { label, href?, icon?, desc?, comingSoon?, children? }: a node with `children` is a menu, a leaf has an `href`. The Navbar renders this to ANY depth (cascading flyouts on desktop, a nested single-open accordion on mobile), so adding a deeper sub-level needs no code change. `icon` is a KEY — a lucide-react component name resolved by NAV_ICONS in src/data/navIcons.js — because React components cannot be stored in JSON.",
+  "$comment": "Navbar silo — the site's information architecture as a RECURSIVE tree. Editable content, safe for a CMS. Each node is { label, href?, icon?, desc?, comingSoon?, children? }: a node with `children` is a menu, a leaf has an `href`. The Navbar renders this to ANY depth (cascading flyouts on desktop, a nested single-open accordion on mobile), so adding a deeper sub-level needs no code change. `icon` is a KEY — a lucide-react component name resolved by NAV_ICONS in src/data/navIcons.js — because React components cannot be stored in JSON. Every industry vertical carries the SAME EIGHT service pages (web, seo, automation, creative, content, facebook, google, social) with a `<vertical>-<service>` href pattern — keep that pattern when a new vertical is added so the flyout columns stay balanced.",
   "content": {
     "brandHref": "#home",
     "brandLogoAlt": "Young Architects Logo",
@@ -96,37 +96,145 @@
           "desc": "Growth for regulated firms",
           "children": [
             {
-              "label": "Digital Marketing Agency for Law Firms",
-              "href": "#law-firms",
+              "label": "Digital Marketing for Law Firms",
               "icon": "Gavel",
+              "desc": "Cases, not just clicks",
               "children": [
                 {
-                  "label": "Website Development Agency for Law Firms",
+                  "label": "Website Development for Law Firms",
                   "href": "#law-firms-web",
                   "icon": "Code"
                 },
                 {
-                  "label": "SEO Agency for Law Firms",
+                  "label": "SEO for Law Firms",
                   "href": "#law-firms-seo",
                   "icon": "Search"
                 },
                 {
-                  "label": "+ 7 Services & CRM",
-                  "href": "#law-firms-more",
-                  "icon": "Plus",
-                  "comingSoon": true
+                  "label": "Marketing Automation for Law Firms",
+                  "href": "#law-firms-automation",
+                  "icon": "Zap"
+                },
+                {
+                  "label": "Creative Marketing for Law Firms",
+                  "href": "#law-firms-creative",
+                  "icon": "Palette"
+                },
+                {
+                  "label": "Content Marketing for Law Firms",
+                  "href": "#law-firms-content",
+                  "icon": "PenTool"
+                },
+                {
+                  "label": "Facebook Ads for Law Firms",
+                  "href": "#law-firms-facebook",
+                  "icon": "Facebook"
+                },
+                {
+                  "label": "Google Ads for Law Firms",
+                  "href": "#law-firms-google",
+                  "icon": "Megaphone"
+                },
+                {
+                  "label": "Social Media Marketing for Law Firms",
+                  "href": "#law-firms-social",
+                  "icon": "Share2"
                 }
               ]
             },
             {
-              "label": "Digital Marketing Agency for Security Companies",
-              "href": "#security-companies",
-              "icon": "Shield"
+              "label": "Digital Marketing for Security Companies",
+              "icon": "Shield",
+              "desc": "Win more service contracts",
+              "children": [
+                {
+                  "label": "Website Development for Security Companies",
+                  "href": "#security-companies-web",
+                  "icon": "Code"
+                },
+                {
+                  "label": "SEO for Security Companies",
+                  "href": "#security-companies-seo",
+                  "icon": "Search"
+                },
+                {
+                  "label": "Marketing Automation for Security Companies",
+                  "href": "#security-companies-automation",
+                  "icon": "Zap"
+                },
+                {
+                  "label": "Creative Marketing for Security Companies",
+                  "href": "#security-companies-creative",
+                  "icon": "Palette"
+                },
+                {
+                  "label": "Content Marketing for Security Companies",
+                  "href": "#security-companies-content",
+                  "icon": "PenTool"
+                },
+                {
+                  "label": "Facebook Ads for Security Companies",
+                  "href": "#security-companies-facebook",
+                  "icon": "Facebook"
+                },
+                {
+                  "label": "Google Ads for Security Companies",
+                  "href": "#security-companies-google",
+                  "icon": "Megaphone"
+                },
+                {
+                  "label": "Social Media Marketing for Security Companies",
+                  "href": "#security-companies-social",
+                  "icon": "Share2"
+                }
+              ]
             },
             {
-              "label": "Digital Marketing Agency for Investigators",
-              "href": "#investigators",
-              "icon": "SearchCheck"
+              "label": "Digital Marketing for Investigators",
+              "icon": "SearchCheck",
+              "desc": "Discreet, credible growth",
+              "children": [
+                {
+                  "label": "Website Development for Investigators",
+                  "href": "#investigators-web",
+                  "icon": "Code"
+                },
+                {
+                  "label": "SEO for Investigators",
+                  "href": "#investigators-seo",
+                  "icon": "Search"
+                },
+                {
+                  "label": "Marketing Automation for Investigators",
+                  "href": "#investigators-automation",
+                  "icon": "Zap"
+                },
+                {
+                  "label": "Creative Marketing for Investigators",
+                  "href": "#investigators-creative",
+                  "icon": "Palette"
+                },
+                {
+                  "label": "Content Marketing for Investigators",
+                  "href": "#investigators-content",
+                  "icon": "PenTool"
+                },
+                {
+                  "label": "Facebook Ads for Investigators",
+                  "href": "#investigators-facebook",
+                  "icon": "Facebook"
+                },
+                {
+                  "label": "Google Ads for Investigators",
+                  "href": "#investigators-google",
+                  "icon": "Megaphone"
+                },
+                {
+                  "label": "Social Media Marketing for Investigators",
+                  "href": "#investigators-social",
+                  "icon": "Share2"
+                }
+              ]
             }
           ]
         },
@@ -136,9 +244,9 @@
           "desc": "Full-funnel growth for SaaS",
           "children": [
             {
-              "label": "Website Design and Development for SaaS",
+              "label": "Website Development for SaaS",
               "href": "#saas-web",
-              "icon": "Code2"
+              "icon": "Code"
             },
             {
               "label": "SEO for SaaS",
@@ -149,6 +257,11 @@
               "label": "Marketing Automation for SaaS",
               "href": "#saas-automation",
               "icon": "Zap"
+            },
+            {
+              "label": "Creative Marketing for SaaS",
+              "href": "#saas-creative",
+              "icon": "Palette"
             },
             {
               "label": "Content Marketing for SaaS",
@@ -166,36 +279,29 @@
               "icon": "Megaphone"
             },
             {
-              "label": "Custom CRM for SaaS",
-              "href": "#saas-crm",
-              "icon": "Database"
+              "label": "Social Media Marketing for SaaS",
+              "href": "#saas-social",
+              "icon": "Share2"
             }
           ]
         },
         {
-          "label": "More Industries",
-          "icon": "LayoutGrid",
-          "desc": "Rolling out next",
-          "children": [
-            {
-              "label": "Healthcare Marketing",
-              "href": "#healthcare",
-              "icon": "HeartPulse",
-              "comingSoon": true
-            },
-            {
-              "label": "Education Marketing",
-              "href": "#education",
-              "icon": "GraduationCap",
-              "comingSoon": true
-            },
-            {
-              "label": "Real Estate Marketing",
-              "href": "#real-estate",
-              "icon": "Building2",
-              "comingSoon": true
-            }
-          ]
+          "label": "Healthcare Marketing",
+          "href": "#healthcare",
+          "icon": "HeartPulse",
+          "comingSoon": true
+        },
+        {
+          "label": "Education Marketing",
+          "href": "#education",
+          "icon": "GraduationCap",
+          "comingSoon": true
+        },
+        {
+          "label": "Real Estate Marketing",
+          "href": "#real-estate",
+          "icon": "Building2",
+          "comingSoon": true
         }
       ]
     },

@@ -47,58 +47,60 @@
     },
     {
       "id": "02",
-      "label": "Fashion Retailer",
-      "industry": "E-commerce · D2C",
-      "title": "Turning Followers\nInto Sales",
-      "challenge": "A loyal Instagram following that liked everything and bought nothing — no funnel connecting content to checkout.",
-      "built": "A full funnel: refreshed e-commerce site, catalogue ads with retargeting, story-driven social content, and abandoned-cart automation.",
+      "label": "Law Firm",
+      "industry": "Legal · Professional Services",
+      "title": "Scaling Organic Growth\nThrough SEO & Automation",
+      "challenge": "A mid-sized law firm relied heavily on referrals and had limited online visibility, slow lead response times, and no structured marketing or lead management system.",
+      "built": "A complete digital growth ecosystem including SEO-driven website architecture, service & location pages, Local SEO, GA4 & GTM analytics, CRM automation, WhatsApp and email workflows, online consultation booking, and lifecycle email marketing.",
       "stats": [
         {
-          "value": "+[XX]%",
-          "label": "Online sales in [XX] months"
+          "value": "24–48 hrs → <30 mins",
+          "label": "Lead response time"
         },
         {
-          "value": "[X.X]x",
-          "label": "Return on ad spend"
+          "value": "6+ automated workflows",
+          "label": "CRM & lifecycle automation"
         },
         {
-          "value": "[XX]%",
-          "label": "Abandoned carts recovered"
+          "value": "100+ high-intent keywords",
+          "label": "Targeted through SEO"
         }
       ],
       "tags": [
-        "E-commerce",
-        "Retargeting",
-        "Social Content",
-        "Automation"
+        "SEO Architecture",
+        "Local SEO",
+        "GA4 & GTM",
+        "CRM Automation",
+        "Lifecycle Email"
       ]
     },
     {
       "id": "03",
-      "label": "B2B Services Firm",
-      "industry": "B2B · Professional Services",
-      "title": "Finds Its\nSecond Engine",
-      "challenge": "Two decades of referral-driven growth had plateaued — and every referral now Googled them first, finding almost nothing.",
-      "built": "An authority website, bottom-funnel SEO, LinkedIn thought leadership, and automated lead nurture for every enquiry.",
+      "label": "AI SaaS Product",
+      "industry": "SaaS · B2B Technology",
+      "title": "Building a Go-To-Market\nStrategy From Scratch",
+      "challenge": "An AI-powered Expense Management SaaS required a clear market entry strategy, industry positioning, and a repeatable system for generating qualified leads.",
+      "built": "Conducted market and competitor research, defined ICPs across multiple industries, developed positioning and messaging, created landing pages, lead magnets, content strategy, email automation workflows, and a complete GTM roadmap.",
       "stats": [
         {
-          "value": "[XX]",
-          "label": "Inbound enquiries / month"
+          "value": "7+ target industries",
+          "label": "ICP research completed"
         },
         {
-          "value": "[XX]%",
-          "label": "Converting to proposals"
+          "value": "5+ GTM assets",
+          "label": "Landing pages, lead magnets & messaging"
         },
         {
-          "value": "2nd",
-          "label": "Growth engine beside referrals"
+          "value": "Complete GTM strategy",
+          "label": "Ready for market launch"
         }
       ],
       "tags": [
-        "Authority Site",
-        "SEO",
-        "LinkedIn",
-        "Lead Nurture"
+        "Market Research",
+        "ICP & Positioning",
+        "Landing Pages",
+        "Lead Magnets",
+        "GTM Roadmap"
       ]
     }
   ]

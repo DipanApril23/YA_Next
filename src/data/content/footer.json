@@ -14,32 +14,28 @@
   },
   "columns": [
     {
-      "heading": "Solutions",
+      "heading": "Industries",
       "links": [
         {
-          "label": "Digital Launch Engine",
-          "href": "/#digital-launch-engine"
+          "label": "Law Firms",
+          "href": "/#law-firms"
         },
         {
-          "label": "Digital Growth Engine",
-          "href": "/#digital-growth-engine"
+          "label": "SaaS",
+          "href": "/#saas"
         },
         {
-          "label": "Digital Authority Engine",
-          "href": "/#digital-authority-engine"
+          "label": "Private Investigators",
+          "href": "/#investigators"
         },
         {
-          "label": "Digital Conversion Engine",
-          "href": "/#digital-conversion-engine"
-        },
-        {
-          "label": "Digital Lead Engine",
-          "href": "/#digital-lead-engine"
+          "label": "Security Companies",
+          "href": "/#security-companies"
         }
       ]
     },
     {
-      "heading": "Our Services",
+      "heading": "Services",
       "links": [
         {
           "label": "Website Development",
@@ -76,67 +72,43 @@
       ]
     },
     {
-      "heading": "Industries",
+      "heading": "Resources",
       "links": [
         {
-          "label": "Law Firms",
-          "href": "/#law-firms"
-        },
-        {
-          "label": "Law Firm Websites",
-          "href": "/#law-firms-web"
-        },
-        {
-          "label": "Law Firm SEO",
-          "href": "/#law-firms-seo"
-        },
-        {
-          "label": "Security Companies",
-          "href": "/#security-companies"
-        },
-        {
-          "label": "Investigators",
-          "href": "/#investigators"
-        },
-        {
-          "label": "SaaS Marketing",
-          "href": "/#saas-web"
-        }
-      ]
-    },
-    {
-      "heading": "Company",
-      "links": [
-        {
-          "label": "Home",
-          "href": "/#home"
-        },
-        {
-          "label": "Our Vision",
-          "href": "/#vision"
-        },
-        {
-          "label": "Our Mission",
-          "href": "/#mission"
-        },
-        {
-          "label": "Our Team",
-          "href": "/#team"
+          "label": "Blogs",
+          "href": "/#blog"
         },
         {
           "label": "Case Studies",
           "href": "/#case-studies"
         },
         {
-          "label": "Blog",
+          "label": "WhitePapers",
+          "href": "/#whitepapers"
+        },
+        {
+          "label": "FAQs",
+          "href": "/#faq"
+        }
+      ]
+    },
+    {
+      "heading": "Quick Links",
+      "links": [
+        {
+          "label": "Contact Us",
+          "href": "/#book-consultation"
+        },
+        {
+          "label": "Blogs",
           "href": "/#blog"
         },
         {
-          "label": "News & Events",
-          "href": "/#news"
+          "label": "Chat with us",
+          "href": "https://wa.me/919883952010"
         },
         {
-          "label": "Contact Us",
+          "label": "Book a Consultation",
           "href": "/#book-consultation"
         }
       ]
