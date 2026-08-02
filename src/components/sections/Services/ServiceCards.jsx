@@ -20,9 +20,10 @@
 // Catalogue + tab definitions + copy all come from the @/data barrel; this
 // file owns structure and animation only.
 
-import { useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useInView, useReducedMotion } from "framer-motion";
+import { MousePointerClick } from "lucide-react";
 import {
   SERVICES_CATALOGUE as services,
   SERVICE_TABS as TABS,
@@ -370,50 +371,247 @@ const ServiceGrid = ({ serviceList, accent, glow, onLearnMore }) => {
 };
 
 // ─── Animated Tab Selector ────────────────────────────────────────────────────
-const TabSelector = ({ tabs, activeTab, onTabChange }) => (
-  <div className="flex items-center justify-center">
-    <div
-      className="flex items-center gap-1 sm:gap-2 p-1.5 rounded-2xl border"
-      style={{ background: "rgba(255,255,255,0.03)", borderColor: "rgba(255,255,255,0.08)", backdropFilter: "blur(12px)" }}
-    >
-      {tabs.map((tab) => {
-        const isActive = tab.id === activeTab;
-        return (
-          <motion.button
-            key={tab.id}
-            onClick={() => onTabChange(tab.id)}
-            className="relative px-4 sm:px-6 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold capitalize select-none transition-colors duration-200"
-            style={{ color: isActive ? "#fff" : "rgba(255,255,255,0.4)" }}
+// WHY THIS IS MORE THAN THREE BUTTONS
+// A segmented control whose inactive segments are dim grey text reads as a
+// LABEL rather than a control, so a non-technical visitor never discovers that
+// two more categories exist. Four cues fix that, strongest first:
+//
+//   1. INFORMATION SCENT — every tab carries its own service COUNT, so an
+//      unopened tab advertises what is behind it ("Marketing 9"). A number is
+//      the cheapest possible promise of unseen content.
+//   2. UNSEEN MARKERS — a pulsing accent dot sits on any tab the visitor has
+//      not opened yet and vanishes once they have. An open loop wants closing,
+//      and the marker keeps signalling long after any entrance animation ends.
+//   3. AN ENTRANCE NUDGE — when the group scrolls into view the unopened tabs
+//      lift once and a light sweeps the whole control, so peripheral vision
+//      registers "three objects, all alive". It plays twice, then never again:
+//      repeating motion stops being information and becomes noise.
+//   4. A REAL BUTTON SKIN — inactive tabs keep a visible chip, border and a
+//      hover lift in their own accent colour, so they read as pressable rather
+//      than disabled. This is the cue that carries once the motion is over.
+//
+// The written hint above the group is a training wheel: it is removed the
+// moment the visitor switches a tab for the first time, because by then they
+// have proved they understand and the words are just clutter.
+//
+// All motion is skipped under prefers-reduced-motion; the chip skin, counts
+// and dots survive, so nothing above depends on animation to be discoverable.
+const TabSelector = ({
+  tabs,
+  activeTab,
+  onTabChange,
+  counts,
+  seenTabs,
+  showHint,
+  copy,
+}) => {
+  const groupRef = useRef(null);
+  const btnRefs = useRef([]);
+  const [hovered, setHovered] = useState(null);
+
+  const reduceMotion = useReducedMotion();
+  const inView = useInView(groupRef, { once: true, amount: 0.6 });
+  const nudge = inView && !reduceMotion;
+
+  // ← → move between tabs, as a tablist is expected to.
+  const handleKeyDown = (e) => {
+    const dir = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
+    if (!dir) return;
+    e.preventDefault();
+    const from = tabs.findIndex((t) => t.id === activeTab);
+    const to = (from + dir + tabs.length) % tabs.length;
+    onTabChange(tabs[to].id);
+    btnRefs.current[to]?.focus();
+  };
+
+  return (
+    <div className="flex w-full flex-col items-center gap-2.5 sm:w-auto sm:items-start">
+
+      {/* ── Training-wheel hint (removed after the first switch) ── */}
+      <AnimatePresence>
+        {showHint && (
+          <motion.p
+            initial={{ opacity: 0, y: 4 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -4 }}
+            transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+            className="flex items-center gap-1.5 px-1 text-center text-[9.5px] font-bold uppercase tracking-[0.13em] text-white/45 min-[400px]:text-[10px] sm:text-left sm:text-[11px]"
           >
-            {isActive && (
-              <motion.div
-                layoutId="tab-pill"
-                className="absolute inset-0 rounded-xl"
+            <motion.span
+              aria-hidden="true"
+              className="shrink-0 text-white/60"
+              animate={reduceMotion ? {} : { scale: [1, 0.86, 1] }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <MousePointerClick size={13} strokeWidth={2.4} />
+            </motion.span>
+            <span className="hidden sm:inline">
+              {copy.hint.replace("{count}", tabs.length)}
+            </span>
+            <span className="sm:hidden">{copy.hintCompact}</span>
+          </motion.p>
+        )}
+      </AnimatePresence>
+
+      {/* ── The control ── */}
+      <div
+        ref={groupRef}
+        role="tablist"
+        aria-label={copy.ariaLabel}
+        onKeyDown={handleKeyDown}
+        className="relative grid w-full grid-cols-3 gap-1 rounded-2xl border p-1.5 sm:flex sm:w-auto sm:items-center sm:gap-2"
+        style={{
+          background: "rgba(255,255,255,0.03)",
+          borderColor: "rgba(255,255,255,0.08)",
+          backdropFilter: "blur(12px)",
+        }}
+      >
+        {/* One-shot sweep: tells the eye the whole group is one live control.
+            Clipped by its own wrapper so it never cuts off the unseen dots.
+
+            The x values look oversized because a translateX percentage is
+            relative to THE BAND'S OWN WIDTH, not the control's. The band is
+            w-1/3, so clearing the full width needs 300%, not 100% — anything
+            less leaves the highlight parked on screen when the run ends. */}
+        {nudge && (
+          <span className="pointer-events-none absolute inset-0 overflow-hidden rounded-2xl">
+            <motion.span
+              initial={{ x: "-120%", opacity: 0 }}
+              animate={{ x: "320%", opacity: [0, 1, 1, 0] }}
+              transition={{ duration: 1.15, delay: 0.35, ease: [0.4, 0, 0.2, 1], repeat: 1, repeatDelay: 2.1 }}
+              className="absolute inset-y-0 w-1/3 bg-linear-to-r from-transparent via-white/[0.14] to-transparent"
+              style={{ skewX: "-18deg" }}
+            />
+          </span>
+        )}
+
+        {tabs.map((tab, i) => {
+          const isActive = tab.id === activeTab;
+          const isSeen = seenTabs.includes(tab.id);
+          const isHot = hovered === tab.id && !isActive;
+
+          return (
+            <motion.button
+              key={tab.id}
+              ref={(el) => { btnRefs.current[i] = el; }}
+              type="button"
+              role="tab"
+              id={`service-tab-${tab.id}`}
+              aria-selected={isActive}
+              aria-controls="services-panel"
+              tabIndex={isActive ? 0 : -1}
+              onClick={() => onTabChange(tab.id)}
+              onHoverStart={() => setHovered(tab.id)}
+              onHoverEnd={() => setHovered(null)}
+              whileHover={isActive ? undefined : { y: -2, transition: { duration: 0.18, ease: "easeOut" } }}
+              whileTap={{ scale: 0.96, transition: { duration: 0.1 } }}
+              /* Unopened tabs lift twice on entry, then rest. The stagger and
+                 repeat live INSIDE this value, never on a shared `transition`
+                 prop — there they would also delay the hover and tap lifts. */
+              animate={
+                nudge && !isActive && !isSeen
+                  ? {
+                      y: [0, -5, 0],
+                      transition: {
+                        duration: 0.55,
+                        delay: 0.45 + i * 0.13,
+                        repeat: 1,
+                        repeatDelay: 2,
+                        ease: "easeInOut",
+                      },
+                    }
+                  : { y: 0, transition: { duration: 0.2, ease: "easeOut" } }
+              }
+              /* Explicit property list, not the blanket `transition` utility:
+                 that one includes `transform`, which would fight the y-lift
+                 framer-motion drives on this same element. */
+              className="relative flex w-full flex-col items-center justify-center gap-1 rounded-xl px-1.5 py-2 text-[10px] font-bold capitalize leading-tight select-none transition-[color,background-color,border-color,box-shadow] duration-200 min-[400px]:text-[11px] min-[500px]:text-xs sm:w-auto sm:flex-row sm:gap-1.5 sm:px-5 sm:py-2.5 sm:text-sm"
+              style={{
+                color: isActive || isHot ? "#fff" : "rgba(255,255,255,0.62)",
+                background: isActive
+                  ? "transparent"
+                  : isHot
+                    ? `${tab.color}1f`
+                    : "rgba(255,255,255,0.045)",
+                border: `1px solid ${
+                  isActive ? "transparent" : isHot ? `${tab.color}66` : "rgba(255,255,255,0.10)"
+                }`,
+                boxShadow: isHot ? `0 8px 20px ${tab.glow}` : "none",
+              }}
+            >
+              {/* Active pill — unchanged, still shared via layoutId */}
+              {isActive && (
+                <motion.div
+                  layoutId="tab-pill"
+                  className="absolute inset-0 rounded-xl"
+                  style={{
+                    background: `linear-gradient(135deg,${tab.color}22,${tab.color}44)`,
+                    border: `1px solid ${tab.color}55`,
+                    boxShadow: `0 0 20px ${tab.glow}`,
+                  }}
+                  transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                />
+              )}
+
+              {/* Unseen marker — the cue that outlives the entrance animation */}
+              {!isActive && !isSeen && (
+                <span className="absolute -right-0.5 -top-0.5 z-20 flex h-2 w-2" aria-hidden="true">
+                  <span
+                    className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-70 motion-reduce:animate-none"
+                    style={{ background: tab.color }}
+                  />
+                  <span
+                    className="relative inline-flex h-2 w-2 rounded-full"
+                    style={{ background: tab.color, boxShadow: `0 0 8px ${tab.color}` }}
+                  />
+                </span>
+              )}
+
+              <span className="relative z-10">{tab.label}</span>
+
+              {/* Information scent: how much is waiting behind this tab */}
+              <span
+                className="relative z-10 rounded-full px-1.5 py-px font-mono text-[9px] font-bold leading-none tabular-nums transition-colors duration-200 sm:text-[10px]"
                 style={{
-                  background: `linear-gradient(135deg,${tab.color}22,${tab.color}44)`,
-                  border: `1px solid ${tab.color}55`,
-                  boxShadow: `0 0 20px ${tab.glow}`,
+                  color: isActive ? "#fff" : tab.color,
+                  background: isActive ? "rgba(255,255,255,0.16)" : `${tab.color}1f`,
+                  border: `1px solid ${isActive ? "rgba(255,255,255,0.20)" : `${tab.color}3d`}`,
                 }}
-                transition={{ type: "spring", stiffness: 380, damping: 32 }}
-              />
-            )}
-            <span className="relative z-10">{tab.label}</span>
-          </motion.button>
-        );
-      })}
+              >
+                {counts[tab.id] ?? 0}
+              </span>
+
+              {!isActive && !isSeen && <span className="sr-only">{copy.unseenLabel}</span>}
+            </motion.button>
+          );
+        })}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 // ─── Root ServiceCards Component ──────────────────────────────────────────────
+const DEFAULT_TAB = "development";
+
 const ServiceCards = () => {
   const modalRootRef = useRef(null);
-  const [activeTabId, setActiveTabId] = useState("development");
+  const [activeTabId, setActiveTabId] = useState(DEFAULT_TAB);
   const [selectedService, setSelectedService] = useState(null);
   const [viewMode, setViewMode] = useState("stack");
 
+  /* Which categories the visitor has actually opened. Drives the "unseen" dots
+     and the entrance nudge — the tab we land on counts as already seen. */
+  const [seenTabs, setSeenTabs] = useState([DEFAULT_TAB]);
+  const hasSwitched = seenTabs.length > 1;
+
   const activeTab = TABS.find((t) => t.id === activeTabId);
   const activeServiceList = (services[activeTabId] || []).map((s) => ({ ...s, category: activeTabId }));
+
+  /* How many cards sit behind each tab — the promise printed on the tab. */
+  const tabCounts = useMemo(
+    () => Object.fromEntries(TABS.map((t) => [t.id, (services[t.id] || []).length])),
+    [],
+  );
 
   const handleLearnMore = (service) => {
     setSelectedService(service);
@@ -423,17 +621,28 @@ const ServiceCards = () => {
   const handleTabChange = (tabId) => {
     if (tabId === activeTabId) return;
     setActiveTabId(tabId);
+    setSeenTabs((prev) => (prev.includes(tabId) ? prev : [...prev, tabId]));
   };
 
   return (
     <div className="w-full space-y-8 sm:space-y-10">
 
       {/* ── Tab + View Toggle ────────────────────────────── */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-        <TabSelector tabs={TABS} activeTab={activeTabId} onTabChange={handleTabChange} />
+      {/* `items-end` keeps the view toggle level with the bottom of the tab
+          group whether or not the hint line above it is still showing. */}
+      <div className="flex flex-col items-center justify-between gap-4 sm:flex-row sm:items-end">
+        <TabSelector
+          tabs={TABS}
+          activeTab={activeTabId}
+          onTabChange={handleTabChange}
+          counts={tabCounts}
+          seenTabs={seenTabs}
+          showHint={!hasSwitched}
+          copy={CONTENT.tabs}
+        />
 
         <div
-          className="flex items-center gap-1 p-1 rounded-xl border"
+          className="flex shrink-0 items-center gap-1 p-1 rounded-xl border"
           style={{ background: "rgba(255,255,255,0.03)", borderColor: "rgba(255,255,255,0.08)" }}
         >
           {[
@@ -471,6 +680,9 @@ const ServiceCards = () => {
       <AnimatePresence mode="wait">
         <motion.div
           key={`${activeTabId}-${viewMode}`}
+          id="services-panel"
+          role="tabpanel"
+          aria-labelledby={`service-tab-${activeTabId}`}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -12 }}

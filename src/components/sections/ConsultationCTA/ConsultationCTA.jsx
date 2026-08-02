@@ -7,7 +7,7 @@
    ------------------------------------------------------------
    npm i gsap framer-motion
    Drop in: components/ConsultationCTA.jsx
-   Right panel = live GoHighLevel embed (YA Services Form).
+   Right panel = live GoHighLevel embed (YA Main Form Website).
    ============================================================ */
 
 import { useEffect, useRef } from "react";
@@ -38,6 +38,7 @@ const GHL_FORM_URL = `${FORM.widgetBaseUrl}/${FORM.id}`;
 export default function ConsultationCTA() {
   const sectionRef = useRef(null);
   const traceRef = useRef(null);
+  const chartRef = useRef(null);
   const prefersReducedMotion = useReducedMotion();
 
   /* ---------------- GSAP: blueprint drafting sequence on enter ------------ */
@@ -79,24 +80,8 @@ export default function ConsultationCTA() {
         0.7
       );
 
-      // 5 · growth sketch draws itself (bars → arrow → dimension line)
-      gsap.utils.toArray(".ya-sk").forEach((p, i) => {
-        const l = p.getTotalLength();
-        gsap.set(p, { strokeDasharray: l, strokeDashoffset: l, opacity: 1 });
-        tl.to(p, { strokeDashoffset: 0, duration: 0.65, ease: "power2.out" }, 1.05 + i * 0.14);
-      });
-      tl.fromTo(
-        ".ya-sk-tip",
-        { scale: 0, opacity: 0, transformOrigin: "center" },
-        { scale: 1, opacity: 1, duration: 0.4, ease: "back.out(3)" },
-        2.1
-      );
-      tl.fromTo(
-        ".ya-sk-label",
-        { opacity: 0 },
-        { opacity: 1, duration: 0.5, stagger: 0.08 },
-        2.0
-      );
+      // 5 · the growth sketch is NOT drawn here — it owns a replaying
+      //     ScrollTrigger of its own, in the effect below.
 
       // 6 · form panel slides in (clearProps → no stacking-context bugs)
       tl.fromTo(
@@ -110,6 +95,76 @@ export default function ConsultationCTA() {
       gsap.to(".ya-blob-a", { y: -26, x: 14, duration: 7, yoyo: true, repeat: -1, ease: "sine.inOut" });
       gsap.to(".ya-blob-b", { y: 22, x: -16, duration: 8.5, yoyo: true, repeat: -1, ease: "sine.inOut" });
     }, sectionRef);
+    return () => ctx.revert();
+  }, [prefersReducedMotion]);
+
+  /* -------- GSAP: the growth chart redraws on EVERY visit to the section --- */
+  /* Deliberately a separate timeline from the drafting sequence above. That one
+     is a first-impression sequence and stays `once: true` — replaying the form
+     panel slide-in every time someone scrolls past would be noise, and it would
+     disturb the embedded GHL iframe. The chart is the section's whole argument
+     ("this is your growth"), so it re-tells itself on each arrival.
+
+     toggleActions is positional — onEnter, onLeave, onEnterBack, onLeaveBack:
+
+       "restart   none    restart      none"
+        enter ↓   leave ↓  enter ↑    leave ↑
+
+     Both ENTER slots restart, so the draw replays whether the visitor arrives
+     scrolling down or scrolling back up; both LEAVE slots do nothing, so it is
+     left alone on the way out. Putting restart in a leave slot by mistake is
+     invisible in testing one direction — it fires while the chart is off
+     screen and the arrival it should have animated does nothing.
+
+     start/end are BOTH set on purpose, because each one is the arrival edge for
+     one direction. Scrolling down, onEnter fires at `start`. Scrolling up,
+     onEnterBack fires at `end` — and the default end ("bottom top") sits at the
+     very top of the screen, so the draw would be all but finished before the
+     chart was properly in view. "bottom 40%" moves that crossing down the
+     viewport, so an upward arrival sees the chart draw the same way a downward
+     one does.
+
+     The tweens are fromTo, not set + to: fromTo states an explicit start value,
+     so every restart rewinds to a blank chart. A plain `to` would replay from
+     whatever the stroke happened to be at, which after an interrupted pass is
+     part-drawn. */
+  useEffect(() => {
+    /* Reduced motion is handled by the set() in the effect above, which paints
+       the finished chart — no drawing, nothing to replay. */
+    if (prefersReducedMotion) return;
+
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: chartRef.current,
+          start: "top 80%",   // arrival edge when scrolling down
+          end: "bottom 40%",  // arrival edge when scrolling up
+          toggleActions: "restart none restart none",
+        },
+      });
+
+      // bars → arrow → dimension line, each stroke drawing itself
+      gsap.utils.toArray(".ya-sk").forEach((p, i) => {
+        const len = p.getTotalLength();
+        gsap.set(p, { strokeDasharray: len, opacity: 1 });
+        tl.fromTo(
+          p,
+          { strokeDashoffset: len },
+          { strokeDashoffset: 0, duration: 0.65, ease: "power2.out" },
+          i * 0.14
+        );
+      });
+
+      // drafting labels, then the arrow-tip pulse lands last
+      tl.fromTo(".ya-sk-label", { opacity: 0 }, { opacity: 1, duration: 0.5, stagger: 0.08 }, 0.95);
+      tl.fromTo(
+        ".ya-sk-tip",
+        { scale: 0, opacity: 0, transformOrigin: "center" },
+        { scale: 1, opacity: 1, duration: 0.4, ease: "back.out(3)" },
+        1.05
+      );
+    }, sectionRef);
+
     return () => ctx.revert();
   }, [prefersReducedMotion]);
 
@@ -217,7 +272,11 @@ export default function ConsultationCTA() {
 
                 {/* --- module A · growth curve card (fills the flexible middle) --- */}
                 <div className="ya-panel-item mt-8 flex flex-1 flex-col justify-center">
-                  <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] sm:p-5">
+                  {/* ref = the trigger for the chart's own replaying timeline */}
+                  <div
+                    ref={chartRef}
+                    className="rounded-2xl border border-white/10 bg-white/[0.03] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] sm:p-5"
+                  >
                     <div className="mb-3 flex items-center justify-between">
                       <span className="font-mono text-[9px] uppercase tracking-[0.28em] text-cyan-300/70">
                         {CONTENT.growthCard.caption}

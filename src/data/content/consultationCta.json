@@ -4,9 +4,9 @@
     "id": "eXiJlucpqyxkUimRwzww",
     "widgetBaseUrl": "https://link.youngarchitects.in/widget/form",
     "embedScript": "https://link.youngarchitects.in/js/form_embed.js",
-    "title": "YA Services Form",
-    "name": "YA Services Form",
-    "minHeight": 919
+    "title": "YA Main Form Website",
+    "name": "YA Main Form Website",
+    "minHeight": 794
   },
   "content": {
     "badge": "Book your free consultation",

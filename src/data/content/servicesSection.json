@@ -1,5 +1,5 @@
 {
-  "$comment": "Copy for the VISIBLE Services section (the interactive card deck) — distinct from services.json, which is the catalogue of individual services, and from servicesSeo.json, which is the hidden crawlable version. Editable content — safe for a CMS. Headings are split into parts because each part carries a different gradient; keep the trailing space on `headingLeadTrail` (it separates the two halves when they wrap onto one line).",
+  "$comment": "Copy for the VISIBLE Services section (the interactive card deck) — distinct from services.json, which is the catalogue of individual services, and from servicesSeo.json, which is the hidden crawlable version. Editable content — safe for a CMS. Headings are split into parts because each part carries a different gradient; keep the trailing space on `headingLeadTrail` (it separates the two halves when they wrap onto one line). In `tabs.hint` the token {count} is replaced with the real number of categories at render time — keep it in any rewrite; `tabs.hintCompact` is the phone-width version and has no room for it.",
   "content": {
     "badge": "Our Expertise",
     "headingLead": "Premium Services",
@@ -16,6 +16,12 @@
     "viewModes": {
       "stack": "Desktop View",
       "grid": "Mobile View"
+    },
+    "tabs": {
+      "ariaLabel": "Service category",
+      "hint": "{count} categories — switch to see different services",
+      "hintCompact": "Tap to switch category",
+      "unseenLabel": "Not viewed yet"
     }
   }
 }
