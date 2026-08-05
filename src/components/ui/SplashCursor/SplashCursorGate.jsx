@@ -10,25 +10,44 @@
 //   coarse pointer   a fluid trail chasing a finger that is not touching the
 //                    screen has nothing to follow
 //   reduced motion   the whole point of the effect is motion
-//   neither          load it when the browser next goes idle
+//   neither          warm the chunk on idle, start the solver on first move
 //
-// LOADED ON IDLE, NOT ON FIRST MOVE. Waiting for a mousemove would mean the
-// visitor's first gesture — the one that would have drawn the nicest opening
-// trail — falls into a chunk that has not arrived yet. requestIdleCallback
-// puts the fetch after everything the page needs to become interactive, so it
-// costs nothing on the critical path and is still ready before the pointer is.
-// The 2s timeout is the guarantee: a page that never idles still gets it.
+// ── TWO SEPARATE MOMENTS, AND WHY ─────────────────────────────────────
+// Downloading the module is cheap. Standing up the WebGL context is not: it
+// compiles ~15 shader programs and allocates a 1440² dye target, and then
+// updateFrame() runs a full Navier-Stokes solve (20 pressure iterations, ~25
+// draw calls) every single frame FOREVER — whether or not the pointer has
+// ever moved.
+//
+// On a machine with a real GPU that is invisible. On one without, the solver
+// falls back to SwiftShader and runs on the CPU, where it saturates the main
+// thread outright: measured on a throttled desktop run, mounting it at load
+// produced 147 SECONDS of total blocking time and dragged the performance
+// score to 65, while the same page on mobile — where the coarse-pointer check
+// above means it is never downloaded — scored 92.
+//
+// So the split below: `warm` fetches and parses the module when the browser
+// next idles, and the component is not MOUNTED (no context, no solver, no
+// rAF loop) until the pointer actually moves.
+//
+// THIS IS NOT A VISUAL TRADE-OFF. The simulation paints nothing on start —
+// there is no opening splat, and applyInputs() only injects dye for a pointer
+// whose `moved` flag is set. Before the first movement the canvas is a fully
+// transparent, empty layer. Arming on that first movement therefore shows the
+// visitor the exact same thing, one pointer event later, with the chunk
+// already in memory so the trail begins immediately.
 //
 // The simulation checks the same two media queries itself — it is a public
 // component and may be mounted directly on a route. The duplication is the
-// point: this file decides what to DOWNLOAD, that one decides what to RUN.
+// point: this file decides what to DOWNLOAD and WHEN TO START, that one
+// decides what to RUN.
 
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 
 /* ssr:false is legal here and not in Layout — this is a client component.
    The chunk is requested on the first render of <SplashCursor>, i.e. only
-   once `armed` flips. */
+   once `armed` flips — or earlier, by the idle warm-up below. */
 const SplashCursor = dynamic(() => import("./SplashCursor"), { ssr: false });
 
 export default function SplashCursorGate(props) {
@@ -39,16 +58,42 @@ export default function SplashCursorGate(props) {
     if (matches("(pointer: coarse)")) return;
     if (matches("(prefers-reduced-motion: reduce)")) return;
 
-    const arm = () => setArmed(true);
-
+    /* ── 1. Warm the chunk on idle ──────────────────────────────────
+       Fetch and parse the module after everything the page needs to become
+       interactive, so the network cost is off the critical path and the
+       code is resident before the pointer asks for it. Nothing is executed
+       beyond module scope — the WebGL work all lives in an effect that has
+       not mounted yet. The 2s timeout is the guarantee: a page that never
+       idles still gets it. */
+    let idleId = 0;
+    let timerId = 0;
+    const warm = () => {
+      import("./SplashCursor");
+    };
     if (typeof window.requestIdleCallback === "function") {
-      const id = window.requestIdleCallback(arm, { timeout: 2000 });
-      return () => window.cancelIdleCallback(id);
+      idleId = window.requestIdleCallback(warm, { timeout: 2000 });
+    } else {
+      // Safari < 17.4 has no requestIdleCallback; a plain delay past the
+      // load burst is close enough for a decoration.
+      timerId = window.setTimeout(warm, 1500);
     }
-    // Safari < 17.4 has no requestIdleCallback; a plain delay past the load
-    // burst is close enough for a decoration.
-    const timer = setTimeout(arm, 1500);
-    return () => clearTimeout(timer);
+
+    /* ── 2. Start the solver on the first pointer movement ──────────
+       `pointermove` covers mouse, trackpad and pen. `pointerdown` is the
+       safety net for the visitor who clicks before moving. Both are passive
+       and fire once — after that this file has no further work to do. */
+    const arm = () => setArmed(true);
+    window.addEventListener("pointermove", arm, { once: true, passive: true });
+    window.addEventListener("pointerdown", arm, { once: true, passive: true });
+
+    return () => {
+      if (idleId && typeof window.cancelIdleCallback === "function") {
+        window.cancelIdleCallback(idleId);
+      }
+      if (timerId) clearTimeout(timerId);
+      window.removeEventListener("pointermove", arm);
+      window.removeEventListener("pointerdown", arm);
+    };
   }, []);
 
   return armed ? <SplashCursor {...props} /> : null;

@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(export CHROME_PATH=\"C:\\\\Program Files \\(x86\\)\\\\Google\\\\Chrome\\\\Application\\\\chrome.exe\")",
+      "Bash(npx -y lighthouse@12 https://ya-next.vercel.app/ --preset=desktop --only-categories=performance --output=json --output-path=./lh-desktop-baseline.json --chrome-flags=\"--headless=new\" --quiet)",
+      "Bash(echo \"EXIT=$?\")",
+      "Bash(cd \"c:/Users/user/OneDrive/Desktop/ya-next-master\" && grep -n \"multipleSplats\\\\|randomSplats\\\\|splatStack\\\\|initialSplat\" src/components/ui/SplashCursor/SplashCursor.jsx | head -20; echo \"=== applyInputs ===\"; sed -n '/function applyInputs/,/^    }/p' src/components/ui/SplashCursor/SplashCursor.jsx; echo \"=== css ===\"; cat src/components/ui/SplashCursor/splashCursor.css)",
+      "Bash(node -e ' *)",
+      "Bash(npm run *)",
+      "Bash(echo \"BUILD EXIT=$?\")",
+      "Bash(node -e \"const p=require\\('./src/data/config/heroParticles.json'\\); console.log\\('particles:', Array.isArray\\(p\\)?p.length:Object.keys\\(p\\)\\);\")",
+      "Bash(npx next *)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3210/)",
+      "Bash(bash measure.sh baseline desktop)",
+      "Bash(bash measure.sh baseline mobile)",
+      "Bash(sed -i 's|localhost:3210|localhost:3211|' measure.sh)",
+      "Bash(bash measure.sh fix1 desktop)",
+      "Bash(bash measure.sh fix1 mobile)"
+    ],
+    "additionalDirectories": [
+      "C:\\Users\\user\\OneDrive\\Desktop\\ya-next-master\\src\\components\\ui\\SplashCursor"
+    ]
+  }
+}
