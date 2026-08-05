@@ -8,5 +8,8 @@ export { default as SectionHeader } from "./SectionHeader/SectionHeader";
 export { default as SectionDivider } from "./SectionDivider/SectionDivider";
 // Portal-rendered dialog — used by the Services section's "Learn More".
 export { default as Modal } from "./Modal/Modal";
-// Pointer replacement — mounted once in Layout, never per section.
-export { default as CustomCursor } from "./CustomCursor/CustomCursor";
+// WebGL fluid trail that follows the pointer — the site's cursor effect,
+// mounted once in Layout, never per section. Export the GATE, not the
+// simulation: it is what keeps the solver off phones and out of the initial
+// bundle. (It replaced a dot-and-ring CustomCursor that used to live here.)
+export { default as SplashCursor } from "./SplashCursor/SplashCursorGate";

@@ -37,6 +37,19 @@
 // levels indent less and tighten their padding, so a fourth-level label still
 // gets a readable line on a small phone.
 //
+// IN-PAGE NAVIGATION
+// Nearly every href in the silo is a #anchor on the home page, and the Home
+// menu is a full index of it — one row per section page.js mounts. Those links
+// do NOT rely on the browser's own fragment jump, which would park the section
+// under the fixed pill and, worse, do nothing at all for #faq or #partners
+// (they live inside chunks <DeferredSection> has not loaded yet). Every link
+// goes through <NavLink> → scrollToSection, which offsets for the navbar, waits
+// for a deferred section to mount and keeps correcting while the page settles.
+// See ./scrollToSection.js.
+//
+// A node with BOTH `href` and `children` — Home — is a menu you can also click:
+// the trigger navigates and the list still opens on hover.
+//
 // Uses framer-motion's lightweight `m` (the app is wrapped in <LazyMotion>).
 
 import Link from "next/link";
@@ -47,6 +60,7 @@ import { ArrowUpRight, ChevronDown, ChevronRight, Sparkles } from "lucide-react"
 
 import { NAV_ITEMS, NAV_CONTENT, EASE_SMOOTH, SPRING_FAST } from "@/data";
 import brandLogo from "@/assets/logo/brandlogo.webp";
+import { scrollToSection, isHashLink, useHashScroll } from "./scrollToSection";
 import "./navbar.css";
 
 /* Timing comes from the shared motion tokens (src/data/config/motion.json) so
@@ -55,6 +69,29 @@ const SMOOTH_EASE = EASE_SMOOTH;
 const FAST_SPRING = SPRING_FAST;
 
 const hasChildren = (n) => Boolean(n?.children?.length);
+
+/* ─────────────────────────── one link, either kind ───────────────────────────
+   An on-page #anchor is handled by scrollToSection (navbar offset + waits for a
+   deferred section to mount); anything else is a real route and stays a
+   next/link. `onClick` — normally "close the menu" — runs for both. */
+function NavLink({ href, onClick, children, ...rest }) {
+  const anchor = isHashLink(href);
+
+  const handleClick = (e) => {
+    if (anchor) {
+      e.preventDefault();
+      scrollToSection(href);
+    }
+    onClick?.(e);
+  };
+
+  const Tag = anchor ? "a" : Link;
+  return (
+    <Tag href={href} onClick={handleClick} {...rest}>
+      {children}
+    </Tag>
+  );
+}
 
 /* Lets any leaf, at any depth, close the whole open menu tree when clicked. */
 const MenuCloseContext = createContext(() => {});
@@ -238,9 +275,9 @@ function FlyoutRow({ item, depth }) {
       );
     }
     return (
-      <Link href={item.href} onClick={close} className={rowCls}>
+      <NavLink href={item.href} onClick={close} className={rowCls}>
         <RowInner item={item} branch={false} compact />
-      </Link>
+      </NavLink>
     );
   }
 
@@ -410,9 +447,9 @@ function MobileNode({ item, depth, isOpen, onToggle, onNavigate }) {
     return item.comingSoon || !item.href ? (
       <div className={`${rowCls} cursor-default`}>{inner}</div>
     ) : (
-      <Link href={item.href} onClick={onNavigate} className={rowCls}>
+      <NavLink href={item.href} onClick={onNavigate} className={rowCls}>
         {inner}
-      </Link>
+      </NavLink>
     );
   }
 
@@ -543,6 +580,18 @@ export default function Navbar() {
   const closeAll = useCallback(() => setOpenDropdown(null), []);
   const closeDrawer = useCallback(() => setMobileOpen(false), []);
 
+  /* The CTA points at #book-consultation, a deferred section — it needs the
+     same treatment as the menu links (it is an <m.a>, so not a NavLink). */
+  const onCtaClick = useCallback((e) => {
+    if (!isHashLink(NAV_CONTENT.cta.href)) return;
+    e.preventDefault();
+    scrollToSection(NAV_CONTENT.cta.href);
+  }, []);
+
+  /* Fragment URLs that don't come from the navbar — a shared /#faq link, the
+     back button between two anchors — land on the right section too. */
+  useHashScroll();
+
   return (
     <>
       {/* Scroll progress bar */}
@@ -565,7 +614,11 @@ export default function Navbar() {
           className="relative mx-auto flex max-w-7xl items-center justify-between rounded-full px-4 backdrop-blur-2xl sm:px-5"
         >
           {/* ── Logo ── */}
-          <Link href={NAV_CONTENT.brandHref} className="group relative z-20 flex items-center">
+          <NavLink
+            href={NAV_CONTENT.brandHref}
+            onClick={closeAll}
+            className="group relative z-20 flex items-center"
+          >
             <m.div animate={{ scale: scrolled ? 0.93 : 1 }} transition={{ duration: 0.3 }} className="relative">
               <Image
                 src={brandLogo}
@@ -575,7 +628,7 @@ export default function Navbar() {
                 className={`object-contain transition-all duration-300 ${scrolled ? "h-[34px] w-auto" : "h-[40px] w-auto"}`}
               />
             </m.div>
-          </Link>
+          </NavLink>
 
           {/* ── Desktop nav ── */}
           <MenuCloseContext.Provider value={closeAll}>
@@ -584,6 +637,23 @@ export default function Navbar() {
               {NAV_ITEMS.map((item) => {
                 const branch = hasChildren(item);
                 const isOpen = openDropdown === item.label;
+
+                /* Same trigger face for all three kinds of top item — plain
+                   link, pure menu, and the clickable menu (Home) that has both
+                   an href and children. */
+                const triggerCls =
+                  "nav-underline-item group relative flex items-center gap-1 whitespace-nowrap rounded-full px-3 py-1.5 text-[12.5px] font-medium text-white/70 transition-colors duration-200 hover:text-white";
+                const triggerFace = (
+                  <>
+                    <span>{item.label}</span>
+                    {branch && (
+                      <m.span animate={{ rotate: isOpen ? 180 : 0 }} transition={FAST_SPRING}>
+                        <ChevronDown className="h-3.5 w-3.5 text-white/40 transition-colors duration-200 group-hover:text-violet-300" />
+                      </m.span>
+                    )}
+                  </>
+                );
+
                 return (
                   <div
                     key={item.label}
@@ -591,7 +661,18 @@ export default function Navbar() {
                     onMouseEnter={(e) => branch && openMenu(item, e.currentTarget)}
                     onMouseLeave={closeMenu}
                   >
-                    {branch ? (
+                    {item.href ? (
+                      /* Has a destination of its own → clicking goes there and
+                         shuts the menu; hover still opens the list. */
+                      <NavLink
+                        href={item.href}
+                        onClick={closeAll}
+                        className={triggerCls}
+                        {...(branch ? { "aria-haspopup": "true", "aria-expanded": isOpen } : {})}
+                      >
+                        {triggerFace}
+                      </NavLink>
+                    ) : (
                       <button
                         onClick={(e) => {
                           measureTrigger(e.currentTarget, item);
@@ -599,20 +680,10 @@ export default function Navbar() {
                         }}
                         aria-haspopup="true"
                         aria-expanded={isOpen}
-                        className="nav-underline-item group relative flex items-center gap-1 whitespace-nowrap rounded-full px-3 py-1.5 text-[12.5px] font-medium text-white/70 transition-colors duration-200 hover:text-white"
+                        className={triggerCls}
                       >
-                        <span>{item.label}</span>
-                        <m.span animate={{ rotate: isOpen ? 180 : 0 }} transition={FAST_SPRING}>
-                          <ChevronDown className="h-3.5 w-3.5 text-white/40 transition-colors duration-200 group-hover:text-violet-300" />
-                        </m.span>
+                        {triggerFace}
                       </button>
-                    ) : (
-                      <Link
-                        href={item.href}
-                        className="nav-underline-item group relative block whitespace-nowrap rounded-full px-3 py-1.5 text-[12.5px] font-medium text-white/70 transition-colors duration-200 hover:text-white"
-                      >
-                        <span>{item.label}</span>
-                      </Link>
                     )}
 
                     {/* Pointer arrow — centered on the trigger for either anchor. */}
@@ -635,6 +706,7 @@ export default function Navbar() {
               animate={{ paddingTop: scrolled ? "7px" : "9px", paddingBottom: scrolled ? "7px" : "9px" }}
               transition={FAST_SPRING}
               href={NAV_CONTENT.cta.href}
+              onClick={onCtaClick}
               className="group relative overflow-hidden rounded-full bg-gradient-to-r from-blue-600 via-purple-500 to-pink-500 px-5 text-[12.5px] font-semibold text-white shadow-[0_4px_20px_rgba(139,92,246,0.4)]"
             >
               <span className="absolute inset-0 -translate-x-full skew-x-12 bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
@@ -676,7 +748,10 @@ export default function Navbar() {
                 <div className="mt-2 border-t border-white/10 pt-2">
                   <a
                     href={NAV_CONTENT.cta.href}
-                    onClick={closeDrawer}
+                    onClick={(e) => {
+                      onCtaClick(e);
+                      closeDrawer();
+                    }}
                     className="group relative flex w-full items-center justify-center gap-1.5 overflow-hidden rounded-xl bg-gradient-to-r from-blue-600 via-purple-500 to-pink-500 py-2.5 text-[12.5px] font-semibold text-white shadow-lg shadow-purple-500/20"
                   >
                     <span className="absolute inset-0 -translate-x-full skew-x-12 bg-gradient-to-r from-transparent via-white/15 to-transparent transition-transform duration-700 group-hover:translate-x-full" />

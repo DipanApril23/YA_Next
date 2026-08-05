@@ -6,10 +6,11 @@
 //
 //   { label, href?, icon?, desc?, comingSoon?, children? }
 //
-// A node with `children` is a menu; a leaf has an `href`. The Navbar renders
-// this to ANY depth — cascading flyouts on desktop, a nested single-open
-// accordion on mobile — so adding a deeper sub-level is a data edit, never a
-// code change.
+// A node with `children` is a menu; a leaf has an `href`; a node with BOTH —
+// Home, which indexes every section of the home page — is a menu that is also
+// clickable. The Navbar renders this to ANY depth — cascading flyouts on
+// desktop, a nested single-open accordion on mobile — so adding a deeper
+// sub-level is a data edit, never a code change.
 //
 // THE ONE TRANSFORMATION DONE HERE
 // JSON cannot store a React component, so each node's `icon` is a string key

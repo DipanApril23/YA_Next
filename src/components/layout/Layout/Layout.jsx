@@ -7,16 +7,18 @@
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import MotionProvider from "../MotionProvider/MotionProvider";
-import { CustomCursor, SectionDivider } from "@/components/ui";
+import { SplashCursor, SectionDivider } from "@/components/ui";
 import BrandMark from "@/components/sections/BrandMark/BrandMark";
 
 const Layout = ({ children }) => {
   return (
     <MotionProvider>
-      {/* Fixed-position overlay, not part of the visual stack — mounted
-          here so the pointer is replaced on every route, and exactly
-          once. It self-disables on touch devices. */}
-      <CustomCursor />
+      {/* Fixed-position overlay, not part of the visual stack — mounted here
+          so the fluid trail follows the pointer on every route, and exactly
+          once. The native cursor still does the pointing; this only paints
+          behind it. Self-disables on touch and for reduced motion, and its
+          gate keeps the simulation off those devices entirely. */}
+      <SplashCursor />
 
       <Header />
       <main>{children}</main>

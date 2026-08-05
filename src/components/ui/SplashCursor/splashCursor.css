@@ -1,0 +1,34 @@
+/* ─── SplashCursor — the canvas the fluid simulation paints into ───────
+
+   SIZED IN PERCENT, NOT VIEWPORT UNITS. On a desktop with a classic
+   (non-overlay) scrollbar, 100vw is WIDER than the viewport, and the
+   simulation maps the pointer as `clientX / canvas.width` — so every splash
+   would land a scrollbar's width to the left of the cursor, with the aspect
+   ratio the shaders correct by wrong to match. A fixed element's containing
+   block IS the viewport, so 100% is the same box minus that error.
+
+   Both `inset: 0` AND the explicit 100% are needed. A canvas is a REPLACED
+   element: with `width: auto` it takes its intrinsic 300x150 and the offsets
+   that would stretch it are simply dropped, leaving the effect penned into a
+   small box in the top-left corner. Remove either line and it stops covering
+   the page.
+
+   STACKING. Above the Modal (2000) and the navbar (100): the trail follows the
+   pointer everywhere on the page, and having it disappear under an open dialog
+   reads as a bug rather than as a decision. It stops one short of 9999 — the
+   layer the old CustomCursor drew its dot and ring on — so anything added
+   later that has to sit ON the pointer still has a free layer above the dye.
+
+   The canvas paints premultiplied-alpha dye over transparent black, so
+   everything it does not touch stays fully see-through. It never takes the
+   pointer — the effect only ever watches it. */
+
+.ya-splash-cursor {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9998;
+  display: block;
+  pointer-events: none;
+}

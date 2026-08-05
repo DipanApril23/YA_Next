@@ -9,8 +9,9 @@
      3. responsive breakpoints
      4. the YAGlyphs @font-face shim (see the note above it)
      5. the `body` base rule
-     6. two cross-cutting utilities: `.cv-section` (content-visibility) and the
-        global prefers-reduced-motion guard
+     6. three cross-cutting rules: `.cv-section` (content-visibility), the
+        fixed-navbar clearance for fragment links, and the global
+        prefers-reduced-motion guard
 
    Section-specific rules must NOT be added here — put them in the section's
    own stylesheet so the cascade stays predictable and dead CSS is obvious.
@@ -94,6 +95,17 @@ body {
 .cv-section {
   content-visibility: auto;
   contain-intrinsic-size: auto 720px;
+}
+
+/*
+  Fixed-navbar clearance for fragment links. Anything the browser scrolls to
+  itself — a /#services URL opened cold, a fragment jump before JS is ready —
+  would otherwise land with the section's top edge under the pill. Navbar
+  clicks are handled in JS with the same 96px offset (see
+  Navbar/scrollToSection.js → NAV_OFFSET); keep the two numbers in step.
+*/
+:target {
+  scroll-margin-top: 96px;
 }
 
 /*
