@@ -1,9 +1,14 @@
 {
-  "$comment": "The full services catalogue, keyed by tab id (must match the ids in src/data/config/serviceTabs.json). Editable content — safe for a CMS. Each service: title, description, logo (image URL) and an optional learnMore { intro, points[], conclusion } shown in the modal. This same copy is ALSO rendered server-side and visually hidden by ServicesSeo.jsx so crawlers and screen readers get the whole catalogue — edit it here only.",
+  "$comment": "The full services catalogue, keyed by tab id (must match the ids in src/data/config/serviceTabs.json). Editable content — safe for a CMS. Each service: title, description, logo (image URL) and an optional learnMore { intro, points[], conclusion } shown in the modal. `highlights` is an optional list of 2-3 SHORT (2-4 word) feature labels shown as chips on the wide desktop card; omit it and the card derives them from any learnMore point written as \"Label - explanation\", which is why most services carry none. This same copy is ALSO rendered server-side and visually hidden by ServicesSeo.jsx so crawlers and screen readers get the whole catalogue — edit it here only.",
   "marketing": [
     {
       "title": "Instagram Marketing",
       "description": "Elevate your brand's online presence with Instagram - the perfect platform to engage and attract your target audience. Click to know more.",
+      "highlights": [
+        "Page Setup & Upkeep",
+        "Community Engagement",
+        "Bio & Hashtag Strategy"
+      ],
       "longDescription": "This is long description",
       "logo": "https://youngarchitects.in/assets/servicesImage/Instagram_marketing.webp",
       "learnMore": {
@@ -20,6 +25,11 @@
     {
       "title": "Facebook Marketing",
       "description": "Elevate your brand's online presence with Facebook - an well versed platform to engage and attract your target audience. Click to know more.",
+      "highlights": [
+        "Page Setup & Upkeep",
+        "Community Engagement",
+        "Bio & Hashtag Strategy"
+      ],
       "longDescription": "This is long description",
       "logo": "https://youngarchitects.in/assets/servicesImage/Facebook_marketing.webp",
       "learnMore": {
@@ -36,6 +46,11 @@
     {
       "title": "LinkedIn Marketing",
       "description": "Boost your professional presence and build a strong network with LinkedIn, the ultimate platform for business connections. Click to know more.",
+      "highlights": [
+        "Professional Page Build",
+        "Reputation Management",
+        "Content Strategy"
+      ],
       "longDescription": "This is long description",
       "logo": "https://youngarchitects.in/assets/servicesImage/LinkedIn_Marketing.webp",
       "learnMore": {
@@ -52,6 +67,11 @@
     {
       "title": "YouTube Marketing",
       "description": "Empower your brand with YouTube marketing - the ultimate platform to connect, engage, and convert your audience through compelling video content. Click to Learn More.",
+      "highlights": [
+        "Channel Setup & Upkeep",
+        "Editing & Voiceovers",
+        "Keyword Optimisation"
+      ],
       "longDescription": "This is long description",
       "logo": "https://youngarchitects.in/assets/servicesImage/Youtube_Marketing.webp",
       "learnMore": {
@@ -71,6 +91,11 @@
     {
       "title": "Local SEO and Website SEO",
       "description": "Get Organic Customers without spending money on Ads. Whether you want to rank in Google Maps or on the First Page of GOOGLE. Click to Learn More.",
+      "highlights": [
+        "Google Maps Ranking",
+        "Website Page Ranking",
+        "Calls & Enquiries"
+      ],
       "longDescription": "This is long description",
       "logo": "https://youngarchitects.in/assets/servicesImage/Local_and_website_seo.webp",
       "learnMore": {

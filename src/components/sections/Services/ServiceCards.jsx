@@ -32,86 +32,162 @@ import {
 } from "@/data";
 import { Modal } from "@/components/ui";
 
+/* ─── Feature chips — desktop only ────────────────────────────────────────────
+   The deck runs the full width of the container, which is roughly three times
+   the width of the phone card the layout was designed at. Everything below
+   `md` keeps that portrait design; from `md` the face turns landscape (logo
+   panel beside the copy, see CardFace) and these chips fill the room the wider
+   column opens up. The third chip waits for `lg` — in the narrower `md` column
+   it wraps onto a line of its own and reads as clutter.
+
+   Two sources, in order:
+
+     1. `highlights` on the service — an explicit list, for entries whose
+        points are written as plain sentences and cannot be compressed to a
+        chip without mangling them.
+     2. the `learnMore` points, most of which the catalogue writes as
+        "Label - explanation". The label alone is a ready-made 2-4 word
+        feature, so those services need no extra copy at all.
+
+   A point in neither form is skipped rather than truncated mid-sentence, and
+   fewer than two survivors renders no row at all — one lonely chip reads as a
+   mistake. So a service that grows a new point, or a whole new tab, keeps
+   working without touching this file. */
+/* 30 characters is the measured ceiling for a label that still reads as a
+   CHIP. Past it the catalogue is really writing a sentence fragment
+   ("Instagram, Facebook & LinkedIn post design"), which fills the row and
+   defeats the point; skipping those and taking the next qualifying point
+   keeps every one of the 20 services chipped. */
+const CHIP_LABEL = /^(.{3,30}?)\s+[-–—]\s+/;
+const MAX_CHIPS = 3;
+const MIN_CHIPS = 2;
+
+const featureChips = (service) => {
+  if (service.highlights?.length >= MIN_CHIPS) return service.highlights.slice(0, MAX_CHIPS);
+
+  const chips = [];
+  for (const point of service.learnMore?.points ?? []) {
+    const label = point.match(CHIP_LABEL)?.[1]?.trim();
+    if (label) chips.push(label);
+    if (chips.length === MAX_CHIPS) break;
+  }
+  return chips.length >= MIN_CHIPS ? chips : [];
+};
+
 // ─── Card content (only rendered for the front card) ─────────────────────────
-const CardFace = ({ service, accent, glow, onLearnMore }) => (
-  <div
-    className="w-full h-full rounded-[28px] border flex flex-col overflow-hidden"
-    style={{
-      background: "linear-gradient(145deg,rgba(18,18,28,0.97) 0%,rgba(10,10,20,0.99) 100%)",
-      borderColor: `${accent}55`,
-      boxShadow: `0 0 0 1px ${accent}22, 0 28px 70px rgba(0,0,0,0.75), 0 0 50px ${glow}`,
-    }}
-  >
-    {/* ── Full-width logo banner ── */}
+// PORTRAIT ON PHONES, LANDSCAPE FROM `md`. The deck is as wide as the section,
+// so a stacked logo-over-text face has to stretch its 120px of content down a
+// 430px card — `justify-between` then banks all of that slack into one hole
+// between the description and the footer. From `md` the logo banner becomes a
+// full-height panel on the LEFT, the copy sits beside it and is centred rather
+// than pushed apart, and the chips above use the width that opens up. Nothing
+// below `md` changes: the phone card was already right.
+//
+// The switch is at `md` (768px) and not `lg` because this project redefines the
+// breakpoints in globals.css — `lg` is 992px here, and a card is already 840px
+// wide and half empty by then.
+const CardFace = ({ service, accent, glow, onLearnMore }) => {
+  const chips = featureChips(service);
+
+  return (
     <div
-      className="relative w-full flex items-center justify-center flex-shrink-0"
+      className="relative w-full h-full rounded-[28px] border flex flex-col md:flex-row overflow-hidden"
       style={{
-        height: "clamp(130px, 28%, 165px)",
-        background: `linear-gradient(135deg, ${accent}1a 0%, rgba(8,8,18,0.7) 100%)`,
-        borderBottom: `1px solid ${accent}22`,
+        background: "linear-gradient(145deg,rgba(18,18,28,0.97) 0%,rgba(10,10,20,0.99) 100%)",
+        borderColor: `${accent}55`,
+        boxShadow: `0 0 0 1px ${accent}22, 0 28px 70px rgba(0,0,0,0.75), 0 0 50px ${glow}`,
       }}
     >
-      {/* Soft glow behind logo */}
+      {/* ── Logo panel — a banner across the top, a column down the side ──
+          Sizing lives in classes rather than the style prop so the `lg` rules
+          can win; only the accent-derived colours stay inline. */}
       <div
-        className="absolute inset-0 pointer-events-none"
-        style={{ background: `radial-gradient(ellipse at 50% 55%, ${accent}28, transparent 70%)` }}
-      />
+        className="relative flex w-full shrink-0 items-center justify-center border-b h-[clamp(130px,28%,165px)] md:h-full md:w-[36%] md:max-w-[420px] md:border-b-0 md:border-r"
+        style={{
+          background: `linear-gradient(135deg, ${accent}1a 0%, rgba(8,8,18,0.7) 100%)`,
+          borderColor: `${accent}22`,
+        }}
+      >
+        {/* Soft glow behind logo */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{ background: `radial-gradient(ellipse at 50% 55%, ${accent}28, transparent 70%)` }}
+        />
 
-      {/* Service logo — large, centred, clearly readable */}
-      <Image
-        src={service.logo}
-        alt={service.title}
-        width={220}
-        height={140}
-        sizes="(max-width: 640px) 60vw, 220px"
-        className="object-contain relative z-10"
-        style={{ maxHeight: "110px", width: "auto", maxWidth: "80%" }}
-      />
+        {/* Service logo — large, centred, clearly readable */}
+        <Image
+          src={service.logo}
+          alt={service.title}
+          width={220}
+          height={140}
+          sizes="(max-width: 640px) 60vw, (max-width: 992px) 220px, 300px"
+          className="relative z-10 h-auto w-auto max-h-[110px] max-w-[80%] object-contain md:max-h-[130px] lg:max-h-[150px]"
+        />
+      </div>
 
-      {/* Category badge top-right */}
+      {/* Category badge — pinned to the CARD's corner, so it stays top-right
+          when the logo panel moves to the side. */}
       <span
-        className="absolute top-3 right-3 text-[9px] sm:text-[10px] font-mono font-bold tracking-widest uppercase px-2.5 py-1 rounded-full border"
+        className="absolute top-3 right-3 z-20 text-[9px] sm:text-[10px] font-mono font-bold tracking-widest uppercase px-2.5 py-1 rounded-full border"
         style={{ color: accent, borderColor: `${accent}44`, background: "rgba(8,8,18,0.88)" }}
       >
         {service.category}
       </span>
-    </div>
-    {/* ── Body + Footer ── */}
-    <div className="flex flex-col justify-between flex-1 p-5 sm:p-6">
-      {/* Body */}
-      <div className="space-y-2">
-        <h3
-          className="text-white text-base sm:text-lg font-extrabold tracking-tight leading-snug capitalize"
-          style={{ textShadow: `0 0 20px ${accent}44` }}
-        >
-          {service.title}
-        </h3>
-        <p className="text-neutral-400 text-xs sm:text-sm leading-relaxed line-clamp-3">
-          {service.description}
-        </p>
-      </div>
 
-      {/* Footer */}
-      <div
-        className="pt-4 mt-3 flex items-center justify-between border-t"
-        style={{ borderColor: "rgba(255,255,255,0.06)" }}
-      >
-        <button
-          onClick={onLearnMore}
-          className="group/btn flex items-center gap-2 text-xs font-black uppercase tracking-widest transition-all duration-200"
-          style={{ color: accent }}
-        >
-          <span className="group-hover/btn:underline underline-offset-4">Learn More</span>
-          <span className="inline-block transition-transform group-hover/btn:translate-x-1">→</span>
-        </button>
+      {/* ── Body + Footer ── */}
+      <div className="flex flex-1 flex-col justify-between p-5 sm:p-6 md:justify-center md:gap-5 md:p-7 lg:gap-6 lg:p-9">
+        {/* Body */}
+        <div className="space-y-2 md:space-y-3 lg:space-y-3.5">
+          <h3
+            className="text-white text-base sm:text-lg md:text-xl lg:text-[26px] font-extrabold tracking-tight leading-snug capitalize"
+            style={{ textShadow: `0 0 20px ${accent}44` }}
+          >
+            {service.title}
+          </h3>
+          {/* The clamp is a phone measure — at this width the copy is two lines. */}
+          <p className="text-neutral-400 text-xs sm:text-sm lg:text-[15px] leading-relaxed line-clamp-3 md:line-clamp-none md:max-w-2xl">
+            {service.description}
+          </p>
+
+          {chips.length > 0 && (
+            <ul className="hidden flex-wrap gap-2 pt-1 md:flex">
+              {chips.map((chip, i) => (
+                <li
+                  key={chip}
+                  className={`rounded-full border px-3 py-1 text-[11px] font-semibold leading-none text-white/75 ${
+                    i === 2 ? "hidden lg:block" : ""
+                  }`}
+                  style={{ borderColor: `${accent}33`, background: `${accent}0f` }}
+                >
+                  {chip}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+
+        {/* Footer */}
         <div
-          className="w-2 h-2 rounded-full"
-          style={{ background: accent, boxShadow: `0 0 10px ${accent}` }}
-        />
+          className="pt-4 mt-3 md:mt-0 md:max-w-2xl flex items-center justify-between border-t"
+          style={{ borderColor: "rgba(255,255,255,0.06)" }}
+        >
+          <button
+            onClick={onLearnMore}
+            className="group/btn flex items-center gap-2 text-xs font-black uppercase tracking-widest transition-all duration-200"
+            style={{ color: accent }}
+          >
+            <span className="group-hover/btn:underline underline-offset-4">Learn More</span>
+            <span className="inline-block transition-transform group-hover/btn:translate-x-1">→</span>
+          </button>
+          <div
+            className="w-2 h-2 rounded-full"
+            style={{ background: accent, boxShadow: `0 0 10px ${accent}` }}
+          />
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 // ─── Back-card placeholder (no content, just the layered panel look) ──────────
 const CardBack = ({ accent }) => (
@@ -146,11 +222,13 @@ const CardStack = ({ serviceList, accent, glow, onLearnMore }) => {
   return (
     <div className="flex flex-col items-center gap-6 w-full">
 
-      {/* ── Stack viewport ─────────────────────────────────── */}
-      <div
-        className="relative w-full"
-        style={{ height: "clamp(320px, 50vw, 430px)" }}
-      >
+      {/* ── Stack viewport ───────────────────────────────────
+          The deck is absolutely positioned, so this height IS the card height.
+          Below `lg` it tracks the viewport, as a portrait card should. From
+          `lg` the face is landscape and its content needs about 230px, so the
+          card stops growing: the old 430px was height the copy could not fill
+          and the visible result was a hole above the footer. */}
+      <div className="relative w-full h-[clamp(320px,44vw,400px)] md:h-[330px] lg:h-[350px]">
         {/* Ambient glow behind deck */}
         <div
           className="absolute -inset-10 rounded-full blur-[90px] pointer-events-none"
@@ -394,6 +472,15 @@ const ServiceGrid = ({ serviceList, accent, glow, onLearnMore }) => {
 // moment the visitor switches a tab for the first time, because by then they
 // have proved they understand and the words are just clutter.
 //
+// IT IS A COACH-MARK, NOT A CAPTION. As dim grey 9.5px type it was invisible
+// against the near-black section — present in the DOM, absent to the eye, and
+// a cue nobody can read is not a cue. It now reads as a deliberate object: a
+// glass pill in the ACTIVE TAB'S accent, an icon tile, the count as its own
+// badge, and a caret on the underside that points at the control it is
+// describing. The accent tie is what makes it belong to the tabs rather than
+// float above them, and the caret is what makes "switch" mean "switch THAT".
+// Everything that moves is finite or stops on reduced motion.
+//
 // All motion is skipped under prefers-reduced-motion; the chip skin, counts
 // and dots survive, so nothing above depends on animation to be discoverable.
 const TabSelector = ({
@@ -413,6 +500,16 @@ const TabSelector = ({
   const inView = useInView(groupRef, { once: true, amount: 0.6 });
   const nudge = inView && !reduceMotion;
 
+  /* The hint borrows the live tab's accent so it reads as part of the control.
+     The fallback only matters if a tab id ever stops matching the catalogue. */
+  const accent = tabs.find((t) => t.id === activeTab)?.color ?? "#a855f7";
+
+  /* Copy carries the count as a {count} token so it can be lifted out and set
+     as its own badge — the number is the strongest part of the sentence. Split
+     rather than replace, so a rewrite may move the token, and a rewrite that
+     drops it entirely just renders the line with no badge. */
+  const [hintLead, hintTail] = copy.hint.split("{count}");
+
   // ← → move between tabs, as a tablist is expected to.
   const handleKeyDown = (e) => {
     const dir = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
@@ -427,28 +524,78 @@ const TabSelector = ({
   return (
     <div className="flex w-full flex-col items-center gap-2.5 sm:w-auto sm:items-start">
 
-      {/* ── Training-wheel hint (removed after the first switch) ── */}
+      {/* ── Training-wheel coach-mark (removed after the first switch) ── */}
       <AnimatePresence>
         {showHint && (
           <motion.p
-            initial={{ opacity: 0, y: 4 }}
+            initial={{ opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -4 }}
-            transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
-            className="flex items-center gap-1.5 px-1 text-center text-[9.5px] font-bold uppercase tracking-[0.13em] text-white/45 min-[400px]:text-[10px] sm:text-left sm:text-[11px]"
+            exit={{ opacity: 0, y: -6, transition: { duration: 0.22 } }}
+            transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
+            className="m-0 w-full text-center sm:w-auto sm:text-left"
           >
+            {/* The pill. Bobs three times on arrival and then holds still —
+                motion that never stops reads as decoration, not instruction. */}
             <motion.span
-              aria-hidden="true"
-              className="shrink-0 text-white/60"
-              animate={reduceMotion ? {} : { scale: [1, 0.86, 1] }}
-              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+              animate={reduceMotion ? {} : { y: [0, -3, 0] }}
+              transition={{ duration: 2, repeat: 2, ease: "easeInOut", delay: 0.5 }}
+              className="relative inline-flex items-center gap-2 rounded-full border px-3 py-1.5 backdrop-blur-md"
+              style={{
+                borderColor: `${accent}59`,
+                background: `linear-gradient(135deg, ${accent}24 0%, rgba(10,10,20,0.9) 60%)`,
+                boxShadow: `0 0 0 1px ${accent}14, 0 8px 24px ${accent}2e`,
+              }}
             >
-              <MousePointerClick size={13} strokeWidth={2.4} />
+              {/* Shimmer, clipped by its own layer so it cannot touch the caret.
+                  Long pause between passes: it is a glint, not a strobe. */}
+              {!reduceMotion && (
+                <span className="pointer-events-none absolute inset-0 overflow-hidden rounded-full">
+                  <motion.span
+                    className="absolute inset-y-0 left-0 w-1/3 -skew-x-12 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+                    animate={{ x: ["-140%", "440%"] }}
+                    transition={{ duration: 1.2, repeat: Infinity, repeatDelay: 3.6, ease: "easeInOut" }}
+                  />
+                </span>
+              )}
+
+              {/* Icon tile — same language as the navbar's menu-row icons. */}
+              <motion.span
+                aria-hidden="true"
+                className="relative flex h-5 w-5 shrink-0 items-center justify-center rounded-md border"
+                style={{ color: accent, borderColor: `${accent}3d`, background: `${accent}1f` }}
+                animate={reduceMotion ? {} : { scale: [1, 0.86, 1] }}
+                transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+              >
+                <MousePointerClick size={12} strokeWidth={2.6} />
+              </motion.span>
+
+              {/* The count, lifted out of the sentence — a number is the
+                  strongest promise of unseen content this line can make. */}
+              {hintTail !== undefined && (
+                <span
+                  className="relative hidden rounded-full px-1.5 py-px font-mono text-[10px] font-bold leading-none tabular-nums sm:inline-block"
+                  style={{ color: accent, background: `${accent}24`, border: `1px solid ${accent}47` }}
+                >
+                  {tabs.length}
+                </span>
+              )}
+
+              <span className="relative hidden text-[11px] font-bold uppercase leading-none tracking-[0.11em] text-white/90 sm:inline">
+                {hintTail ?? hintLead}
+              </span>
+              <span className="relative text-[10.5px] font-bold uppercase leading-none tracking-[0.11em] text-white/90 sm:hidden">
+                {copy.hintCompact}
+              </span>
+
+              {/* Caret — turns "switch" into "switch THAT". Centred under the
+                  pill on phones, over the first tab once the group is
+                  left-aligned. */}
+              <span
+                aria-hidden="true"
+                className="absolute -bottom-[5px] left-1/2 h-2 w-2 -translate-x-1/2 rotate-45 border-b border-r sm:left-7 sm:translate-x-0"
+                style={{ borderColor: `${accent}59`, background: "rgb(12,12,22)" }}
+              />
             </motion.span>
-            <span className="hidden sm:inline">
-              {copy.hint.replace("{count}", tabs.length)}
-            </span>
-            <span className="sm:hidden">{copy.hintCompact}</span>
           </motion.p>
         )}
       </AnimatePresence>
