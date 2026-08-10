@@ -31,7 +31,15 @@ export default function Home() {
       </div>
 
       <SectionDivider />
-      {/* Light-theme "blueprint spine" process section — owns its own background */}
+      <ServicesSeo />
+      <DeferredSection
+        name="Services"
+        id="services"
+        minHeight="2100px"
+        background="linear-gradient(180deg,#010208 0%,#060612 60%,#010208 100%)"
+        />
+        
+        {/* Light-theme "blueprint spine" process section — owns its own background */}
       <DeferredSection
         name="OurProcess"
         id="our-process"
@@ -44,13 +52,6 @@ export default function Home() {
           The interactive deck is deferred/client and shows one card at a time,
           so <ServicesSeo> renders the full catalogue as server-side, visually
           hidden, crawlable content + Schema.org data (zero visual change). */}
-      <ServicesSeo />
-      <DeferredSection
-        name="Services"
-        id="services"
-        minHeight="2100px"
-        background="linear-gradient(180deg,#010208 0%,#060612 60%,#010208 100%)"
-      />
 
       <SectionDivider />
       {/* Mid-page CTA — consultation booking form; embeds the partners strip. */}

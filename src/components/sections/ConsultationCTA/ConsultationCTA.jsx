@@ -22,7 +22,8 @@ import {
 } from "@/data";
 import "./consultationCta.css";
 // Rendered at the foot of this section (not a standalone page section).
-import OurPartners from "../OurPartners/OurPartners";
+// TEMPORARILY DISABLED — uncomment together with <OurPartners /> below.
+// import OurPartners from "../OurPartners/OurPartners";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -378,8 +379,9 @@ export default function ConsultationCTA() {
         </div>
 
         {/* Agency-style "platforms we build with" logo strip — lives at the
-            foot of this section rather than as its own page block. */}
-        <OurPartners />
+            foot of this section rather than as its own page block.
+            TEMPORARILY DISABLED — uncomment (and the import above) to restore. */}
+        {/* <OurPartners /> */}
       </div>
     </section>
   );
