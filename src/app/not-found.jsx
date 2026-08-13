@@ -15,10 +15,19 @@
 // own crosshair cursor, and the shell would duplicate the first two and
 // fight the third.
 //
-// FONTS ARE ROUTE-LOCAL. Space Grotesk and JetBrains Mono are downloaded only
-// by visitors who actually land here — a 404 is the one page where a couple
-// of extra families cost nothing, because the route is a dead end rather than
-// a step on the way somewhere. The rest of the site never requests them.
+// FONTS ARE ROUTE-LOCAL, AND `preload: false` IS WHAT MAKES THAT TRUE.
+//
+// next/font preloads by default, and this file sits at the app root — so both
+// families were being emitted as <link rel="preload"> into EVERY page in the
+// tree, homepage included. Measured on the live site that put 52.4KB of font
+// the homepage never renders onto its critical path, ahead of the LCP text,
+// on every single visit.
+//
+// With preloading off, the @font-face rules still ship (they are bytes, not
+// requests) and the browser fetches the files only when something actually
+// asks for those families — which happens on this route and nowhere else.
+// The cost lands where it belongs: a 404 pays a few ms, and because both are
+// `display: swap` its text paints immediately in the fallback regardless.
 
 import { Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import NotFound from "@/components/sections/NotFound/NotFound";
@@ -28,6 +37,7 @@ const spaceGrotesk = Space_Grotesk({
   weight: ["500", "600", "700"],
   variable: "--font-display",
   display: "swap",
+  preload: false,
 });
 
 const jetbrainsMono = JetBrains_Mono({
@@ -35,6 +45,7 @@ const jetbrainsMono = JetBrains_Mono({
   weight: ["400", "500"],
   variable: "--font-mono",
   display: "swap",
+  preload: false,
 });
 
 export const metadata = {

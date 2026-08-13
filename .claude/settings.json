@@ -15,7 +15,11 @@
       "Bash(bash measure.sh baseline mobile)",
       "Bash(sed -i 's|localhost:3210|localhost:3211|' measure.sh)",
       "Bash(bash measure.sh fix1 desktop)",
-      "Bash(bash measure.sh fix1 mobile)"
+      "Bash(bash measure.sh fix1 mobile)",
+      "Bash(bash measure-std.sh LIVE2 desktop https://ya-next.vercel.app/ 1)",
+      "Bash(bash measure.sh LIVE2 mobile https://ya-next.vercel.app/)",
+      "Bash(curl -s https://ya-next.vercel.app/)",
+      "Bash(curl -s http://localhost:3901/)"
     ],
     "additionalDirectories": [
       "C:\\Users\\user\\OneDrive\\Desktop\\ya-next-master\\src\\components\\ui\\SplashCursor"

@@ -23,7 +23,9 @@
 
 import Link from "next/link";
 import MagneticButton from "@/components/ui/MagneticButton/MagneticButton";
-import { COMING_SOON_CONTENT as CONTENT } from "@/data";
+/* Direct module imports rather than the @/data barrel: this page's copy has no
+   business in the homepage's client bundle. See src/data/index.js. */
+import { COMING_SOON_CONTENT as CONTENT } from "@/data/comingSoon";
 import { NAV_ICONS } from "@/data/navIcons";
 import "./comingSoon.css";
 

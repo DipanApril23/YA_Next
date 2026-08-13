@@ -93,10 +93,19 @@ export {
 } from "./motion";
 
 // ── Routes ───────────────────────────────────────────────────────────
-// Every page the menu points at, flattened out of the nav silo, plus the
-// shared copy for the ones that are still being built.
-export { NAV_ROUTES, findNavRoute } from "./navRoutes";
-export { COMING_SOON_CONTENT } from "./comingSoon";
+// DELIBERATELY NOT RE-EXPORTED HERE: ./navRoutes and ./comingSoon.
+//
+// This barrel is imported by client components (Navbar, Hero, FlipCard,
+// MagneticButton and more), so everything it re-exports is liable to be
+// bundled for the browser. ./navRoutes builds its 67-route map with a
+// top-level walk of the nav tree — a module-scope side effect, which means a
+// bundler cannot tree-shake it away even where it is unused. Re-exporting it
+// here put the entire route map plus the Coming Soon copy into the homepage's
+// client bundle: measured at ~50KB of transfer the homepage has no use for.
+//
+// They are server-only data. Import them from their own modules instead:
+//   import { NAV_ROUTES, findNavRoute } from "@/data/navRoutes";
+//   import { COMING_SOON_CONTENT } from "@/data/comingSoon";
 
 export {
   NOT_FOUND_CONTENT,

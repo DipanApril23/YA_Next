@@ -26,11 +26,27 @@
 
 import { notFound } from "next/navigation";
 import ComingSoon from "@/components/sections/ComingSoon/ComingSoon";
-import { NAV_ROUTES, findNavRoute, COMING_SOON_CONTENT } from "@/data";
+/* Imported from their own modules, not the @/data barrel — see the note in
+   src/data/index.js. The barrel is reachable from client components, and the
+   route map is a module-scope computation that cannot be tree-shaken, so
+   re-exporting it there ships all 67 routes to every visitor's browser. */
+import { NAV_ROUTES, findNavRoute } from "@/data/navRoutes";
+import { COMING_SOON_CONTENT } from "@/data/comingSoon";
 
 /* Next passes the matched segments; join them back into the pathname the
    route map is keyed by. */
 const pathOf = (slug) => `/${(slug ?? []).join("/")}`;
+
+/* THE 404 MUST NOT INHERIT THE SHELL, AND THIS IS WHAT PREVENTS IT.
+   Calling notFound() from inside this route renders the root not-found page
+   within the layout it was thrown from — i.e. wrapped in ../layout.js, so the
+   standalone 404 sheet came up with the site navbar above it and its own
+   brand mark overlapping the navbar's.
+   With dynamicParams disabled, a path that generateStaticParams did not
+   produce is not served by this route at all: Next 404s before rendering the
+   segment, so the root not-found renders under the root layout alone —
+   full-screen, one logo, exactly as designed. */
+export const dynamicParams = false;
 
 export function generateStaticParams() {
   return NAV_ROUTES.map((route) => ({
