@@ -1,0 +1,368 @@
+/* ─── ComingSoon — the placeholder every unbuilt menu page renders ─────
+
+   Scoped under .cs-section and prefixed cs-, because this is a plain global
+   stylesheet (the project uses sibling .css files, not modules — see
+   globals.css) and names like .cs-title would otherwise be free to collide.
+
+   IT SITS INSIDE THE APP SHELL, so it must clear the fixed navbar itself —
+   hence the top padding rather than the full-viewport centring the 404 uses.
+   `min-height` is the viewport minus roughly the footer, so a short page never
+   leaves the footer floating halfway up a tall screen.                      */
+
+.cs-section {
+  --cs-text: #eef2f8;
+  --cs-muted: #93a0b4;
+  --cs-line: rgba(255, 255, 255, 0.12);
+  --cs-bg: #05070d;
+
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: clamp(560px, 88svh, 1000px);
+  padding: clamp(7rem, 14vh, 10rem) clamp(1.25rem, 5vw, 2.5rem) clamp(4rem, 9vh, 7rem);
+  background: var(--cs-bg);
+  color: var(--cs-text);
+  text-align: center;
+}
+
+/* ── Backdrop ────────────────────────────────────────────────── */
+
+.cs-section .cs-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* Two slow blooms in the brand's own blue and magenta — the same treatment
+   the hero and the 404 use, so a visitor moving between them stays in one
+   world. Transform-only animation, so the heavy blur rasterises once. */
+.cs-section .cs-aurora {
+  position: absolute;
+  border-radius: 50%;
+}
+
+.cs-section .cs-aurora--1 {
+  top: -18%;
+  left: 6%;
+  width: clamp(340px, 46vw, 620px);
+  height: clamp(340px, 46vw, 620px);
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.85) 0%, transparent 66%);
+  filter: blur(90px);
+  opacity: 0.16;
+  animation: csAurora1 26s ease-in-out infinite;
+}
+
+.cs-section .cs-aurora--2 {
+  right: 4%;
+  bottom: -22%;
+  width: clamp(320px, 44vw, 580px);
+  height: clamp(320px, 44vw, 580px);
+  background: radial-gradient(
+    circle,
+    rgba(190, 56, 135, 0.8) 0%,
+    rgba(124, 58, 237, 0.45) 55%,
+    transparent 72%
+  );
+  filter: blur(96px);
+  opacity: 0.15;
+  animation: csAurora2 21s ease-in-out infinite;
+  animation-delay: -8s;
+}
+
+@keyframes csAurora1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(4%, 4%) scale(1.08); }
+}
+@keyframes csAurora2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(-5%, -3%) scale(1.06); }
+}
+
+/* A faint drafting grid, masked to a soft pool behind the medallion so it
+   never reaches the copy. */
+.cs-section .cs-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 58px 58px;
+  -webkit-mask-image: radial-gradient(ellipse 62% 48% at 50% 30%, #000 0%, transparent 76%);
+  mask-image: radial-gradient(ellipse 62% 48% at 50% 30%, #000 0%, transparent 76%);
+}
+
+/* ── Layout ──────────────────────────────────────────────────── */
+
+.cs-section .cs-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 46rem;
+  margin-inline: auto;
+}
+
+/* ── Breadcrumb ──────────────────────────────────────────────── */
+
+.cs-section .cs-crumbs ol {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.15rem 0.55rem;
+  font-size: 0.75rem;
+  color: var(--cs-muted);
+}
+
+/* The separator is generated rather than authored, so the trail can be any
+   depth (these go four levels deep) without markup for the slashes. */
+.cs-section .cs-crumbs li + li::before {
+  content: "/";
+  margin-right: 0.55rem;
+  color: rgba(255, 255, 255, 0.25);
+}
+
+.cs-section .cs-crumbs li {
+  display: inline-flex;
+  align-items: center;
+}
+
+.cs-section .cs-crumbs a {
+  color: var(--cs-muted);
+  transition: color 0.22s ease;
+}
+.cs-section .cs-crumbs a:hover { color: var(--cs-text); }
+.cs-section .cs-crumb-current { color: rgba(255, 255, 255, 0.85); }
+
+/* ── Medallion ───────────────────────────────────────────────── */
+/* The one element that changes per page. The orbit is a conic gradient
+   rotating behind a solid core, which reads as a ring travelling around the
+   icon while costing one composited rotation. */
+
+.cs-section .cs-medallion {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: clamp(96px, 20vw, 128px);
+  height: clamp(96px, 20vw, 128px);
+  margin-top: clamp(1.75rem, 4vh, 2.75rem);
+}
+
+.cs-section .cs-medallion-orbit {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    rgba(59, 130, 246, 0.9) 70deg,
+    rgba(190, 56, 135, 0.9) 150deg,
+    transparent 210deg,
+    transparent 360deg
+  );
+  animation: csOrbit 6s linear infinite;
+}
+
+/* Punches the middle out of the conic ring — cheaper and crisper than a
+   second element stacked on top of it. */
+.cs-section .cs-medallion-orbit::after {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  border-radius: 50%;
+  background: var(--cs-bg);
+}
+
+.cs-section .cs-medallion-core {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: calc(100% - 16px);
+  height: calc(100% - 16px);
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 32%, #16203a 0%, #0a0f1c 70%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.09),
+    0 0 42px rgba(59, 130, 246, 0.22);
+}
+
+.cs-section .cs-medallion-core svg {
+  width: 42%;
+  height: 42%;
+  color: #b9cdf2;
+}
+
+@keyframes csOrbit {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Badge ───────────────────────────────────────────────────── */
+
+.cs-section .cs-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: clamp(1.25rem, 3vh, 1.9rem);
+  padding: 0.34rem 0.85rem;
+  border: 1px solid rgba(59, 130, 246, 0.32);
+  border-radius: 999px;
+  background: rgba(59, 130, 246, 0.09);
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: #9fc2f5;
+}
+
+.cs-section .cs-badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #3b82f6;
+  box-shadow: 0 0 8px #3b82f6;
+  animation: csPing 2.4s ease-in-out infinite;
+}
+
+@keyframes csPing {
+  0%, 100% { opacity: 0.45; transform: scale(1); }
+  50%      { opacity: 1; transform: scale(1.4); }
+}
+
+/* ── Copy ────────────────────────────────────────────────────── */
+
+.cs-section .cs-title {
+  margin-top: clamp(0.9rem, 2.2vh, 1.35rem);
+  max-width: 18ch;
+  font-size: clamp(1.75rem, 5.2vw, 3.1rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+  background: linear-gradient(135deg, #ffffff 0%, #cfe0ff 55%, #f0b9dd 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.cs-section .cs-standfirst {
+  margin-top: clamp(0.65rem, 1.6vh, 1rem);
+  max-width: 40ch;
+  font-size: clamp(0.95rem, 2.3vw, 1.125rem);
+  line-height: 1.6;
+  color: #c3cede;
+  text-wrap: pretty;
+}
+
+.cs-section .cs-body {
+  margin-top: clamp(0.6rem, 1.4vh, 0.9rem);
+  max-width: 46ch;
+  font-size: clamp(0.85rem, 2vw, 0.95rem);
+  line-height: 1.7;
+  color: var(--cs-muted);
+  text-wrap: pretty;
+}
+
+/* ── Actions ─────────────────────────────────────────────────── */
+/* No button skin here — these are the site's <MagneticButton>, which brings
+   its own gradients, glow and focus ring. These rules only place them. */
+
+.cs-section .cs-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.7rem;
+  width: 100%;
+  max-width: 21rem;
+  margin-top: clamp(1.6rem, 3.6vh, 2.4rem);
+}
+
+@media (min-width: 480px) {
+  .cs-section .cs-actions {
+    flex-direction: row;
+    justify-content: center;
+    width: auto;
+    max-width: none;
+    gap: 0.9rem;
+  }
+}
+
+/* MagneticButton's `fullWidth` prop writes display:block inline, which cannot
+   be undone at a breakpoint — so the phone-width case is done from here. */
+@media (max-width: 479px) {
+  .cs-section .cs-actions > *,
+  .cs-section .cs-actions > * > a {
+    width: 100%;
+  }
+}
+
+/* ── Meanwhile ───────────────────────────────────────────────── */
+
+.cs-section .cs-meanwhile {
+  margin-top: clamp(2.25rem, 5vh, 3.5rem);
+  padding-top: clamp(1.5rem, 3vh, 2rem);
+  width: 100%;
+  border-top: 1px solid var(--cs-line);
+}
+
+.cs-section .cs-meanwhile-label {
+  display: block;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--cs-muted);
+}
+
+.cs-section .cs-meanwhile ul {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem 0.75rem;
+  margin-top: 0.9rem;
+}
+
+.cs-section .cs-meanwhile-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.9rem;
+  border: 1px solid var(--cs-line);
+  border-radius: 999px;
+  font-size: 0.8rem;
+  color: #c3cede;
+  transition: color 0.22s ease, border-color 0.22s ease, background 0.22s ease;
+}
+.cs-section .cs-meanwhile-link:hover {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.05);
+}
+.cs-section .cs-meanwhile-link span {
+  transition: transform 0.22s ease;
+}
+.cs-section .cs-meanwhile-link:hover span {
+  transform: translateX(3px);
+}
+
+/* ── Focus ───────────────────────────────────────────────────── */
+/* MagneticButton ships its own ring, so this deliberately does not cover it. */
+
+.cs-section .cs-crumbs a:focus-visible,
+.cs-section .cs-meanwhile-link:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 3px;
+  border-radius: 999px;
+}
+
+/* ── Reduced motion ──────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .cs-section .cs-aurora,
+  .cs-section .cs-medallion-orbit,
+  .cs-section .cs-badge-dot {
+    animation: none;
+  }
+  .cs-section .cs-badge-dot { opacity: 1; }
+  .cs-section .cs-meanwhile-link:hover span { transform: none; }
+}

@@ -93,6 +93,11 @@ export {
 } from "./motion";
 
 // ── Routes ───────────────────────────────────────────────────────────
+// Every page the menu points at, flattened out of the nav silo, plus the
+// shared copy for the ones that are still being built.
+export { NAV_ROUTES, findNavRoute } from "./navRoutes";
+export { COMING_SOON_CONTENT } from "./comingSoon";
+
 export {
   NOT_FOUND_CONTENT,
   NOT_FOUND_NOISE_URL,

@@ -76,19 +76,19 @@
       "children": [
         {
           "label": "Our Vision",
-          "href": "#vision",
+          "href": "/about-us/our-vision",
           "icon": "Eye",
           "desc": "Where we're headed"
         },
         {
           "label": "Our Mission",
-          "href": "#mission",
+          "href": "/about-us/our-mission",
           "icon": "Target",
           "desc": "What drives us daily"
         },
         {
           "label": "Our Team",
-          "href": "#team",
+          "href": "/about-us/our-team",
           "icon": "Users",
           "desc": "Meet the people behind it"
         }
@@ -104,19 +104,19 @@
           "children": [
             {
               "label": "Digital Launch Engine",
-              "href": "#digital-launch-engine",
+              "href": "/digital-marketing-solutions/digital-authority-system/digital-launch-engine",
               "icon": "Rocket",
               "desc": "Get online, fast"
             },
             {
               "label": "Digital Growth Engine",
-              "href": "#digital-growth-engine",
+              "href": "/digital-marketing-solutions/digital-authority-system/digital-growth-engine",
               "icon": "TrendingUp",
               "desc": "Scale what works"
             },
             {
               "label": "Digital Authority Engine",
-              "href": "#digital-authority-engine",
+              "href": "/digital-marketing-solutions/digital-authority-system/digital-authority-engine",
               "icon": "Award",
               "desc": "Own your category"
             }
@@ -129,13 +129,13 @@
           "children": [
             {
               "label": "Digital Conversion Engine",
-              "href": "#digital-conversion-engine",
+              "href": "/digital-marketing-solutions/lead-generation-system/digital-conversion-engine",
               "icon": "Filter",
               "desc": "Convert more visitors"
             },
             {
               "label": "Digital Lead Engine",
-              "href": "#digital-lead-engine",
+              "href": "/digital-marketing-solutions/lead-generation-system/digital-lead-engine",
               "icon": "UserPlus",
               "desc": "A steady flow of leads"
             }
@@ -158,42 +158,42 @@
               "children": [
                 {
                   "label": "Website Development for Law Firms",
-                  "href": "#law-firms-web",
+                  "href": "/industry/legal-compliance-marketing/law-firms/website-development",
                   "icon": "Code"
                 },
                 {
                   "label": "SEO for Law Firms",
-                  "href": "#law-firms-seo",
+                  "href": "/industry/legal-compliance-marketing/law-firms/seo",
                   "icon": "Search"
                 },
                 {
                   "label": "Marketing Automation for Law Firms",
-                  "href": "#law-firms-automation",
+                  "href": "/industry/legal-compliance-marketing/law-firms/marketing-automation",
                   "icon": "Zap"
                 },
                 {
                   "label": "Creative Marketing for Law Firms",
-                  "href": "#law-firms-creative",
+                  "href": "/industry/legal-compliance-marketing/law-firms/creative-marketing",
                   "icon": "Palette"
                 },
                 {
                   "label": "Content Marketing for Law Firms",
-                  "href": "#law-firms-content",
+                  "href": "/industry/legal-compliance-marketing/law-firms/content-marketing",
                   "icon": "PenTool"
                 },
                 {
                   "label": "Facebook Ads for Law Firms",
-                  "href": "#law-firms-facebook",
+                  "href": "/industry/legal-compliance-marketing/law-firms/facebook-ads",
                   "icon": "Facebook"
                 },
                 {
                   "label": "Google Ads for Law Firms",
-                  "href": "#law-firms-google",
+                  "href": "/industry/legal-compliance-marketing/law-firms/google-ads",
                   "icon": "Megaphone"
                 },
                 {
                   "label": "Social Media Marketing for Law Firms",
-                  "href": "#law-firms-social",
+                  "href": "/industry/legal-compliance-marketing/law-firms/social-media-marketing",
                   "icon": "Share2"
                 }
               ]
@@ -205,42 +205,42 @@
               "children": [
                 {
                   "label": "Website Development for Security Companies",
-                  "href": "#security-companies-web",
+                  "href": "/industry/legal-compliance-marketing/security-companies/website-development",
                   "icon": "Code"
                 },
                 {
                   "label": "SEO for Security Companies",
-                  "href": "#security-companies-seo",
+                  "href": "/industry/legal-compliance-marketing/security-companies/seo",
                   "icon": "Search"
                 },
                 {
                   "label": "Marketing Automation for Security Companies",
-                  "href": "#security-companies-automation",
+                  "href": "/industry/legal-compliance-marketing/security-companies/marketing-automation",
                   "icon": "Zap"
                 },
                 {
                   "label": "Creative Marketing for Security Companies",
-                  "href": "#security-companies-creative",
+                  "href": "/industry/legal-compliance-marketing/security-companies/creative-marketing",
                   "icon": "Palette"
                 },
                 {
                   "label": "Content Marketing for Security Companies",
-                  "href": "#security-companies-content",
+                  "href": "/industry/legal-compliance-marketing/security-companies/content-marketing",
                   "icon": "PenTool"
                 },
                 {
                   "label": "Facebook Ads for Security Companies",
-                  "href": "#security-companies-facebook",
+                  "href": "/industry/legal-compliance-marketing/security-companies/facebook-ads",
                   "icon": "Facebook"
                 },
                 {
                   "label": "Google Ads for Security Companies",
-                  "href": "#security-companies-google",
+                  "href": "/industry/legal-compliance-marketing/security-companies/google-ads",
                   "icon": "Megaphone"
                 },
                 {
                   "label": "Social Media Marketing for Security Companies",
-                  "href": "#security-companies-social",
+                  "href": "/industry/legal-compliance-marketing/security-companies/social-media-marketing",
                   "icon": "Share2"
                 }
               ]
@@ -252,42 +252,42 @@
               "children": [
                 {
                   "label": "Website Development for Investigators",
-                  "href": "#investigators-web",
+                  "href": "/industry/legal-compliance-marketing/investigators/website-development",
                   "icon": "Code"
                 },
                 {
                   "label": "SEO for Investigators",
-                  "href": "#investigators-seo",
+                  "href": "/industry/legal-compliance-marketing/investigators/seo",
                   "icon": "Search"
                 },
                 {
                   "label": "Marketing Automation for Investigators",
-                  "href": "#investigators-automation",
+                  "href": "/industry/legal-compliance-marketing/investigators/marketing-automation",
                   "icon": "Zap"
                 },
                 {
                   "label": "Creative Marketing for Investigators",
-                  "href": "#investigators-creative",
+                  "href": "/industry/legal-compliance-marketing/investigators/creative-marketing",
                   "icon": "Palette"
                 },
                 {
                   "label": "Content Marketing for Investigators",
-                  "href": "#investigators-content",
+                  "href": "/industry/legal-compliance-marketing/investigators/content-marketing",
                   "icon": "PenTool"
                 },
                 {
                   "label": "Facebook Ads for Investigators",
-                  "href": "#investigators-facebook",
+                  "href": "/industry/legal-compliance-marketing/investigators/facebook-ads",
                   "icon": "Facebook"
                 },
                 {
                   "label": "Google Ads for Investigators",
-                  "href": "#investigators-google",
+                  "href": "/industry/legal-compliance-marketing/investigators/google-ads",
                   "icon": "Megaphone"
                 },
                 {
                   "label": "Social Media Marketing for Investigators",
-                  "href": "#investigators-social",
+                  "href": "/industry/legal-compliance-marketing/investigators/social-media-marketing",
                   "icon": "Share2"
                 }
               ]
@@ -301,61 +301,61 @@
           "children": [
             {
               "label": "Website Development for SaaS",
-              "href": "#saas-web",
+              "href": "/industry/saas-digital-marketing/website-development",
               "icon": "Code"
             },
             {
               "label": "SEO for SaaS",
-              "href": "#saas-seo",
+              "href": "/industry/saas-digital-marketing/seo",
               "icon": "Search"
             },
             {
               "label": "Marketing Automation for SaaS",
-              "href": "#saas-automation",
+              "href": "/industry/saas-digital-marketing/marketing-automation",
               "icon": "Zap"
             },
             {
               "label": "Creative Marketing for SaaS",
-              "href": "#saas-creative",
+              "href": "/industry/saas-digital-marketing/creative-marketing",
               "icon": "Palette"
             },
             {
               "label": "Content Marketing for SaaS",
-              "href": "#saas-content",
+              "href": "/industry/saas-digital-marketing/content-marketing",
               "icon": "PenTool"
             },
             {
               "label": "Facebook Ads for SaaS",
-              "href": "#saas-facebook",
+              "href": "/industry/saas-digital-marketing/facebook-ads",
               "icon": "Facebook"
             },
             {
               "label": "Google Ads for SaaS",
-              "href": "#saas-google",
+              "href": "/industry/saas-digital-marketing/google-ads",
               "icon": "Megaphone"
             },
             {
               "label": "Social Media Marketing for SaaS",
-              "href": "#saas-social",
+              "href": "/industry/saas-digital-marketing/social-media-marketing",
               "icon": "Share2"
             }
           ]
         },
         {
           "label": "Healthcare Marketing",
-          "href": "#healthcare",
+          "href": "/industry/healthcare-marketing",
           "icon": "HeartPulse",
           "comingSoon": true
         },
         {
           "label": "Education Marketing",
-          "href": "#education",
+          "href": "/industry/education-marketing",
           "icon": "GraduationCap",
           "comingSoon": true
         },
         {
           "label": "Real Estate Marketing",
-          "href": "#real-estate",
+          "href": "/industry/real-estate-marketing",
           "icon": "Building2",
           "comingSoon": true
         }
@@ -366,49 +366,49 @@
       "children": [
         {
           "label": "Website Development",
-          "href": "#service-web",
+          "href": "/our-services/website-development",
           "icon": "Code",
           "desc": "Sites that convert"
         },
         {
           "label": "SEO",
-          "href": "#service-seo",
+          "href": "/our-services/seo",
           "icon": "Search",
           "desc": "Rank where it counts"
         },
         {
           "label": "Marketing Automation",
-          "href": "#service-automation",
+          "href": "/our-services/marketing-automation",
           "icon": "Zap",
           "desc": "Systems that follow up"
         },
         {
           "label": "Creative Designing",
-          "href": "#service-design",
+          "href": "/our-services/creative-designing",
           "icon": "Palette",
           "desc": "Design that stands out"
         },
         {
           "label": "Content Marketing",
-          "href": "#service-content",
+          "href": "/our-services/content-marketing",
           "icon": "PenTool",
           "desc": "Content that compounds"
         },
         {
           "label": "Facebook Ads",
-          "href": "#service-facebook",
+          "href": "/our-services/facebook-ads",
           "icon": "Facebook",
           "desc": "Meta ads that pay back"
         },
         {
           "label": "Google Ads",
-          "href": "#service-google",
+          "href": "/our-services/google-ads",
           "icon": "Megaphone",
           "desc": "Intent-driven traffic"
         },
         {
           "label": "Social Media Marketing",
-          "href": "#service-social",
+          "href": "/our-services/social-media-marketing",
           "icon": "Share2",
           "desc": "Presence that grows"
         }
@@ -419,25 +419,25 @@
       "children": [
         {
           "label": "Blog",
-          "href": "#blog",
+          "href": "/insights/blog",
           "icon": "BookOpen",
           "desc": "Latest marketing insights"
         },
         {
           "label": "Case Studies",
-          "href": "#case-studies",
+          "href": "/insights/case-studies",
           "icon": "Briefcase",
           "desc": "Real-world success stories"
         },
         {
           "label": "White Paper",
-          "href": "#whitepapers",
+          "href": "/insights/white-paper",
           "icon": "FileText",
           "desc": "Research & deep dives"
         },
         {
           "label": "News & Events",
-          "href": "#news",
+          "href": "/insights/news-events",
           "icon": "CalendarDays",
           "desc": "What's happening at YA"
         }

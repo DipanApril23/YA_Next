@@ -1,0 +1,27 @@
+{
+  "$comment": "Coming Soon page copy. Editable content — safe for a CMS. This is the SHARED framing only: each page's own heading and standfirst come from the matching nav item in nav.json (its `label` and `desc`), which is why every menu row already reads as a page title. Change a nav label and the page heading follows. `meanwhile` and `actions` hrefs point back at the homepage with a leading slash so they work from any depth of sub-route.",
+  "content": {
+    "badge": "In Development",
+    "homeLabel": "Home",
+    "fallbackDesc": "A dedicated page for this is on the way.",
+    "body": "Our team is putting this page together right now — the strategy, the proof and the detail it deserves. It will be live shortly.",
+    "meanwhileLabel": "While you're here",
+    "meanwhile": [
+      { "label": "Explore our services", "href": "/#services" },
+      { "label": "See case studies", "href": "/#case-studies" },
+      { "label": "Read the FAQ", "href": "/#faq" }
+    ],
+    "actions": [
+      {
+        "label": "Book a Consultation",
+        "href": "/#book-consultation",
+        "variant": "primary"
+      },
+      {
+        "label": "Back to Home",
+        "href": "/",
+        "variant": "secondary"
+      }
+    ]
+  }
+}
