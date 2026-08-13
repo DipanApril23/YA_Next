@@ -1,45 +1,49 @@
-// ─── 404 page ─────────────────────────────────────────────────────────
-// Rendered by Next.js for unmatched routes. Copy comes from NOT_FOUND_CONTENT
-// (src/data/notFound.js).
+// ─── 404 route ────────────────────────────────────────────────────────
+// Rendered by Next.js for unmatched routes and for any notFound() call.
+//
+// THIS FILE OWNS THE FONTS AND THE METADATA; the view owns the markup. Both
+// are Server Components — the whole route ships zero client JavaScript,
+// because the warning-sign animation is CSS rather than an animation
+// runtime (see @/components/sections/NotFound). Keep it that way: adding
+// "use client" anywhere up here would also forfeit the `metadata` export
+// below, since a client module cannot declare one.
+//
+// IT RENDERS OUTSIDE THE APP SHELL. The site's Navbar, BrandMark, Footer and
+// SplashCursor are mounted by src/app/(site)/layout.js, not by the root
+// layout, so nothing wraps this route. That is deliberate: this page is a
+// full-screen drawing sheet with its own brand bar, its own footer and its
+// own crosshair cursor, and the shell would duplicate the first two and
+// fight the third.
+//
+// FONTS ARE ROUTE-LOCAL. Space Grotesk and JetBrains Mono are downloaded only
+// by visitors who actually land here — a 404 is the one page where a couple
+// of extra families cost nothing, because the route is a dead end rather than
+// a step on the way somewhere. The rest of the site never requests them.
 
-import Link from "next/link";
-import { Button } from "@/components/ui";
-import { NOT_FOUND_CONTENT as CONTENT } from "@/data";
+import { Space_Grotesk, JetBrains_Mono } from "next/font/google";
+import NotFound from "@/components/sections/NotFound/NotFound";
 
-const NotFoundPage = () => {
-  return (
-    <section>
-      <div className="bg-linear-to-r from-purple-300 to-blue-200">
-        <div className="m-auto flex min-h-screen w-9/12 items-center justify-center py-16">
-          <div className="overflow-hidden bg-white pb-8 shadow sm:rounded-lg">
-            <div className="border-t border-gray-200 pt-8 text-center">
-              <h1 className="text-9xl font-bold text-purple-400">{CONTENT.code}</h1>
-              <h1 className="py-8 text-6xl font-medium">{CONTENT.title}</h1>
-              <p className="px-12 pb-8 text-2xl font-medium">{CONTENT.description}</p>
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  weight: ["500", "600", "700"],
+  variable: "--font-display",
+  display: "swap",
+});
 
-              {CONTENT.actions.map((action) =>
-                action.external ? (
-                  <a
-                    key={action.label}
-                    href={action.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex-1"
-                  >
-                    <Button>{action.label}</Button>
-                  </a>
-                ) : (
-                  <Link key={action.label} href={action.href} className="mr-6">
-                    <Button>{action.label}</Button>
-                  </Link>
-                )
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  variable: "--font-mono",
+  display: "swap",
+});
+
+export const metadata = {
+  title: "Page Not Found — Young Architects",
+  // Unmatched routes already return a real HTTP 404, so this is belt and
+  // braces for anything that resolves the page without reading the status.
+  robots: { index: false, follow: true },
 };
 
-export default NotFoundPage;
+export default function NotFoundPage() {
+  return <NotFound fontClassName={`${spaceGrotesk.variable} ${jetbrainsMono.variable}`} />;
+}

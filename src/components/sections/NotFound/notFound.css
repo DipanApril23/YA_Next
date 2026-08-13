@@ -1,0 +1,488 @@
+/* ─── NotFound — the 404 warning-sign sheet ────────────────────────────
+
+   EVERYTHING IS SCOPED UNDER .ya-404 AND PREFIXED nf-. This is a plain
+   global stylesheet (the project uses sibling .css files, not modules or
+   styled-jsx — see globals.css), so an unprefixed `.grid` or `.btn` here
+   would be free to collide with a section elsewhere on the site.
+
+   THE WHOLE SCENE ANIMATES FROM THIS FILE. There is no animation runtime on
+   this route — no framer-motion, no GSAP, no Lottie player. Three keyframe
+   loops share one 7s clock so the sign, its shadow and the light pooling on
+   the floor stay in step:
+
+     0–28%   the sign stands and sways
+     28–40%  it dips, then drops through the rim
+     40–52%  gone; only the hole is left
+     52–62%  it springs back out, overshooting
+     62–100% it settles
+
+   Percentages in the three loops line up deliberately — move one and the
+   shadow will part company with the sign.                                */
+
+.ya-404 {
+  /* Surface */
+  --nf-bg: #06090f;
+  --nf-bg-lift: #0e1424;
+  --nf-line: rgba(255, 255, 255, 0.12);
+
+  /* Type */
+  --nf-text: #eef2f8;
+  --nf-muted: #8d99ae;
+
+  /* The sign */
+  --nf-red: #e8232b;
+  --nf-red-soft: #ff7a7d;
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  /* svh keeps the sheet exactly one screen tall on mobile, where the URL bar
+     makes vh taller than what is actually visible. vh stays as the fallback. */
+  min-height: 100vh;
+  min-height: 100svh;
+  width: 100%;
+  overflow: hidden;
+  /* A cool wash falling from above the top edge, over near-black. The aurora
+     blooms sit on top of this; together they are what replaces the old grid. */
+  background:
+    radial-gradient(1100px 560px at 50% -10%, rgba(59, 130, 246, 0.1), transparent 62%),
+    var(--nf-bg);
+  color: var(--nf-text);
+}
+
+.ya-404 .ya-font-display {
+  font-family: var(--font-display, "Space Grotesk", ui-sans-serif, sans-serif);
+}
+.ya-404 .ya-font-mono {
+  font-family: var(--font-mono, "JetBrains Mono", ui-monospace, monospace);
+}
+
+/* ── Backdrop ────────────────────────────────────────────────── */
+
+.ya-404 .nf-backdrop {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* ── Aurora blooms ───────────────────────────────────────────── */
+/* The hero's treatment, same palette and same slow tempo, so a visitor who
+   lands here from the site does not feel they have changed planets. Each is a
+   soft radial disc pushed through a heavy blur and animated on transform
+   only — transform-animated layers get their own compositing layer, so the
+   expensive blur is rasterised once rather than on every frame. */
+.ya-404 .nf-aurora {
+  position: absolute;
+  border-radius: 50%;
+}
+
+.ya-404 .nf-aurora--1 {
+  left: 4%;
+  top: 8%;
+  width: clamp(320px, 44vw, 560px);
+  height: clamp(320px, 44vw, 560px);
+  background: radial-gradient(circle, rgba(6, 182, 212, 0.75) 0%, transparent 68%);
+  filter: blur(72px);
+  opacity: 0.17;
+  animation: nfAurora1 22s ease-in-out infinite;
+}
+
+.ya-404 .nf-aurora--2 {
+  right: 6%;
+  top: 16%;
+  width: clamp(360px, 50vw, 640px);
+  height: clamp(360px, 50vw, 640px);
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.9) 0%, transparent 65%);
+  filter: blur(90px);
+  opacity: 0.14;
+  animation: nfAurora2 28s ease-in-out infinite;
+  animation-delay: -9s;
+}
+
+.ya-404 .nf-aurora--3 {
+  left: 22%;
+  bottom: 2%;
+  width: clamp(300px, 42vw, 520px);
+  height: clamp(300px, 42vw, 520px);
+  background: radial-gradient(
+    circle,
+    rgba(168, 85, 247, 0.75) 0%,
+    rgba(236, 72, 153, 0.5) 50%,
+    transparent 70%
+  );
+  filter: blur(80px);
+  opacity: 0.16;
+  animation: nfAurora3 19s ease-in-out infinite;
+  animation-delay: -15s;
+}
+
+@keyframes nfAurora1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25%      { transform: translate(4%, -3%) scale(1.08); }
+  50%      { transform: translate(-3%, 5%) scale(0.94); }
+  75%      { transform: translate(3%, 2%) scale(1.05); }
+}
+@keyframes nfAurora2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%      { transform: translate(-5%, 4%) scale(1.1); }
+  66%      { transform: translate(4%, -5%) scale(0.92); }
+}
+@keyframes nfAurora3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  40%      { transform: translate(7%, 3%) scale(1.06); }
+  80%      { transform: translate(-4%, -5%) scale(0.97); }
+}
+
+/* ── Star field ──────────────────────────────────────────────── */
+/* Every value arrives as a custom property from NOT_FOUND_STARS, so the
+   field is retuned from src/data/config/notFound.json rather than from here.
+   The box-shadow is what makes a 2px dot read as a distant light: a coloured
+   glow spread to twice the dot's own size. */
+.ya-404 .nf-star {
+  position: absolute;
+  left: var(--s-left);
+  top: var(--s-top);
+  width: var(--s-size);
+  height: var(--s-size);
+  border-radius: 50%;
+  background: var(--s-color);
+  box-shadow: 0 0 var(--s-glow) var(--s-size) var(--s-glow-color);
+  animation: nfStar var(--s-duration) ease-in-out var(--s-delay) infinite;
+}
+
+@keyframes nfStar {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.28; }
+  50%      { transform: translate(var(--s-dx), var(--s-dy)) scale(1.55); opacity: 0.85; }
+}
+
+.ya-404 .nf-vignette {
+  position: absolute;
+  inset: 0;
+  /* Pulls the corners down into black so the aurora reads as depth behind the
+     scene rather than as colour washing the whole panel. */
+  background: radial-gradient(ellipse at center, transparent 34%, var(--nf-bg) 94%);
+}
+
+.ya-404 .nf-noise {
+  position: absolute;
+  inset: 0;
+  opacity: 0.045;
+  mix-blend-mode: overlay;
+  background-repeat: repeat;
+}
+
+/* ── Header ──────────────────────────────────────────────────── */
+
+.ya-404 .nf-header {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: clamp(1.15rem, 3vw, 2rem) clamp(1.25rem, 5vw, 2.75rem);
+}
+
+.ya-404 .nf-brand {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* Sized by HEIGHT, width auto — the same treatment the Navbar and Footer give
+   this logo. Constraining the width instead would let a tall crop grow the
+   header band on narrow screens. */
+.ya-404 .nf-brand-logo {
+  height: clamp(30px, 4.4vw, 40px);
+  width: auto;
+  object-fit: contain;
+  transition: opacity 0.25s ease;
+}
+.ya-404 .nf-brand:hover .nf-brand-logo { opacity: 0.85; }
+
+/* ── Main ────────────────────────────────────────────────────── */
+
+.ya-404 .nf-main {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 clamp(1.25rem, 5vw, 2.5rem) clamp(1.5rem, 4vw, 3rem);
+}
+
+/* ── The scene ───────────────────────────────────────────────── */
+/* BOUNDED ON BOTH AXES, WHICH IS THE WHOLE TRICK. Sizing art by width alone
+   is what makes a full-screen page overflow on a short window: the viewport
+   loses height, the artwork does not, and the buttons get pushed off the
+   bottom. So the width is the SMALLER of a width-derived size and a
+   height-derived one — 38svh converted back into a width through the
+   artwork's own 420/262 ratio (≈1.603). The scene can therefore never claim
+   more than ~38% of the screen's height, whatever the shape of the window.
+   svh rather than vh so mobile browser chrome is already accounted for; the
+   vh line above it is the fallback for anything that lacks svh. */
+.ya-404 .nf-scene {
+  aspect-ratio: 420 / 262;
+  width: min(clamp(215px, 58vw, 420px), calc(38vh * 1.603));
+  width: min(clamp(215px, 58vw, 420px), calc(38svh * 1.603));
+  margin-inline: auto;
+}
+
+.ya-404 .nf-scene-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.ya-404 .nf-code {
+  font-size: 46px;
+  font-weight: 700;
+  fill: #ffffff;
+  letter-spacing: 0.02em;
+}
+
+/* Rotation pivots where the post meets the ground, so the sway reads as a
+   post planted in earth rather than a sprite spinning about its middle.
+   `view-box` makes the origin below resolve in viewBox units. */
+.ya-404 .nf-sign {
+  transform-box: view-box;
+  transform-origin: 210px 250px;
+  animation: nfSign 7s cubic-bezier(0.45, 0, 0.25, 1) infinite;
+}
+
+.ya-404 .nf-shadow {
+  transform-box: view-box;
+  transform-origin: 210px 252px;
+  animation: nfShadow 7s cubic-bezier(0.45, 0, 0.25, 1) infinite;
+}
+
+.ya-404 .nf-spill {
+  transform-box: view-box;
+  transform-origin: 210px 250px;
+  animation: nfSpill 7s ease-in-out infinite;
+}
+
+.ya-404 .nf-rim {
+  transform-box: view-box;
+  transform-origin: 210px 250px;
+  animation: nfRim 7s ease-out infinite;
+}
+
+/* 215px is not arbitrary: the sign's top edge sits at y=62.7 and the clip
+   ends at y=250, so anything less than ~188 leaves the octagon peeking out
+   of the hole. The extra margin covers the rotation. */
+@keyframes nfSign {
+  0%   { transform: translateY(0) rotate(0deg); }
+  6%   { transform: translateY(0) rotate(-2.6deg); }
+  13%  { transform: translateY(0) rotate(2.2deg); }
+  19%  { transform: translateY(0) rotate(-1.2deg); }
+  24%  { transform: translateY(0) rotate(0.5deg); }
+  28%  { transform: translateY(0) rotate(0deg); }
+  31%  { transform: translateY(-9px) rotate(-1.6deg); }  /* anticipation */
+  40%  { transform: translateY(215px) rotate(5deg); }    /* through the rim */
+  52%  { transform: translateY(215px) rotate(5deg); }    /* hole alone */
+  62%  { transform: translateY(-17px) rotate(-5deg); }   /* springs out */
+  70%  { transform: translateY(7px) rotate(2.6deg); }
+  78%  { transform: translateY(-4px) rotate(-1.4deg); }
+  86%  { transform: translateY(1.5px) rotate(0.6deg); }
+  94%  { transform: translateY(0) rotate(0deg); }
+  100% { transform: translateY(0) rotate(0deg); }
+}
+
+@keyframes nfShadow {
+  0%, 28% { transform: scale(1); opacity: 0.5; }
+  40%     { transform: scale(0.34); opacity: 0; }
+  52%     { transform: scale(0.34); opacity: 0; }
+  62%     { transform: scale(1.16); opacity: 0.55; }
+  78%     { transform: scale(0.98); opacity: 0.48; }
+  94%, 100% { transform: scale(1); opacity: 0.5; }
+}
+
+@keyframes nfSpill {
+  0%, 28% { opacity: 1; }
+  40%     { opacity: 0.28; }
+  52%     { opacity: 0.28; }
+  62%     { opacity: 1; }
+  94%, 100% { opacity: 1; }
+}
+
+/* The rim catches the light as the sign passes through it — once going in,
+   once coming out. */
+@keyframes nfRim {
+  0%, 37%   { transform: scale(1); opacity: 0.5; }
+  42%       { transform: scale(1.06); opacity: 1; }
+  50%, 59%  { transform: scale(1); opacity: 0.5; }
+  64%       { transform: scale(1.05); opacity: 0.92; }
+  72%, 100% { transform: scale(1); opacity: 0.5; }
+}
+
+/* ── Copy ────────────────────────────────────────────────────── */
+
+.ya-404 .nf-eyebrow {
+  margin-top: clamp(1.25rem, 3vw, 2rem);
+  font-size: clamp(0.6rem, 1.9vw, 0.7rem);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+  color: var(--nf-red-soft);
+}
+
+.ya-404 .nf-title {
+  margin-top: clamp(0.75rem, 2vw, 1.1rem);
+  max-width: 20ch;
+  font-size: clamp(1.55rem, 5.4vw, 3rem);
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.ya-404 .nf-desc {
+  margin-top: clamp(0.75rem, 1.8vw, 1.05rem);
+  max-width: 46ch;
+  font-size: clamp(0.875rem, 2.2vw, 1rem);
+  line-height: 1.65;
+  color: var(--nf-muted);
+  text-wrap: pretty;
+}
+
+/* ── Actions ─────────────────────────────────────────────────── */
+/* Full-width and stacked on a phone, side by side from 480px up. */
+.ya-404 .nf-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.7rem;
+  width: 100%;
+  max-width: 22rem;
+  margin-top: clamp(1.5rem, 3.5vw, 2.25rem);
+}
+
+/* NO BUTTON SKIN LIVES HERE. The two CTAs are the site's <MagneticButton>
+   (see NotFoundActions.jsx), which brings its own gradients, glow, shine
+   sweep and focus ring. These rules only position them — anything visual
+   added below would be fighting that component rather than matching it.
+
+   The magnetic effect translates each button on a spring, so it needs room
+   to lean into: the row gap is wider than the visual gap looks, and the
+   buttons must not be flush against the viewport edge. */
+
+/* Full-bleed on a phone. MagneticButton's `fullWidth` prop would do this,
+   but it is a fixed prop — it writes display:block inline, which cannot then
+   be undone at a breakpoint. Widening from CSS keeps it responsive. */
+@media (max-width: 479px) {
+  .ya-404 .nf-actions > *,
+  .ya-404 .nf-actions > * > a {
+    width: 100%;
+  }
+}
+
+/* ── Footer ──────────────────────────────────────────────────── */
+
+.ya-404 .nf-footer {
+  position: relative;
+  z-index: 1;
+  padding: clamp(1rem, 3vw, 2rem) 1.25rem;
+  text-align: center;
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--nf-muted);
+}
+
+/* ── Focus ───────────────────────────────────────────────────── */
+/* Scoped to the logo deliberately. MagneticButton ships its own
+   focus-visible ring; a blanket `a:focus-visible` here would paint a second,
+   differently-coloured outline on top of it. */
+
+.ya-404 .nf-brand:focus-visible {
+  outline: 2px solid var(--nf-red-soft);
+  outline-offset: 3px;
+  border-radius: 999px;
+}
+
+/* ── Responsive ──────────────────────────────────────────────── */
+
+@media (min-width: 480px) {
+  .ya-404 .nf-actions {
+    flex-direction: row;
+    justify-content: center;
+    width: auto;
+    max-width: none;
+    gap: 0.9rem;
+  }
+}
+
+/* Anything under a laptop's worth of height. A wide-but-short window (a
+   landscape tablet at 1024x768, an Android at 360x640) is the case that
+   catches full-screen pages out: the width clamp is satisfied, so the art
+   and the type both stay at full size while the height quietly runs out.
+   Tightening the rhythm here is what removes the scrollbar. */
+@media (max-height: 900px) {
+  .ya-404 .nf-scene { width: min(clamp(190px, 50vw, 400px), calc(30svh * 1.603)); }
+  .ya-404 .nf-header { padding-block: clamp(0.9rem, 2vw, 1.4rem); }
+  .ya-404 .nf-eyebrow { margin-top: 0.85rem; }
+  .ya-404 .nf-title { margin-top: 0.5rem; font-size: clamp(1.4rem, 4vw, 2.2rem); }
+  .ya-404 .nf-desc { margin-top: 0.5rem; }
+  .ya-404 .nf-actions { margin-top: 1.1rem; }
+  .ya-404 .nf-footer { padding-block: clamp(0.8rem, 2vw, 1.2rem); }
+}
+
+/* Landscape phones and short windows. Here height, not width, is the scarce
+   axis — so the scene shrinks hard and the vertical rhythm tightens, which
+   keeps the buttons on screen without scrolling. */
+@media (orientation: landscape) and (max-height: 720px) {
+  .ya-404 .nf-scene { width: min(clamp(140px, 22vw, 240px), calc(34svh * 1.603)); }
+  .ya-404 .nf-header { padding-block: 0.75rem; }
+  .ya-404 .nf-eyebrow { margin-top: 0.7rem; }
+  .ya-404 .nf-title { font-size: clamp(1.2rem, 3.2vw, 1.8rem); }
+  .ya-404 .nf-desc { margin-top: 0.45rem; font-size: 0.8rem; line-height: 1.5; }
+  .ya-404 .nf-actions { margin-top: 0.9rem; }
+  .ya-404 .nf-footer { padding-block: 0.6rem; }
+}
+
+/* Short windows of any orientation. */
+@media (max-height: 620px) {
+  .ya-404 .nf-header { padding-block: 0.7rem; }
+  .ya-404 .nf-footer { padding-block: 0.6rem; }
+}
+
+/* Genuinely tiny heights. The heading already says what happened, and the
+   buttons are what the visitor actually needs to reach without scrolling, so
+   the supporting paragraph and the footer line are what give way. */
+@media (max-height: 430px) {
+  .ya-404 .nf-desc { display: none; }
+  .ya-404 .nf-footer { display: none; }
+}
+
+/* Large screens: let the sheet breathe instead of stretching the column.
+   Gated on height as well as width — a 1536x800 window is wide enough to
+   match on width alone, and scaling the art up there would undo the
+   short-window rules above. */
+@media (min-width: 1536px) and (min-height: 900px) {
+  .ya-404 .nf-scene { width: 460px; }
+  .ya-404 .nf-title { font-size: 3.25rem; }
+}
+
+/* ── Reduced motion ──────────────────────────────────────────── */
+/* The sign stands still, above ground, lit — the resting frame of the loop.
+   Nothing on this page conveys meaning through movement, so stopping it
+   costs the visitor nothing. */
+@media (prefers-reduced-motion: reduce) {
+  .ya-404 .nf-sign,
+  .ya-404 .nf-shadow,
+  .ya-404 .nf-spill,
+  .ya-404 .nf-rim,
+  .ya-404 .nf-aurora,
+  .ya-404 .nf-star {
+    animation: none;
+  }
+  /* The stars still need to be visible with the twinkle stopped — their
+     resting keyframe is the dim end of the cycle. */
+  .ya-404 .nf-star { opacity: 0.55; }
+}

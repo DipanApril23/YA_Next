@@ -1,0 +1,35 @@
+{
+  "$comment": "404 backdrop config. DEVELOPER CONFIG, not editable copy — do NOT hand this to the CMS. `noise` feeds the grain overlay, which src/data/notFound.js builds into an inline feTurbulence data URL so the texture costs no extra request. `stars` is expanded by the same file into the per-star custom properties `.nf-star` consumes in notFound.css — the formula is index-based rather than random so the field is identical on every build (the same rule heroParticles.json follows). The colours deliberately match the hero's particle palette so the two backdrops read as one system. The warning-sign scene itself is drawn and animated entirely in SVG + CSS — there is no Lottie/JSON payload and no animation runtime to configure.",
+  "noise": {
+    "size": 220,
+    "baseFrequency": 0.85,
+    "numOctaves": 2
+  },
+  "stars": {
+    "count": 22,
+    "sizes": [2, 3, 1.5, 2.5, 2, 1.5],
+    "colors": ["#22d3ee", "#a855f7", "#3b82f6", "#ec4899", "#e2e8f0", "#06b6d4"],
+    "formula": {
+      "leftBase": 4,
+      "leftStep": 13.7,
+      "leftRange": 90,
+      "topBase": 6,
+      "topStep": 17.3,
+      "topRange": 86,
+      "glowBlurOffset": 4,
+      "glowBlurSizeFactor": 2,
+      "glowAlphaHex": "44",
+      "durationBase": 9,
+      "durationStep": 1.7,
+      "durationRange": 10,
+      "delayStep": 1.3,
+      "delayRange": 9,
+      "dxStep": 14,
+      "dxModulo": 5,
+      "dxCentre": 2,
+      "dyStep": 11,
+      "dyModulo": 4,
+      "dyCentre": 2
+    }
+  }
+}

@@ -1,19 +1,26 @@
 {
-  "$comment": "404 page copy. Editable content — safe for a CMS.",
+  "$comment": "404 page copy. Editable content — safe for a CMS. `actions` open in a new tab when `external` is true, and `variant` picks the button treatment (primary = brand gradient, secondary = outline).",
   "content": {
     "code": "404",
-    "title": "oops! Page not found",
-    "description": "Oops! The page you are looking for does not exist. It might have been moved or deleted.",
+    "brandLogoAlt": "Young Architects Logo",
+    "brandAriaLabel": "Young Architects — go to home",
+    "eyebrow": "Error 404 — Route Not Found",
+    "title": "This route isn’t on the plan.",
+    "description": "The page you’re looking for has been moved, renamed, or never made it past the drawing board. Let’s get you back onto solid ground.",
+    "footerNote": "Digital Marketing, Engineered in Kolkata.",
+    "sceneAlt": "A 404 warning sign on a post, sinking into a hole in the ground and springing back out.",
     "actions": [
       {
-        "label": "HOME",
+        "label": "Back to Foundation",
         "href": "/",
-        "external": false
+        "external": false,
+        "variant": "primary"
       },
       {
-        "label": "Book Consultation",
+        "label": "Book a Consultation",
         "href": "https://calendly.com/yafoundations/45min",
-        "external": true
+        "external": true,
+        "variant": "secondary"
       }
     ]
   }

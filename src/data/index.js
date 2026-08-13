@@ -93,7 +93,12 @@ export {
 } from "./motion";
 
 // ── Routes ───────────────────────────────────────────────────────────
-export { NOT_FOUND_CONTENT } from "./notFound";
+export {
+  NOT_FOUND_CONTENT,
+  NOT_FOUND_NOISE_URL,
+  NOT_FOUND_NOISE_SIZE,
+  NOT_FOUND_STARS,
+} from "./notFound";
 
 // ── Legacy image manifests (data/json/) ──────────────────────────────
 // Flat URL maps predating the content/ + config/ split. `about` is still read

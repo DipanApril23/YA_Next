@@ -1,11 +1,16 @@
 // ─── Root layout ──────────────────────────────────────────────────────
-// The shell wrapped around every route: self-hosted Roboto font, <html>/<body>,
-// site metadata, image-origin preconnect hints, the modal portal root, and the
-// app shell (<Layout> → Navbar + BrandMark + Footer) so those three render on
-// every page. No page content lives here — sections are composed in app/page.js.
+// The document itself, and only that: self-hosted Roboto, <html>/<body>, site
+// metadata, image-origin preconnect hints and the modal portal root. No page
+// content lives here — sections are composed in app/(site)/page.js.
+//
+// THE APP SHELL IS NOT HERE ANY MORE. Navbar, BrandMark, Footer and the
+// SplashCursor overlay moved into app/(site)/layout.js so they wrap the
+// marketing site but NOT src/app/not-found.jsx, which is a full-screen sheet
+// with its own brand bar, footer and cursor. See that file for the reasoning.
+// The homepage URL is unchanged — "(site)" is a route group, so it adds no
+// path segment.
 
 import { Roboto } from "next/font/google";
-import { Layout } from "@/components/layout";
 import "./globals.css";
 
 // Self-hosted via next/font — no render-blocking external stylesheet request.
@@ -40,9 +45,7 @@ export default function RootLayout({ children }) {
         className={`${roboto.variable} antialiased`}
         suppressHydrationWarning
       >
-        {/* The app shell — Navbar, closing BrandMark and Footer — lives here so
-            every route (including not-found) renders inside the same frame. */}
-        <Layout>{children}</Layout>
+        {children}
         <div id="portal-modal-root" />
       </body>
     </html>
