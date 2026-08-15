@@ -1,71 +1,71 @@
 {
   "$comment": "Navbar silo — the site's information architecture as a RECURSIVE tree. Editable content, safe for a CMS. Each node is { label, href?, icon?, desc?, comingSoon?, children? }: a node with `children` is a menu, a leaf has an `href`, and a node carrying BOTH is a menu you can also click (see Home) — on desktop it navigates on click and still opens its list on hover; on mobile it stays an accordion, which is why its own destination is repeated as the first child. The Navbar renders this to ANY depth (cascading flyouts on desktop, a nested single-open accordion on mobile), so adding a deeper sub-level needs no code change. `icon` is a KEY — a lucide-react component name resolved by NAV_ICONS in src/data/navIcons.js — because React components cannot be stored in JSON. HOME is the on-page menu: one row per section actually mounted by src/app/page.js, in page order, so every part of the home page is one click away. Those hrefs are element ids — if a section's id changes, change it here too. Every industry vertical carries the SAME EIGHT service pages (web, seo, automation, creative, content, facebook, google, social) with a `<vertical>-<service>` href pattern — keep that pattern when a new vertical is added so the flyout columns stay balanced.",
   "content": {
-    "brandHref": "#home",
+    "brandHref": "/#home",
     "brandLogoAlt": "Young Architects Logo",
     "menuToggleLabel": "Toggle menu",
     "cta": {
-      "href": "#book-consultation",
+      "href": "/#book-consultation",
       "label": "Contact Us"
     }
   },
   "items": [
     {
       "label": "Home",
-      "href": "#home",
+      "href": "/#home",
       "icon": "Rocket",
       "children": [
         {
           "label": "Top of Page",
-          "href": "#home",
+          "href": "/#home",
           "icon": "Rocket",
           "desc": "Back to the hero"
         },
         {
           "label": "Our Process",
-          "href": "#our-process",
+          "href": "/#our-process",
           "icon": "Workflow",
           "desc": "How a project runs, step by step"
         },
         {
           "label": "Services",
-          "href": "#services",
+          "href": "/#services",
           "icon": "LayoutGrid",
           "desc": "The full service deck"
         },
         {
           "label": "Book a Consultation",
-          "href": "#book-consultation",
+          "href": "/#book-consultation",
           "icon": "CalendarCheck",
           "desc": "Pick a free strategy call"
         },
         {
           "label": "Our Partners",
-          "href": "#partners",
+          "href": "/#partners",
           "icon": "Handshake",
           "desc": "Brands we build with"
         },
         {
           "label": "Case Studies",
-          "href": "#case-studies",
+          "href": "/#case-studies",
           "icon": "Briefcase",
           "desc": "Results, with the numbers"
         },
         {
           "label": "Testimonials",
-          "href": "#testimonials",
+          "href": "/#testimonials",
           "icon": "MessageSquareQuote",
           "desc": "What clients say"
         },
         {
           "label": "FAQ",
-          "href": "#faq",
+          "href": "/#faq",
           "icon": "CircleHelp",
           "desc": "Answers before you ask"
         },
         {
           "label": "Contact & Details",
-          "href": "#footer",
+          "href": "/#footer",
           "icon": "Mail",
           "desc": "Reach us, everything else"
         }

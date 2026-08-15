@@ -54,13 +54,14 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname, useRouter } from "next/navigation";
 import { m, AnimatePresence, useScroll } from "framer-motion";
 import { useEffect, useState, useRef, useCallback, createContext, useContext } from "react";
 import { ArrowUpRight, ChevronDown, ChevronRight, Sparkles } from "lucide-react";
 
 import { NAV_ITEMS, NAV_CONTENT, EASE_SMOOTH, SPRING_FAST } from "@/data";
 import brandLogo from "@/assets/logo/brandlogo.webp";
-import { scrollToSection, isHashLink, useHashScroll } from "./scrollToSection";
+import { scrollToSection, isSamePageAnchor, useHashScroll } from "./scrollToSection";
 import "./navbar.css";
 
 /* Timing comes from the shared motion tokens (src/data/config/motion.json) so
@@ -71,21 +72,33 @@ const FAST_SPRING = SPRING_FAST;
 const hasChildren = (n) => Boolean(n?.children?.length);
 
 /* ─────────────────────────── one link, either kind ───────────────────────────
-   An on-page #anchor is handled by scrollToSection (navbar offset + waits for a
-   deferred section to mount); anything else is a real route and stays a
-   next/link. `onClick` — normally "close the menu" — runs for both. */
+   Three destinations, and the difference is decided per click:
+
+     "/#services" from the homepage   an on-page anchor → intercept and hand to
+                                      scrollToSection (navbar offset + waits
+                                      for a deferred section to mount)
+     "/#services" from anywhere else  NOT this page → let next/link navigate to
+                                      "/", where useHashScroll finishes the job
+                                      on arrival
+     "/our-services/seo"              a real route → next/link, untouched
+
+   The middle case is why this asks isSamePageAnchor rather than "does the href
+   contain a #". Intercepting an anchor that does not exist on the current page
+   is exactly what stranded visitors on a Coming Soon route with a dead "#home"
+   in the address bar. `onClick` — normally "close the menu" — runs for all. */
 function NavLink({ href, onClick, children, ...rest }) {
-  const anchor = isHashLink(href);
+  const pathname = usePathname();
+  const scrollHere = isSamePageAnchor(href, pathname);
 
   const handleClick = (e) => {
-    if (anchor) {
+    if (scrollHere) {
       e.preventDefault();
       scrollToSection(href);
     }
     onClick?.(e);
   };
 
-  const Tag = anchor ? "a" : Link;
+  const Tag = scrollHere ? "a" : Link;
   return (
     <Tag href={href} onClick={handleClick} {...rest}>
       {children}
@@ -580,13 +593,28 @@ export default function Navbar() {
   const closeAll = useCallback(() => setOpenDropdown(null), []);
   const closeDrawer = useCallback(() => setMobileOpen(false), []);
 
-  /* The CTA points at #book-consultation, a deferred section — it needs the
-     same treatment as the menu links (it is an <m.a>, so not a NavLink). */
-  const onCtaClick = useCallback((e) => {
-    if (!isHashLink(NAV_CONTENT.cta.href)) return;
-    e.preventDefault();
-    scrollToSection(NAV_CONTENT.cta.href);
-  }, []);
+  /* Which route is rendered decides whether an on-page anchor scrolls or
+     navigates — see NavLink and onCtaClick below. */
+  const pathname = usePathname();
+  const router = useRouter();
+
+  /* The CTA points at /#book-consultation, a deferred section — it needs the
+     same treatment as the menu links, but it is an <m.a> (and an <a> in the
+     drawer), not a NavLink, so it gets the logic by hand.
+
+     Off the homepage this pushes through the router rather than letting the
+     anchor navigate: a bare <a href="/#book-consultation"> would hard-reload
+     the whole site to reach a section that is one client-side transition away.
+     useHashScroll then scrolls once the homepage has painted. */
+  const onCtaClick = useCallback(
+    (e) => {
+      const href = NAV_CONTENT.cta.href;
+      e.preventDefault();
+      if (isSamePageAnchor(href, pathname)) scrollToSection(href);
+      else router.push(href);
+    },
+    [pathname, router]
+  );
 
   /* Fragment URLs that don't come from the navbar — a shared /#faq link, the
      back button between two anchors — land on the right section too. */
