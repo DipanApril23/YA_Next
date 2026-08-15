@@ -25,7 +25,9 @@ import particleConfig from "./config/heroParticles.json";
 export const HERO_CONTENT = heroContent.content;
 export const HERO_CTAS = heroContent.ctas;
 export const HERO_STATS = heroContent.stats;
-export const HERO_BENEFITS = heroContent.benefits;
+/* The reasons-to-choose tick list that used to sit under the CTAs now lives on
+   the FlipCard's back face — see src/data/content/flipCard.json → `services`.
+   Moving it out is what lets the hero fit its CTAs above the fold. */
 
 /* Expand the particle config into the per-particle custom properties that
    `.hero-particle` in hero.css consumes. Pure and index-based — see above. */

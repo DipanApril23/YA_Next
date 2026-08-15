@@ -14,11 +14,9 @@
 // a ~20-line rAF handler writing transforms straight to the layer refs.
 
 import { useEffect, useRef } from "react";
-import { Check } from "lucide-react";
 import { Container, FlipCard, Button } from "@/components/ui";
 import {
   HERO_STATS as STATS,
-  HERO_BENEFITS as BENEFITS,
   HERO_PARTICLES as PARTICLES,
   HERO_CTAS as CTAS,
   HERO_CONTENT as CONTENT,
@@ -133,11 +131,14 @@ const Hero = () => {
 
       {/* ════════════════ MAIN LAYOUT ════════════════ */}
       <Container>
-        <div className="relative z-10 flex min-h-screen w-full flex-col items-center justify-center gap-12 py-20 md:flex-row md:gap-6 md:py-24">
+        {/* `hero-row` / `hero-col` are hooks for the short-viewport rules in
+            hero.css — they tighten this padding and gap so the CTAs stay above
+            the fold on a short screen. They carry no styles otherwise. */}
+        <div className="hero-row relative z-10 flex min-h-screen w-full flex-col items-center justify-center gap-12 py-20 md:flex-row md:gap-6 md:py-24">
           {/* ── LEFT COLUMN ── */}
           <div
             ref={contentRef}
-            className="flex w-full flex-col items-center text-center gap-5 sm:gap-6 md:w-[55%] md:items-start md:text-left md:pr-6 lg:pr-12"
+            className="hero-col flex w-full flex-col items-center text-center gap-5 sm:gap-6 md:w-[55%] md:items-start md:text-left md:pr-6 lg:pr-12"
           >
             {/* Status chip */}
             <div className="hero-fade hero-fade--chip hero-chip inline-flex items-center gap-2.5 rounded-full border px-4 py-1.5 backdrop-blur-sm">
@@ -198,17 +199,11 @@ const Hero = () => {
               ))}
             </div>
 
-            {/* Benefits checklist */}
-            <ul className="hero-fade hero-fade--benefits hero-benefits pt-2">
-              {BENEFITS.map((benefit) => (
-                <li key={benefit} className="hero-benefit">
-                  <span className="hero-benefit-check" aria-hidden>
-                    <Check strokeWidth={3.5} />
-                  </span>
-                  <span className="hero-benefit-text">{benefit}</span>
-                </li>
-              ))}
-            </ul>
+            {/* The reasons-to-choose tick list used to sit here, between the
+                CTAs and the stats. It has moved to the FlipCard's back face
+                (src/data/content/flipCard.json → `services`): six rows of copy
+                pushed the CTAs below the fold on every laptop, which is the
+                one thing the hero cannot afford to hide. */}
 
             {/* Stats row */}
             <div className="hero-fade hero-fade--stats flex gap-6 sm:gap-10 pt-4">
@@ -223,11 +218,6 @@ const Hero = () => {
                 </div>
               ))}
             </div>
-
-            {/* Closing line */}
-            <p className="hero-fade hero-fade--closing max-w-[38rem] text-sm sm:text-base text-white/50 font-medium leading-relaxed">
-              <strong>{CONTENT.closing}</strong>
-            </p>
           </div>
 
           {/* ── RIGHT COLUMN ── */}

@@ -7,6 +7,7 @@
 
 import { useState, useRef, useCallback } from "react";
 import { m, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { Check } from "lucide-react";
 import Image from "next/image";
 import {
   FLIPCARD_SERVICES as SERVICES,
@@ -174,7 +175,12 @@ const FlipCard = ({
                     whileHover={{ x: 6, scale: 1.02 }}
                     transition={SPRING_SNAPPY}
                   >
-                    <span className="fc-service-icon">{svc.icon}</span>
+                    {/* A tick, not a per-row glyph: these rows are the
+                        reasons-to-choose list that used to sit in the hero,
+                        and the tick is what carried them there. */}
+                    <span className="fc-service-icon" aria-hidden>
+                      <Check strokeWidth={3.5} />
+                    </span>
                     <span className="fc-service-label">{svc.label}</span>
                     <span className="fc-service-dot" />
                   </m.div>
@@ -185,36 +191,52 @@ const FlipCard = ({
             </div>
           </m.div>
         </m.div>
-      </div>
 
-      {/* ── "Tap to flip" indicator ─────────────────────────── */}
-      <m.button
-        onClick={handleFlip}
-        className="fc-flip-btn"
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.5, duration: 0.6 }}
-        whileHover={{ scale: 1.06 }}
-        whileTap={{ scale: 0.95 }}
-        aria-label={DEFAULTS.flipAriaLabel}
-      >
-        <svg
-          className="fc-flip-icon"
-          width="15"
-          height="15"
-          viewBox="0 0 24 24"
-          fill="none"
-          strokeWidth="2.2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
-          <path d="M21 3v5h-5" />
-          <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
-          <path d="M8 16H3v5" />
-        </svg>
-        <span className="fc-flip-label">{isFlipped ? "Flip Back" : "Flip Card"}</span>
-      </m.button>
+        {/* ── Flip control ─────────────────────────────────────
+            ABOVE the card, not under it. Sitting below the stage it added
+            ~46px of height and fell past the fold, so the only affordance for
+            the back face was invisible until you scrolled — the card read as a
+            static image and most visitors never discovered it turned. Anchored
+            over the card's top edge it costs no layout height and rides at the
+            top of the card, which is the first part of it on screen.
+
+            The slot does the positioning and the button only scales, because
+            framer writes `transform` for whileHover/whileTap — a translate for
+            centring would be overwritten the moment the pointer arrived.
+
+            It also sits OUTSIDE .fc-tilt on purpose: inside, it would inherit
+            the 3D tilt and the float, and a control that pitches away from the
+            pointer is harder to hit than one that holds still. */}
+        <div className="fc-flip-slot">
+          <m.button
+            onClick={handleFlip}
+            className="fc-flip-btn"
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.2, duration: 0.6 }}
+            whileHover={{ scale: 1.06 }}
+            whileTap={{ scale: 0.95 }}
+            aria-label={DEFAULTS.flipAriaLabel}
+          >
+            <svg
+              className="fc-flip-icon"
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              strokeWidth="2.2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
+              <path d="M21 3v5h-5" />
+              <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
+              <path d="M8 16H3v5" />
+            </svg>
+            <span className="fc-flip-label">{isFlipped ? "Flip Back" : "Flip Card"}</span>
+          </m.button>
+        </div>
+      </div>
     </div>
   );
 };

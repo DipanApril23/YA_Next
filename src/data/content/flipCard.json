@@ -1,30 +1,29 @@
 {
-  "$comment": "Digital business card (FlipCard): the service list and the card's default contact details. Editable content — safe for a CMS. The accent tints and pulse timings shown on screen are DERIVED from `color` and the entry index by src/data/flipCard.js, so only the base colour is authored here.",
+  "$comment": "FlipCard (digital business card) copy. Editable content — safe for a CMS. `services` is the list on the BACK face: these are the six reasons-to-choose that used to sit as a tick list in the hero's left column, moved here so the hero can put its CTAs above the fold. Each row's `color` is the accent that src/data/flipCard.js expands into the row's background tint, border tint and pulse timing — keep the six colours distinct so consecutive rows stay separable. Rows render with a tick icon rather than a per-row glyph, so no `icon` key is needed. Keep labels under about 60 characters: longer than that and a row wraps to three lines on the narrowest card.",
   "services": [
     {
-      "icon": "✦",
-      "label": "AI Solutions & Automation",
+      "label": "AI-Powered Marketing — Smarter, Faster, Measurable",
       "color": "#06b6d4"
     },
     {
-      "icon": "◈",
-      "label": "Web & App Development",
+      "label": "Everything Under One Roof: Web, SEO, Ads, Content & Automation",
       "color": "#3b82f6"
     },
     {
-      "icon": "▲",
-      "label": "Digital Marketing & SEO",
+      "label": "Built for Local Businesses — Strategies That Fit Kolkata's Market",
       "color": "#a855f7"
     },
     {
-      "icon": "⟳",
-      "label": "Digital Transformation",
+      "label": "Results You Can Count: Leads, Sales & ROI, Not Vanity Metrics",
       "color": "#ec4899"
     },
     {
-      "icon": "◉",
-      "label": "Cloud & Infrastructure",
+      "label": "Transparent Reporting in Plain Language",
       "color": "#22d3ee"
+    },
+    {
+      "label": "No Long Lock-In Contracts",
+      "color": "#8b5cf6"
     }
   ],
   "defaults": {
@@ -36,7 +35,7 @@
       "+91 9804569051"
     ],
     "email": "yafoundations@gmail.com",
-    "servicesTitle": "Our Services",
+    "servicesTitle": "Why Choose Us",
     "frontLogoAlt": "Young Architects",
     "backLogoAlt": "Young Architects",
     "qrAlt": "QR Code",

@@ -31,11 +31,12 @@
 }
 
 /* ── Layout shell ────────────────────────────────────────────── */
+/* No column gap any more: the flip control is an overlay on the stage rather
+   than a row beneath it, so the root is exactly as tall as the card. */
 .fc-root {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
 }
 .fc-stage {
   position: relative;
@@ -201,8 +202,13 @@
     inset 0 0 40px rgba(0, 0, 0, 0.5);
   border: 1px solid rgba(255, 255, 255, 0.06);
 }
+/* Smaller than the front's 82%. The back now carries six reasons-to-choose
+   rows whose copy wraps to two lines each; at the old 78% the logo alone ate
+   ~270px of a 530px card and the last rows were clipped by the face's
+   `overflow: hidden`. The mark still reads clearly at this size because it is
+   the second thing the visitor sees, not the first. */
 .fc-logo--back {
-  width: 78%;
+  width: 46%;
   background: radial-gradient(circle, rgba(168, 85, 247, 0.07) 0%, transparent 70%);
   box-shadow: 0 0 50px rgba(168, 85, 247, 0.1), inset 0 0 40px rgba(0, 0, 0, 0.4);
   border: 1px solid rgba(168, 85, 247, 0.1);
@@ -298,22 +304,24 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 9px;
+  gap: 6px;
 }
 
 /* Per-service accent colours arrive as custom properties from FLIPCARD_SERVICES. */
+/* Top-aligned, not centred: these labels wrap to two lines, and a centred
+   tick against two lines of copy reads as misaligned. */
 .fc-service {
   display: flex;
-  align-items: center;
-  gap: 10px;
+  align-items: flex-start;
+  gap: 8px;
   border-radius: 12px;
-  padding: 10px 13px;
+  padding: 8px 10px;
   background: linear-gradient(100deg, var(--svc-tint-bg) 0%, transparent 100%);
   border: 1px solid var(--svc-tint-border);
 }
 .fc-service-icon {
-  width: 26px;
-  height: 26px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   flex-shrink: 0;
   display: flex;
@@ -321,46 +329,101 @@
   justify-content: center;
   background: var(--svc-tint-icon);
   color: var(--svc-color);
-  font-size: 0.75rem;
+  /* Nudged down so the tick sits on the first line's optical centre. */
+  margin-top: 1px;
+}
+.fc-service-icon svg {
+  width: 11px;
+  height: 11px;
 }
 .fc-service-label {
   flex: 1;
   text-align: left;
-  font-size: 0.83rem;
+  font-size: 0.7rem;
+  line-height: 1.35;
   font-weight: 500;
   color: rgba(255, 255, 255, 0.82);
+  /* Long words ("Automation", "Kolkata's") must break rather than push the
+     row wider than the card and get clipped. */
+  overflow-wrap: anywhere;
 }
 .fc-service-dot {
   width: 6px;
   height: 6px;
   border-radius: 50%;
   flex-shrink: 0;
+  margin-top: 4px;
   background: var(--svc-color);
   box-shadow: 0 0 7px var(--svc-color);
   animation: fcPulse var(--svc-pulse-duration) ease-in-out infinite;
 }
 
 /* ── Flip hint button ────────────────────────────────────────── */
+/* Anchored to the card's bottom-left corner, inside the rounded edge. That
+   corner is the quietest part of both faces — the front's QR sits right of it,
+   the back's last row ends above it — so the control never covers content.
+   Higher contrast than the old version too: as a hint sitting under the card
+   it could afford to whisper, but overlaying artwork it has to stay legible,
+   hence the darker plate and brighter label. */
+/* Spans the card's width and centres the pill over its top edge. Full-width
+   so the centring never depends on the button's own width — the label swaps
+   between "Flip Card" and "Flip Back", which are different widths.
+   `pointer-events: none` so this invisible bar cannot swallow clicks or block
+   the card's tilt; the button itself takes them back. */
+.fc-flip-slot {
+  position: absolute;
+  top: -42px;
+  left: 0;
+  right: 0;
+  z-index: 4;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+
 .fc-flip-btn {
+  pointer-events: auto;
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 7px 18px;
+  gap: 7px;
+  padding: 7px 14px;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(8, 10, 20, 0.62);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
   cursor: pointer;
   outline: none;
   animation: fcFlipHint 2.8s ease-in-out infinite;
+  transition: border-color 0.25s ease, background 0.25s ease;
+}
+.fc-flip-btn:hover {
+  border-color: rgba(6, 182, 212, 0.55);
+  background: rgba(8, 10, 20, 0.8);
+}
+.fc-flip-btn:focus-visible {
+  outline: 2px solid rgba(6, 182, 212, 0.85);
+  outline-offset: 3px;
 }
 .fc-flip-icon {
-  stroke: rgba(6, 182, 212, 0.85);
+  stroke: rgb(34, 211, 238);
+  flex-shrink: 0;
 }
 .fc-flip-label {
-  font-size: 0.78rem;
-  font-weight: 500;
+  font-size: 0.7rem;
+  font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.45);
+  white-space: nowrap;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+/* The float nudge reads as fidgety on a control pinned to the card, so only
+   the opacity pulse survives — it still draws the eye without drifting. */
+@keyframes fcFlipHintPinned {
+  0%, 100% { opacity: 0.82; }
+  50% { opacity: 1; }
+}
+.fc-flip-btn {
+  animation-name: fcFlipHintPinned;
 }
