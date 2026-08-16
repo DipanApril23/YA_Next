@@ -10,7 +10,7 @@
       "Spring Framework with JAVA (Full project based - Making Backend & API)",
       "Selenium with JAVA for automation purposes."
     ],
-    "image": "https://youngarchitects.in/assets/coursesImage/java.webp"
+    "image": "/assets/coursesImage/java.webp"
   },
   {
     "name": "JavaScript",
@@ -24,7 +24,7 @@
       "Advanced concepts of JavaScript Frameworks.",
       "Backend API with NodeJs"
     ],
-    "image": "https://youngarchitects.in/assets/coursesImage/JavaScript-logo.webp"
+    "image": "/assets/coursesImage/JavaScript-logo.webp"
   },
   {
     "name": "Database",
@@ -35,7 +35,7 @@
       "Learn MongoDB and implement it in the backend like NodeJs.",
       "Implement database concepts in backend with Python and JAVA."
     ],
-    "image": "https://youngarchitects.in/assets/coursesImage/database.webp"
+    "image": "/assets/coursesImage/database.webp"
   },
   {
     "name": "Python",
@@ -48,7 +48,7 @@
       "Numerous Framework with Python(Full project based - Making Backend & API).",
       "AI with Python."
     ],
-    "image": "https://youngarchitects.in/assets/coursesImage/python.webp"
+    "image": "/assets/coursesImage/python.webp"
   },
   {
     "name": "General Concepts",
@@ -58,6 +58,6 @@
       "Conceptual deep dive into Computer Networks",
       "Learning about cloud based on GCP (Google Cloud Platform)"
     ],
-    "image": "https://youngarchitects.in/assets/coursesImage/computer.webp"
+    "image": "/assets/coursesImage/computer.webp"
   }
 ]

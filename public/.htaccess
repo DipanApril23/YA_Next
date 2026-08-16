@@ -1,0 +1,44 @@
+# ─── Young Architects — Apache/LiteSpeed config for the static export ───
+#
+# Anything in public/ is copied verbatim into out/ by `next build`, so this
+# ships with every export and lands at public_html/.htaccess on upload.
+#
+# Hostinger Premium runs LiteSpeed, which reads .htaccess like Apache.
+
+# ── 404 ───────────────────────────────────────────────────────────────
+# The export writes the animated 404 sheet to /404.html. Without this line
+# the host answers unknown URLs with its own plain error page instead.
+ErrorDocument 404 /404.html
+
+# ── Compression ───────────────────────────────────────────────────────
+# The pages carry their CSS inline, so the HTML is large but compresses hard.
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml
+  AddOutputFilterByType DEFLATE application/javascript application/json
+  AddOutputFilterByType DEFLATE image/svg+xml
+</IfModule>
+
+# ── Caching ───────────────────────────────────────────────────────────
+<IfModule mod_headers.c>
+  # Everything under /_next/static carries a content hash in its filename —
+  # the name changes whenever the bytes do — so it can be cached forever.
+  #
+  # Scoped by path on purpose. A blanket rule on file EXTENSION would also
+  # freeze /assets/… , the folder this site loads its client logos and QR
+  # code from, and those are replaced in place without a new filename.
+  <If "%{REQUEST_URI} =~ m#^/_next/static/#">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </If>
+
+  # HTML must revalidate, or a deploy would never reach returning visitors.
+  <FilesMatch "\.html$">
+    Header set Cache-Control "public, max-age=0, must-revalidate"
+  </FilesMatch>
+</IfModule>
+
+# ── Correct types for the fonts and images Next emits ─────────────────
+<IfModule mod_mime.c>
+  AddType font/woff2 .woff2
+  AddType image/webp .webp
+  AddType image/avif .avif
+</IfModule>

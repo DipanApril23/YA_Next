@@ -28,8 +28,17 @@
 // Consumed by: src/app/(site)/[...slug]/page.jsx (via the @/data barrel).
 
 import navContent from "./content/nav.json";
+import footerContent from "./content/footer.json";
 
-const isRouteHref = (href) => typeof href === "string" && href.startsWith("/");
+/* A page, not a place on a page. The "#" test is load-bearing: the Home menu's
+   entries are authored as "/#services", "/#faq" and so on — root-relative so
+   they work from any route (see Navbar/scrollToSection.js). Those start with
+   "/" too, so a bare startsWith("/") counted all nine of them as routes and
+   generated a Coming Soon page for each, which Next then emitted at the
+   percent-encoded paths /%23services, /%23faq … Anything carrying a fragment
+   addresses a section of a page that already exists. */
+const isRouteHref = (href) =>
+  typeof href === "string" && href.startsWith("/") && !href.includes("#");
 
 /* The path a group node sits at: the segments every descendant shares. With
    more than one child that is exactly the group's own path. A lone child
@@ -47,6 +56,9 @@ function sharedPrefix(paths) {
 }
 
 const routes = [];
+
+/* Guard against a footer row duplicating a path the menu already produced. */
+const byPathHas = (list, path) => list.some((r) => r.path === path);
 
 /* Returns every route path inside this subtree, so the caller can work out
    its own path from its children. */
@@ -88,6 +100,27 @@ for (const top of navContent.items) {
     continue;
   }
   walk(top, []);
+}
+
+/* ── Pages the footer links to but the menu does not ──────────────────
+   The legal trio (/disclaimer, /terms-and-conditions, /privacy-policy) is
+   reachable only from the footer, so walking the nav tree never produces it
+   and every one of those links used to 404.
+
+   They are read from the SAME array the footer renders, so a link and its page
+   can never disagree: add a row to `legal` in content/footer.json and the page
+   exists. Each row carries an `icon` (a NAV_ICONS key) and a `desc`, which are
+   what the Coming Soon medallion and standfirst use. */
+for (const item of footerContent.legal ?? []) {
+  if (!isRouteHref(item.href) || byPathHas(routes, item.href)) continue;
+  routes.push({
+    path: item.href,
+    label: item.label,
+    desc: item.desc ?? null,
+    icon: item.icon ?? null,
+    isGroup: false,
+    trail: [],
+  });
 }
 
 export const NAV_ROUTES = routes;

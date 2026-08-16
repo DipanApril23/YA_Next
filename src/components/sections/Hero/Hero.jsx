@@ -14,6 +14,7 @@
 // a ~20-line rAF handler writing transforms straight to the layer refs.
 
 import { useEffect, useRef } from "react";
+import Link from "next/link";
 import { Container, FlipCard, Button } from "@/components/ui";
 import {
   HERO_STATS as STATS,
@@ -184,19 +185,26 @@ const Hero = () => {
 
             {/* ── CTAs ── */}
             <div className="hero-fade hero-fade--ctas w-full px-4 sm:px-0 flex flex-col sm:flex-row items-center justify-center md:justify-start gap-3 sm:gap-4">
-              {CTAS.map((cta) => (
-                <a
-                  key={cta.label}
-                  href={cta.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={cta.narrow ? "hero-cta hero-cta--narrow" : "hero-cta"}
-                >
-                  <Button variant={cta.variant} className="w-full mt-0">
-                    {cta.label}
-                  </Button>
-                </a>
-              ))}
+              {/* A new tab is right for the booking calendar — it takes the
+                  visitor off-site — and wrong for an on-site page, which should
+                  also route client-side rather than reload the whole app. The
+                  href decides, so a CTA can be repointed from @/data alone. */}
+              {CTAS.map((cta) => {
+                const external = /^https?:/.test(cta.href);
+                const Tag = external ? "a" : Link;
+                return (
+                  <Tag
+                    key={cta.label}
+                    href={cta.href}
+                    className={cta.narrow ? "hero-cta hero-cta--narrow" : "hero-cta"}
+                    {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                  >
+                    <Button variant={cta.variant} className="w-full mt-0">
+                      {cta.label}
+                    </Button>
+                  </Tag>
+                );
+              })}
             </div>
 
             {/* The reasons-to-choose tick list used to sit here, between the

@@ -27,9 +27,9 @@
     }
   ],
   "defaults": {
-    "frontLogo": "https://youngarchitects.in/assets/image/logo.webp",
-    "backLogo": "https://youngarchitects.in/assets/image/logo2.webp",
-    "qrCode": "https://youngarchitects.in/assets/image/qr.webp",
+    "frontLogo": "/assets/image/logo.webp",
+    "backLogo": "/assets/image/logo2.webp",
+    "qrCode": "/assets/image/qr.webp",
     "phoneNumbers": [
       "+91 9883952010",
       "+91 9804569051"

@@ -22,8 +22,7 @@ import {
 } from "@/data";
 import "./consultationCta.css";
 // Rendered at the foot of this section (not a standalone page section).
-// TEMPORARILY DISABLED — uncomment together with <OurPartners /> below.
-// import OurPartners from "../OurPartners/OurPartners";
+import OurPartners from "../OurPartners/OurPartners";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -379,9 +378,10 @@ export default function ConsultationCTA() {
         </div>
 
         {/* Agency-style "platforms we build with" logo strip — lives at the
-            foot of this section rather than as its own page block.
-            TEMPORARILY DISABLED — uncomment (and the import above) to restore. */}
-        {/* <OurPartners /> */}
+            foot of this section rather than as its own page block. It carries
+            the #partners anchor the Home menu points at, so removing it again
+            would leave that menu row with nothing to scroll to. */}
+        <OurPartners />
       </div>
     </section>
   );

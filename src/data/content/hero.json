@@ -1,5 +1,5 @@
 {
-  "$comment": "Hero section copy. Editable content — safe to hand to a CMS/backend team. Rendered by src/components/sections/Hero/Hero.jsx via src/data/hero.js.",
+  "$comment": "Hero section copy. Editable content — safe to hand to a CMS/backend team. Rendered by src/components/sections/Hero/Hero.jsx via src/data/hero.js. NOTE: the \"View Policy\" CTA pointed at https://youngarchitects.in/assets/YA_Policy.pdf, a file that was lost when public_html was cleared and is not in this repo. It now points at the on-site /privacy-policy page so the button is not a dead link. To go back to the PDF, put the file in public/assets/ and set this href to /assets/YA_Policy.pdf.",
   "content": {
     "eyebrow": "AI-Powered Digital Agency · Kolkata",
     "headlineLead": "The AI Digital Marketing Agency",
@@ -17,7 +17,7 @@
     },
     {
       "label": "View Policy",
-      "href": "https://youngarchitects.in/assets/YA_Policy.pdf",
+      "href": "/privacy-policy",
       "variant": "secondary",
       "narrow": true
     }

@@ -18,19 +18,19 @@
       "links": [
         {
           "label": "Law Firms",
-          "href": "/#law-firms"
+          "href": "/industry/legal-compliance-marketing/law-firms"
         },
         {
           "label": "SaaS",
-          "href": "/#saas"
+          "href": "/industry/saas-digital-marketing"
         },
         {
           "label": "Private Investigators",
-          "href": "/#investigators"
+          "href": "/industry/legal-compliance-marketing/investigators"
         },
         {
           "label": "Security Companies",
-          "href": "/#security-companies"
+          "href": "/industry/legal-compliance-marketing/security-companies"
         }
       ]
     },
@@ -39,35 +39,35 @@
       "links": [
         {
           "label": "Website Development",
-          "href": "/#service-web"
+          "href": "/our-services/website-development"
         },
         {
           "label": "SEO Agency",
-          "href": "/#service-seo"
+          "href": "/our-services/seo"
         },
         {
           "label": "Marketing Automation",
-          "href": "/#service-automation"
+          "href": "/our-services/marketing-automation"
         },
         {
           "label": "Creative Designing",
-          "href": "/#service-design"
+          "href": "/our-services/creative-designing"
         },
         {
           "label": "Content Marketing",
-          "href": "/#service-content"
+          "href": "/our-services/content-marketing"
         },
         {
           "label": "Facebook Ads",
-          "href": "/#service-facebook"
+          "href": "/our-services/facebook-ads"
         },
         {
           "label": "Google Ads",
-          "href": "/#service-google"
+          "href": "/our-services/google-ads"
         },
         {
           "label": "Social Media Marketing",
-          "href": "/#service-social"
+          "href": "/our-services/social-media-marketing"
         }
       ]
     },
@@ -76,7 +76,7 @@
       "links": [
         {
           "label": "Blogs",
-          "href": "/#blog"
+          "href": "/insights/blog"
         },
         {
           "label": "Case Studies",
@@ -84,7 +84,7 @@
         },
         {
           "label": "WhitePapers",
-          "href": "/#whitepapers"
+          "href": "/insights/white-paper"
         },
         {
           "label": "FAQs",
@@ -101,7 +101,7 @@
         },
         {
           "label": "Blogs",
-          "href": "/#blog"
+          "href": "/insights/blog"
         },
         {
           "label": "Chat with us",
@@ -150,15 +150,21 @@
   "legal": [
     {
       "label": "Disclaimer",
-      "href": "/disclaimer"
+      "href": "/disclaimer",
+      "icon": "FileText",
+      "desc": "How to read what we publish"
     },
     {
       "label": "Terms & Conditions",
-      "href": "/terms-and-conditions"
+      "href": "/terms-and-conditions",
+      "icon": "Scale",
+      "desc": "The terms you agree to"
     },
     {
       "label": "Privacy Policy",
-      "href": "/privacy-policy"
+      "href": "/privacy-policy",
+      "icon": "Shield",
+      "desc": "What we collect, and why"
     }
   ]
 }
