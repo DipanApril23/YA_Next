@@ -5,12 +5,19 @@ centre of the section as you scroll (left rail on mobile); each step is a glass
 card with a rotating border-beam, a ghost numeral, a phase annotation, and a
 spine node that lights up with the step's colour as the spine passes it.
 
+Inside every card sits an **animated diagram of that phase** — a live call, a
+blueprint drafting itself, a funnel with traffic falling through it, a chart
+where the winner is scaled and the waste is cut, a pipeline closing out. They
+are the reason the section reads as something happening rather than five
+paragraphs of copy. See [Phase diagrams](#phase-diagrams) below.
+
 ## File map
 
 | File | Owns |
 | ---- | ---- |
 | [`OurProcess.jsx`](./OurProcess.jsx) | Structure, GSAP scroll animation, Framer Motion variants, and the `PROCESS_ICONS` lookup. |
-| [`ourProcess.css`](./ourProcess.css) | **Every** style rule (all `op-` prefixed). |
+| [`ourProcess.css`](./ourProcess.css) | **Every** style rule for the section itself (all `op-` prefixed), including the `.op-card-visual` slot the diagram drops into. |
+| [`visuals/`](./visuals) | The five phase diagrams — see [below](#phase-diagrams). Self-contained: its own components, its own stylesheet (`opv-` prefixed), its own in-view hook. |
 | [`../../../data/content/ourProcess.json`](../../../data/content/ourProcess.json) | **Editable copy** — header text and the five steps. Safe to hand to a CMS. |
 | [`../../../data/config/ourProcessParticles.json`](../../../data/config/ourProcessParticles.json) | Developer config — the backdrop particle positions. Not CMS content. |
 | [`../../../data/ourProcess.js`](../../../data/ourProcess.js) | Thin loader that re-exports the two JSON files under the names the component imports. |
@@ -58,6 +65,53 @@ SVG through the `PROCESS_ICONS` map in
 [`OurProcess.jsx`](./OurProcess.jsx) — the same pattern MainServices uses for
 `SERVICE_ICONS`. To add an icon: add an entry to `PROCESS_ICONS`, then reference
 its key from the step in the data file.
+
+## Phase diagrams
+
+Each step renders one animated diagram, resolved from `step.visual.kind` exactly
+the way `step.icon` is resolved — the key lives in the content JSON, the lookup
+lives in [`visuals/index.js`](./visuals/index.js). A missing or unknown `kind`
+renders nothing, so a CMS typo degrades to the card's copy instead of breaking
+the page.
+
+| `kind` | Draws | The line it illustrates |
+| ------ | ----- | ----------------------- |
+| `consult` | Connected caller, live voice waveform, notes landing one by one | "understand your business goals in depth" |
+| `plan` | A spec sheet drafting itself: spine, modules, dimension rules, revision stamp | "built around your goals, market, and budget" |
+| `funnel` | The funnel outline draws, stages light up, traffic falls and converges on the spout | "a fail-proof marketing funnel … deployed" |
+| `scale` | Columns grow, a trend draws across them, one is scaled and lit, one is pulled back and greyed | "winners get budget, waste gets cut" |
+| `close` | Three leads advance along their tracks; a ring closes and the check drops in | "every lead captured, followed up, and accounted for" |
+
+**Nothing in a diagram is a claim.** Every number in them is geometry generated
+in the component (column heights, funnel taper, pipeline progress); the content
+JSON carries only labels. There is deliberately no "+182% ROAS" anywhere — a
+decorative figure a visitor could read as a result is a liability, not a flourish.
+
+### How the animation is wired
+
+Two conventions carry the whole folder, and both are documented at the top of
+[`processVisuals.css`](./visuals/processVisuals.css):
+
+1. **A selector's plain declarations are the *finished* state**, and keyframes
+   run *from* the un-built state with `animation-fill-mode: backwards`. So the
+   un-built state shows before the animation starts, the element returns to its
+   own CSS after, and `prefers-reduced-motion` can simply drop the animations —
+   every diagram is then already drawn complete.
+2. **One switch.** `.opv` pauses every animation inside it and `.is-live` runs
+   them, set by [`useLiveInView`](./visuals/useLiveInView.js) while the frame is
+   on screen. Pausing never restarts an animation, so the same boolean gives
+   both behaviours: entrances play once on the first pass, and the ambient loops
+   (waveform, falling traffic, sheen) stop costing frames the moment the card
+   scrolls away — which is what keeps five panels of animated nodes off the
+   scroll's critical path.
+
+Where an element has both an entrance and a loop on the same property, the loop
+carries a delay past the entrance and no fill-mode so it stays inert until then;
+where that is not enough they are merged into a single keyframe track (see
+`.opv-column.is-cut`). All geometry reaches the sheet as custom properties, and
+any value computed during render uses integer or plain arithmetic only —
+`Math.sin` and friends are allowed to differ in their last bits between engines,
+which is a hydration mismatch waiting to happen.
 
 ## Styling notes (`ourProcess.css`)
 

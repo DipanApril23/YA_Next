@@ -1,5 +1,5 @@
 {
-  "$comment": "Our Process section copy and the five process steps. Editable content — safe for a CMS. `icon` is a KEY resolved to a React component by PROCESS_ICONS in OurProcess.jsx; keep the spelling in sync when adding a step. `accent`/`glow` are per-step brand colours forwarded to CSS as the --accent/--glow custom properties.",
+  "$comment": "Our Process section copy and the five process steps. Editable content — safe for a CMS. `icon` is a KEY resolved to a React component by PROCESS_ICONS in OurProcess.jsx; keep the spelling in sync when adding a step. `accent`/`glow` are per-step brand colours forwarded to CSS as the --accent/--glow custom properties. `visual` describes the animated diagram drawn inside the card: `kind` is a KEY resolved by PROCESS_VISUALS in OurProcess/visuals/index.js and DECIDES THE SHAPE OF THE REST OF THE OBJECT (consult → notes[], plan → modules[], funnel → stages[], scale → winnerLabel/cutLabel, close → statuses[] + ringLabel). `caption`/`status` are the two labels printed on the diagram's chrome for every kind. Every number in the diagrams is geometry generated in code — nothing here states a result or a metric, so no figure can be read as a claim.",
   "content": {
     "badge": "Our Process",
     "headingLead": "Simple Process for",
@@ -15,7 +15,13 @@
       "tag": "Free · 30 min",
       "icon": "consult",
       "accent": "#ec4899",
-      "glow": "rgba(236,72,153,0.4)"
+      "glow": "rgba(236,72,153,0.4)",
+      "visual": {
+        "kind": "consult",
+        "caption": "Discovery call",
+        "status": "Listening",
+        "notes": ["Goals", "Audience", "Challenges"]
+      }
     },
     {
       "num": "02",
@@ -25,7 +31,13 @@
       "tag": "Your growth blueprint",
       "icon": "plan",
       "accent": "#a855f7",
-      "glow": "rgba(168,85,247,0.4)"
+      "glow": "rgba(168,85,247,0.4)",
+      "visual": {
+        "kind": "plan",
+        "caption": "Growth blueprint",
+        "status": "Drafting",
+        "modules": ["Goals", "Market", "Budget"]
+      }
     },
     {
       "num": "03",
@@ -35,7 +47,13 @@
       "tag": "Web · Ads · Automation",
       "icon": "funnel",
       "accent": "#3b82f6",
-      "glow": "rgba(59,130,246,0.4)"
+      "glow": "rgba(59,130,246,0.4)",
+      "visual": {
+        "kind": "funnel",
+        "caption": "Funnel in production",
+        "status": "Live",
+        "stages": ["Traffic", "Landing", "Leads", "Booked"]
+      }
     },
     {
       "num": "04",
@@ -45,7 +63,14 @@
       "tag": "Data-driven, weekly",
       "icon": "scale",
       "accent": "#06b6d4",
-      "glow": "rgba(6,182,212,0.4)"
+      "glow": "rgba(6,182,212,0.4)",
+      "visual": {
+        "kind": "scale",
+        "caption": "Weekly review",
+        "status": "Tuning",
+        "winnerLabel": "Scaled",
+        "cutLabel": "Cut"
+      }
     },
     {
       "num": "05",
@@ -55,7 +80,14 @@
       "tag": "Leads → Customers",
       "icon": "close",
       "accent": "#10b981",
-      "glow": "rgba(16,185,129,0.4)"
+      "glow": "rgba(16,185,129,0.4)",
+      "visual": {
+        "kind": "close",
+        "caption": "Sales pipeline",
+        "status": "Closing",
+        "statuses": ["Captured", "Followed up", "Won"],
+        "ringLabel": "Accounted for"
+      }
     }
   ]
 }

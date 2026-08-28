@@ -1,0 +1,985 @@
+/* ═══════════════════════════════════════════════════════════════
+   PROCESS VISUALS — every style rule for the five phase diagrams
+   Young Architects · Our Process · light theme
+
+   Class prefix: `opv-`. The components ship no inline styles beyond the
+   custom properties they use to hand *geometry* to this sheet
+   (--i index, --h height, --x/--drift/--dur/--dl for the falling
+   traffic, --p pipeline progress, --len ring circumference).
+
+   ── THE ONE RULE THAT EXPLAINS THE WHOLE FILE ──────────────────
+   A selector's plain declarations describe the diagram's FINISHED
+   state. Keyframes then run *from* the un-built state toward it, with
+   `animation-fill-mode: backwards` and no `forwards`. That inversion
+   buys three things for free:
+     · before the animation starts, `backwards` shows the un-built state;
+     · after it ends, the element simply returns to its own CSS — the
+       finished state — so nothing depends on a fill hanging around;
+     · under prefers-reduced-motion the animations are dropped entirely
+       and every diagram is already sitting at its finished frame.
+
+   ── THE SECOND RULE: ONE SWITCH ────────────────────────────────
+   `.opv` pauses every animation inside it; `.is-live` (set by
+   useLiveInView while the frame is on screen) runs them. Pausing never
+   restarts an animation, so one-shot entrances play once on the first
+   pass and the ambient loops stop costing frames when the card is
+   scrolled away.
+
+   ── COMPOSING ANIMATIONS ───────────────────────────────────────
+   Where an element has both an entrance and an ambient loop on the
+   *same* property, the loop is given a delay ≥ the entrance's duration
+   and NO fill-mode, so it stays inert (rather than overriding the
+   entrance from behind) until the entrance is done. Where the two would
+   still collide, they are merged into a single keyframe track instead
+   (see .opv-column.is-cut).
+
+   Breakpoints follow the project theme: sm 576px · md 768px · lg 992px.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ═══ Panel shell ═══════════════════════════════════════════════ */
+.opv {
+  /* Local tokens. --accent / --glow / --accent-ink cascade in from the
+     .op-step <li>; the fallbacks keep the diagrams renderable if a visual
+     is ever dropped somewhere else. */
+  --opv-a: var(--accent, #a855f7);
+  --opv-ai: var(--accent-ink, #4a2f7a);
+  --opv-glow: var(--glow, rgba(168, 85, 247, 0.4));
+  --opv-ink: #0a1120;
+  --opv-muted: #55627a;
+  --opv-line: rgba(15, 23, 42, 0.1);
+  --opv-mono: ui-monospace, SFMono-Regular, "SF Mono", "Cascadia Mono", Menlo,
+    Consolas, monospace;
+  --opv-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --opv-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --opv-h: 122px; /* drawing area, excluding the caption row */
+
+  position: relative;
+  overflow: hidden;
+  margin: 0;
+  border: 1px solid var(--opv-line);
+  border-radius: 0.875rem;
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--opv-a) 7%, #ffffff) 0%,
+      #ffffff 58%,
+      color-mix(in srgb, var(--opv-a) 5%, #ffffff) 100%
+    );
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 1px 2px rgba(15, 23, 42, 0.04);
+  /* Isolate the diagram: five panels of animated nodes should never be able
+     to invalidate layout or paint outside their own box. */
+  contain: layout paint style;
+  transition: border-color 0.45s ease, box-shadow 0.45s ease;
+}
+@media (min-width: 576px) {
+  .opv {
+    --opv-h: 134px;
+  }
+}
+
+/* The single animation switch — see the header note. */
+.opv *,
+.opv *::before,
+.opv *::after {
+  animation-play-state: paused;
+}
+.opv.is-live *,
+.opv.is-live *::before,
+.opv.is-live *::after {
+  animation-play-state: running;
+}
+
+/* Blueprint rule, masked to a soft ellipse so it never fights the drawing */
+.opv-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(15, 23, 42, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(15, 23, 42, 0.05) 1px, transparent 1px);
+  background-size: 20px 20px;
+  -webkit-mask-image: radial-gradient(ellipse 88% 78% at 50% 45%, #000 30%, transparent 100%);
+  mask-image: radial-gradient(ellipse 88% 78% at 50% 45%, #000 30%, transparent 100%);
+  animation: opv-fade-in 0.9s ease backwards;
+}
+
+/* Slow specular pass across the glass */
+.opv-sheen {
+  position: absolute;
+  inset: -20% -40%;
+  transform: translateX(-115%) rotate(8deg);
+  /* Wide and soft: a narrow, bright band cuts a hard diagonal edge across the
+     drawing underneath, which reads as a rendering fault rather than glass. */
+  background: linear-gradient(
+    100deg,
+    transparent 34%,
+    rgba(255, 255, 255, 0.45) 50%,
+    transparent 66%
+  );
+  animation: opv-sheen 7s ease-in-out 1.6s infinite;
+}
+
+/* Corner brackets — the instrument-panel tell */
+.opv-bracket {
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  border: 1px solid color-mix(in srgb, var(--opv-a) 55%, transparent);
+  animation: opv-bracket-in 0.6s var(--opv-back) 0.15s backwards;
+}
+.opv-bracket--tl {
+  top: 6px;
+  left: 6px;
+  border-right: 0;
+  border-bottom: 0;
+}
+.opv-bracket--tr {
+  top: 6px;
+  right: 6px;
+  border-left: 0;
+  border-bottom: 0;
+}
+.opv-bracket--bl {
+  bottom: 6px;
+  left: 6px;
+  border-right: 0;
+  border-top: 0;
+}
+.opv-bracket--br {
+  bottom: 6px;
+  right: 6px;
+  border-left: 0;
+  border-top: 0;
+}
+
+/* Caption row — the only text in the tree; the drawing is aria-hidden */
+.opv-caption {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.625rem 0.875rem 0;
+  font-family: var(--opv-mono);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--opv-muted);
+}
+.opv-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-weight: 700;
+  color: var(--opv-ai);
+}
+.opv-status-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--opv-a);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--opv-a) 16%, transparent);
+  animation: opv-blink 2s ease-in-out infinite;
+}
+
+/* The drawing area itself */
+.opv-stage {
+  position: relative;
+  z-index: 1;
+  height: var(--opv-h);
+  padding: 0.625rem 0.875rem 0.75rem;
+}
+
+/* ═══ 01 · DISCOVERY — live call ════════════════════════════════ */
+.opv-call {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 0.75rem;
+  height: 58%;
+}
+
+.opv-caller {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid color-mix(in srgb, var(--opv-a) 32%, transparent);
+  border-radius: 12px;
+  background: linear-gradient(150deg, #ffffff, color-mix(in srgb, var(--opv-a) 12%, #ffffff));
+  color: var(--opv-ai);
+  box-shadow: 0 6px 14px -8px var(--opv-glow);
+  animation: opv-pop 0.65s var(--opv-back) backwards;
+}
+.opv-caller svg {
+  position: relative;
+  width: 17px;
+  height: 17px;
+}
+/* Two rings breathe outward — "connected" */
+.opv-caller-ring {
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--opv-a);
+  border-radius: 12px;
+  opacity: 0;
+  animation: opv-signal 2.8s ease-out 0.6s infinite;
+}
+.opv-caller-ring--2 {
+  animation-delay: 2s;
+}
+
+.opv-wave {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  height: 100%;
+}
+.opv-wave-bar {
+  flex: 1 1 0;
+  min-width: 2px;
+  height: var(--h);
+  border-radius: 2px;
+  background: linear-gradient(
+    180deg,
+    var(--opv-a),
+    color-mix(in srgb, var(--opv-a) 42%, #ffffff)
+  );
+  opacity: 0.9;
+  /* Entrance is opacity-only so it cannot collide with the loop's
+     transform (see the header note on composing animations). */
+  animation:
+    opv-fade-in 0.5s ease calc(var(--i) * 20ms) backwards,
+    opv-wave 1.2s ease-in-out calc(var(--i) * 55ms) infinite;
+}
+
+.opv-notes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+  margin-top: 0.75rem;
+}
+.opv-note {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  border: 1px solid color-mix(in srgb, var(--opv-a) 28%, transparent);
+  border-radius: 999px;
+  padding: 0.25rem 0.5rem;
+  background: color-mix(in srgb, var(--opv-a) 8%, #ffffff);
+  color: var(--opv-ai);
+  font-family: var(--opv-mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  animation: opv-pop 0.55s var(--opv-back) calc(0.55s + var(--i) * 0.4s) backwards;
+}
+.opv-note svg {
+  width: 9px;
+  height: 9px;
+}
+
+/* ═══ 02 · STRATEGY — the blueprint drafts itself ═══════════════ */
+.opv-sheet {
+  position: relative;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  height: 100%;
+}
+/* `align-self` rather than `align-content`: the list has to shrink to its rows
+   for ::before's 8px inset to land on the first and last node centres. Centring
+   the tracks inside a full-height box instead leaves the spine measuring from
+   the top of the sheet. */
+.opv-modules {
+  position: relative;
+  align-self: center;
+  display: grid;
+  gap: 0.6rem;
+}
+/* The spine the modules hang off. Insetting it by half a node (the node is
+   17px) pins each end to a node's centre, so it stays right whatever number
+   of modules the content JSON carries. */
+.opv-modules::before {
+  content: "";
+  position: absolute;
+  top: 8px;
+  bottom: 8px;
+  left: 8px;
+  width: 1.5px;
+  background: linear-gradient(
+    180deg,
+    var(--opv-a),
+    color-mix(in srgb, var(--opv-a) 25%, transparent)
+  );
+  transform-origin: top;
+  animation: opv-draw-y 0.85s var(--opv-ease) backwards;
+}
+.opv-module {
+  display: grid;
+  grid-template-columns: 17px auto 1fr;
+  align-items: center;
+  gap: 0.5rem;
+  animation: opv-slide-x 0.6s var(--opv-ease) calc(0.28s + var(--i) * 0.26s) backwards;
+}
+.opv-module-node {
+  display: grid;
+  place-items: center;
+  width: 17px;
+  height: 17px;
+  border: 1px solid color-mix(in srgb, var(--opv-a) 38%, transparent);
+  border-radius: 6px;
+  background: #ffffff;
+  color: var(--opv-ai);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--opv-a) 8%, transparent);
+}
+.opv-module-node svg {
+  width: 9px;
+  height: 9px;
+  stroke-dasharray: 26;
+  stroke-dashoffset: 0;
+  animation: opv-draw-check 0.5s ease calc(0.6s + var(--i) * 0.26s) backwards;
+}
+.opv-module-label {
+  font-family: var(--opv-mono);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--opv-ink);
+}
+/* Dimension rule with blueprint end-ticks. --w is the module's own measured
+   width (set per row in PlanVisual) — equal rules would read as a table. */
+.opv-module-rule {
+  position: relative;
+  width: var(--w, 100%);
+  height: 1px;
+  background: rgba(15, 23, 42, 0.09);
+}
+.opv-module-rule::before,
+.opv-module-rule::after {
+  content: "";
+  position: absolute;
+  top: -2px;
+  width: 1px;
+  height: 5px;
+  background: rgba(15, 23, 42, 0.18);
+}
+.opv-module-rule::before {
+  left: 0;
+}
+.opv-module-rule::after {
+  right: 0;
+}
+.opv-module-rule-fill {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, var(--opv-a), transparent);
+  transform-origin: left;
+  animation: opv-draw-x 0.75s var(--opv-ease) calc(0.42s + var(--i) * 0.26s) backwards;
+}
+
+.opv-stamp {
+  justify-self: end;
+  border: 1px solid color-mix(in srgb, var(--opv-a) 40%, transparent);
+  border-radius: 4px;
+  padding: 0.2rem 0.4rem;
+  color: var(--opv-ai);
+  font-family: var(--opv-mono);
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  transform: rotate(-4deg);
+  animation: opv-stamp-in 0.55s var(--opv-back) 1.25s backwards;
+}
+
+/* ═══ 03 · BUILD — the funnel, running ══════════════════════════ */
+.opv-funnel-wrap {
+  position: relative;
+  height: 100%;
+}
+/* Clip everything inside to the funnel silhouette, so the falling traffic
+   is trimmed by the walls exactly where they close in. */
+.opv-funnel {
+  position: absolute;
+  inset: 0;
+  clip-path: polygon(0 0, 100% 0, 64% 100%, 36% 100%);
+}
+/* Each band is a touch denser than the one above it, so the funnel reads as
+   one tapering solid rather than four stripes behind a grid. */
+.opv-band {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(var(--i) * 100% / var(--n));
+  height: calc(100% / var(--n));
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--opv-a) 30%, transparent),
+    color-mix(in srgb, var(--opv-a) 12%, transparent)
+  );
+  border-bottom: 1px dashed color-mix(in srgb, var(--opv-a) 38%, transparent);
+  opacity: calc(0.34 + var(--i) * 0.22);
+  animation: opv-band-in 0.6s var(--opv-ease) calc(0.25s + var(--i) * 0.14s) backwards;
+}
+
+.opv-drop {
+  --fall-x: 0px;
+  --fall-y: 150px;
+  position: absolute;
+  top: -6%;
+  left: var(--x);
+  width: var(--s);
+  height: var(--s);
+  border-radius: 50%;
+  background: var(--opv-ai);
+  box-shadow: 0 0 7px color-mix(in srgb, var(--opv-a) 75%, transparent);
+  animation: opv-drop-fall var(--dur) linear var(--dl) infinite;
+}
+/* Container units let each dot converge on the spout by a share of the
+   funnel's own width, and fall exactly its height, with no JS measuring.
+   Without support the dots simply fall straight and the walls clip them. */
+@supports (container-type: size) {
+  .opv-funnel {
+    container-type: size;
+  }
+  .opv-drop {
+    --fall-x: calc(var(--drift) * 1cqw);
+    --fall-y: 112cqh;
+  }
+}
+
+.opv-funnel-outline {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+/* Revealed with a clip wipe, NOT stroke-dash. `preserveAspectRatio="none"`
+   stretches the box, so the stroke needs `non-scaling-stroke` to stay an even
+   weight — but that also moves dash lengths into screen units, where a
+   `pathLength="100"` dasharray is ~100px of a ~450px path and the outline
+   comes out visibly broken. A wipe sidesteps the unit mismatch entirely, and
+   top-to-bottom is the better read anyway: the funnel builds downward. */
+.opv-funnel-outline {
+  clip-path: inset(0 0 0 0);
+  animation: opv-wipe-y 1.15s cubic-bezier(0.65, 0, 0.35, 1) backwards;
+}
+.opv-funnel-outline polygon {
+  fill: none;
+  stroke: color-mix(in srgb, var(--opv-a) 85%, transparent);
+  stroke-width: 1.25;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.opv-stage-labels {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-auto-rows: 1fr;
+}
+.opv-stage-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--opv-mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--opv-ai);
+  /* The label crosses the band fill, the dashed rule and the blueprint grid at
+     once — a white halo is what keeps 9px type readable over all three. */
+  text-shadow:
+    0 0 4px #ffffff,
+    0 0 8px #ffffff;
+  animation: opv-fade-in 0.5s ease calc(0.4s + var(--i) * 0.16s) backwards;
+}
+
+/* What makes it through, glowing at the spout */
+.opv-spout {
+  position: absolute;
+  left: 50%;
+  bottom: -3px;
+  width: 30%;
+  height: 6px;
+  transform: translateX(-50%);
+  border-radius: 999px;
+  background: var(--opv-a);
+  filter: blur(5px);
+  animation: opv-spout 2.4s ease-in-out 1s infinite;
+}
+
+/* ═══ 04 · OPTIMIZE — winners scaled, waste cut ═════════════════ */
+.opv-chart {
+  position: relative;
+  height: 74%;
+}
+.opv-columns {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  gap: 5px;
+}
+.opv-column {
+  position: relative;
+  flex: 1 1 0;
+  height: var(--h);
+  border-radius: 3px 3px 0 0;
+  transform-origin: bottom;
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--opv-a) 50%, #ffffff),
+    color-mix(in srgb, var(--opv-a) 16%, #ffffff)
+  );
+  animation: opv-grow 0.7s var(--opv-ease) calc(var(--i) * 0.07s) backwards;
+}
+
+/* The winner: lit, capped, and breathing after it is scaled. The loop's
+   delay clears the entrance, and it carries no fill-mode, so it stays
+   inert until then instead of overriding the growth. */
+.opv-column.is-winner {
+  background: linear-gradient(
+    180deg,
+    var(--opv-a),
+    color-mix(in srgb, var(--opv-a) 38%, #ffffff)
+  );
+  box-shadow: 0 0 16px color-mix(in srgb, var(--opv-a) 45%, transparent);
+  animation:
+    opv-grow 0.7s var(--opv-ease) calc(var(--i) * 0.07s) backwards,
+    opv-breathe 2.8s ease-in-out 1.2s infinite;
+}
+.opv-column.is-winner::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 2px;
+  border-radius: 2px;
+  background: #ffffff;
+  box-shadow: 0 0 8px var(--opv-a);
+  animation: opv-fade-in 0.5s ease 1.1s backwards;
+}
+
+/* The waste: it grows with the rest, then gets pulled back and greyed.
+   Entrance and cut are ONE track — two animations on transform would
+   fight (see the header note). */
+.opv-column.is-cut {
+  transform: scaleY(0.42);
+  animation: opv-cut 1.9s var(--opv-ease) calc(var(--i) * 0.07s) backwards;
+}
+.opv-column.is-cut::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(180deg, rgba(100, 116, 139, 0.85), rgba(148, 163, 184, 0.45));
+  animation: opv-fade-in 0.5s ease 1.15s backwards;
+}
+
+/* Left-to-right wipe rather than stroke-dash — same reason as the funnel
+   outline above: `non-scaling-stroke` puts dash lengths in screen units. */
+.opv-trend {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  clip-path: inset(0 0 0 0);
+  animation: opv-wipe-x 1.2s cubic-bezier(0.65, 0, 0.35, 1) 0.55s backwards;
+}
+.opv-trend polyline {
+  fill: none;
+  stroke: var(--opv-ai);
+  stroke-width: 1.25;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+  opacity: 0.8;
+}
+
+.opv-baseline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(15, 23, 42, 0.24), transparent);
+  transform-origin: center;
+  animation: opv-draw-x 0.7s var(--opv-ease) backwards;
+}
+
+.opv-legend {
+  display: flex;
+  gap: 0.375rem;
+  margin-top: 0.625rem;
+}
+.opv-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  border-radius: 999px;
+  padding: 0.2rem 0.5rem;
+  font-family: var(--opv-mono);
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  animation: opv-pop 0.5s var(--opv-back) 1.3s backwards;
+}
+.opv-legend-item svg {
+  width: 9px;
+  height: 9px;
+}
+.opv-legend-item--up {
+  border: 1px solid color-mix(in srgb, var(--opv-a) 32%, transparent);
+  background: color-mix(in srgb, var(--opv-a) 9%, #ffffff);
+  color: var(--opv-ai);
+}
+.opv-legend-item--down {
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  background: rgba(15, 23, 42, 0.035);
+  color: #64748b;
+  animation-delay: 1.45s;
+}
+
+/* ═══ 05 · REVENUE — nothing slips through ══════════════════════ */
+.opv-pipeline {
+  display: grid;
+  grid-template-columns: 1fr 68px;
+  align-items: center;
+  gap: 0.75rem;
+  height: 100%;
+}
+.opv-leads {
+  display: grid;
+  gap: 0.65rem;
+}
+.opv-lead {
+  display: grid;
+  /* Wide enough for the longest status on one line — a wrapped label pushes
+     its row's track out of alignment with the two beside it. */
+  grid-template-columns: 76px 1fr 15px;
+  align-items: center;
+  gap: 0.5rem;
+  animation: opv-slide-x 0.6s var(--opv-ease) calc(var(--i) * 0.18s) backwards;
+}
+.opv-lead-label {
+  font-family: var(--opv-mono);
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--opv-muted);
+}
+.opv-lead.is-won .opv-lead-label {
+  color: var(--opv-ai);
+}
+.opv-lead-track {
+  position: relative;
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.08);
+}
+.opv-lead-fill {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: var(--p);
+  border-radius: 999px;
+  transform-origin: left;
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--opv-a) 30%, #ffffff),
+    var(--opv-a)
+  );
+  animation: opv-draw-x 0.9s var(--opv-ease) calc(0.3s + var(--i) * 0.18s) backwards;
+}
+.opv-lead-head {
+  position: absolute;
+  top: 50%;
+  left: var(--p);
+  width: 7px;
+  height: 7px;
+  margin: -3.5px 0 0 -3.5px;
+  border: 1.5px solid var(--opv-a);
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 0 8px color-mix(in srgb, var(--opv-a) 50%, transparent);
+  animation: opv-pop 0.5s var(--opv-back) calc(1.05s + var(--i) * 0.18s) backwards;
+}
+.opv-lead-mark {
+  display: grid;
+  place-items: center;
+  width: 15px;
+  height: 15px;
+  border: 1px solid rgba(15, 23, 42, 0.16);
+  border-radius: 50%;
+  background: #ffffff;
+  color: transparent;
+}
+.opv-lead-mark svg {
+  width: 8px;
+  height: 8px;
+}
+.opv-lead.is-won .opv-lead-mark {
+  border-color: var(--opv-a);
+  background: var(--opv-a);
+  color: #ffffff;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--opv-a) 16%, transparent);
+  animation: opv-pop 0.6s var(--opv-back) 1.5s backwards;
+}
+
+.opv-ring-wrap {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 0.35rem;
+}
+.opv-ring {
+  width: 54px;
+  height: 54px;
+  transform: rotate(-90deg);
+}
+.opv-ring-track {
+  fill: none;
+  stroke: rgba(15, 23, 42, 0.1);
+  stroke-width: 3;
+}
+.opv-ring-fill {
+  fill: none;
+  stroke: var(--opv-a);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-dasharray: var(--len);
+  stroke-dashoffset: 0;
+  animation: opv-ring-draw 1.5s cubic-bezier(0.65, 0, 0.35, 1) 0.4s backwards;
+}
+.opv-ring-mark {
+  position: absolute;
+  top: 27px;
+  left: 50%;
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  transform: translate(-50%, -50%);
+  color: var(--opv-ai);
+  animation: opv-mark-in 0.6s var(--opv-back) 1.6s backwards;
+}
+.opv-ring-mark svg {
+  width: 16px;
+  height: 16px;
+}
+.opv-ring-label {
+  max-width: 68px;
+  text-align: center;
+  font-family: var(--opv-mono);
+  font-size: 8px;
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--opv-muted);
+  animation: opv-fade-in 0.6s ease 1.8s backwards;
+}
+
+/* ═══ Keyframes ═════════════════════════════════════════════════
+   Every one of these runs FROM the un-built state; the 100% frame is
+   the element's own CSS, so none of them declare it. */
+@keyframes opv-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes opv-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+}
+@keyframes opv-mark-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.3);
+  }
+}
+@keyframes opv-slide-x {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+}
+@keyframes opv-band-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+@keyframes opv-draw-x {
+  from {
+    transform: scaleX(0);
+  }
+}
+@keyframes opv-draw-y {
+  from {
+    transform: scaleY(0);
+  }
+}
+@keyframes opv-grow {
+  from {
+    transform: scaleY(0);
+  }
+}
+/* Wipes. Used for the two SVGs that carry `preserveAspectRatio="none"` +
+   `non-scaling-stroke`, where a stroke-dash draw would measure its dashes in
+   screen units and break the line up. */
+@keyframes opv-wipe-x {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+}
+@keyframes opv-wipe-y {
+  from {
+    clip-path: inset(0 0 100% 0);
+  }
+}
+@keyframes opv-draw-check {
+  from {
+    stroke-dashoffset: 26;
+  }
+}
+@keyframes opv-ring-draw {
+  from {
+    stroke-dashoffset: var(--len);
+  }
+}
+@keyframes opv-bracket-in {
+  from {
+    opacity: 0;
+    transform: scale(0.2);
+  }
+}
+@keyframes opv-stamp-in {
+  from {
+    opacity: 0;
+    transform: rotate(-16deg) scale(1.5);
+  }
+}
+/* Grow with the rest, hold, then get pulled back — one track, so the
+   entrance and the cut cannot fight over `transform`. */
+@keyframes opv-cut {
+  0% {
+    transform: scaleY(0);
+  }
+  26% {
+    transform: scaleY(1);
+  }
+  55% {
+    transform: scaleY(1);
+  }
+  100% {
+    transform: scaleY(0.42);
+  }
+}
+
+/* ── Ambient loops ───────────────────────────────────────────── */
+@keyframes opv-wave {
+  0%,
+  100% {
+    transform: scaleY(0.32);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+@keyframes opv-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+@keyframes opv-signal {
+  0% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  70%,
+  100% {
+    opacity: 0;
+    transform: scale(1.65);
+  }
+}
+@keyframes opv-sheen {
+  0% {
+    transform: translateX(-115%) rotate(8deg);
+  }
+  55%,
+  100% {
+    transform: translateX(115%) rotate(8deg);
+  }
+}
+@keyframes opv-drop-fall {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0);
+  }
+  12% {
+    opacity: 0.8;
+  }
+  88% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(var(--fall-x), var(--fall-y), 0);
+  }
+}
+@keyframes opv-spout {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: translateX(-50%) scaleX(0.7);
+  }
+  50% {
+    opacity: 0.85;
+    transform: translateX(-50%) scaleX(1.15);
+  }
+}
+@keyframes opv-breathe {
+  0%,
+  100% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(1.06);
+  }
+}
+
+/* ═══ Reduced motion ════════════════════════════════════════════
+   Drop the animations outright: because every rule above describes the
+   FINISHED state, each diagram is then simply drawn complete. The two
+   purely ambient layers have no finished state worth showing, so they
+   are removed rather than frozen. */
+@media (prefers-reduced-motion: reduce) {
+  .opv *,
+  .opv *::before,
+  .opv *::after {
+    animation: none !important;
+  }
+  .opv-sheen,
+  .opv-drop,
+  .opv-caller-ring {
+    display: none;
+  }
+}

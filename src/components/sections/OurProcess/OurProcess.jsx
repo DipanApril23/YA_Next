@@ -24,6 +24,7 @@ import {
   OURPROCESS_PARTICLES,
   EASE_ENTRANCE,
 } from "@/data";
+import ProcessVisual from "./visuals";
 import "./ourProcess.css";
 
 /* Resolves each step's `icon` key (from the data) onto its SVG. Kept in the
@@ -277,6 +278,14 @@ export default function OurProcess() {
 
                         <h3 className="op-card-title">{step.title}</h3>
                         <p className="op-card-desc">{step.desc}</p>
+
+                        {/* The phase, drawn. One animated diagram per step,
+                            resolved from `step.visual.kind` — see
+                            ./visuals/index.js. */}
+                        <ProcessVisual
+                          visual={step.visual}
+                          className="op-card-visual"
+                        />
 
                         {/* Measurement ticks — blueprint detail */}
                         <div className="op-ticks" aria-hidden="true">
