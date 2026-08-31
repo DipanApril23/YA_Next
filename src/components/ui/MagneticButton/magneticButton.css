@@ -1,0 +1,38 @@
+/* ── MagneticButton — the fixed parts of the button's layer stack ────────────
+   See ./MagneticButton.jsx.
+
+   The button paints itself in numbered layers, and the ORDER of those layers
+   never changes even though what they paint does. The z-indices and the glow's
+   geometry are that fixed order; the colours come from the variant (`v.glow`,
+   `v.sh`) and the springs come from framer-motion, so those stay inline.
+
+   Prefixed `mb-` so nothing collides with the Tailwind utilities the component
+   also uses, or with another section's stylesheet. */
+
+/* ① Outer glow. Bleeds 3px past the button and is blurred far wider, so it
+   reads as light coming off the edge rather than as a second border. Sits
+   BEHIND the button's own background, hence the negative index. */
+.mb-glow {
+  inset: -3px;
+  filter: blur(18px);
+  z-index: -1;
+}
+
+/* ⑤ Ghost variant's hover fill. Opacity is animated inline. */
+.mb-ghost-fill {
+  background: rgba(255, 255, 255, 0.07);
+}
+
+/* ⑥ Shimmer sweep: a clipping window and the band that travels across it.
+   The band's own gradient is variant-tinted and stays inline. */
+.mb-shimmer-clip {
+  z-index: 2;
+}
+.mb-shimmer-band {
+  width: 55%;
+}
+
+/* ⑦ Label, icon and spinner — above every decorative layer. */
+.mb-content {
+  z-index: 3;
+}

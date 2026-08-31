@@ -13,6 +13,7 @@ import {
   SERVICES_SECTION_CONTENT as CONTENT,
 } from "@/data";
 import serviceWire from "@/assets/image/service-wire.webp";
+import "./service.css";
 
 // ── Floating Particle ─────────────────────────────────────────────────────────
 const Particle = ({ style }) => (
@@ -31,8 +32,8 @@ const StatPill = ({ value, label, color, delay = 0 }) => (
     whileInView={{ opacity: 1, scale: 1, y: 0 }}
     viewport={{ once: true }}
     transition={{ type: "spring", stiffness: 200, damping: 20, delay }}
-    className="flex flex-col items-center justify-center px-4 py-3 rounded-2xl border flex-1"
-    style={{ background: "rgba(255,255,255,0.03)", borderColor: `${color}33` }}
+    className="sv-stat flex flex-col items-center justify-center px-4 py-3 rounded-2xl border flex-1"
+    style={{ borderColor: `${color}33` }}
   >
     <span className="text-xl sm:text-2xl font-black tracking-tight" style={{ color }}>
       {value}
@@ -56,8 +57,7 @@ const Service = () => {
   return (
     <div
       ref={sectionRef}
-      className="relative w-full overflow-hidden"
-      style={{ background: "linear-gradient(180deg,#010208 0%,#060612 60%,#010208 100%)" }}
+      className="sv-section relative w-full overflow-hidden"
     >
       {/* ── Ambient blobs ─── */}
       <motion.div style={{ y: spring }} className="absolute inset-0 pointer-events-none">
@@ -71,11 +71,7 @@ const Service = () => {
 
       {/* ── Grid overlay ─── */}
       <div
-        className="absolute inset-0 pointer-events-none opacity-[0.025]"
-        style={{
-          backgroundImage: "linear-gradient(rgba(255,255,255,0.3) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.3) 1px,transparent 1px)",
-          backgroundSize: "60px 60px",
-        }}
+        className="sv-grid absolute inset-0 pointer-events-none opacity-[0.025]"
       />
 
       <Container>
@@ -91,10 +87,9 @@ const Service = () => {
           >
             {/* Label chip */}
             <div
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border text-[10px] sm:text-xs font-mono font-bold tracking-widest uppercase"
-              style={{ color: "#00f5d4", borderColor: "rgba(0,245,212,0.3)", background: "rgba(0,245,212,0.07)" }}
+              className="sv-badge inline-flex items-center gap-2 px-4 py-1.5 rounded-full border text-[10px] sm:text-xs font-mono font-bold tracking-widest uppercase"
             >
-              <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: "#00f5d4", boxShadow: "0 0 6px #00f5d4" }} />
+              <span className="sv-badge-dot w-1.5 h-1.5 rounded-full animate-pulse" />
               {CONTENT.badge}
             </div>
 
@@ -119,8 +114,7 @@ const Service = () => {
             whileInView={{ scaleX: 1, opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.65, ease: [0.4, 0, 0.2, 1] }}
-            className="w-full h-px rounded-full"
-            style={{ background: "linear-gradient(90deg,transparent,rgba(0,245,212,0.25),rgba(168,85,247,0.25),transparent)" }}
+            className="sv-rule w-full h-px rounded-full"
           />
 
           {/* ══ 2. Two-column: LEFT info  |  RIGHT image ════════════════════ */}
@@ -183,8 +177,7 @@ const Service = () => {
               >
                 {/* Glow behind image */}
                 <div
-                  className="absolute inset-0 rounded-full blur-[80px] pointer-events-none"
-                  style={{ background: "radial-gradient(ellipse, rgba(168,85,247,0.25) 0%, rgba(0,245,212,0.15) 60%, transparent 100%)" }}
+                  className="sv-image-glow absolute inset-0 rounded-full blur-[80px] pointer-events-none"
                 />
                 <Image
                   src={serviceWire}
@@ -205,8 +198,7 @@ const Service = () => {
             whileInView={{ scaleX: 1, opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.65, ease: [0.4, 0, 0.2, 1] }}
-            className="w-full h-px rounded-full"
-            style={{ background: "linear-gradient(90deg,transparent,rgba(0,245,212,0.25),rgba(168,85,247,0.25),transparent)" }}
+            className="sv-rule w-full h-px rounded-full"
           />
 
           {/* ══ 3. ServiceCards — full width below ══════════════════════════ */}

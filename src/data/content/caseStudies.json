@@ -1,5 +1,5 @@
 {
-  "$comment": "Case Studies section: header copy and the case-study cards. Editable content — safe for a CMS. WARNING: values wrapped in [XX] are placeholders from the approved copy deck; replace them with real, verifiable results before publishing. Add a 4th/5th study by appending to `items` — the results index, card stack and mobile slider all read this array's length.",
+  "$comment": "Case Studies section: header copy and the case-study cards. Editable content — safe for a CMS. CARD SHAPE: `hook` is the one-line human truth (kept short — it is set large, so ~10 words max); `summary` is the one-line proof of work and is the card's SEO payload (keep the service keywords a client would actually search — 'local SEO', 'Google Ads', 'CRM automation', 'go-to-market' — and keep it under ~28 words); `shifts` renders the Before → After ledger — each row is one honest before-state pulled from the brief and one stated result, with `fill` (0-100) sizing that row's progress bar, so raise/lower `fill` to reflect how far that metric actually moved. WARNING: never invent a numeric before-value — qualitative before-states ('Missed calls', 'Referrals only') are what keep this section honest. Add a 4th/5th study by appending to `items` — the results index, card stack and mobile slider all read this array's length.",
   "content": {
     "eyebrow": "Case Studies",
     "title": {
@@ -14,6 +14,11 @@
       "lead": "Trusted by",
       "strong": "local businesses",
       "tail": "across Kolkata"
+    },
+    "card": {
+      "shiftLabel": "The Shift",
+      "shiftLegend": "Before → After",
+      "stackLabel": "The Stack"
     }
   },
   "items": [
@@ -22,20 +27,26 @@
       "label": "Dental Clinic",
       "industry": "Healthcare · Local Business",
       "title": "From Missed Calls\nto Full Calendar",
-      "challenge": "Strong reputation offline, invisible online — missed calls and zero Google presence meant patients quietly went elsewhere.",
-      "built": "A conversion-focused website, local SEO, Google Ads for treatment searches, and AI-powered WhatsApp booking that answers 24/7.",
-      "stats": [
+      "hook": "Everyone on the street knew them. Google didn't.",
+      "summary": "A conversion-built website, local SEO for “dentist near me” searches, Google Ads on treatment intent, and an AI WhatsApp assistant that books appointments at 11pm.",
+      "shifts": [
         {
-          "value": "20+",
-          "label": "Appointment enquiries / month"
+          "metric": "Appointment enquiries / month",
+          "before": "Missed calls",
+          "after": "20+",
+          "fill": 84
         },
         {
-          "value": "78%",
-          "label": "Booked outside clinic hours"
+          "metric": "Bookings outside clinic hours",
+          "before": "Phone only, 9–6",
+          "after": "78%",
+          "fill": 78
         },
         {
-          "value": "Page 1",
-          "label": "Rankings for 5+ treatment keywords"
+          "metric": "Treatment keyword rankings",
+          "before": "Invisible on search",
+          "after": "Page 1",
+          "fill": 92
         }
       ],
       "tags": [
@@ -50,28 +61,33 @@
       "label": "Law Firm",
       "industry": "Legal · Professional Services",
       "title": "Scaling Organic Growth\nThrough SEO & Automation",
-      "challenge": "A mid-sized law firm relied heavily on referrals and had limited online visibility, slow lead response times, and no structured marketing or lead management system.",
-      "built": "A complete digital growth ecosystem including SEO-driven website architecture, service & location pages, Local SEO, GA4 & GTM analytics, CRM automation, WhatsApp and email workflows, online consultation booking, and lifecycle email marketing.",
-      "stats": [
+      "hook": "Referrals kept them busy. Nobody new could find them.",
+      "summary": "SEO-led site architecture, service and location pages, GA4 & GTM tracking, CRM automation and lifecycle email that reply to an enquiry before it reaches the next firm.",
+      "shifts": [
         {
-          "value": "24–48 hrs → <30 mins",
-          "label": "Lead response time"
+          "metric": "Lead response time",
+          "before": "24–48 hrs",
+          "after": "<30 mins",
+          "fill": 90
         },
         {
-          "value": "6+ automated workflows",
-          "label": "CRM & lifecycle automation"
+          "metric": "CRM & lifecycle automation",
+          "before": "Manual follow-up",
+          "after": "6+ workflows",
+          "fill": 76
         },
         {
-          "value": "100+ high-intent keywords",
-          "label": "Targeted through SEO"
+          "metric": "High-intent keywords targeted",
+          "before": "Referrals only",
+          "after": "100+",
+          "fill": 88
         }
       ],
       "tags": [
         "SEO Architecture",
         "Local SEO",
         "GA4 & GTM",
-        "CRM Automation",
-        "Lifecycle Email"
+        "CRM Automation"
       ]
     },
     {
@@ -79,27 +95,32 @@
       "label": "AI SaaS Product",
       "industry": "SaaS · B2B Technology",
       "title": "Building a Go-To-Market\nStrategy From Scratch",
-      "challenge": "An AI-powered Expense Management SaaS required a clear market entry strategy, industry positioning, and a repeatable system for generating qualified leads.",
-      "built": "Conducted market and competitor research, defined ICPs across multiple industries, developed positioning and messaging, created landing pages, lead magnets, content strategy, email automation workflows, and a complete GTM roadmap.",
-      "stats": [
+      "hook": "The product was ready. The market had never heard of it.",
+      "summary": "Competitor research, ICPs across seven industries, positioning, landing pages, lead magnets and email automation — a repeatable B2B SaaS go-to-market engine.",
+      "shifts": [
         {
-          "value": "7+ target industries",
-          "label": "ICP research completed"
+          "metric": "Target industries mapped",
+          "before": "No defined ICP",
+          "after": "7+",
+          "fill": 74
         },
         {
-          "value": "5+ GTM assets",
-          "label": "Landing pages, lead magnets & messaging"
+          "metric": "GTM assets built",
+          "before": "Zero collateral",
+          "after": "5+",
+          "fill": 70
         },
         {
-          "value": "Complete GTM strategy",
-          "label": "Ready for market launch"
+          "metric": "Route to market",
+          "before": "No entry plan",
+          "after": "Launch-ready",
+          "fill": 95
         }
       ],
       "tags": [
         "Market Research",
         "ICP & Positioning",
         "Landing Pages",
-        "Lead Magnets",
         "GTM Roadmap"
       ]
     }

@@ -1,5 +1,5 @@
 {
-  "$comment": "Case Studies dark-glass design tokens. DEVELOPER CONFIG, not editable copy — do NOT hand this to the CMS. `gradientText` is a React inline-style object (camelCase CSS keys) applied to the gradient headline.",
+  "$comment": "Case Studies dark-glass design tokens. DEVELOPER CONFIG, not editable copy — do NOT hand this to the CMS. `gradientText` is a React inline-style object (camelCase CSS keys) applied to the gradient headline. The `card*` tokens are the card's own text colours and are deliberately brighter than `body`/`muted`: those two are tuned for the left panel sitting on the bare galaxy backdrop, and reusing them on the lit glass card left the ledger labels near 3:1 contrast — unreadable at 9.5px. They reach the card as CSS custom properties so :hover rules can override them.",
   "tokens": {
     "bg": "#060610",
     "surface": "#0b0b16",
@@ -9,7 +9,10 @@
     "accent1": "#a855f7",
     "accent2": "#ec4899",
     "accent3": "#38bdf8",
-    "tagText": "#cbb6f2"
+    "tagText": "#d6c4f7",
+    "cardLabel": "#9298b8",
+    "cardLabelHi": "#d3d8ee",
+    "cardCopy": "#c3c8dd"
   },
   "gradient": "linear-gradient(135deg, #4f46e5 0%, #a855f7 50%, #ec4899 100%)",
   "gradientText": {

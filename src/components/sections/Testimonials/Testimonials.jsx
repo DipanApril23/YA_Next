@@ -275,16 +275,7 @@ export default function Testimonials() {
 
       {/* ── Background: dot grid (masked so it fades at the edges) ───────── */}
       <div
-        className="pointer-events-none absolute inset-0"
-        style={{
-          backgroundImage:
-            "radial-gradient(circle, rgba(109,40,217,0.07) 1px, transparent 1px)",
-          backgroundSize: "28px 28px",
-          maskImage:
-            "radial-gradient(ellipse 80% 60% at 50% 40%, black 40%, transparent 100%)",
-          WebkitMaskImage:
-            "radial-gradient(ellipse 80% 60% at 50% 40%, black 40%, transparent 100%)",
-        }}
+        className="tst-dotgrid pointer-events-none absolute inset-0"
         aria-hidden="true"
       />
 

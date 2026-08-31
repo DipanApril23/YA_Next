@@ -1,0 +1,113 @@
+/* ── ServiceCards — the static half of the deck's styling ─────────────────────
+   See ./ServiceCards.jsx.
+
+   WHAT LIVES HERE AND WHAT DOES NOT
+   Every service carries its own brand colour (`accent`, `glow`, `tab.color`)
+   from src/data/content/services.json, and roughly thirty rules in the deck
+   are derived from it — `${accent}44`, `0 0 30px ${glow}`, and so on. Those
+   stay on the `style` prop, because that is the one place a per-instance value
+   from data belongs; expressing them here would mean either a custom property
+   per shade or `color-mix()`, which rounds the alpha and would quietly shift
+   every accent on the page.
+
+   What lives here is the other half: the rules that are the SAME on every card
+   no matter which service is rendered — panel gradients, hairlines, the glass
+   on the tab bar. Those were repeated inline on every render for no reason.
+
+   Class names are prefixed `sc-` so nothing here can collide with the Tailwind
+   utilities the components also use, or with another section's stylesheet. No
+   rule below overrides a utility present on the same element, so the order the
+   two stylesheets load in cannot matter. */
+
+/* ── The deck ── */
+
+/* Slot wrapper. Framer Motion owns x/y/rotate/scale on this element; only the
+   two properties that never change are here, so the two systems never meet. */
+.sc-slot {
+  position: absolute;
+  inset: 0;
+}
+
+/* The face of the front card. Its border and shadow are accent-derived and
+   stay inline; this is only the panel it is drawn on. */
+.sc-face {
+  background: linear-gradient(145deg, rgba(18, 18, 28, 0.97) 0%, rgba(10, 10, 20, 0.99) 100%);
+}
+
+/* The cards stacked behind the front one: no content, just the panel look, so
+   nothing about them varies by service. */
+.sc-back {
+  background: linear-gradient(145deg, rgba(18, 18, 28, 0.95) 0%, rgba(10, 10, 20, 0.97) 100%);
+  border-color: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+/* Category pill. Deliberately near-opaque: it sits over the logo panel, whose
+   tint changes per service, and the text is accent-coloured. */
+.sc-badge {
+  background: rgba(8, 8, 18, 0.88);
+}
+
+/* The hairline above a card's footer row. */
+.sc-hairline {
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+/* Pager dots. Width, colour and glow mark the active dot and stay inline. */
+.sc-dot {
+  height: 7px;
+}
+
+/* ── Grid view ── */
+
+.sc-grid-card {
+  background: linear-gradient(145deg, rgba(15, 15, 25, 0.95), rgba(8, 8, 18, 0.98));
+  transition: border-color 0.25s, box-shadow 0.25s;
+}
+
+/* Floor for the logo well, so a short logo cannot collapse the row. */
+.sc-grid-logo {
+  min-height: 120px;
+}
+
+/* ── Controls ── */
+
+/* Shared glass for the tab bar and the stack/grid toggle beside it — one look,
+   so they read as one control strip. */
+.sc-control-panel {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+/* NOTE — order matters here. Written standard-property-first, Lightning CSS
+   prunes the unprefixed `backdrop-filter` (the browserslist floor is Safari
+   16.4, which needs the -webkit- form) and ships ONLY the prefixed one. Modern
+   Chrome does not treat `-webkit-backdrop-filter` as an alias — it computes to
+   `none` — so the glass silently stops blurring. Prefixed first, standard
+   last, keeps both in the output. */
+.sc-control-panel-blur {
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+
+/* The little pointer under the "switch tabs" hint. Its border is accent-tinted
+   and stays inline; the fill has to match the page behind it, not the accent,
+   or the caret reads as a floating diamond. */
+.sc-caret {
+  background: rgb(12, 12, 22);
+}
+
+/* ── Learn-more modal ── */
+
+.sc-modal-head {
+  border-color: rgba(255, 255, 255, 0.07);
+}
+
+/* The intro line is painted with an accent-to-violet gradient set inline; the
+   clip that turns that paint into letterforms never varies. */
+.sc-gradient-text {
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}

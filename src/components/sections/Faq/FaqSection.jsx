@@ -20,6 +20,7 @@ import { Sparkles, Plus, MessageCircle } from "lucide-react";
 import ScrollBeamDivider from "./ScrollBeamDivider";
 import MagneticButton from "@/components/ui/MagneticButton/MagneticButton";
 import { FAQ_CONTENT, FAQ_ITEMS, FAQ_SUPPORT, EASE_ENTRANCE as EASE } from "@/data";
+import "./faqSection.css";
 
 /* Answers may contain **bold** keyword phrases. Split on the markers and wrap
    the emphasised segments in <strong>; everything else renders as plain text. */
@@ -129,11 +130,8 @@ export default function FaqSection() {
               >
                 {/* Active accent bar */}
                 <div
-                  className="absolute bottom-3 left-0 top-3 w-[3px] rounded-r-full transition-opacity duration-300"
-                  style={{
-                    background: "linear-gradient(180deg, #7c3aed, #d946ef)",
-                    opacity: isOpen ? 1 : 0,
-                  }}
+                  className="faq-accent-bar absolute bottom-3 left-0 top-3 w-[3px] rounded-r-full transition-opacity duration-300"
+                  style={{ opacity: isOpen ? 1 : 0 }}
                 />
 
                 <button
@@ -218,11 +216,7 @@ export default function FaqSection() {
         >
           <div className="flex flex-col items-center gap-3 sm:flex-row sm:gap-4">
             <span
-              className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-2xl text-white shadow-lg"
-              style={{
-                background: "linear-gradient(135deg, #7c3aed, #d946ef)",
-                boxShadow: "0 8px 20px rgba(124,58,237,0.25)",
-              }}
+              className="faq-support-icon flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-2xl text-white shadow-lg"
             >
               <MessageCircle className="h-5 w-5" />
             </span>

@@ -1,0 +1,19 @@
+/* ── FAQ section — the fixed brand marks ─────────────────────────────────────
+   See ./FaqSection.jsx. Only two things in this section are painted rather
+   than laid out, and both are the same on every row: the violet→fuchsia accent
+   bar beside an open question, and the support card's icon tile.
+
+   The bar's OPACITY is what marks a row open, so that one property stays on
+   the `style` prop next to the state that drives it.
+
+   Prefixed `faq-` so nothing collides with the Tailwind utilities the
+   component also uses, or with another section's stylesheet. */
+
+.faq-accent-bar {
+  background: linear-gradient(180deg, #7c3aed, #d946ef);
+}
+
+.faq-support-icon {
+  background: linear-gradient(135deg, #7c3aed, #d946ef);
+  box-shadow: 0 8px 20px rgba(124, 58, 237, 0.25);
+}

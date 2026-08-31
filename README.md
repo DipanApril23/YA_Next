@@ -246,12 +246,46 @@ cost the visitor nothing — they are repo weight only, kept so nothing is silen
   (`.cv-section`, `:target` navbar clearance, the `prefers-reduced-motion` guard). Section rules must
   not be added here.
 * **Each component owns a sibling `.css` file** with a prefixed namespace — `hero-`, `fc-`, `nf-`,
-  `cs-`, `ya-`.
+  `cs-`, `sc-`, `sv-`, `md-`, `mb-`, `faq-`, `tst-`, `ya-`.
 * Because those are plain global stylesheets, **generic class names are scoped by a parent selector**
   (`.ya-404 .btn-primary`, `.cs-section .cs-title`) so they cannot collide.
 * `WhyChoose.module.css` is the one CSS Module.
 * Brand tokens are defined once in `:root` and bridged into Tailwind via `@theme inline`, so
   `text-primary` and `var(--primary)` can never disagree.
+
+### What belongs in a stylesheet, and what belongs on `style={{ }}`
+
+The split is **not** "no inline styles". It is whether the value can be known without
+rendering the component:
+
+| The value is… | Where it goes | Example |
+| --- | --- | --- |
+| the same on every render | the sibling `.css` file | a card's panel gradient, a hairline, a z-index |
+| a per-instance value from data | the `style` prop | a service's own `accent` colour, tinted per use |
+| driven by state or a spring | the `style` prop, beside the state | `opacity: isOpen ? 1 : 0` |
+| one value that a *cluster* of rules depends on | a CSS custom property, rules in the `.css` | `--cs-label`, `--chip-accent`, `--i` |
+
+Moving a per-service colour into CSS would mean either a custom property per shade or
+`color-mix()`, which rounds the alpha and would shift every accent on the page — so those
+stay inline, deliberately. Roughly half the remaining `style={{ }}` blocks in the codebase
+are in that category, and the header of each stylesheet says which half it owns.
+
+### One trap: `-webkit-` prefixed properties must come FIRST
+
+Lightning CSS prunes declarations it thinks the browserslist does not need. This project's
+floor is `safari 16.4`, which needs `-webkit-backdrop-filter` and `-webkit-mask-image`. Write
+the standard property first and **the unprefixed one is dropped from the build entirely**,
+leaving only the `-webkit-` form — which modern Chrome does not treat as an alias, so it
+computes to `none` and the effect silently disappears in production while looking fine in dev.
+
+Always write the prefixed declaration first and the standard one last:
+
+```css
+-webkit-backdrop-filter: blur(10px);
+backdrop-filter: blur(10px);      /* last, so it survives */
+```
+
+This bit the glass blur on the case-study badges and the services tab bar once already.
 
 ---
 

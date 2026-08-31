@@ -30,6 +30,23 @@
    SEPARATE inner layer owns that transform so it never fights the
    scroll-driven GSAP scale/recede on the outer card element.
 
+   CARD ANATOMY — hook, then proof, then evidence:
+     1. hook     one short human line, set as a pull-quote
+     2. summary  one line of what was built — the card's keyword line
+     3. shifts   the Before → After ledger: per row, the honest starting
+                 state, the stated result, and a bar whose length comes
+                 from `fill` in the data and grows as the card scrolls in
+   This replaced two dense "Challenge / What We Built" paragraphs. Same
+   claims, roughly a third of the words, and the movement is shown rather
+   than asserted — a visitor gets the whole story without reading prose.
+
+   HEIGHT IS A HARD BUDGET. A stuck card is only ever visible between
+   STICKY_TOP and the fold, so anything taller than (100vh - STICKY_TOP) is
+   not "below the fold of the card" — it is never on screen at all. That is
+   how the stack row went missing on short windows. The card's vertical
+   rhythm compresses at max-height: 840px and again at 700px (see the
+   stylesheet) rather than letting the last row fall off the bottom.
+
    Adding a 4th / 5th case study: add an object to CASESTUDIES_ITEMS
    in the data file. Results index, card stack, and mobile slider
    all read that array's length — nothing here needs to change.
@@ -38,7 +55,7 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { m } from "framer-motion";
+import { m, useReducedMotion } from "framer-motion";
 import { SectionHeader } from "@/components/ui";
 import { CASESTUDIES_CONTENT as CONTENT, CASESTUDIES_ITEMS as ITEMS } from "@/data";
 import "./caseStudies.css";
@@ -46,6 +63,7 @@ import "./caseStudies.css";
 gsap.registerPlugin(ScrollTrigger);
 
 const C = CONTENT.tokens;
+const CARD = CONTENT.card;
 const GRAD = CONTENT.gradient;
 const GRAD_TEXT = CONTENT.gradientText;
 const N = ITEMS.length;
@@ -64,6 +82,23 @@ const fadeUp = (delay = 0) => ({
     transition: { duration: 0.9, ease: [0.16, 1, 0.3, 1], delay },
   },
 });
+
+// The ledger bars re-run their fill EVERY time a card comes into view, not
+// just the first — someone who scrolls back up should see the same thing they
+// saw the first time, and on mobile each slide should fill as it arrives.
+// Hence no `once: true` on the viewport, plus an `empty` variant whose
+// transition is zero-length: the reset happens off-screen, and animating the
+// bars back DOWN would read as a visible rewind to anyone scrolling slowly.
+// `grown` is dynamic so each bar resolves its own width and stagger from the
+// `custom` prop; the delay is explicit rather than `staggerChildren` because
+// the bars are not direct children of the element that owns the variant.
+const barVariants = {
+  empty: { width: 0, transition: { duration: 0 } },
+  grown: ({ fill, i }) => ({
+    width: `${fill}%`,
+    transition: { duration: 1.1, delay: 0.15 + i * 0.14, ease: [0.16, 1, 0.3, 1] },
+  }),
+};
 
 const indexListVariants = {
   hidden: {},
@@ -182,9 +217,36 @@ function GalaxyBackground({ parallax = false }) {
   );
 }
 
+// ─── Ledger arrow ─────────────────────────────────────────────
+// Inherits `currentColor` rather than carrying a gradient, so it can be
+// reused on every row without minting a unique <linearGradient> id per card.
+function ShiftArrow() {
+  return (
+    <svg className="cs-arrow" width="17" height="8" viewBox="0 0 17 8" fill="none" aria-hidden="true">
+      <path
+        d="M0.75 4h13.9M11.7 1l3 3-3 3"
+        stroke="currentColor"
+        strokeWidth="1.2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 // ─── Card ─────────────────────────────────────────────────────
+// See CARD ANATOMY in the file header. Everything below the headline is
+// content-driven: rows come from `item.shifts`, and a study with two or four
+// of them lays out just as well as one with three.
+//
+// `compact` is the mobile-slider variant. It only toggles the `is-compact`
+// class — every size difference lives in the stylesheet next to its desktop
+// default, so the two variants can never drift apart in two files at once.
 function Card({ item, compact = false }) {
-  const pad = compact ? "20px 20px 24px" : "clamp(24px,2.6vw,40px)";
+  // The ledger bars grow every time the card scrolls into view (see
+  // barVariants). When the visitor has asked for less motion they start at
+  // their final width instead, and `whileInView` then has nothing to change.
+  const reduceMotion = useReducedMotion();
   const cardRef = useRef(null);
   const tiltRef = useRef(null);
   const orbRef1 = useRef(null);
@@ -233,10 +295,20 @@ function Card({ item, compact = false }) {
   }, [compact]);
 
   return (
-    <div
+    <article
       ref={cardRef}
       className="cs-glass-card"
+      aria-label={`${item.label} case study — ${item.title.replace(/\n/g, " ")}`}
       style={{
+        // Card text colours travel as custom properties, not as inline
+        // `color` on each node: the stylesheet needs to override them on
+        // :hover, and an inline colour cannot be overridden by a rule.
+        "--cs-ink": C.ink,
+        "--cs-copy": C.cardCopy,
+        "--cs-label": C.cardLabel,
+        "--cs-label-hi": C.cardLabelHi,
+        "--cs-accent": C.accent1,
+        "--cs-tag": C.tagText,
         position: "relative",
         borderRadius: compact ? 20 : 26,
         overflow: "hidden",
@@ -304,231 +376,97 @@ function Card({ item, compact = false }) {
 
       {/* ── Tilt layer — everything readable lives in here ── */}
       <div ref={tiltRef} className="cs-tilt-layer">
-        <div
-          style={{
-            position: "relative",
-            height: 3,
-            background: GRAD,
-            zIndex: 1,
-            overflow: "hidden",
-          }}
-        >
+        <div className="cs-rail" style={{ background: GRAD }}>
           <div className="cs-stripe-shimmer" />
         </div>
 
-        <div style={{ padding: pad, position: "relative", zIndex: 1 }}>
-          {/* ── Header row ── */}
-          <div
-            style={{
-              display: "flex",
-              alignItems: "flex-start",
-              justifyContent: "space-between",
-              gap: 12,
-              paddingBottom: compact ? 14 : 16,
-              borderBottom: "1px solid rgba(255,255,255,0.08)",
-              marginBottom: compact ? 16 : 18,
-            }}
-          >
-            <div>
-              <p
-                style={{
-                  fontFamily: "monospace",
-                  fontSize: 8,
-                  letterSpacing: "0.28em",
-                  textTransform: "uppercase",
-                  marginBottom: 6,
-                  fontWeight: 700,
-                }}
-              >
-                <span style={{ color: C.accent1 }}>{item.label}</span>
-                <span style={{ color: C.muted }}> · {item.industry}</span>
-              </p>
-              <h3
-                style={{
-                  fontFamily: "var(--font-fraunces), Georgia, serif",
-                  fontSize: compact
-                    ? "clamp(1.5rem,6vw,1.9rem)"
-                    : "clamp(1.9rem,2.4vw,2.6rem)",
-                  fontWeight: 700,
-                  lineHeight: 1.08,
-                  letterSpacing: "-0.025em",
-                  color: C.ink,
-                  whiteSpace: "pre-line",
-                  margin: 0,
-                }}
-              >
-                {item.title}
-              </h3>
+        <div className={`cs-body${compact ? " is-compact" : ""}`}>
+          {/* ── Who this was for ── */}
+          <div className="cs-head">
+            <p className="cs-eyebrow">
+              <span className="cs-eyebrow-client">{item.label}</span>
+              <span className="cs-eyebrow-industry"> · {item.industry}</span>
+            </p>
+            <span className="cs-id">{item.id}</span>
+          </div>
+
+          <h3 className="cs-title">{item.title}</h3>
+
+          {/* ── 1. The hook, 2. the build — one accented block, because
+                 together they are the card's story; the proof below is not ── */}
+          <div className="cs-lede">
+            <p className="cs-hook">{item.hook}</p>
+            <p className="cs-summary">{item.summary}</p>
+          </div>
+
+          {/* ── 3. The ledger — a <dl> because each row genuinely is a term
+                 (the metric) and its value (where it ended up). Semantic
+                 markup here is also what makes the proof legible to crawlers
+                 rather than reading as three loose numbers.
+
+                 The bar lives inside the <dd> alongside the values: a <dl>
+                 row may only contain <dt> and <dd>, and the bar is that
+                 value drawn rather than a fourth thing. ── */}
+          <div className="cs-shift">
+            <div className="cs-shift-head">
+              <span className="cs-microlabel">{CARD.shiftLabel}</span>
+              <span className="cs-microlabel cs-shift-legend">{CARD.shiftLegend}</span>
             </div>
 
-            <span
-              style={{
-                fontFamily: "monospace",
-                fontSize: 9,
-                letterSpacing: "0.1em",
-                padding: "5px 11px",
-                borderRadius: 100,
-                flexShrink: 0,
-                background: "rgba(168,85,247,0.14)",
-                backdropFilter: "blur(8px)",
-                color: "#d8b4fe",
-                border: "1px solid rgba(168,85,247,0.3)",
-                fontWeight: 700,
-                boxShadow: "inset 0 1px 0 rgba(255,255,255,0.14)",
-              }}
+            <m.dl
+              className="cs-ledger"
+              initial={reduceMotion ? "grown" : "empty"}
+              whileInView="grown"
+              viewport={{ amount: 0.4 }}
             >
-              {item.id}
-            </span>
-          </div>
-
-          {/* ── The Challenge / What We Built — verbatim copy ── */}
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: compact ? 10 : 14,
-              marginBottom: compact ? 16 : 20,
-            }}
-          >
-            <p
-              style={{
-                fontFamily: "var(--font-outfit), sans-serif",
-                fontSize: compact ? 12.5 : 13.5,
-                lineHeight: 1.62,
-                color: C.body,
-                margin: 0,
-              }}
-            >
-              <span style={{ fontWeight: 700, color: C.accent1 }}>The Challenge: </span>
-              {item.challenge}
-            </p>
-            <p
-              style={{
-                fontFamily: "var(--font-outfit), sans-serif",
-                fontSize: compact ? 12.5 : 13.5,
-                lineHeight: 1.62,
-                color: C.body,
-                margin: 0,
-              }}
-            >
-              <span style={{ fontWeight: 700, color: C.accent2 }}>What We Built: </span>
-              {item.built}
-            </p>
-          </div>
-
-          {/* ── The Result — 3-stat row, each with a small gradient tick ── */}
-          <div
-            style={{
-              borderTop: "1px solid rgba(255,255,255,0.08)",
-              paddingTop: compact ? 14 : 18,
-            }}
-          >
-            <p
-              style={{
-                fontFamily: "monospace",
-                fontSize: 8,
-                letterSpacing: "0.28em",
-                textTransform: "uppercase",
-                color: C.muted,
-                marginBottom: compact ? 10 : 12,
-                fontWeight: 700,
-              }}
-            >
-              The Result
-            </p>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: `repeat(${item.stats.length}, 1fr)`,
-                gap: compact ? 8 : 16,
-              }}
-            >
-              {item.stats.map((s, si) => (
-                <div key={si}>
-                  <span
-                    style={{
-                      display: "block",
-                      width: 14,
-                      height: 2,
-                      borderRadius: 2,
-                      background: GRAD,
-                      marginBottom: 6,
-                    }}
-                  />
-                  <div
-                    style={{
-                      fontFamily: "var(--font-fraunces), Georgia, serif",
-                      fontSize: compact
-                        ? "clamp(0.95rem,3.6vw,1.15rem)"
-                        : "clamp(1.15rem,1.7vw,1.5rem)",
-                      fontWeight: 700,
-                      lineHeight: 1.05,
-                      ...GRAD_TEXT,
-                    }}
-                  >
-                    {s.value}
-                  </div>
-                  <div
-                    style={{
-                      marginTop: 4,
-                      fontFamily: "var(--font-outfit), sans-serif",
-                      fontSize: compact ? 10 : 10.5,
-                      lineHeight: 1.35,
-                      color: C.body,
-                    }}
-                  >
-                    {s.label}
-                  </div>
+              {item.shifts.map((row, ri) => (
+                <div className="cs-row" key={row.metric}>
+                  <dt className="cs-row-metric">{row.metric}</dt>
+                  <dd className="cs-row-values">
+                    <span className="cs-values">
+                      <span className="cs-before">{row.before}</span>
+                      <ShiftArrow />
+                      <span className="cs-sr">to</span>
+                      <span className="cs-after" style={GRAD_TEXT}>
+                        {row.after}
+                      </span>
+                    </span>
+                    <span className="cs-track" aria-hidden="true">
+                      <m.span
+                        className="cs-fill"
+                        style={{ background: GRAD }}
+                        variants={barVariants}
+                        custom={{ fill: row.fill, i: ri }}
+                      >
+                        <span className="cs-fill-head" />
+                      </m.span>
+                    </span>
+                  </dd>
                 </div>
+              ))}
+            </m.dl>
+          </div>
+
+          {/* ── What it was built with. Label and tools share one row: stacked,
+                 this block was the part that fell off the bottom of the card. ── */}
+          <div className="cs-stack">
+            <span className="cs-microlabel cs-stack-label">{CARD.stackLabel}</span>
+            <div className="cs-tags">
+              {item.tags.map((tag) => (
+                <span key={tag} className="cs-glass-tag">
+                  {tag}
+                </span>
               ))}
             </div>
           </div>
-
-          {/* ── Tags ── */}
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: compact ? 16 : 20 }}>
-            {item.tags.map((tag) => (
-              <span
-                key={tag}
-                className="cs-glass-tag"
-                style={{
-                  padding: "5px 12px",
-                  borderRadius: 100,
-                  background: "rgba(255,255,255,0.05)",
-                  backdropFilter: "blur(10px)",
-                  color: C.tagText,
-                  fontFamily: "var(--font-outfit), sans-serif",
-                  fontSize: 9,
-                  fontWeight: 700,
-                  letterSpacing: "0.04em",
-                  textTransform: "uppercase",
-                  border: "1px solid rgba(255,255,255,0.1)",
-                  boxShadow: "inset 0 1px 0 rgba(255,255,255,0.1)",
-                  transition: "background 0.25s, box-shadow 0.25s, border-color 0.25s",
-                }}
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
         </div>
 
-        <div
-          style={{
-            position: "absolute",
-            bottom: 0,
-            left: "10%",
-            right: "10%",
-            height: 1,
-            background:
-              "linear-gradient(90deg, transparent, rgba(168,85,247,0.4), rgba(236,72,153,0.4), transparent)",
-            zIndex: 2,
-          }}
-        />
+        <div className="cs-underglow" aria-hidden="true" />
       </div>
 
       {/* Dims this card as the next one arrives (desktop stack only). */}
       <div className="cs-veil" aria-hidden="true" />
-    </div>
+    </article>
   );
 }
 
@@ -716,12 +654,25 @@ export default function CaseStudies() {
   useEffect(() => {
     const mm = gsap.matchMedia();
 
-    mm.add("(min-width: 768px)", () => {
+    // `isStacked` mirrors the stylesheet: under 700px of window the slides
+    // stop being sticky and the cards flow, so there is nothing arriving to
+    // cover them and the recede would just be shrinking cards for no reason.
+    // Declared as matchMedia conditions rather than read once, so resizing
+    // across the threshold rebuilds the triggers instead of stranding them.
+    mm.add(
+      {
+        isDesktop: "(min-width: 768px)",
+        isStacked: "(min-width: 768px) and (min-height: 700px)",
+        reduce: "(prefers-reduced-motion: reduce)",
+      },
+      (ctx) => {
+      const { isDesktop, isStacked, reduce } = ctx.conditions;
+      if (!isDesktop) return;
+
       const slides = gsap.utils.toArray(".cs-slide");
       if (!slides.length) return;
       const cards = gsap.utils.toArray(".cs-slide .cs-glass-card");
       const veils = gsap.utils.toArray(".cs-slide .cs-veil");
-      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
       slides.forEach((slide, i) => {
         ScrollTrigger.create({
@@ -732,7 +683,7 @@ export default function CaseStudies() {
         });
       });
 
-      if (!reduce) {
+      if (isStacked && !reduce) {
         cards.forEach((card, i) => {
           if (i === cards.length - 1) return;
           gsap
@@ -750,7 +701,8 @@ export default function CaseStudies() {
       }
 
       requestAnimationFrame(() => ScrollTrigger.refresh());
-    });
+      }
+    );
 
     return () => mm.revert();
   }, []);
@@ -840,7 +792,7 @@ export default function CaseStudies() {
                 <div
                   key={item.id}
                   ref={(el) => (slideRefs.current[i] = el)}
-                  className="cs-slide"
+                  className={`cs-slide${i === N - 1 ? " is-last" : ""}`}
                   style={{ top: STICKY_TOP, zIndex: i + 1 }}
                 >
                   {i === 0 ? (

@@ -7,11 +7,26 @@
   box-sizing: border-box;
 }
 #cs-mobile p, #cs-mobile h2, #cs-mobile h3,
-#cs-mobile ul, #cs-mobile li,
+#cs-mobile ul, #cs-mobile li, #cs-mobile dl, #cs-mobile dt, #cs-mobile dd,
 #cs-desktop p, #cs-desktop h2, #cs-desktop h3,
-#cs-desktop ul, #cs-desktop li {
+#cs-desktop ul, #cs-desktop li, #cs-desktop dl, #cs-desktop dt, #cs-desktop dd {
   margin: 0;
   padding: 0;
+}
+
+/* Visually hidden — carries the "to" between a Before and an After value so
+   the ledger reads as a sentence to screen readers and crawlers, not as two
+   orphaned fragments. */
+.cs-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 /* Subtle dot-grid texture overlay — light dots on dark, sits above the
@@ -51,9 +66,21 @@
    "runway"; the card itself is never height-capped. */
 .cs-slide {
   position: sticky;
-  min-height: 88vh;
+  /* The slide's height IS the scroll runway for the card stuck inside it.
+     At 88vh the next slide's top sat at 88vh + 96px — barely below the fold —
+     so the moment a card finished arriving the following one already began
+     covering it, and whatever sat at the bottom of the card (the stack row)
+     was never on screen long enough to read. One viewport plus a margin means
+     the next card cannot appear until the reader has scrolled ~216px past the
+     point where the current one is fully visible. */
+  min-height: calc(100vh + 120px);
   display: flex;
   align-items: flex-start;
+}
+/* The last card has nothing coming to cover it, so its runway would just be
+   dead scroll at the end of the section. */
+.cs-slide.is-last {
+  min-height: 0;
 }
 .cs-sidebar-sticky {
   position: sticky;
@@ -111,11 +138,490 @@
   animation: cs-shimmer-sweep 2.8s ease-in-out infinite;
 }
 
-/* Glass tag hover */
+/* ═════════════════════════════════════════════════════
+   CARD CONTENT — three tiers, scannable in about five seconds:
+     1. .cs-hook     one human line, set as a pull-quote
+     2. .cs-summary  one line of what was built (the SEO keyword line)
+     3. .cs-shift    the Before → After ledger — the visualisation
+   then .cs-stack, the tools, on a single inline row.
+
+   COLOUR comes in as CSS custom properties set on .cs-glass-card from the
+   theme tokens, rather than as inline `style={{ color }}` on each element.
+   Inline colour cannot be overridden by a `:hover` rule, and these rows need
+   hover states — so the tokens still own the values, the stylesheet owns when
+   they apply.
+
+   SIZING has a desktop default plus three overrides, all in this file so a
+   value is never split across two places:
+     .is-compact              the mobile slider's narrower card
+     max-width: 1080px        the desktop card in a narrow grid column
+     max-height: 840px / 700px  short windows, where the card has to fit
+                              inside the sticky window or its last row is
+                              simply never seen
+   ═════════════════════════════════════════════════════ */
+
+.cs-rail {
+  position: relative;
+  height: 3px;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.cs-body {
+  position: relative;
+  z-index: 1;
+  padding: clamp(24px, 2.4vw, 34px);
+}
+.cs-body.is-compact {
+  padding: 22px 20px 26px;
+}
+
+/* ── Header: eyebrow + index badge share one line and the title gets the
+   full card width below, instead of splitting it with a pill ── */
+.cs-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.cs-eyebrow {
+  font-family: monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.cs-eyebrow-client {
+  color: var(--cs-accent);
+}
+.cs-eyebrow-industry {
+  color: var(--cs-label);
+}
+/* The longest eyebrow — "Dental Clinic · Healthcare · Local Business", 42
+   tracked monospace characters — has to share a row with the index badge,
+   which on a 360px phone leaves it about 230px. Fluid rather than fixed so
+   it holds one line from ~340px up, where a fixed size fit one handset and
+   wrapped on the next. Below that it wraps under a centred badge. */
+.is-compact .cs-eyebrow {
+  font-size: clamp(7.2px, 2.05vw, 8px);
+  letter-spacing: 0.07em;
+}
+
+/* NOTE — order matters here. Written standard-property-first, Lightning CSS
+   prunes the unprefixed `backdrop-filter` (the browserslist floor is Safari
+   16.4, which needs the -webkit- form) and ships ONLY the prefixed one. Modern
+   Chrome does not treat `-webkit-backdrop-filter` as an alias — it computes to
+   `none` — so the glass silently stops blurring. Prefixed first, standard
+   last, keeps both in the output. */
+.cs-id {
+  font-family: monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.1em;
+  padding: 5px 11px;
+  border-radius: 100px;
+  flex-shrink: 0;
+  font-weight: 700;
+  color: #ddc2fe;
+  background: rgba(168, 85, 247, 0.18);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(168, 85, 247, 0.36);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14);
+}
+
+.cs-title {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(1.85rem, 2.3vw, 2.45rem);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  white-space: pre-line;
+  color: var(--cs-ink);
+}
+.is-compact .cs-title {
+  font-size: clamp(1.5rem, 6vw, 1.9rem);
+}
+
+/* ── The lede — hook + summary, marked as one block by a single gradient
+   rule. The rule spans both lines rather than just the hook: two accents
+   this close together read as noise, one reads as a deliberate margin that
+   separates the story from the measured proof below it. ── */
+.cs-lede {
+  position: relative;
+  margin-top: clamp(16px, 1.6vw, 22px);
+  padding-left: 18px;
+}
+.is-compact .cs-lede {
+  margin-top: 15px;
+  padding-left: 14px;
+}
+.cs-lede::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 2px;
+  bottom: 2px;
+  width: 2px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, #818cf8 0%, #c084fc 50%, #f472b6 100%);
+  box-shadow: 0 0 12px rgba(168, 85, 247, 0.5);
+}
+
+/* The hook — the one line a reader recognises themselves in. Italic serif
+   so it carries a different voice from the headline above and the data below. */
+.cs-hook {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(1.02rem, 1.15vw, 1.18rem);
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  color: var(--cs-ink);
+}
+.is-compact .cs-hook {
+  font-size: 0.96rem;
+}
+
+/* The summary — what was actually built. Deliberately one sentence: it is
+   the card's keyword line, not its story. */
+.cs-summary {
+  margin-top: 10px;
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--cs-copy);
+}
+.is-compact .cs-summary {
+  margin-top: 9px;
+  font-size: 12.8px;
+  line-height: 1.56;
+}
+
+/* ── Before → After ledger — recessed like an instrument readout, so the
+   proof reads as something measured rather than as more marketing copy ── */
+.cs-shift {
+  margin-top: clamp(16px, 1.7vw, 20px);
+  padding: clamp(14px, 1.2vw, 17px);
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(4, 4, 12, 0.42) 0%, rgba(4, 4, 12, 0.24) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.055);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 10px 30px rgba(0, 0, 0, 0.22);
+}
+.is-compact .cs-shift {
+  margin-top: 16px;
+  padding: 13px 14px;
+  border-radius: 14px;
+}
+
+.cs-shift-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 13px;
+}
+.cs-microlabel {
+  font-family: monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--cs-label);
+}
+.cs-shift-legend {
+  letter-spacing: 0.16em;
+}
+/* On the narrow card the ledger explains itself — drop the legend. */
+.is-compact .cs-shift-legend {
+  display: none;
+}
+
+.cs-ledger {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(13px, 1.3vw, 16px);
+}
+.is-compact .cs-ledger {
+  gap: 13px;
+}
+
+/* Hovering a row lights up that one metric — the reader can pick a number
+   out of the three and have the card acknowledge it. */
+.cs-row-metric {
+  font-family: monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--cs-label);
+  transition: color 0.3s ease;
+}
+.cs-row:hover .cs-row-metric {
+  color: var(--cs-label-hi);
+}
+.cs-values {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin-top: 4px;
+}
+.cs-before {
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--cs-copy);
+}
+.is-compact .cs-before {
+  font-size: 11.5px;
+}
+.cs-arrow {
+  flex-shrink: 0;
+  align-self: center;
+  color: rgba(203, 150, 255, 0.9);
+}
+.cs-after {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: clamp(1.1rem, 1.45vw, 1.4rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+.is-compact .cs-after {
+  font-size: clamp(1rem, 4.4vw, 1.2rem);
+}
+
+/* The bar is the visualisation: its length is authored per row (`fill` in the
+   data) and the bright head marks where that metric landed. */
+.cs-track {
+  display: block;
+  position: relative;
+  height: 3px;
+  margin-top: 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.09);
+}
+.cs-fill {
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  border-radius: 999px;
+  box-shadow: 0 0 12px rgba(168, 85, 247, 0.45);
+  transition: box-shadow 0.4s ease;
+}
+.cs-glass-card:hover .cs-fill {
+  box-shadow: 0 0 16px rgba(236, 72, 153, 0.55);
+}
+.cs-row:hover .cs-fill {
+  box-shadow: 0 0 22px rgba(236, 72, 153, 0.8);
+}
+.cs-fill-head {
+  position: absolute;
+  right: -2px;
+  top: 50%;
+  width: 7px;
+  height: 7px;
+  transform: translateY(-50%);
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 10px 2px rgba(236, 72, 153, 0.55);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+}
+.cs-row:hover .cs-fill-head {
+  transform: translateY(-50%) scale(1.45);
+  box-shadow: 0 0 14px 3px rgba(236, 72, 153, 0.85);
+}
+
+/* ── The stack — label and tools on ONE row. Stacked, this block added ~25px
+   to a card that already did not fit the sticky window, and it is the part
+   that fell off the bottom. ── */
+.cs-stack {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  margin-top: clamp(15px, 1.5vw, 19px);
+}
+.is-compact .cs-stack {
+  margin-top: 16px;
+  gap: 9px 12px;
+}
+.cs-stack-label {
+  flex-shrink: 0;
+}
+.cs-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.cs-glass-tag {
+  padding: 5px 12px;
+  border-radius: 100px;
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--cs-tag);
+  background: rgba(255, 255, 255, 0.06);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: background 0.25s, box-shadow 0.25s, border-color 0.25s, color 0.25s;
+}
 .cs-glass-tag:hover {
-  background: rgba(168, 85, 247, 0.16) !important;
-  border-color: rgba(168, 85, 247, 0.35) !important;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 2px 12px rgba(168, 85, 247, 0.25) !important;
+  background: rgba(168, 85, 247, 0.18);
+  border-color: rgba(168, 85, 247, 0.4);
+  color: #ecd8ff;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 2px 12px rgba(168, 85, 247, 0.28);
+}
+
+/* Hairline of light along the card's bottom edge */
+.cs-underglow {
+  position: absolute;
+  bottom: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  z-index: 2;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(168, 85, 247, 0.4),
+    rgba(236, 72, 153, 0.4),
+    transparent
+  );
+}
+
+/* ── Desktop card in a narrow grid column (tablet / small laptop) ── */
+@media (min-width: 768px) and (max-width: 1080px) {
+  .cs-body {
+    padding: 24px 22px 28px;
+  }
+  .cs-title {
+    font-size: clamp(1.5rem, 2.7vw, 1.95rem);
+  }
+  .cs-hook {
+    font-size: clamp(0.98rem, 1.5vw, 1.08rem);
+  }
+  /* At 768px the card column is only ~344px wide, which leaves the eyebrow
+     ~245px beside the badge. Sized to hold one line at that width; if a
+     longer industry string is ever added it wraps under a centred badge,
+     which is untidy but never broken. */
+  .cs-eyebrow {
+    font-size: 7.8px;
+    letter-spacing: 0.08em;
+  }
+  .cs-shift-legend {
+    display: none;
+  }
+}
+
+/* ── Short windows ── The card lives in a sticky window of `100vh - 96px`.
+   Anything taller than that is simply never seen, which is exactly how the
+   stack row disappeared on a 727px-tall window (651px card, 631px window).
+   These two tiers trade vertical rhythm for fitting — nothing is removed. */
+@media (min-width: 768px) and (max-height: 840px) {
+  .cs-body {
+    padding: 22px 26px 26px;
+  }
+  .cs-head {
+    margin-bottom: 10px;
+  }
+  .cs-title {
+    font-size: clamp(1.5rem, 1.95vw, 1.9rem);
+  }
+  .cs-lede {
+    margin-top: 14px;
+  }
+  .cs-hook {
+    font-size: clamp(0.96rem, 1.05vw, 1.06rem);
+  }
+  .cs-summary {
+    margin-top: 8px;
+    font-size: 12.8px;
+    line-height: 1.55;
+  }
+  .cs-shift {
+    margin-top: 14px;
+    padding: 12px 14px;
+  }
+  .cs-shift-head {
+    margin-bottom: 11px;
+  }
+  .cs-ledger {
+    gap: 11px;
+  }
+  .cs-after {
+    font-size: clamp(1rem, 1.25vw, 1.2rem);
+  }
+  .cs-track {
+    margin-top: 7px;
+  }
+  .cs-stack {
+    margin-top: 13px;
+  }
+}
+/* ── Below ~700px of window there is no honest way to fit a card with a
+   headline, a lede, three measured rows and a tool list into a sticky window
+   of `100vh - 96px`. Rather than shrink the type until it is unreadable or
+   let the last row fall off the bottom again, the stack is switched off and
+   the cards simply flow down the page — every card whole, nothing hidden.
+   CaseStudies.jsx gates the GSAP recede on the same 700px so it is not
+   scaling cards that nothing is coming to cover. ── */
+@media (min-width: 768px) and (max-height: 699px) {
+  .cs-slide {
+    position: relative;
+    min-height: 0;
+    top: auto !important;
+    margin-bottom: 28px;
+  }
+}
+
+@media (min-width: 768px) and (max-height: 700px) {
+  .cs-body {
+    padding: 18px 22px 22px;
+  }
+  .cs-title {
+    font-size: clamp(1.35rem, 1.7vw, 1.6rem);
+  }
+  .cs-lede {
+    margin-top: 11px;
+  }
+  .cs-hook {
+    font-size: 0.98rem;
+    line-height: 1.4;
+  }
+  .cs-summary {
+    margin-top: 7px;
+    font-size: 12.2px;
+    line-height: 1.5;
+  }
+  .cs-shift {
+    margin-top: 11px;
+    padding: 11px 12px;
+  }
+  .cs-shift-head {
+    margin-bottom: 9px;
+  }
+  .cs-ledger {
+    gap: 9px;
+  }
+  .cs-after {
+    font-size: 1.05rem;
+  }
+  .cs-track {
+    margin-top: 6px;
+  }
+  .cs-stack {
+    margin-top: 11px;
+  }
 }
 
 /* ── Results index (left panel) — active state ── */
@@ -273,6 +779,7 @@
    calmest, still fully functional. */
 @media (prefers-reduced-motion: reduce) {
   .cs-stripe-shimmer { animation: none; }
+  .cs-fill, .cs-fill-head, .cs-glass-tag, .cs-row-metric { transition: none; }
   .cs-slide { position: relative; min-height: 0; top: auto !important; }
   .cs-sidebar-sticky { position: relative; top: auto !important; }
   .cs-tilt-layer { transform: none !important; }

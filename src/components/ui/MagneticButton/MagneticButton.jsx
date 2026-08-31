@@ -26,6 +26,7 @@ import React, { useRef, useState, useCallback } from "react";
 import { m, useMotionValue, useSpring } from "framer-motion";
 import Link from "next/link";
 import { SPRING_SNAPPY } from "@/data";
+import "./magneticButton.css";
 
 // Internal class utility (no external dep needed)
 const cx = (...c) => c.filter(Boolean).join(" ");
@@ -188,13 +189,8 @@ const MagneticButton = React.forwardRef(function MagneticButton(
       {v.glow && (
         <m.span
           aria-hidden
-          className="pointer-events-none absolute rounded-[inherit]"
-          style={{
-            inset:      "-3px",
-            background: v.glow,
-            filter:     "blur(18px)",
-            zIndex:     -1,
-          }}
+          className="mb-glow pointer-events-none absolute rounded-[inherit]"
+          style={{ background: v.glow }}
           animate={{
             opacity: hovered ? 0.60 : 0.20,
             scale:   hovered ? 1.07 : 1.00,
@@ -241,8 +237,7 @@ const MagneticButton = React.forwardRef(function MagneticButton(
       {variant === "ghost" && (
         <m.span
           aria-hidden
-          className="pointer-events-none absolute inset-0 rounded-[inherit]"
-          style={{ background: "rgba(255,255,255,0.07)" }}
+          className="mb-ghost-fill pointer-events-none absolute inset-0 rounded-[inherit]"
           animate={{ opacity: hovered ? 1 : 0 }}
           transition={{ duration: 0.22 }}
         />
@@ -251,15 +246,11 @@ const MagneticButton = React.forwardRef(function MagneticButton(
       {/* ⑥  SHIMMER SWEEP */}
       <span
         aria-hidden
-        className="pointer-events-none absolute inset-0 overflow-hidden rounded-[inherit]"
-        style={{ zIndex: 2 }}
+        className="mb-shimmer-clip pointer-events-none absolute inset-0 overflow-hidden rounded-[inherit]"
       >
         <m.span
-          className="absolute top-0 h-full"
-          style={{
-            width:      "55%",
-            background: `linear-gradient(90deg,transparent,rgba(255,255,255,${v.sh}),transparent)`,
-          }}
+          className="mb-shimmer-band absolute top-0 h-full"
+          style={{ background: `linear-gradient(90deg,transparent,rgba(255,255,255,${v.sh}),transparent)` }}
           animate={{ left: hovered ? "130%" : "-60%" }}
           transition={{ duration: 0.52, ease: "easeInOut" }}
         />
@@ -267,8 +258,7 @@ const MagneticButton = React.forwardRef(function MagneticButton(
 
       {/* ⑦  CONTENT: spinner · icon · label */}
       <span
-        className={cx("relative flex items-center", s.gap)}
-        style={{ zIndex: 3 }}
+        className={cx("mb-content relative flex items-center", s.gap)}
       >
         {loading && <Spinner />}
 

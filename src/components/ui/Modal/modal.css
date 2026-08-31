@@ -1,0 +1,53 @@
+/* ── Modal — panel, scrim and close button ───────────────────────────────────
+   See ./Modal.jsx. Every rule here is fixed: the modal looks the same whatever
+   it is asked to display, so none of it belonged on the `style` prop.
+
+   Prefixed `md-` so nothing collides with the Tailwind utilities the component
+   also uses, or with another section's stylesheet. */
+
+/* The scrim. Clicking it closes the modal, so it must read as a surface rather
+   than as darkness — hence the blur as well as the tint.
+
+   ORDER MATTERS on the two backdrop-filter lines. Standard-property-first,
+   Lightning CSS prunes the unprefixed one (the browserslist floor is Safari
+   16.4, which needs the -webkit- form) and ships only the prefixed version.
+   Modern Chrome does not treat `-webkit-backdrop-filter` as an alias — it
+   computes to `none` — so the blur silently disappears. Prefixed first,
+   standard last, keeps both in the output. */
+.md-scrim {
+  background: rgba(0, 0, 0, 0.75);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+.md-panel {
+  background: linear-gradient(145deg, rgba(14, 14, 24, 0.98) 0%, rgba(8, 8, 18, 0.99) 100%);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.05),
+    0 40px 100px rgba(0, 0, 0, 0.85),
+    0 0 60px rgba(168, 85, 247, 0.12);
+}
+
+/* Hairline of brand colour along the panel's top edge. */
+.md-topglow {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(168, 85, 247, 0.6),
+    rgba(0, 245, 212, 0.6),
+    transparent
+  );
+}
+
+.md-close {
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Firefox-only scrollbar styling; other engines ignore both properties. */
+.md-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+}

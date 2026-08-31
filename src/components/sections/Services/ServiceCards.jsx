@@ -19,6 +19,12 @@
 //
 // Catalogue + tab definitions + copy all come from the @/data barrel; this
 // file owns structure and animation only.
+//
+// STYLING is split on one line: anything that is the same for every service
+// lives in ./serviceCards.css as an `sc-` class; anything derived from the
+// service's own brand colour (`accent`, `glow`, `tab.color`) stays on the
+// `style` prop, because that is a per-instance value from data. See the head
+// of that stylesheet for why those are not custom properties.
 
 import { useMemo, useRef, useState } from "react";
 import Image from "next/image";
@@ -31,6 +37,7 @@ import {
   SERVICES_SECTION_CONTENT as CONTENT,
 } from "@/data";
 import { Modal } from "@/components/ui";
+import "./serviceCards.css";
 
 /* ─── Feature chips — desktop only ────────────────────────────────────────────
    The deck runs the full width of the container, which is roughly three times
@@ -91,9 +98,8 @@ const CardFace = ({ service, accent, glow, onLearnMore }) => {
 
   return (
     <div
-      className="relative w-full h-full rounded-[28px] border flex flex-col md:flex-row overflow-hidden"
+      className="sc-face relative w-full h-full rounded-[28px] border flex flex-col md:flex-row overflow-hidden"
       style={{
-        background: "linear-gradient(145deg,rgba(18,18,28,0.97) 0%,rgba(10,10,20,0.99) 100%)",
         borderColor: `${accent}55`,
         boxShadow: `0 0 0 1px ${accent}22, 0 28px 70px rgba(0,0,0,0.75), 0 0 50px ${glow}`,
       }}
@@ -128,8 +134,8 @@ const CardFace = ({ service, accent, glow, onLearnMore }) => {
       {/* Category badge — pinned to the CARD's corner, so it stays top-right
           when the logo panel moves to the side. */}
       <span
-        className="absolute top-3 right-3 z-20 text-[9px] sm:text-[10px] font-mono font-bold tracking-widest uppercase px-2.5 py-1 rounded-full border"
-        style={{ color: accent, borderColor: `${accent}44`, background: "rgba(8,8,18,0.88)" }}
+        className="sc-badge absolute top-3 right-3 z-20 text-[9px] sm:text-[10px] font-mono font-bold tracking-widest uppercase px-2.5 py-1 rounded-full border"
+        style={{ color: accent, borderColor: `${accent}44` }}
       >
         {service.category}
       </span>
@@ -168,8 +174,7 @@ const CardFace = ({ service, accent, glow, onLearnMore }) => {
 
         {/* Footer */}
         <div
-          className="pt-4 mt-3 md:mt-0 md:max-w-2xl flex items-center justify-between border-t"
-          style={{ borderColor: "rgba(255,255,255,0.06)" }}
+          className="sc-hairline pt-4 mt-3 md:mt-0 md:max-w-2xl flex items-center justify-between border-t"
         >
           <button
             onClick={onLearnMore}
@@ -192,12 +197,7 @@ const CardFace = ({ service, accent, glow, onLearnMore }) => {
 // ─── Back-card placeholder (no content, just the layered panel look) ──────────
 const CardBack = ({ accent }) => (
   <div
-    className="w-full h-full rounded-[28px] border"
-    style={{
-      background: "linear-gradient(145deg,rgba(18,18,28,0.95) 0%,rgba(10,10,20,0.97) 100%)",
-      borderColor: "rgba(255,255,255,0.06)",
-      boxShadow: "0 8px 32px rgba(0,0,0,0.5)",
-    }}
+    className="sc-back w-full h-full rounded-[28px] border"
   />
 );
 
@@ -294,7 +294,7 @@ const CardStack = ({ serviceList, accent, glow, onLearnMore }) => {
                   damping: 32,
                   mass: 0.9,
                 }}
-                style={{ position: "absolute", inset: 0 }}
+                className="sc-slot"
               >
                 {isFront ? (
                   <CardFace
@@ -331,10 +331,9 @@ const CardStack = ({ serviceList, accent, glow, onLearnMore }) => {
             <button
               key={i}
               onClick={() => { setDirection(i > frontIndex ? 1 : -1); setFrontIndex(i); }}
-              className="rounded-full transition-all duration-300"
+              className="sc-dot rounded-full transition-all duration-300"
               style={{
                 width:      i === frontIndex ? "22px" : "7px",
-                height:     "7px",
                 background: i === frontIndex ? accent : "rgba(255,255,255,0.2)",
                 boxShadow:  i === frontIndex ? `0 0 8px ${accent}` : "none",
               }}
@@ -376,12 +375,10 @@ const ServiceGrid = ({ serviceList, accent, glow, onLearnMore }) => {
           transition={{ delay: i * 0.055, duration: 0.38 }}
           onHoverStart={() => setHovered(i)}
           onHoverEnd={() => setHovered(null)}
-          className="relative rounded-[20px] border flex flex-col p-5 cursor-pointer overflow-hidden"
+          className="sc-grid-card relative rounded-[20px] border flex flex-col p-5 cursor-pointer overflow-hidden"
           style={{
-            background:   "linear-gradient(145deg,rgba(15,15,25,0.95),rgba(8,8,18,0.98))",
             borderColor:  hovered === i ? `${accent}55` : "rgba(255,255,255,0.07)",
             boxShadow:    hovered === i ? `0 0 30px ${glow}, 0 8px 24px rgba(0,0,0,0.5)` : "0 4px 16px rgba(0,0,0,0.3)",
-            transition:   "border-color 0.25s,box-shadow 0.25s",
           }}
           onClick={() => onLearnMore(service)}
         >
@@ -398,11 +395,10 @@ const ServiceGrid = ({ serviceList, accent, glow, onLearnMore }) => {
           <div className="flex flex-col flex-1 gap-4">
             {/* Banner Logo */}
             <div
-              className="relative w-full rounded-xl flex items-center justify-center flex-shrink-0 p-4"
+              className="sc-grid-logo relative w-full rounded-xl flex items-center justify-center flex-shrink-0 p-4"
               style={{
                 background: `linear-gradient(135deg, ${accent}15 0%, rgba(8,8,18,0.7) 100%)`,
                 border: `1px solid ${accent}22`,
-                minHeight: "120px"
               }}
             >
               <div
@@ -428,8 +424,8 @@ const ServiceGrid = ({ serviceList, accent, glow, onLearnMore }) => {
 
             {/* Learn More link */}
             <div
-              className="pt-3 border-t flex items-center gap-2 text-xs font-bold uppercase tracking-widest transition-colors duration-200"
-              style={{ borderColor: "rgba(255,255,255,0.06)", color: hovered === i ? accent : "rgba(255,255,255,0.5)" }}
+              className="sc-hairline pt-3 border-t flex items-center gap-2 text-xs font-bold uppercase tracking-widest transition-colors duration-200"
+              style={{ color: hovered === i ? accent : "rgba(255,255,255,0.5)" }}
             >
               <span>Learn More</span>
               <span className={`inline-block transition-transform ${hovered === i ? "translate-x-1" : ""}`}>→</span>
@@ -592,8 +588,8 @@ const TabSelector = ({
                   left-aligned. */}
               <span
                 aria-hidden="true"
-                className="absolute -bottom-[5px] left-1/2 h-2 w-2 -translate-x-1/2 rotate-45 border-b border-r sm:left-7 sm:translate-x-0"
-                style={{ borderColor: `${accent}59`, background: "rgb(12,12,22)" }}
+                className="sc-caret absolute -bottom-[5px] left-1/2 h-2 w-2 -translate-x-1/2 rotate-45 border-b border-r sm:left-7 sm:translate-x-0"
+                style={{ borderColor: `${accent}59` }}
               />
             </motion.span>
           </motion.p>
@@ -606,12 +602,7 @@ const TabSelector = ({
         role="tablist"
         aria-label={copy.ariaLabel}
         onKeyDown={handleKeyDown}
-        className="relative grid w-full grid-cols-3 gap-1 rounded-2xl border p-1.5 sm:flex sm:w-auto sm:items-center sm:gap-2"
-        style={{
-          background: "rgba(255,255,255,0.03)",
-          borderColor: "rgba(255,255,255,0.08)",
-          backdropFilter: "blur(12px)",
-        }}
+        className="sc-control-panel sc-control-panel-blur relative grid w-full grid-cols-3 gap-1 rounded-2xl border p-1.5 sm:flex sm:w-auto sm:items-center sm:gap-2"
       >
         {/* One-shot sweep: tells the eye the whole group is one live control.
             Clipped by its own wrapper so it never cuts off the unseen dots.
@@ -789,8 +780,7 @@ const ServiceCards = () => {
         />
 
         <div
-          className="flex shrink-0 items-center gap-1 p-1 rounded-xl border"
-          style={{ background: "rgba(255,255,255,0.03)", borderColor: "rgba(255,255,255,0.08)" }}
+          className="sc-control-panel flex shrink-0 items-center gap-1 p-1 rounded-xl border"
         >
           {[
             {
@@ -872,7 +862,7 @@ const ServiceCards = () => {
             <div className="space-y-6">
 
               {/* ── Service header ── */}
-              <div className="flex items-center gap-4 pb-5 border-b" style={{ borderColor: "rgba(255,255,255,0.07)" }}>
+              <div className="sc-modal-head flex items-center gap-4 pb-5 border-b">
                 {/* Logo */}
                 <div
                   className="w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0 relative overflow-hidden"
@@ -911,12 +901,8 @@ const ServiceCards = () => {
 
               {/* ── Intro ── */}
               <p
-                className="text-sm sm:text-base font-semibold leading-relaxed"
-                style={{
-                  background: `linear-gradient(135deg, ${accent}, #a855f7)`,
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                }}
+                className="sc-gradient-text text-sm sm:text-base font-semibold leading-relaxed"
+                style={{ background: `linear-gradient(135deg, ${accent}, #a855f7)` }}
               >
                 {selectedService.learnMore?.intro}
               </p>

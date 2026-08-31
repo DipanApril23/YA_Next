@@ -1,0 +1,61 @@
+/* ── Services section shell — background, grid, rules, chips ─────────────────
+   See ./Service.jsx. This file holds the section's fixed furniture; the
+   interactive deck inside it has its own stylesheet (./serviceCards.css).
+
+   Everything here is the same on every render. The one thing that is not — a
+   stat chip's border, tinted with the stat's own colour from the data — stays
+   on the `style` prop where a per-instance value belongs.
+
+   Prefixed `sv-` so nothing collides with the Tailwind utilities the component
+   also uses, or with another section's stylesheet. */
+
+.sv-section {
+  background: linear-gradient(180deg, #010208 0%, #060612 60%, #010208 100%);
+}
+
+/* Blueprint grid behind the content. Held at 2.5% opacity by a utility on the
+   element — visible as texture, never as lines. */
+.sv-grid {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.3) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.3) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* Section eyebrow chip and its live dot — teal, the section's accent. */
+.sv-badge {
+  color: #00f5d4;
+  border-color: rgba(0, 245, 212, 0.3);
+  background: rgba(0, 245, 212, 0.07);
+}
+.sv-badge-dot {
+  background: #00f5d4;
+  box-shadow: 0 0 6px #00f5d4;
+}
+
+/* The hairline rules above and below the two-column block. Both ends fade to
+   transparent so the rule reads as drawn light rather than as a border. */
+.sv-rule {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 245, 212, 0.25),
+    rgba(168, 85, 247, 0.25),
+    transparent
+  );
+}
+
+/* Glow behind the wireframe illustration. */
+.sv-image-glow {
+  background: radial-gradient(
+    ellipse,
+    rgba(168, 85, 247, 0.25) 0%,
+    rgba(0, 245, 212, 0.15) 60%,
+    transparent 100%
+  );
+}
+
+/* Stat chip. The border colour is the stat's own and stays inline. */
+.sv-stat {
+  background: rgba(255, 255, 255, 0.03);
+}
