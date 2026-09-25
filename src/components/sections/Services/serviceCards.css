@@ -104,7 +104,20 @@
 }
 
 /* The intro line is painted with an accent-to-violet gradient set inline; the
-   clip that turns that paint into letterforms never varies. */
+   clip that turns that paint into letterforms never varies.
+
+   THE INLINE PAINT MUST USE THE `backgroundImage` LONGHAND, NOT `background`.
+   The gradient carries the active tab's accent, so it has to live on the style
+   prop — and an inline declaration outranks this rule. The `background`
+   SHORTHAND resets every background longhand it does not name, `background-clip`
+   included, so writing it inline silently reverts the clip below to `border-box`
+   and the paragraph paints as a solid gradient block with invisible text on top.
+   Blink used to hide this: `-webkit-background-clip` was a separate legacy
+   property the shorthand left alone. It is a true alias of `background-clip` in
+   current Chrome, so the shorthand now resets both and the bug shows. Every
+   other gradient-text rule in this project (hero.css, sectionHeader.css …)
+   declares its own `background` in the same rule as the clip, which is why they
+   were never exposed to this. See ServiceCards.jsx. */
 .sc-gradient-text {
   -webkit-background-clip: text;
   background-clip: text;

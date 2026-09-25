@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  sitemap.xml — youngarchitects.in
+
+  ONE URL, ON PURPOSE. A sitemap is a list of pages you are asking to have
+  indexed, so it must only ever contain indexable URLs. Every other page this
+  site exports is a Coming Soon placeholder that ships
+  <meta name="robots" content="noindex, follow"> from
+  src/app/(site)/[...slug]/page.jsx. Listing those here would contradict the
+  page itself, and Search Console reports it as "Submitted URL marked
+  noindex" — a warning against the whole sitemap, not just the offending row.
+
+  ADDING A PAGE. When a placeholder is replaced by a real page, that page stops
+  emitting the noindex tag — add its URL here at the same time. Keep the
+  trailing slash: next.config.mjs sets trailingSlash: true, so /our-services/seo/
+  is the canonical form and /our-services/seo would be a redirect.
+
+  To check what is currently indexable, build and grep the export:
+    npx next build
+    grep -rLi "noindex" out --include=index.html
+
+  changefreq and priority are omitted deliberately. Google has confirmed it
+  ignores both, and unread hints are just another thing to keep in step.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://youngarchitects.in/</loc>
+    <lastmod>2026-09-26</lastmod>
+  </url>
+</urlset>

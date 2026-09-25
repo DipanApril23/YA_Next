@@ -902,7 +902,7 @@ const ServiceCards = () => {
               {/* ── Intro ── */}
               <p
                 className="sc-gradient-text text-sm sm:text-base font-semibold leading-relaxed"
-                style={{ background: `linear-gradient(135deg, ${accent}, #a855f7)` }}
+                style={{ backgroundImage: `linear-gradient(135deg, ${accent}, #a855f7)` }}
               >
                 {selectedService.learnMore?.intro}
               </p>

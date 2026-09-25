@@ -132,271 +132,401 @@
   ],
   "development": [
     {
-      "title": "AI Development & Integration",
-      "description": "Transform your business with AI development and integration, leveraging cutting-edge technology to enhance efficiency and drive innovation. Click to Learn More.",
-      "longDescription": "This is long description",
-      "logo": "/assets/servicesImage/AI_development_and_integrations.webp",
+      "title": "Custom Website Development",
+      "description": "Bespoke custom website development — every layout and every line of code crafted around your brand, your customers and how you actually sell. No templates, no page-builder bloat. Click to Learn More.",
+      "highlights": [
+        "Next.js & Headless WP",
+        "Core Web Vitals Ready",
+        "SEO-First Build"
+      ],
+      "logo": "/assets/servicesImage/Custom_website_development.webp",
       "learnMore": {
-        "intro": "Empower your business by seamlessly integrating AI into your existing workflows and digital assets, delivering intelligent, future-ready solutions tailored to your specific requirements.",
+        "intro": "As a custom website development company, we build from a blank canvas — designed around your buyers, engineered for speed, and structured so search engines understand exactly what you do.",
         "points": [
-          "Custom AI Solutions - Seamlessly embed AI technologies into your current business workflows, ensuring each solution is tailored to address your specific operational needs.",
-          "Enhanced Operational Efficiency - Automate routine tasks and optimize complex processes, driving measurable improvements in productivity and cost savings across your organization.",
-          "Smart Digital Transformation - Transform static websites and legacy systems into intelligent, responsive platforms that deliver real-time insights and adaptive user experiences.",
-          "Scalable and Future-Ready - Implement AI solutions that scale with your business growth, providing agility and adaptability in an ever-evolving digital landscape.",
-          "Data-Driven Decision Making - Leverage advanced analytics and machine learning to turn raw data into actionable insights, empowering faster and more informed business decisions.",
-          "AI-Powered Marketing Solutions - Enhance your marketing strategies with AI-driven tools for personalized outreach, automated campaign management, lead scoring, and advanced customer insights—maximizing engagement and ROI."
+          "Bespoke Design & Build - Every page is designed and coded around your brand and your sales process, so nothing is bent to fit a theme you never chose.",
+          "Next.js & Headless WordPress - Modern React front-ends backed by a headless CMS, giving you app-like speed with an editor your team already knows.",
+          "ACF-Powered Content Editing - Custom fields let your team update real content in plain language, without wrestling with layouts or breaking a page.",
+          "Core Web Vitals Ready - Builds tuned for LCP, INP and CLS from day one, because page speed is a ranking factor and a conversion factor at the same time.",
+          "SEO-First Architecture - Clean semantic markup, crawlable structure, schema and metadata built in during development rather than bolted on afterwards.",
+          "Built to Scale - A component library and clean codebase your developers can extend for years without another rebuild."
         ],
-        "conclusion": "Fuel your business growth with intelligent AI solutions and innovative marketing strategies. Drive results, amplify your reach, and stay ahead in today’s digital marketplace."
+        "conclusion": "A website that loads fast, ranks well and sells while you sleep. Built once, properly, around the way your business actually works."
       }
     },
     {
-      "title": "Custom Software Design",
-      "description": "Drive business transformation with custom software design, leveraging purpose-built solutions to optimize operations and accelerate growth. Click to Learn More.",
-      "longDescription": "This is long description",
-      "logo": "/assets/servicesImage/Custom_software_design.webp",
+      "title": "E-Commerce Development",
+      "description": "Stores built to convert, not just to display. Fast catalogues, secure payments and a checkout that doesn't lose the sale at the last step — plus a backend your team can actually run. Click to Learn More.",
+      "highlights": [
+        "WooCommerce & Shopify",
+        "Secure Payment Gateways",
+        "Abandoned Cart Recovery"
+      ],
+      "logo": "/assets/servicesImage/Ecommerce_development.webp",
       "learnMore": {
-        "intro": "Empower your organization with bespoke software solutions engineered to streamline your operations, enhance efficiency, and scale with your evolving business requirements.",
+        "intro": "Ecommerce website development built around one number — revenue per visitor. Fast product pages, a frictionless checkout, and the automations that recover the sales most stores quietly lose.",
         "points": [
-          "Tailored Architecture - Develop custom software systems precisely aligned with your business processes and long-term vision.",
-          "Seamless Integration - Ensure compatibility and smooth integration with your existing technology stack, minimizing disruption.",
-          "Scalable Solutions - Build flexible platforms designed to grow alongside your organization and adapt to changing demands.",
-          "Enhanced Security - Implement robust security protocols tailored to your unique data and compliance needs.",
-          "User-Centric Design - Deliver intuitive, user-friendly interfaces that drive adoption and improve productivity across your teams.",
-          "Expert Consultation - Benefit from strategic guidance and expert consulting at every stage—from requirements analysis and solution architecture to deployment and ongoing support."
+          "WooCommerce, Shopify & Headless - Built on the platform that fits your catalogue, your margins and your team, not the one that is easiest for us.",
+          "Payment Gateway Integration - Razorpay, Stripe, PayPal, UPI and COD wired in securely, with the checkout trimmed to the fewest steps a customer will tolerate.",
+          "Abandoned Cart Recovery - Automated email, SMS and WhatsApp nudges that bring back the shoppers who walked away with a full basket.",
+          "Product SEO & Shopping Feeds - Optimised product schema, category structure and clean Google Shopping and Meta feeds, so your catalogue is found and shoppable.",
+          "A Backend Your Team Can Run - Stock, pricing, offers and orders managed in-house, without a developer on speed dial every week.",
+          "Speed at Catalogue Scale - Image optimisation, caching and lean templates that keep thousands of SKUs loading in under two seconds."
         ],
-        "conclusion": "Achieve operational excellence and agility with custom software designed around your business goals. Future-proof your operations and drive lasting growth with solutions built specifically for you."
+        "conclusion": "A store that earns its traffic — quick to browse, effortless to buy from and simple to run. Turn more of the visitors you already pay for into paying customers."
       }
     },
     {
-      "title": "Custom App Development",
-      "description": "Accelerate your growth with custom app development—delivering intuitive, high-performance solutions for web and mobile. Click to Learn More.",
-      "longDescription": "This is long description",
-      "logo": "/assets/servicesImage/Custom_app_development.webp",
+      "title": "Web Application Development",
+      "description": "When a website isn't enough. Booking systems, client portals, dashboards, internal tools and full SaaS products — engineered to simplify how your business runs. Click to Learn More.",
+      "highlights": [
+        "SaaS MVP Builds",
+        "Admin Dashboards",
+        "Role-Based Access"
+      ],
+      "logo": "/assets/servicesImage/Web_application_development.webp",
       "learnMore": {
-        "intro": "Build powerful, intuitive applications tailored to your business objectives, delivering seamless experiences across all devices.",
+        "intro": "Web application development for the work a brochure site cannot do — the portals, dashboards and internal tools that replace spreadsheets, WhatsApp threads and manual follow-up.",
         "points": [
-          "Tailored App Solutions - Create applications uniquely designed to address your specific business challenges and goals.",
-          "Cross-Platform Compatibility - Ensure smooth performance and a consistent user experience across web, Android, and iOS devices.",
-          "Agile Development Process - Leverage modern development methodologies for rapid delivery, flexibility, and ongoing improvement.",
-          "Scalable & Secure Architecture - Build apps with scalability and security at their core, supporting future growth and safeguarding your data.",
-          "User-Centric Experience - Focus on intuitive interfaces and engaging user journeys to maximize adoption and satisfaction.",
-          "End-to-End Consultancy - Receive expert guidance from ideation and design through deployment and post-launch support."
+          "SaaS MVP Builds - Get a real, usable product in front of paying users fast, architected so version two is an extension and not a rewrite.",
+          "Admin Dashboards - Live operational views that put the numbers your team decides on into one screen instead of five exports.",
+          "Client Portals - Give customers a secure place to track orders, approve work, download documents and raise requests without emailing anyone.",
+          "Role-Based Access Control - Granular permissions, so every user sees exactly what their role needs and nothing more.",
+          "API & System Integrations - Connect payments, CRM, shipping, accounting and internal systems so the app fits the stack you already run.",
+          "Secure & Scalable Architecture - Encrypted data, audited access and infrastructure that holds steady as your user count grows."
         ],
-        "conclusion": "Empower your business with custom apps built for performance, scalability, and user delight. Transform your ideas into impactful digital solutions that drive measurable results."
+        "conclusion": "Software that removes work instead of adding another tab to your day. Built to fit your process exactly, and to keep fitting it as you grow."
       }
     },
     {
-      "title": "Custom Web Development",
-      "description": "Elevate your digital presence with custom web development, delivering responsive, scalable, and secure solutions that drive engagement and support your business growth. Click to Learn More.",
-      "longDescription": "This is long description",
-      "logo": "/assets/servicesImage/Custom_web_development.webp",
+      "title": "UI/UX Design",
+      "description": "Beautiful isn't enough — it has to feel effortless. UI UX design that guides people toward action without making them think, from user flows and wireframes to a pixel-perfect build handoff. Click to Learn More.",
+      "highlights": [
+        "User Flows & Wireframes",
+        "Design Systems",
+        "Figma-to-Code Handoff"
+      ],
+      "logo": "/assets/servicesImage/UI_UX_design.webp",
       "learnMore": {
-        "intro": "Create high-performance, visually stunning websites tailored to your brand and business needs.",
+        "intro": "UI UX design that earns its keep — research-led interfaces where the next step is always obvious, shaped by real user behaviour rather than opinion.",
         "points": [
-          "Bespoke Website Solutions - Design and develop websites uniquely crafted to reflect your brand identity and achieve your business objectives.",
-          "Responsive & Mobile-First Design - Ensure seamless user experiences across all devices with adaptive layouts and modern UI/UX principles.",
-          "Performance Optimization - Build fast-loading, SEO-friendly sites that enhance user satisfaction and search engine visibility.",
-          "Robust Security - Incorporate advanced security measures to safeguard your data and protect against cyber threats.",
-          "Seamless Integration - Connect your website effortlessly with third-party services, APIs, and business tools for maximum functionality.",
-          "Consultative Approach - Benefit from expert guidance at every stage, from initial planning and design to launch and ongoing support."
+          "User Flows & Wireframes - Map the journey before a single pixel is coloured, so the structure is right while it is still cheap to change.",
+          "Conversion-Focused Layouts - Every screen is built around one primary action, with hierarchy, contrast and copy pulling in the same direction.",
+          "Design Systems - Reusable components, type scales and tokens that keep every future screen on-brand and cut build time in half.",
+          "Accessible by Default - Readable contrast, keyboard navigation and screen-reader-friendly structure, meeting WCAG standards as standard.",
+          "Mobile-First Thinking - Designed for the small screen where most of your traffic actually lands, then scaled up rather than squeezed down.",
+          "Figma-to-Code Handoff - Developer-ready files with spacing, states and behaviour documented, so the build matches the design exactly."
         ],
-        "conclusion": "Unlock new opportunities with a custom website built for impact, scalability, and performance. Position your business for digital success with a solution tailored to your unique vision."
+        "conclusion": "Interfaces people move through without thinking about them. Better usability, higher conversion, and a design language your brand can grow into."
       }
     },
     {
-      "title": "API Development",
-      "description": "Streamline your business operations with robust API development, enabling effortless connectivity, data exchange, and integration across platforms. Click to Learn More.",
-      "longDescription": "This is long description",
-      "logo": "/assets/servicesImage/API_development.webp",
+      "title": "Website Redesign, Maintenance & Care",
+      "description": "Fix what you have, then keep it sharp. Website redesign services that rebuild dated sites into fast, mobile-first, conversion-focused assets — without throwing away the SEO you have already earned. Click to Learn More.",
+      "highlights": [
+        "Full 301 Redirect Mapping",
+        "Speed & Core Web Vitals",
+        "Monthly Care Plans"
+      ],
+      "logo": "/assets/servicesImage/Website_redesign_and_maintenance.webp",
       "learnMore": {
-        "intro": "Design and deploy secure, high-performance APIs to power seamless integrations and enable scalable digital ecosystems—even if you already have an existing frontend.",
+        "intro": "Website redesign services that modernise the experience while protecting the rankings — followed by a care plan that keeps the site fast, secure and current long after launch.",
         "points": [
-          "Custom API Solutions - Build APIs tailored to your specific business processes and application requirements.",
-          "Secure & Reliable Architecture - Implement industry-standard authentication, encryption, and error handling for safe and stable data transfer.",
-          "Seamless Integration - Enable smooth interoperability with internal systems, third-party platforms, and mobile/web applications.",
-          "Scalable Design - Architect APIs to handle increasing traffic and evolving business needs without compromising performance.",
-          "Comprehensive Documentation - Provide clear, developer-friendly documentation to accelerate onboarding and integration.",
-          "Expert Consultation - Receive strategic guidance from initial API planning and design through deployment and ongoing support."
+          "Redesign Without Ranking Loss - Full URL audits and 301 redirect mapping, so the authority you built over years transfers cleanly to the new site.",
+          "Speed & Core Web Vitals Fixes - Diagnose and repair what is actually slowing the site down, from oversized images to render-blocking scripts.",
+          "Mobile-First Rebuild - Rework dated layouts around the phone screen, where most of your visitors and most of your lost conversions already are.",
+          "Security, Backups & Uptime - Hardened installs, automated off-site backups and monitoring that flags a problem before your customers find it.",
+          "Ongoing Updates & Fixes - Core, plugin and dependency updates applied and tested, so nothing breaks quietly in the background.",
+          "Monthly Care Plans - A fixed monthly retainer covering content edits, technical health checks and priority support from a team that knows your build."
         ],
-        "conclusion": "Empower your digital ecosystem with reliable, scalable APIs designed for maximum compatibility and performance. Unlock new efficiencies and business opportunities through seamless integration."
+        "conclusion": "Keep the equity, lose the baggage. A faster, cleaner site that converts better — and a team keeping it that way every single month."
       }
     },
     {
-      "title": "Saas CRM Automations",
-      "description": "Streamline customer management and boost growth with SaaS CRM automations powered by intelligent workflows. Click to Learn More.",
-      "longDescription": "This is long description",
-      "logo": "/assets/servicesImage/SaaS_CRM_Automations.webp",
+      "title": "AI Chatbots & Customer Support",
+      "description": "Answers at 2am, in your voice. Website and WhatsApp chatbots trained on your business, your services and your tone — replying instantly, qualifying the enquiry, and handing over only when a human is genuinely needed. Click to Learn More.",
+      "highlights": [
+        "Website & WhatsApp Chat",
+        "Lead Qualification",
+        "Smart Human Handoff"
+      ],
+      "logo": "/assets/servicesImage/AI_chatbots_and_customer_support.webp",
       "learnMore": {
-        "intro": "Automate your sales, marketing, and support processes with intelligent SaaS CRM solutions, driving efficiency and growth at every customer touchpoint.",
+        "intro": "AI chatbot development that gives every visitor an instant, accurate answer — trained on your own content, so it sounds like your business and not a generic assistant.",
         "points": [
-          "Automated Workflows - Configure smart workflows to automate repetitive sales, marketing, and support tasks, freeing your team to focus on higher-value activities.",
-          "Lead Management & Nurturing - Automatically capture, segment, and nurture leads with personalized communications, ensuring no opportunity slips through the cracks.",
-          "Seamless Integration - Connect your CRM with existing business tools and channels for a unified, efficient data ecosystem.",
-          "Analytics & Reporting - Gain actionable insights with real-time dashboards and performance analytics to drive smarter decisions.",
-          "Scalable & Customizable - Adapt automation rules and CRM features to fit your unique business processes as you grow.",
-          "Expert Consultation & Support - Access professional guidance from setup and onboarding to ongoing optimization and troubleshooting."
+          "Trained on Your Own Content - The bot learns your services, pricing logic, policies and tone from your material, so answers stay correct and on-brand.",
+          "Website & WhatsApp Chat - One assistant across the channels your customers already use, with conversation history following them between the two.",
+          "Lead Qualification - Every chat quietly collects service, timeline, budget and contact details, so your team opens the conversation already briefed.",
+          "Smart Human Handoff - Clear escalation rules pass the chat to a real person the moment a question outgrows the bot, with full context attached.",
+          "24/7 Instant Response - Out-of-hours enquiries are answered in seconds instead of waiting overnight for a reply that may arrive too late.",
+          "CRM & Calendar Connected - Conversations write straight into your CRM and can book a slot on the calendar before the visitor leaves the page."
         ],
-        "conclusion": "Empower your digital ecosystem with reliable, scalable APIs designed for maximum compatibility and performance. Unlock new efficiencies and business opportunities through seamless integration."
+        "conclusion": "Faster answers, fewer repetitive tickets and more qualified enquiries reaching your team. Support that never sleeps and never goes off-script."
       }
     },
     {
-      "title": "Enterprise Software Development",
-      "description": "Transform your business with enterprise software development, delivering robust, custom solutions that optimize performance and support large-scale growth. Click to Learn More.",
-      "longDescription": "This is long description",
-      "logo": "/assets/servicesImage/Enterprise_software_development.webp",
+      "title": "Lead Capture, Follow-Up & Booking Automation",
+      "description": "The business that replies first usually wins. Lead generation automation that captures every enquiry, answers it in seconds and follows up until it converts — then turns it into a confirmed slot on your calendar. Click to Learn More.",
+      "highlights": [
+        "Instant Lead Response",
+        "Missed-Call Text-Back",
+        "Calendar Sync & Reminders"
+      ],
+      "logo": "/assets/servicesImage/Lead_capture_and_booking_automation.webp",
       "learnMore": {
-        "intro": "Empower your organization with scalable, secure enterprise software built to streamline operations and drive digital transformation.",
+        "intro": "Lead generation automation that closes the gap between enquiry and conversation — instant replies, relentless follow-up, and appointment booking automation that fills the calendar without a single phone call.",
         "points": [
-          "Tailored Enterprise Solutions - Design and develop software tailored to your organization’s unique workflows, processes, and compliance needs.",
-          "Integration with Business Systems - Seamlessly connect new solutions with existing ERP, CRM, and other core business platforms for unified operations.",
-          "High Scalability & Performance - Architect systems that handle high volumes of users, data, and transactions—ensuring reliable performance at scale.",
-          "Advanced Security Protocols - Implement enterprise-grade security features to protect sensitive data and ensure regulatory compliance.",
-          "Custom Reporting & Analytics - Enable data-driven decision making with real-time dashboards, analytics, and automated reporting tools.",
-          "Strategic Consultancy & Support - Benefit from expert guidance through every project phase—from planning and architecture to deployment and ongoing optimization."
+          "Instant Lead Response - Every form, ad and chat enquiry gets a reply within seconds, while the visitor is still thinking about you.",
+          "Missed-Call Text-Back - A missed call triggers an automatic text, so the enquiry starts a conversation instead of dialling your competitor.",
+          "Multi-Channel Follow-Up - Sequenced SMS, email and WhatsApp nudges keep working the leads that go quiet, for as long as it takes.",
+          "Calendar Sync & Reminders - Prospects self-book into live availability, with confirmations and reminders that cut no-shows sharply.",
+          "No-Show Recovery - A missed appointment triggers an automatic rebooking sequence rather than being written off as lost.",
+          "One Central Lead Inbox - Every conversation from every channel lands in one place with full history, so nothing slips between tools."
         ],
-        "conclusion": "Drive operational excellence with enterprise software designed for your business realities. Achieve sustainable growth and agility through secure, scalable technology solutions."
+        "conclusion": "Speed to lead, without hiring for it. Capture more enquiries, waste far fewer, and turn the ones you already have into confirmed appointments."
+      }
+    },
+    {
+      "title": "Marketing Automation",
+      "description": "Campaigns that keep working after the first click. Email, SMS and WhatsApp journeys that nurture leads on autopilot — welcome sequences, offers, review requests and win-back campaigns. Click to Learn More.",
+      "highlights": [
+        "Welcome & Nurture Flows",
+        "Review Generation",
+        "WhatsApp Broadcasts"
+      ],
+      "logo": "/assets/servicesImage/Marketing_automation.webp",
+      "learnMore": {
+        "intro": "As a marketing automation company in Kolkata, we build the journeys that keep running after the ad spend stops — nurturing, converting and re-engaging your list without daily manual effort.",
+        "points": [
+          "Welcome & Nurture Sequences - Automated journeys that warm a new lead from first contact to ready-to-buy, in your voice and at your pace.",
+          "Review Generation - Timed requests that ask happy customers for a Google review at the exact moment they are most likely to leave one.",
+          "WhatsApp Broadcasts - Reach your list on the channel people actually open, with segmented offers and updates instead of blanket messages.",
+          "Segmentation & Personalisation - Messaging split by service, behaviour and buying stage, so every contact hears only what is relevant to them.",
+          "Win-Back & Re-Engagement - Automated campaigns that revive dormant customers and lapsed leads already sitting in your database.",
+          "Reporting That Means Something - Dashboards tracking opens, replies, bookings and revenue per campaign, not vanity metrics."
+        ],
+        "conclusion": "Your database is an asset most businesses never work. Automation makes it earn every week, without adding to anyone's workload."
+      }
+    },
+    {
+      "title": "Workflow Automation & Custom AI Integrations",
+      "description": "If your staff does it every week, we can probably automate it. Business process automation for invoices, data entry, reports and inter-team handoffs — plus the integrations that finally make your tools talk to each other. Click to Learn More.",
+      "highlights": [
+        "n8n & GHL Workflows",
+        "CRM to Website Sync",
+        "AI Report Generation"
+      ],
+      "logo": "/assets/servicesImage/Workflow_automation_and_AI_integrations.webp",
+      "learnMore": {
+        "intro": "Business process automation services and custom AI automation solutions in Kolkata that connect the tools you already pay for — so your CRM, website, forms and sheets behave like one system instead of five.",
+        "points": [
+          "n8n & GoHighLevel Workflows - Automations built on proven platforms, documented and owned by you rather than locked inside an agency account.",
+          "CRM, Website & Sheets Sync - Data entered once appears everywhere it is needed, ending duplicate entry and the errors that ride along with it.",
+          "AI Report & Document Generation - Proposals, invoices, summaries and weekly reports drafted automatically from your live business data.",
+          "Repetitive Task Elimination - The weekly jobs that quietly eat days — data entry, reconciliation, chasing updates — handled in the background.",
+          "Custom API Integrations - Bespoke connections for the tools with no off-the-shelf integration, including legacy and in-house systems.",
+          "Failure Alerts & Monitoring - Every workflow is watched, and you hear about a break the moment it happens instead of a month later."
+        ],
+        "conclusion": "Give your team their week back. Fewer manual handoffs, fewer mistakes, and systems that finally work together — measured in hours saved every month."
       }
     }
   ],
   "designing": [
     {
-      "title": "Social Media Poster Design",
-      "description": "Stand out online with scroll-stopping social media posters crafted to reflect your brand's identity and engage your audience. Click to Learn More.",
-      "longDescription": "This is long description",
-      "logo": "/assets/servicesImage/Social_Media_and_Event_Poster_Design.webp",
+      "title": "Logo & Brand Identity Design",
+      "description": "The face of your business, done properly. Logos, colour palettes, typography and a brand guideline document that keeps every future design — by us or anyone else — unmistakably yours. Click to Learn More.",
+      "highlights": [
+        "Logo & Wordmark",
+        "Colour & Type System",
+        "Brand Guidelines PDF"
+      ],
+      "logo": "/assets/servicesImage/Logo_and_brand_identity_design.webp",
       "learnMore": {
-        "intro": "Empower your brand with impactful social media poster designs that boost visibility and maximize audience engagement across digital channels.",
+        "intro": "Work with a logo design and branding company that builds an identity system, not just a mark — every colour, typeface and rule documented, so your brand stays consistent wherever it shows up.",
         "points": [
-          "Instagram, Facebook & LinkedIn post design - Custom visuals for different platforms tailored to your goals.",
-          "Promotional Banner Design - Eye-catching posters for sales, events, product launches, and more.",
-          "Festive & Event-Based Creatives - Stay relevant with posters for festivals, trends, and special days.",
-          "Carousel Designs - Multi-slide posts to showcase services or tell compelling stories.",
-          "Branding Consistency - Ensure all designs align with your logo, color scheme, and brand message.",
-          "Motion Graphics & GIFs - Add movement to your posts for better engagement.",
-          "Weekly/Monthly Design Packages - Stay consistent with scheduled content support.",
-          "Creative Copywriting - Captions and poster text that match the visual tone and call-to-action."
+          "Logo & Wordmark Design - Primary, secondary and icon-only marks, delivered in every format and lockup your team will ever need to place.",
+          "Colour & Typography System - A defined palette and type scale with exact HEX, RGB, CMYK and Pantone values, so print and screen finally agree.",
+          "Brand Guidelines Document - A practical PDF covering spacing, misuse, tone and application — the reference that keeps future designers on-brand.",
+          "Stationery & Social Kit - Letterheads, email signatures, profile images and cover art, all built from the same system on day one.",
+          "Scalable, Format-Ready Files - Vector masters that stay razor-sharp from a favicon to a hoarding, supplied in AI, SVG, EPS, PDF and PNG.",
+          "Positioning Before Pixels - We define what your brand stands for and who it speaks to first, so the design has something real to express."
         ],
-        "conclusion": "Drive operational excellence with enterprise software designed for your business realities. Achieve sustainable growth and agility through secure, scalable technology solutions."
+        "conclusion": "An identity that looks deliberate everywhere it appears. Built once, documented properly, and impossible to dilute as your business grows."
       }
     },
     {
-      "title": "Event Poster Design",
-      "description": "Promote your events with striking poster designs that capture attention and drive attendance, both online and offline. Click to Learn More.",
-      "longDescription": "This is long description",
-      "logo": "/assets/servicesImage/Social_Media_and_Event_Poster_Design.webp",
+      "title": "Marketing & Print Collateral",
+      "description": "Your offline presence, as sharp as your website. Brochures, flyers, banners, standees, menus, packaging and business cards — delivered print-ready with correct bleed and colour profiles. Click to Learn More.",
+      "highlights": [
+        "Brochures & Catalogues",
+        "Flyers, Banners & Standees",
+        "Print-Ready CMYK Files"
+      ],
+      "logo": "/assets/servicesImage/Marketing_and_print_collateral.webp",
       "learnMore": {
-        "intro": "Empower your event with compelling poster designs that capture attention and drive participation across every promotional channel.",
+        "intro": "Brochure design services and full print collateral built to the printer's spec, not just the screen's — so what you approve on Friday is exactly what comes off the press.",
         "points": [
-          " Concert & Live Show Posters - Visually engaging layouts for music events, stand-ups, or performances.",
-          "Corporate Event Posters - Professional designs for conferences, seminars, and business gatherings.",
-          "Product Launch & Expo Posters - Make a bold statement for product unveilings or trade shows.",
-          "College Fest & Cultural Event Posters - Youthful and vibrant designs tailored to the theme.",
-          "Online Webinar & Workshop Posters - Clean and informative layouts for digital events.",
-          "Invitation Posters - Formal or creative invite posters that set the right tone.",
-          "Custom Themes & Branding - Posters tailored to match your event's vibe and branding.",
-          "Print-Ready & Web-Optimized Files - Delivered in formats suitable for both print and social media use."
+          "Brochures & Catalogues - Multi-page layouts that carry your full range clearly, with a grid and hierarchy that survives a long product list.",
+          "Flyers, Banners & Standees - High-impact formats for events, storefronts and campaigns, designed to land a message from six feet away.",
+          "Menus & Packaging - Layouts built for the material they are printed on, with finishes, folds and die-lines accounted for upfront.",
+          "Business Cards & Stationery - The small pieces people actually keep, designed to match your identity system exactly rather than approximate it.",
+          "Print-Ready CMYK Files - Correct bleed, trim marks, colour profiles and outlined fonts, so the printer never sends the job back.",
+          "Consistent With Your Brand - Every piece drawn from your existing identity, so online and offline read as one business."
         ],
-        "conclusion": "Make your event unmissable with designs that do more than just look good—they attract the right crowd. Let your event poster tell a story before the event even begins."
+        "conclusion": "Print that arrives right the first time. Collateral that makes your business look as considered in the hand as it does on screen."
       }
     },
     {
-      "title": "Front Cover Design",
-      "description": "Make a powerful first impression with professionally crafted front cover designs for brochures, reports, presentations, and eBooks. Click to Learn More.",
-      "longDescription": "This is long description",
-      "logo": "/assets/servicesImage/Magazine_cover_design.webp",
+      "title": "Ad Creatives: Static & Motion",
+      "description": "Built around the click, not the applause. Hooks, layouts and short motion graphics for Meta and Google campaigns — shipped in variations, so your media buyer always has a fresh angle to test. Click to Learn More.",
+      "highlights": [
+        "Meta & Google Ad Sets",
+        "Static + Motion Variants",
+        "All Placement Sizes"
+      ],
+      "logo": "/assets/servicesImage/Ad_creatives_static_and_motion.webp",
       "learnMore": {
-        "intro": "Empower your publication with striking front cover designs that captivate your audience and reflect your brand's identity from the very first glance.",
+        "intro": "Ad creative design services built for performance testing — creative shipped in volume and in variants, because the winning ad is found, not guessed.",
         "points": [
-          "Company Profile Cover Design - Set the tone for your brand with a polished, professional front page.",
-          "Brochure & Catalog Covers - Eye-catching visuals to spark curiosity and interest.",
-          "Magazine & eBook Covers - Creative layouts tailored to your content and target audience.",
-          "Report & Whitepaper Covers - Sleek and credible designs for business and academic use.",
-          "Event Program Covers - Reflect your event's theme with a well-composed front page.",
-          "Custom Typography & Illustration - Unique fonts and illustrations to elevate your brand.",
-          "Print & Digital-Ready Formats - High-resolution files optimized for both print and screen.",
-          "Brand-Aligned Design - Covers that match your overall brand identity and voice."
+          "Meta & Google Ad Sets - Creative built to each platform's specs and buying behaviour, not one design stretched to fit every channel.",
+          "Static & Motion Variants - Still layouts plus short motion graphics from the same concept, so you can test format as well as message.",
+          "Hook-First Creative Copy - The first three seconds and the first three words carry the ad, so that is where the work goes.",
+          "Every Placement Size - Feed, story, reel, square and display exports from one master, correctly recomposed rather than squashed.",
+          "Built to Be Tested - Multiple angles per concept, so your media buyer has something fresh ready before the current set fatigues.",
+          "Iterated on Performance - Losing creative is replaced and winning creative is scaled, using what the numbers actually say."
         ],
-        "conclusion": "Your front cover is more than just a page — it’s the hook. We design covers that invite, intrigue, and convert readers into loyal viewers or customers."
+        "conclusion": "Creative that gives your ad spend somewhere to go. More angles, faster testing, and a falling cost per result as the winners emerge."
       }
     },
     {
-      "title": "Video & Image Editing",
-      "description": "Transform raw visuals into polished content with professional video and image editing services that elevate your brand. Click to Learn More.",
-      "longDescription": "This is long description",
-      "logo": "/assets/servicesImage/Video_and_Image_Editing.webp",
+      "title": "Video Content: Script to Final Cut",
+      "description": "Raw footage in, scroll-stopping video out. Script, cuts, captions, colour and sound — from 30-second reels to brand films, testimonials and full YouTube episodes. Click to Learn More.",
+      "highlights": [
+        "Reels & Shorts",
+        "YouTube Long-Form",
+        "Captions, Colour & Sound"
+      ],
+      "logo": "/assets/servicesImage/Video_content_production.webp",
       "learnMore": {
-        "intro": "Empower your publication with striking front cover designs that captivate your audience and reflect your brand's identity from the very first glance.",
+        "intro": "Video editing services in Kolkata, handled end to end — scripting, reels editing, YouTube video editing, colour and sound — so you hand over footage and get back something ready to publish.",
         "points": [
-          "Short Reels & Promo Video Editing - Snappy, engaging edits for social media and ad campaigns.",
-          "YouTube Video Editing - Seamless transitions, intros/outros, and storytelling cuts.",
-          "Event Highlight Videos - Compile the best moments with cinematic edits and music.",
-          "Product Photo Retouching - Enhance product images for eCommerce and catalogs.",
-          "Background Removal & Object Cleanup - Clean, crisp edits that focus attention where it matters.",
-          "Color Grading & Filters - Bring out the mood with professional color correction.",
-          "Text Overlay & Subtitles - Improve accessibility and messaging with clear captions.",
-          "Thumbnail & Cover Frame Design - Create scroll-stopping visuals for video content."
+          "Reels & Shorts - Vertical edits cut for retention, with the hook, pacing and captions built for a muted, fast-scrolling feed.",
+          "YouTube Long-Form - Full episode edits with b-roll, chapters and thumbnails, structured to hold watch time past the first minute.",
+          "Scripts & Storyboards - The story is planned before a camera rolls, so the shoot stays efficient and the edit is not a rescue job.",
+          "Captions, Colour & Sound - Accurate subtitles, consistent grading and mixed audio — the three things that separate amateur from paid-for.",
+          "Motion Graphics & Titles - Branded lower-thirds, animated text and transitions that reinforce your identity instead of distracting from it.",
+          "Brand Films & Testimonials - Longer pieces that carry credibility, cut to keep a real customer story moving."
         ],
-        "conclusion": "Let your content do the talking with edits that amplify quality, boost engagement, and build a strong visual identity. Whether it's a subtle touch-up or a full-scale edit, we bring your visuals to life."
+        "conclusion": "Video that earns the attention you are competing for. One team from script to final cut, so nothing is lost between hands."
       }
     },
     {
-      "title": "Writeups & Thumbnail Design",
-      "description": "Get compelling write ups and eye-catching thumbnails that increase clicks, views, and engagement across all digital platforms. Click to Learn More.",
-      "longDescription": "This is long description",
-      "logo": "/assets/servicesImage/Write_ups_and_thumbnail_design.webp",
+      "title": "Social Media Content & Creatives",
+      "description": "One team for what you say and how it looks. Post templates, carousels, story graphics, festival creatives and captions — planned on a monthly calendar you approve before anything goes live. Click to Learn More.",
+      "highlights": [
+        "Monthly Content Calendar",
+        "Carousels & Story Sets",
+        "Captions & Hashtags"
+      ],
+      "logo": "/assets/servicesImage/Social_media_content_and_creatives.webp",
       "learnMore": {
-        "intro": "Empower your content with compelling writeups and captivating thumbnail designs that boost engagement and drive audience interaction across digital platforms.",
+        "intro": "Social media content creation services that end the Friday-evening scramble — a month of design and copy planned, approved and scheduled well before it is needed.",
         "points": [
-          "YouTube Thumbnail Design - Bold, clickable designs tailored to your content and niche.",
-          "Blog Cover Thumbnails - Visually aligned thumbnails to draw readers into your articles.",
-          "Social Media Thumbnails - Platform-specific sizes and styles that boost visibility.",
-          "Captivating Video Titles - SEO-friendly and curiosity-driven titles for better reach.",
-          "SEO-Optimized Descriptions - Write-ups designed to rank and convert viewers into followers.",
-          "Creative Copy for Thumbnails - Punchy phrases that grab attention at a glance.",
-          "Consistent Branding Elements - Logos, colors, and styles that match your identity.",
-          "Custom Templates for Series - Maintain a uniform look for episodic or multi-part content."
+          "Monthly Content Calendar - A full month planned and signed off in advance, so nothing is invented the night before it posts.",
+          "Carousels & Story Sets - Multi-slide formats that hold attention longer and give the algorithm a reason to keep showing you.",
+          "Festival & Offer Creatives - Timely graphics for the dates that matter to your audience, prepared ahead rather than rushed out late.",
+          "Captions & Hashtags - Copy written to stop the scroll and prompt a reply, with researched tags instead of the same recycled block.",
+          "Platform-Sized Exports - Every asset delivered at the right dimensions for each network, so nothing is cropped awkwardly on upload.",
+          "Templates You Can Reuse - Editable design systems your own team can extend in-house between campaigns."
         ],
-        "conclusion": "Every scroll, click, and tap starts with a powerful first impression. Our writeups and thumbnails ensure your content not only stands out—but gets seen, read, and remembered."
+        "conclusion": "A feed that looks planned because it is. Consistent design, consistent voice, and a month of content ready before the month begins."
       }
     },
     {
-      "title": "Business Card Design",
-      "description": "Leave a lasting impression with sleek, professional business card designs that speak volumes about your brand. Click to Learn More.",
-      "longDescription": "This is long description",
-      "logo": "/assets/servicesImage/Business_Card_Design.webp",
+      "title": "Content Strategy & Planning",
+      "description": "Direction before volume. We map your audience, the questions they are actually typing into Google and your commercial goals into a content roadmap — so every blog, page and post pulls in the same direction. Click to Learn More.",
+      "highlights": [
+        "Audience & Intent Research",
+        "Topic Clusters",
+        "Content Gap Analysis"
+      ],
+      "logo": "/assets/servicesImage/Content_strategy_and_planning.webp",
       "learnMore": {
-        "intro": "Empower your professional image with custom business card designs that leave a lasting impression and reinforce your brand identity.",
+        "intro": "Content strategy services that decide what to publish and why before anyone writes a word — so your output compounds into authority instead of scattering across unrelated posts.",
         "points": [
-          "Standard & Premium Layouts - From minimal to bold, tailored to your brand personality.",
-          "Double-Sided Designs - Maximize space to include all your key contact info and services.",
-          "Custom Shapes & Sizes - Creative formats that break the traditional mold.",
-          "Logo Integration - Seamless incorporation of your brand identity.",
-          "QR Code Integration - Direct clients to your website, portfolio, or social media with a scan.",
-          "Industry-Specific Styles - Designs suited for corporate, creative, healthcare, tech, and more.",
-          "Print-Ready Files - High-resolution output optimized for any printer.",
-          "Digital Business Cards - Editable and shareable versions for online networking."
+          "Audience & Intent Research - Map who you are writing for and what they are actually searching, rather than what the industry assumes.",
+          "Topic Clusters & Pillars - Group content into connected clusters around core pages, the structure search engines reward with topical authority.",
+          "Content Gap Analysis - Find the questions your competitors rank for and you do not, then prioritise them by effort against opportunity.",
+          "Editorial Calendar - A dated, owned publishing plan, so content ships on schedule instead of whenever someone finds a spare afternoon.",
+          "Aligned to Commercial Goals - Every planned piece maps to a service you actually sell, not just to traffic that never converts.",
+          "Measurement Built In - Defined KPIs per piece and a review cadence, so the plan adapts to what is genuinely working."
         ],
-        "conclusion": "A business card isn't just a contact detail—it's your brand in someone's hand. We design cards that create strong first impressions and open doors to new opportunities."
+        "conclusion": "Stop publishing and hoping. A roadmap where every piece has a job, an audience and a reason to exist."
       }
     },
     {
-      "title": "Customized forms of design and marketing",
-      "description": "Unlock limitless creative possibilities with customized design and marketing assets built using Adobe Illustrator. Click to Learn More.",
-      "longDescription": "This is long description",
-      "logo": "/assets/servicesImage/Customized_forms_of_design_and_marketing.webp",
+      "title": "SEO Blog Writing",
+      "description": "Blogs people search for and actually finish. Researched, structured around real search intent, and written to rank without sounding like it was written to rank. Click to Learn More.",
+      "highlights": [
+        "Keyword & SERP Research",
+        "Topic Cluster Articles",
+        "Internal Linking Built In"
+      ],
+      "logo": "/assets/servicesImage/SEO_blog_writing.webp",
       "learnMore": {
-        "intro": "Empower your business with customized design and marketing solutions tailored to your unique goals, driving brand growth and maximizing impact across all channels.",
+        "intro": "SEO content writing services that earn rankings honestly — researched against the live SERP, structured for how people actually read, and written so nobody can tell it was optimised.",
         "points": [
-          "Custom Logo Design - Unique, vector-based logos scalable for any platform.",
-          "Marketing Collateral - Flyers, brochures, banners, and more tailored to your brand goals.",
-          "Brand Pattern & Icon Sets - Original vector graphics to use across all your branding.",
-          "Packaging & Label Design - Product-focused designs that stand out on shelves.",
-          "Typography-Based Art - Beautiful, hand-crafted text styles and font treatments.",
-          "Custom Illustrations - Unique artwork for storytelling, branding, or product promotion.",
-          "Editable Templates - Reusable Illustrator files for social posts, presentations, or ads.",
-          "Print & Digital Versatility - All designs optimized for both screen and print use."
+          "Keyword & SERP Research - Every article is briefed against what already ranks, so we know the intent, the depth and the angle needed to beat it.",
+          "Written for Search Intent - Answering the question the searcher actually asked, in the format they expected to find it in.",
+          "Topic Cluster Articles - Pieces that connect into your wider content structure and reinforce the pages you need to rank.",
+          "Internal Linking Built In - Contextual links placed while writing, passing authority to your money pages instead of being bolted on later.",
+          "Schema-Ready Formatting - Clear headings, FAQs and structured sections that qualify for rich results and featured snippets.",
+          "Readable, Human Copy - Written to be finished, because dwell time and shares are signals keyword stuffing can never fake."
         ],
-        "conclusion": "With Adobe Illustrator, we create highly customized, precise, and scalable designs that give your brand a polished, professional edge. Let your marketing assets be as unique as your business."
+        "conclusion": "Traffic that compounds month after month instead of spiking and dying. Articles that rank, read well, and quietly sell."
+      }
+    },
+    {
+      "title": "Website & Landing Page Copywriting",
+      "description": "Words that sell while you sleep. Conversion-focused copy for service pages, landing pages and campaigns — clear, confident and persuasive without the shouty sales-page tone customers have learned to scroll past. Click to Learn More.",
+      "highlights": [
+        "Homepage & Service Pages",
+        "Landing Page Copy",
+        "A/B Headline Variants"
+      ],
+      "logo": "/assets/servicesImage/Website_and_landing_page_copywriting.webp",
+      "learnMore": {
+        "intro": "Website copywriting services built around one job — turning a visitor into an enquiry. Clear positioning, an argument that builds, and a call to action that feels like the obvious next step.",
+        "points": [
+          "Homepage & Service Pages - Copy that says what you do, who it is for and why you, above the fold and without jargon.",
+          "Landing Page Copy - Single-purpose pages written to match the ad that sent the visitor, so the message never breaks on arrival.",
+          "Messaging & Positioning - Define the one thing you want to be known for, then write everything else to support it.",
+          "Objection Handling - Address the doubts that quietly kill conversions — price, risk, timelines — before the visitor has to ask.",
+          "A/B Headline Variants - Multiple headline and CTA options supplied for testing, because the first version is rarely the best one.",
+          "SEO-Aware, Reader-First - Keywords placed where they help the page rank, never at the cost of a sentence a human wants to read."
+        ],
+        "conclusion": "Pages that do the selling your best salesperson would do in the room. Clearer messaging, fewer drop-offs, and more enquiries from traffic you already have."
+      }
+    },
+    {
+      "title": "Email Newsletters & Nurture Content",
+      "description": "The one audience you actually own. Newsletters, welcome sequences and win-back campaigns that keep customers reading — and bring them back to buy without you discounting every single time. Click to Learn More.",
+      "highlights": [
+        "Welcome & Nurture Sequences",
+        "Monthly Newsletters",
+        "Subject Line Testing"
+      ],
+      "logo": "/assets/servicesImage/Email_newsletters_and_nurture_content.webp",
+      "learnMore": {
+        "intro": "Email copywriting services for the only channel you own outright — no algorithm standing between you and your list, and no bidding for access to people who already said yes.",
+        "points": [
+          "Welcome & Nurture Sequences - Automated first impressions that turn a new subscriber into a buyer without a hard sell in sight.",
+          "Monthly Newsletters - Genuinely useful sends that keep your name in the inbox, so you are remembered when the need finally appears.",
+          "Offer & Win-Back Campaigns - Reactivate lapsed customers with a reason to return that is not simply a bigger discount.",
+          "Subject Line Testing - Multiple variants per send, because the open rate caps everything that happens after it.",
+          "Segmented, Relevant Sends - Different messages for different buying stages, which is what keeps unsubscribes low and replies high.",
+          "Written to Be Replied To - A human voice that invites a response, the signal inbox providers use to keep you out of the promotions tab."
+        ],
+        "conclusion": "Your list is an asset most businesses let go cold. Email that keeps it warm, keeps it buying, and costs nothing per send."
       }
     }
   ]

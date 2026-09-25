@@ -1,0 +1,124 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# robots.txt — youngarchitects.in
+#
+# POLICY: the whole site is open to every well-behaved crawler, search engine
+# and AI assistant alike. Nothing here is private. The build is a fully static
+# export (next.config.mjs → output: "export"), so there are no API routes, no
+# admin panels and no server endpoints that could need keeping out of an index.
+#
+# NOTHING IS BLOCKED, AND THAT IS DELIBERATE — DO NOT "TIDY" THIS UP.
+# Most pages on this site are Coming Soon placeholders that ship
+# <meta name="robots" content="noindex, follow"> from
+# src/app/(site)/[...slug]/page.jsx. A crawler has to FETCH a page to read that
+# tag. Disallowing those paths here would hide the noindex, and a blocked URL
+# can still be indexed from inbound links — with no description, because the
+# crawler was never allowed to look. Blocking would achieve the exact opposite
+# of what it looks like it achieves. Leave them crawlable.
+#
+# /_next/ MUST STAY CRAWLABLE TOO. It holds the CSS and JS the page needs to
+# render. Google renders before it ranks; block this and the site looks broken
+# to the renderer even though it looks fine to you.
+#
+# WHY THE AI AGENTS ARE LISTED INDIVIDUALLY BELOW when "User-agent: *" already
+# allows them: robots.txt groups are not additive. A crawler obeys the single
+# most specific group that names it and ignores every other group, "*"
+# included. Naming them means that the day someone adds a Disallow to the "*"
+# group, the assistants below keep their current access instead of silently
+# inheriting the new restriction. The list is documentation of intent as much
+# as configuration.
+# ─────────────────────────────────────────────────────────────────────────────
+
+
+# ── Default: every crawler not named further down ────────────────────────────
+User-agent: *
+Allow: /
+
+
+# ── Anthropic — Claude ───────────────────────────────────────────────────────
+# ClaudeBot        crawls and indexes site content
+# Claude-User      fetches this site live when someone asks Claude about us
+# Claude-SearchBot informs which sites Claude's search surfaces
+# anthropic-ai / Claude-Web are retired agents, kept so old deployments of
+# either one are covered rather than falling through to a future "*" rule.
+User-agent: ClaudeBot
+User-agent: Claude-User
+User-agent: Claude-SearchBot
+User-agent: anthropic-ai
+User-agent: Claude-Web
+Allow: /
+
+
+# ── OpenAI — ChatGPT ─────────────────────────────────────────────────────────
+# GPTBot        crawls content for OpenAI's models
+# OAI-SearchBot indexes for ChatGPT Search
+# ChatGPT-User  fetches this site live in response to a user's prompt
+User-agent: GPTBot
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+Allow: /
+
+
+# ── Google — Gemini and AI Overviews ─────────────────────────────────────────
+# Google-Extended is NOT a crawler. It is a permission switch: it governs
+# whether content already fetched by Googlebot may ground Gemini and train
+# Google's models. It has no effect on Google Search ranking, and AI Overviews
+# are served from the ordinary Googlebot index either way. Allowed here so the
+# opt-in is on the record.
+User-agent: Googlebot
+User-agent: Google-Extended
+User-agent: GoogleOther
+Allow: /
+
+
+# ── Microsoft — Bing and Copilot ─────────────────────────────────────────────
+# Copilot answers are grounded in Bing's index, so bingbot is the agent that
+# matters for Microsoft AI surfaces.
+User-agent: bingbot
+User-agent: msnbot
+Allow: /
+
+
+# ── Perplexity ───────────────────────────────────────────────────────────────
+# PerplexityBot builds the index; Perplexity-User fetches live during an answer.
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+Allow: /
+
+
+# ── Apple — Siri and Apple Intelligence ──────────────────────────────────────
+# Applebot-Extended, like Google-Extended, is an opt-out switch over content
+# Applebot already has rather than a crawler of its own.
+User-agent: Applebot
+User-agent: Applebot-Extended
+Allow: /
+
+
+# ── Meta AI ──────────────────────────────────────────────────────────────────
+User-agent: meta-externalagent
+User-agent: meta-externalfetcher
+User-agent: FacebookBot
+Allow: /
+
+
+# ── Other assistants and answer engines ──────────────────────────────────────
+# CCBot is Common Crawl, the open dataset a large share of models train on —
+# it is one of the highest-leverage entries in this whole file.
+User-agent: CCBot
+User-agent: DuckAssistBot
+User-agent: Amazonbot
+User-agent: MistralAI-User
+User-agent: cohere-ai
+User-agent: cohere-training-data-crawler
+User-agent: YouBot
+User-agent: Ai2Bot
+User-agent: Bytespider
+User-agent: Diffbot
+User-agent: omgili
+User-agent: omgilibot
+Allow: /
+
+
+# ── Sitemap ──────────────────────────────────────────────────────────────────
+# Lists only the URLs that are actually indexable. See public/sitemap.xml for
+# why that is currently one URL.
+Sitemap: https://youngarchitects.in/sitemap.xml
