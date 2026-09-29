@@ -57,6 +57,9 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { m, useReducedMotion } from "framer-motion";
 import { SectionHeader } from "@/components/ui";
+// By path, not via the ui barrel — see the note in components/ui/index.js:
+// the barrel would pull this onto the initial bundle of every route.
+import SectionCTA from "@/components/ui/SectionCTA/SectionCTA";
 import { CASESTUDIES_CONTENT as CONTENT, CASESTUDIES_ITEMS as ITEMS } from "@/data";
 import "./caseStudies.css";
 
@@ -817,6 +820,14 @@ export default function CaseStudies() {
           </div>
 
           <div style={{ position: "relative", height: 1, background: GRAD, opacity: 0.2, zIndex: 2 }} />
+
+          {/* Closing CTA — the pair every content section ends on. Dark theme:
+              this section sits on #060610. Padded off the rule above it and
+              the seam below, and kept inside the section's stacking context so
+              the case-study cards cannot overlap it. */}
+          <div style={{ position: "relative", zIndex: 3, padding: "0 20px clamp(48px,7vh,84px)" }}>
+            <SectionCTA theme="dark" />
+          </div>
         </section>
       </div>
     </div>

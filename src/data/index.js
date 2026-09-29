@@ -35,6 +35,8 @@
 // ── Site chrome ──────────────────────────────────────────────────────
 export { NAV_ITEMS, NAV_CONTENT } from "./nav";
 export { NAV_ICONS } from "./navIcons";
+// Shared CTA pair repeated at the foot of each content section.
+export { SECTION_CTA } from "./sectionCta";
 export {
   FOOTER_CONTENT,
   FOOTER_COLUMNS,
@@ -65,14 +67,10 @@ export {
   SERVICES_SEO_ORGANIZATION,
 } from "./services";
 export { CONSULTATION_CTA_CONTENT, CONSULTATION_CTA_FORM } from "./consultationCta";
-export {
-  OURPARTNERS_CONTENT,
-  OURPARTNERS_ROW_ONE,
-  OURPARTNERS_ROW_TWO,
-} from "./ourPartners";
 export { CASESTUDIES_CONTENT, CASESTUDIES_ITEMS } from "./caseStudies";
 export { TESTIMONIALS_CONTENT, TESTIMONIALS_ITEMS, TESTIMONIALS_AVATARS } from "./testimonials";
 export { FAQ_CONTENT, FAQ_ITEMS, FAQ_SUPPORT } from "./faq";
+export { FINAL_CTA } from "./finalCta";
 export { BRANDMARK_CONTENT } from "./brandMark";
 
 // ── Sections built but not currently mounted on any page ─────────────

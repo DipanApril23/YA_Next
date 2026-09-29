@@ -93,7 +93,7 @@ const Service = () => {
               {CONTENT.badge}
             </div>
 
-            <h2 className="text-[30px] sm:text-[42px] md:text-[54px] font-black leading-[1.1] tracking-tight max-w-3xl">
+            <h2 className="text-[24px] sm:text-[34px] md:text-[43px] font-black leading-[1.1] tracking-tight max-w-3xl">
               <span className="bg-gradient-to-r from-white via-neutral-200 to-neutral-500 bg-clip-text text-transparent">
                 {CONTENT.headingLead}
                 {CONTENT.headingLeadTrail}
@@ -104,7 +104,7 @@ const Service = () => {
               </span>
             </h2>
 
-            <p className="text-neutral-400 max-w-xl text-sm sm:text-base leading-relaxed">
+            <p className="text-neutral-400 max-w-xl text-xs sm:text-sm leading-relaxed">
               {CONTENT.intro}
             </p>
           </motion.div>
@@ -130,7 +130,7 @@ const Service = () => {
             >
               {/* Tagline */}
               <div className="space-y-3 text-center lg:text-left">
-                <h3 className="text-2xl sm:text-[28px] md:text-[34px] font-black leading-tight font-poppins">
+                <h3 className="text-xl sm:text-[22px] md:text-[27px] font-black leading-tight font-poppins">
                   <span className="bg-gradient-to-r from-[#00b4db] to-[#00f5d4] bg-clip-text text-transparent">
                     {CONTENT.tagline.line1}
                   </span>

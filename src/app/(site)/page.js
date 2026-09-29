@@ -81,6 +81,18 @@ export default function Home() {
         background="#ECECF4"
       />
 
+      {/* Closing CTA card — the page's last ask, and the last thing before the
+          shell's brand statement and footer. No <SectionDivider> above it: it
+          opens on #ECECF4, the exact surface the FAQ closes on, so the two
+          meet with no seam to mark. The reserved height matches the card plus
+          its section padding. */}
+      <DeferredSection
+        name="FinalCTA"
+        id="get-started"
+        minHeight="820px"
+        background="linear-gradient(180deg,#ECECF4 0%,#F2F4FB 45%,#F5F7FE 100%)"
+      />
+
     </>
   );
 }

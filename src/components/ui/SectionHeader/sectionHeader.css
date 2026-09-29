@@ -75,10 +75,11 @@
 /* ── Headline — Hero's .hero-headline + .hero-grad-text ──────── */
 .ya-sh-heading {
   margin: clamp(14px, 1.8vw, 20px) 0 0;
-  /* One notch below the Hero's clamp(1.95rem, 5vw, 3.8rem): this is an
-     h2 under the page's h1, so it reads as the same treatment without
-     competing with the Hero. Raise to the Hero's values for an exact match. */
-  font-size: clamp(1.85rem, 4.4vw, 3.25rem);
+  /* Stepped down ~20% from clamp(1.85rem, 4.4vw, 3.25rem) so the section
+     headings sit well below the Hero's clamp(1.95rem, 5vw, 3.8rem) rather
+     than rivalling it, and more of each section fits on screen. The ratio
+     between the three stops is unchanged, so it scales as it always did. */
+  font-size: clamp(1.5rem, 3.5vw, 2.6rem);
   font-weight: 900;
   line-height: 1.1;
   letter-spacing: -0.025em;
@@ -113,7 +114,7 @@
    chip, same gradient, same animations; just stepped down so two headings
    never compete at the same scale inside one section. */
 .ya-sh--sm .ya-sh-heading {
-  font-size: clamp(1.2rem, 2.3vw, 1.75rem);
+  font-size: clamp(0.96rem, 1.85vw, 1.4rem);
   font-weight: 800;
   letter-spacing: -0.01em;
   line-height: 1.2;
@@ -127,7 +128,7 @@
 .ya-sh-sub {
   margin: clamp(12px, 1.6vw, 18px) 0 0;
   max-width: 38rem;
-  font-size: 0.875rem;
+  font-size: 0.8rem;
   font-weight: 500;
   line-height: 1.625;
   color: rgba(255, 255, 255, 0.75);
@@ -135,7 +136,7 @@
 }
 @media (min-width: 640px) {
   .ya-sh-sub {
-    font-size: 1rem;
+    font-size: 0.9rem;
   }
 }
 .ya-sh--center .ya-sh-sub {
@@ -147,7 +148,7 @@
 }
 .ya-sh--sm .ya-sh-sub {
   max-width: 470px;
-  font-size: clamp(0.84rem, 1.2vw, 0.95rem);
+  font-size: clamp(0.76rem, 1.1vw, 0.86rem);
   line-height: 1.6;
 }
 

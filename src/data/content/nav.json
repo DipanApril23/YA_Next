@@ -40,12 +40,6 @@
           "desc": "Pick a free strategy call"
         },
         {
-          "label": "Our Partners",
-          "href": "/#partners",
-          "icon": "Handshake",
-          "desc": "Brands we build with"
-        },
-        {
           "label": "Case Studies",
           "href": "/#case-studies",
           "icon": "Briefcase",

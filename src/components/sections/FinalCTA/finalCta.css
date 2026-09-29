@@ -1,0 +1,363 @@
+/* ═══════════════════════════════════════════════════════════════
+   FINAL CTA — the closing card
+   See ./FinalCTA.jsx for what each decorative layer is doing and why.
+   Colours are the Hero's: cyan #06b6d4, blue #3b82f6, purple #a855f7,
+   pink #ec4899. Nothing new is introduced here.
+   ═══════════════════════════════════════════════════════════════ */
+
+.fc-section {
+  /* Opens on the surface the FAQ closes on, so there is no visible seam
+     above the card, and settles to the palest tint underneath it. */
+  background: linear-gradient(180deg, #ececf4 0%, #f2f4fb 45%, #f5f7fe 100%);
+  padding: clamp(48px, 6.5vw, 88px) 0 clamp(56px, 7.5vw, 100px);
+}
+
+.fc-wrap {
+  width: min(1180px, 100% - clamp(24px, 5vw, 64px));
+  margin-inline: auto;
+}
+
+/* ── The card ─────────────────────────────────────────────────── */
+.fc-card {
+  --fc-mx: 50%;
+  --fc-my: 0%;
+
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: clamp(22px, 2.6vw, 34px);
+  padding: clamp(36px, 5vw, 68px) clamp(22px, 5vw, 72px) clamp(34px, 4.4vw, 60px);
+  background:
+    radial-gradient(120% 90% at 50% -10%, #241a3f 0%, transparent 60%),
+    linear-gradient(165deg, #120f22 0%, #0c0a17 48%, #14101f 100%);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  /* Two shadows: a tight contact shadow to seat it on the page, and a wide
+     tinted one so the card appears to spill light onto the surface. */
+  box-shadow:
+    0 2px 6px rgba(13, 10, 28, 0.18),
+    0 34px 80px -34px rgba(76, 29, 149, 0.55);
+}
+
+/* ── 1 · aurora ───────────────────────────────────────────────── */
+@keyframes fcDriftA {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(6%, 4%) scale(1.12); }
+}
+@keyframes fcDriftB {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(-7%, -5%) scale(0.9); }
+}
+
+.fc-aurora {
+  position: absolute;
+  z-index: 0;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.fc-aurora--a {
+  left: -8%;
+  top: -22%;
+  width: clamp(320px, 46vw, 620px);
+  height: clamp(320px, 46vw, 620px);
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.85) 0%, rgba(236, 72, 153, 0.4) 46%, transparent 70%);
+  filter: blur(84px);
+  opacity: 0.3;
+  animation: fcDriftA 26s ease-in-out infinite;
+}
+.fc-aurora--b {
+  right: -10%;
+  bottom: -26%;
+  width: clamp(300px, 42vw, 560px);
+  height: clamp(300px, 42vw, 560px);
+  background: radial-gradient(circle, rgba(6, 182, 212, 0.8) 0%, rgba(59, 130, 246, 0.45) 50%, transparent 72%);
+  filter: blur(90px);
+  opacity: 0.24;
+  animation: fcDriftB 32s ease-in-out infinite;
+  animation-delay: -11s;
+}
+
+/* ── 2 · noise ────────────────────────────────────────────────── */
+/* Inline SVG turbulence. Big soft gradients band badly on 8-bit panels; 3% of
+   grain is enough to break the bands up and costs no request. */
+.fc-noise {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.03;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ── 3 · pointer spotlight ────────────────────────────────────── */
+.fc-spot {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.45s ease;
+  background: radial-gradient(
+    420px circle at var(--fc-mx) var(--fc-my),
+    rgba(168, 85, 247, 0.16) 0%,
+    rgba(59, 130, 246, 0.08) 38%,
+    transparent 68%
+  );
+}
+.fc-card.fc-lit .fc-spot {
+  opacity: 1;
+}
+
+/* ── 4 · lit rim along the top edge ───────────────────────────── */
+.fc-rim {
+  position: absolute;
+  top: 0;
+  left: 12%;
+  right: 12%;
+  height: 1px;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(168, 85, 247, 0.55) 28%,
+    rgba(236, 72, 153, 0.75) 50%,
+    rgba(6, 182, 212, 0.55) 72%,
+    transparent
+  );
+}
+
+/* ── Content ──────────────────────────────────────────────────── */
+.fc-body {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* badge */
+.fc-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.38rem 0.95rem;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(4px);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.72);
+}
+@keyframes fcPing {
+  0%, 100% { opacity: 0.45; transform: scale(1); }
+  50%      { opacity: 1;    transform: scale(1.4); }
+}
+.fc-badge-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #ec4899;
+  box-shadow: 0 0 8px #ec4899;
+  animation: fcPing 2.4s ease-in-out infinite;
+}
+
+/* headline */
+.fc-heading {
+  margin: clamp(16px, 2vw, 22px) 0 0;
+  /* In step with the reduced section headings — a display line, but not a
+     second Hero. */
+  font-size: clamp(1.55rem, 3.6vw, 2.65rem);
+  font-weight: 900;
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+  color: #ffffff;
+  text-wrap: balance;
+  max-width: 20ch;
+}
+@keyframes fcShimmer {
+  0%   { background-position: -300% center; }
+  100% { background-position: 300% center; }
+}
+.fc-heading-accent {
+  display: block;
+  margin-top: 0.22em;
+  font-size: 0.78em;
+  background: linear-gradient(110deg, #06b6d4, #3b82f6, #a855f7, #ec4899, #06b6d4);
+  background-size: 300% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: fcShimmer 6s linear infinite;
+}
+
+/* lead */
+.fc-lead {
+  margin: clamp(14px, 1.8vw, 20px) 0 0;
+  max-width: 64ch;
+  font-size: clamp(0.82rem, 1.15vw, 0.95rem);
+  font-weight: 500;
+  line-height: 1.68;
+  color: rgba(255, 255, 255, 0.62);
+  /* `pretty`, not `balance`: balance is allowed to NARROW the box to even the
+     lines out, which set this in three short columns inside a very wide card.
+     pretty keeps the full measure and only avoids a one-word last line. */
+  text-wrap: pretty;
+}
+
+/* proof pills */
+.fc-pills {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.55rem;
+  margin: clamp(22px, 3vw, 32px) 0 0;
+  padding: 0;
+  list-style: none;
+  /* Measured: the four pills need 728px including gaps. 48rem leaves a little
+     slack so a small copy edit does not drop one onto a second row, while
+     still wrapping cleanly on tablet and phone. */
+  max-width: 48rem;
+}
+.fc-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.44rem 0.95rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.045);
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.82);
+  transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+}
+.fc-pill:hover {
+  border-color: rgba(236, 72, 153, 0.45);
+  background: rgba(255, 255, 255, 0.075);
+  color: #ffffff;
+}
+.fc-pill-check {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+  color: #f472b6;
+}
+
+/* eyebrow above the buttons */
+.fc-eyebrow {
+  margin: clamp(30px, 4.2vw, 46px) 0 0;
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  background: linear-gradient(90deg, #a855f7, #ec4899);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* ── Buttons ──────────────────────────────────────────────────────
+   These override only the SHELL metrics of .ya-cta-btn (which this card
+   still carries). The magnetism, the gradient fill, the sweep and the glow
+   all come from SectionCTA + button.css — see FinalCTA.jsx. */
+.fc-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+  margin-top: clamp(16px, 2vw, 22px);
+  width: 100%;
+}
+.fc-btn {
+  min-width: 0;
+  width: min(30rem, 100%);
+  font-size: 0.92rem;
+}
+/* The label span is the button's only in-flow child, so the icon has to sit
+   inside it. Tailwind's Preflight sets `svg { display: block }`, which would
+   push the icon onto its own line — this makes the label a flex row so the
+   text and the icon stay on one baseline with a real gap. */
+.fc-btn .ya-cta-label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+}
+.fc-btn--primary {
+  padding: 0.95rem 2rem;
+  color: #ffffff;
+}
+.fc-btn--secondary {
+  padding: 0.88rem 2rem;
+  border-color: rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.055);
+  color: #ffffff;
+  backdrop-filter: blur(4px);
+  --ya-cta-ring-rest: rgba(255, 255, 255, 0.09);
+}
+.fc-btn-arrow {
+  position: relative;
+  z-index: 10;
+  width: 17px;
+  height: 17px;
+  flex-shrink: 0;
+}
+
+/* trust line */
+.fc-trust {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem 1.1rem;
+  margin: clamp(22px, 3vw, 30px) 0 0;
+  font-size: 11.5px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.42);
+}
+.fc-trust-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.fc-trust-check {
+  width: 11px;
+  height: 11px;
+  color: #22d3ee;
+}
+/* The separating dot belongs to the tail, so it never lands at the start of a
+   wrapped line on a narrow screen. */
+.fc-trust-tail::before {
+  content: "·";
+  margin-right: 0.7rem;
+  color: rgba(255, 255, 255, 0.28);
+}
+@media (max-width: 560px) {
+  .fc-trust-tail::before {
+    content: none;
+    margin: 0;
+  }
+  .fc-trust {
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+}
+
+/* ── Reduced motion ───────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .fc-aurora,
+  .fc-heading-accent,
+  .fc-badge-dot {
+    animation: none;
+  }
+  .fc-spot {
+    display: none;
+  }
+}

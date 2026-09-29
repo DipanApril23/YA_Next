@@ -1,0 +1,27 @@
+{
+  "$comment": "Closing CTA card — the last thing on the homepage before the brand statement and footer. One ACF group: `pills` and `trust` are repeaters, `primary`/`secondary` are link fields. A href starting http(s) opens in a new tab; a href ending .pdf is served as a download from public/downloads (see that folder's README). Keep `headline` to one short line and `headlineAccent` to one — they are set at display size and a third line pushes the buttons below the fold on a laptop.",
+  "badge": "One last thing",
+  "headline": "Every Business Has a Growth Story.",
+  "headlineAccent": "Let's Make Sure Yours Gets Found.",
+  "lead": "Growing businesses in Kolkata shouldn't lose customers to a site that doesn't convert — or a search page they never appear on.",
+  "pills": [
+    "Websites that convert",
+    "SEO that gets you found",
+    "Ads that pay for themselves",
+    "AI that follows up"
+  ],
+  "eyebrow": "Ready to build your growth system?",
+  "primary": {
+    "label": "Book a Free Consultation",
+    "href": "https://calendly.com/yafoundations/45min"
+  },
+  "secondary": {
+    "label": "Download the Technical Audit Checklist",
+    "href": "/downloads/technical-audit-checklist.pdf"
+  },
+  "trust": [
+    "No obligation",
+    "No lock-in contracts"
+  ],
+  "trustTail": "Just a clear plan for growing your business."
+}

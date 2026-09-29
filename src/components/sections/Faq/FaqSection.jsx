@@ -93,7 +93,7 @@ export default function FaqSection() {
             initial={{ opacity: 0, y: 16 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.08, duration: 0.55, ease: EASE }}
-            className="mt-5 text-3xl font-extrabold leading-[1.1] tracking-tight text-slate-900 sm:text-4xl lg:text-[2.9rem]"
+            className="mt-5 text-2xl font-extrabold leading-[1.1] tracking-tight text-slate-900 sm:text-3xl lg:text-[2.3rem]"
           >
             {FAQ_CONTENT.headline.plain}{" "}
             <span className="bg-gradient-to-r from-violet-600 via-fuchsia-600 to-indigo-600 bg-clip-text text-transparent">
@@ -105,7 +105,7 @@ export default function FaqSection() {
             initial={{ opacity: 0, y: 10 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.16, duration: 0.5, ease: EASE }}
-            className="mx-auto mt-4 max-w-md text-sm font-medium leading-relaxed text-slate-500 sm:text-base"
+            className="mx-auto mt-4 max-w-md text-xs font-medium leading-relaxed text-slate-500 sm:text-sm"
           >
             {FAQ_CONTENT.subheading}
           </m.p>

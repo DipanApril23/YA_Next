@@ -1,0 +1,11 @@
+{
+  "$comment": "Section CTA pair — the 'Book a Consultation' / 'Contact Us' buttons repeated at the foot of the page's content sections. One record, rendered by every section, so the wording and the destinations are changed in exactly one place. Maps onto a single ACF group with two link sub-fields. `primary` is the gradient button, `secondary` the glass one. A href starting http(s) opens in a new tab; a '/#anchor' href scrolls on the homepage and routes there from any other page.",
+  "primary": {
+    "label": "Book a Consultation",
+    "href": "https://calendly.com/yafoundations/45min"
+  },
+  "secondary": {
+    "label": "Contact Us",
+    "href": "/#book-consultation"
+  }
+}

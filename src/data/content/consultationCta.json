@@ -68,24 +68,26 @@
         "label": "AI Automation"
       }
     ],
-    "stats": [
-      {
-        "value": "10+",
-        "label": "Projects Delivered"
-      },
-      {
-        "value": "30+",
-        "label": "Happy Clients"
-      },
-      {
-        "value": "4.1★",
-        "label": "Client Rating"
-      }
-    ],
-    "socialProof": {
-      "strong": "30+ local businesses",
-      "rest": "already growing with their blueprint."
-    },
-    "trustNote": "Your details are safe with us. No spam, no pushy sales calls — just a genuine conversation about growing your business."
+    "trustNote": "Your details are safe with us. No spam, no pushy sales calls — just a genuine conversation about growing your business.",
+    "resources": {
+      "label": "Take something with you",
+      "items": [
+        {
+          "label": "Technical Audit Checklist",
+          "desc": "The 20-point check we run on every site.",
+          "file": "/downloads/technical-audit-checklist.pdf"
+        },
+        {
+          "label": "Sales Deck",
+          "desc": "How we work, what it costs, what you get.",
+          "file": "/downloads/sales-deck.pdf"
+        },
+        {
+          "label": "Brochures",
+          "desc": "Every service, one page each.",
+          "file": "/downloads/brochures.pdf"
+        }
+      ]
+    }
   }
 }

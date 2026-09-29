@@ -35,6 +35,7 @@ const LOADERS = {
   ConsultationCTA: () => import("./sections/ConsultationCTA/ConsultationCTA"),
   CaseStudies: () => import("./sections/CaseStudies/CaseStudies"),
   Testimonials: () => import("./sections/Testimonials/Testimonials"),
+  FinalCTA: () => import("./sections/FinalCTA/FinalCTA"),
 };
 
 /* Warm every section chunk once, on the first sign of a real visitor.

@@ -1,0 +1,158 @@
+/* ═══════════════════════════════════════════════════════════════
+   SECTION CTA
+   The "Book a Consultation" / "Contact Us" pair repeated at the foot
+   of each content section.
+
+   Layout and colour only. The magnetic pull, the hover scale, the
+   light sweep, the gradient cross-fade and the glow are framer-motion
+   props in SectionCTA.jsx — the Hero's Button values, copied exactly —
+   and the gradient fills themselves come from button.css, which that
+   file imports. Nothing here should re-implement an effect the motion
+   props already own, or the two will fight.
+   ═══════════════════════════════════════════════════════════════ */
+
+.ya-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.875rem;
+  margin-top: clamp(28px, 4vw, 44px);
+}
+.ya-cta--center {
+  justify-content: center;
+}
+.ya-cta--start {
+  justify-content: flex-start;
+}
+/* For a parent that already spaces its children (a flex column with a `gap`,
+   say) — the default top margin would stack on top of that gap. */
+.ya-cta--flush {
+  margin-top: 0;
+}
+
+/* ── Shared shell ─────────────────────────────────────────────── */
+.ya-cta-btn {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 13.5rem;
+  padding: 0.8rem 1.75rem;
+  /* Matches Button's rounded-xl, so the magnetic pull moves an identical
+     shape whether it started in the Hero or in a section. */
+  border-radius: 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.015em;
+  text-align: center;
+  text-decoration: none;
+  /* No transform/box-shadow transition: framer-motion drives both, and a CSS
+     transition on the same properties would lag the spring. */
+  will-change: transform;
+}
+@media (max-width: 420px) {
+  .ya-cta-btn {
+    min-width: 0;
+    width: 100%;
+  }
+}
+.ya-cta-btn:focus-visible {
+  outline: 2px solid #06b6d4;
+  outline-offset: 3px;
+}
+
+.ya-cta-label {
+  position: relative;
+  z-index: 10;
+  letter-spacing: 0.025em;
+}
+
+/* Full-bleed decorative layer — the gradient fills, the sweep and the ring all
+   sit on this and are driven from the component. */
+.ya-cta-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.ya-cta-sweep {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.12),
+    transparent
+  );
+}
+/* The primary button's sweep is the brighter one (Button uses via-white/25). */
+.ya-cta-sweep--strong {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.25),
+    transparent
+  );
+}
+
+/* Button's outer glow: a blurred bar tucked under the bottom edge. */
+.ya-cta-glow {
+  position: absolute;
+  bottom: -0.25rem;
+  left: 1.5rem;
+  right: 1.5rem;
+  height: 0.5rem;
+  z-index: 0;
+  border-radius: 9999px;
+  filter: blur(12px);
+  pointer-events: none;
+}
+
+/* ── Primary — the gradient fill (identical on both themes) ───── */
+.ya-cta-btn--primary {
+  border: 1px solid transparent;
+  color: #ffffff;
+}
+
+/* ── Secondary — glass; the one that has to read against the page ─ */
+.ya-cta-btn--secondary {
+  border: 1px solid transparent;
+  backdrop-filter: blur(4px);
+}
+
+.ya-cta--dark .ya-cta-btn--secondary {
+  border-color: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+  /* Resting hairline for the animated ring above. */
+  --ya-cta-ring-rest: rgba(255, 255, 255, 0.08);
+}
+
+.ya-cta--light .ya-cta-btn--secondary {
+  border-color: rgba(11, 23, 40, 0.14);
+  background: rgba(255, 255, 255, 0.72);
+  color: #0b1728;
+  --ya-cta-ring-rest: rgba(11, 23, 40, 0.06);
+}
+/* On a pale section the white sweep is invisible — darken it instead. */
+.ya-cta--light .ya-cta-btn--secondary .ya-cta-sweep {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(11, 23, 40, 0.07),
+    transparent
+  );
+}
+
+/* Reduced motion: framer-motion's own reduced-motion handling covers the
+   springs and scales; this only stops the decorative layers from drawing
+   attention on their own. */
+@media (prefers-reduced-motion: reduce) {
+  .ya-cta-btn {
+    will-change: auto;
+  }
+  .ya-cta-sweep {
+    opacity: 0;
+  }
+}

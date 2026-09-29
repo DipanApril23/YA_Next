@@ -21,8 +21,6 @@ import {
   CONSULTATION_CTA_FORM as FORM,
 } from "@/data";
 import "./consultationCta.css";
-// Rendered at the foot of this section (not a standalone page section).
-import OurPartners from "../OurPartners/OurPartners";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -248,7 +246,7 @@ export default function ConsultationCTA() {
                   </span>
                 </div>
 
-                <h3 className="ya-panel-item mt-8 text-2xl font-bold leading-snug text-white sm:text-[1.7rem]">
+                <h3 className="ya-panel-item mt-8 text-[1.2rem] font-bold leading-snug text-white sm:text-[1.36rem]">
                   {CONTENT.panel.headingLine1}
                   <br className="hidden sm:block" /> {CONTENT.panel.headingLine2}{" "}
                   <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-pink-300 bg-clip-text text-transparent">
@@ -307,35 +305,47 @@ export default function ConsultationCTA() {
                   </div>
                 </div>
 
-                {/* --- stats row (from site: hero metrics) --- */}
-                <div className="ya-panel-item mt-8 grid grid-cols-3 divide-x divide-white/10 rounded-2xl border border-white/10 bg-white/[0.04] py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]">
-                  {CONTENT.stats.map((s) => (
-                    <div key={s.label} className="px-3 text-center">
-                      <p className="bg-gradient-to-r from-cyan-300 via-purple-300 to-pink-300 bg-clip-text text-xl font-extrabold text-transparent sm:text-2xl">
-                        {s.value}
-                      </p>
-                      <p className="mt-1 text-[9.5px] font-semibold uppercase tracking-[0.14em] text-slate-400">
-                        {s.label}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="ya-panel-item mt-6 flex items-center gap-3 border-t border-white/10 pt-6">
-                  <div className="flex -space-x-2">
-                    {["from-sky-400 to-blue-500", "from-purple-400 to-fuchsia-500", "from-pink-400 to-rose-500"].map(
-                      (g) => (
-                        <span
-                          key={g}
-                          className={`h-8 w-8 rounded-full border-2 border-[#101226] bg-gradient-to-br ${g}`}
-                        />
-                      )
-                    )}
-                  </div>
-                  <p className="text-[12.5px] leading-snug text-slate-400">
-                    <span className="font-semibold text-white">{CONTENT.socialProof.strong}</span>{" "}
-                    {CONTENT.socialProof.rest}
+                {/* --- downloadable resources ---
+                    Replaces the stats/social-proof block that used to close
+                    this panel. These are plain <a download> links to static
+                    PDFs in public/downloads — no gate, no form, no JS. A file
+                    that has not been uploaded yet simply 404s on click, so
+                    dropping the PDF in is the only step left to make one live.
+                    Filenames come from the data layer (content/consultationCta
+                    .json → resources.items[].file). */}
+                <div className="ya-panel-item mt-8">
+                  <p className="font-mono text-[9px] uppercase tracking-[0.28em] text-slate-500">
+                    {CONTENT.resources.label}
                   </p>
+                  <div className="mt-3 flex flex-col gap-2">
+                    {CONTENT.resources.items.map((r) => (
+                      <a
+                        key={r.label}
+                        href={r.file}
+                        download
+                        className="cta-resource group flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] transition-colors duration-300 hover:border-cyan-300/40 hover:bg-white/[0.07]"
+                      >
+                        <span
+                          aria-hidden="true"
+                          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] text-cyan-300 transition-colors duration-300 group-hover:border-cyan-300/40"
+                        >
+                          <svg width="15" height="15" viewBox="0 0 20 20" fill="none">
+                            <path
+                              d="M10 3v9m0 0 3.5-3.5M10 12 6.5 8.5M4 15.5h12"
+                              stroke="currentColor"
+                              strokeWidth="1.7"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </svg>
+                        </span>
+                        <span className="min-w-0">
+                          <span className="block text-[13.5px] font-semibold text-white">{r.label}</span>
+                          <span className="block text-[11.5px] leading-snug text-slate-400">{r.desc}</span>
+                        </span>
+                      </a>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
@@ -377,11 +387,6 @@ export default function ConsultationCTA() {
           </div>
         </div>
 
-        {/* Agency-style "platforms we build with" logo strip — lives at the
-            foot of this section rather than as its own page block. It carries
-            the #partners anchor the Home menu points at, so removing it again
-            would leave that menu row with nothing to scroll to. */}
-        <OurPartners />
       </div>
     </section>
   );

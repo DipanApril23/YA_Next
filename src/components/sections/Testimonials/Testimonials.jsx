@@ -20,6 +20,9 @@
 import { useRef, useState } from "react";
 import { m, useInView } from "framer-motion";
 import { SectionHeader } from "@/components/ui";
+// By path, not via the ui barrel — see the note in components/ui/index.js:
+// the barrel would pull this onto the initial bundle of every route.
+import SectionCTA from "@/components/ui/SectionCTA/SectionCTA";
 import {
   TESTIMONIALS_CONTENT as CONTENT,
   TESTIMONIALS_ITEMS as ITEMS,
@@ -351,6 +354,14 @@ export default function Testimonials() {
             {CONTENT.bottomCta.post}
           </p>
         </div>
+
+        {/* Closing CTA — the pair every content section ends on. Light theme:
+            the testimonials surface is #ECECF4.
+            OUTSIDE the social-proof pill above, not inside it: that pill is a
+            fixed-height rounded-full flex row sized around the avatars and one
+            line of text, and two buttons dropped into it overflow its right
+            edge. It belongs to the column, under the pill. */}
+        <SectionCTA theme="light" className="ya-cta--flush" />
       </m.div>
     </section>
 

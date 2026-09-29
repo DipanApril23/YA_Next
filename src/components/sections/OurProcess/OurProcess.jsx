@@ -18,6 +18,9 @@ import { m, useReducedMotion } from "framer-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SectionHeader } from "@/components/ui";
+// By path, not via the ui barrel — see the note in components/ui/index.js:
+// the barrel would pull this onto the initial bundle of every route.
+import SectionCTA from "@/components/ui/SectionCTA/SectionCTA";
 import {
   OURPROCESS_CONTENT as CONTENT,
   OURPROCESS_STEPS,
@@ -306,6 +309,10 @@ export default function OurProcess() {
               );
             })}
           </ol>
+
+          {/* Closing CTA — the pair every content section ends on. Light
+              theme: this section's sheet is the pale blueprint surface. */}
+          <SectionCTA theme="light" />
         </div>
       </div>
     </section>
