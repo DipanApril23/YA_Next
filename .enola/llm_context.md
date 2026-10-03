@@ -41,7 +41,7 @@
 | `src/components/ui/SectionDivider` | typescript | 4 | 1 |
 | `src/components/ui/SectionHeader` | typescript | 2 | 1 |
 | `src/components/ui/SplashCursor` | typescript | 3 | 2 |
-| `src/data` | typescript | 68 | 59 |
+| `src/data` | typescript | 69 | 60 |
 
 ## Extraction Quality
 
@@ -100,4 +100,4 @@ _No entry points detected._
 
 ---
 
-*Generated at 2026-09-29T16:08:58Z in 881.3468ms. 722 facts, 23 insights.*
+*Generated at 2026-10-02T19:47:04Z in 1.7960895s. 725 facts, 23 insights.*

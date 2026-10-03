@@ -1,16 +1,32 @@
 "use client";
 
 // ─── FlipCard ─────────────────────────────────────────────────────────
-// 3D flip business card used in the Hero. Front = brand + services list,
-// back = QR + contact. Content → FLIPCARD_* (src/data/flipCard.js); styles →
-// flipcard.css. Client component (pointer-tilt via Framer Motion).
+// 3D flip business card used in the Hero.
+//
+//   resting face   "Why Choose Us" — the logo, six reasons-to-choose, and the
+//                  prompt that tells the visitor the card turns
+//   flip side      the same logo, both phone numbers, the email and the QR
+//
+// THE RESTING FACE IS THE PITCH, NOT THE CONTACT DETAILS. It used to be the
+// other way round: the card opened on a phone number, which is the thing a
+// visitor wants LAST — after they have a reason to call. The reasons now greet
+// them and the contact details are one flip away, which is also why the prompt
+// below the list exists: a card that turns has to say so, or most visitors
+// never find the other side.
+//
+// BOTH FACES USE THE SAME LOGO FILE. The back used to carry a different,
+// older mark; two logos on one card reads as a mistake. See
+// content/flipCard.json → defaults.logo.
+//
+// Content → FLIPCARD_* (src/data/flipCard.js); styles → flipcard.css.
+// Client component (pointer-tilt via Framer Motion).
 
 import { useState, useRef, useCallback } from "react";
 import { m, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { Check } from "lucide-react";
 import Image from "next/image";
 import {
-  FLIPCARD_SERVICES as SERVICES,
+  FLIPCARD_REASONS as REASONS,
   FLIPCARD_QR_CORNERS as QR_CORNERS,
   FLIPCARD_DEFAULTS,
   SPRING_SNAPPY,
@@ -29,7 +45,7 @@ const FLOAT = {
   },
 };
 
-/* Maps a service from FLIPCARD_SERVICES onto the properties `.fc-service*` reads. */
+/* Maps a reason from FLIPCARD_REASONS onto the properties `.fc-service*` reads. */
 const serviceVars = (svc) => ({
   "--svc-color": svc.color,
   "--svc-tint-bg": svc.tintBg,
@@ -39,12 +55,11 @@ const serviceVars = (svc) => ({
 });
 
 const FlipCard = ({
-  frontLogo = FLIPCARD_DEFAULTS.frontLogo,
-  backLogo = FLIPCARD_DEFAULTS.backLogo,
+  logo = FLIPCARD_DEFAULTS.logo,
   qrCode = FLIPCARD_DEFAULTS.qrCode,
   phoneNumbers = FLIPCARD_DEFAULTS.phoneNumbers,
   email = FLIPCARD_DEFAULTS.email,
-  servicesTitle = FLIPCARD_DEFAULTS.servicesTitle,
+  reasonsTitle = FLIPCARD_DEFAULTS.reasonsTitle,
 }) => {
   const [isFlipped, setIsFlipped] = useState(false);
   const tiltRef = useRef(null);
@@ -105,69 +120,32 @@ const FlipCard = ({
             animate={{ rotateY: isFlipped ? 180 : 0 }}
             transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
           >
-            {/* ══════════ FRONT FACE ══════════ */}
+            {/* ══════════ RESTING FACE · WHY CHOOSE US ══════════ */}
             <div className="fc-face">
               <div aria-hidden className="fc-edge fc-edge--top fc-edge--cyan-purple" />
               <div aria-hidden className="fc-shimmer fc-shimmer--front" />
 
-              {/* Logo */}
-              <div className="fc-logo fc-logo--front">
+              {/* Logo — `object-contain` inside a padded circle, so the
+                  wordmark clears the curve instead of running into it. */}
+              <div className="fc-logo fc-logo--mark">
                 <Image
-                  src={frontLogo}
-                  alt={DEFAULTS.frontLogoAlt}
+                  src={logo}
+                  alt={DEFAULTS.logoAlt}
                   fill
-                  sizes="(max-width: 768px) 60vw, 283px"
-                  className="object-cover"
+                  sizes="(max-width: 768px) 34vw, 150px"
+                  className="object-contain"
                 />
               </div>
 
-              {/* Contact */}
-              <div className="fc-contact">
-                <div className="fc-contact-divider" />
-                {phoneNumbers.map((phone) => (
-                  <p key={phone} className="fc-phone">
-                    {phone}
-                  </p>
-                ))}
-                <p className="fc-email">{email}</p>
-              </div>
-
-              {/* QR */}
-              <div className="fc-qr">
-                <Image src={qrCode} alt={DEFAULTS.qrAlt} fill sizes="144px" className="object-cover" />
-                {QR_CORNERS.map((corner) => (
-                  <span key={corner} aria-hidden className={`fc-qr-corner fc-qr-corner--${corner}`} />
-                ))}
-              </div>
-
-              <div aria-hidden className="fc-edge fc-edge--bottom fc-edge--purple-soft" />
-            </div>
-
-            {/* ══════════ BACK FACE ══════════ */}
-            <div className="fc-face fc-face--back">
-              <div aria-hidden className="fc-edge fc-edge--top fc-edge--purple" />
-              <div aria-hidden className="fc-shimmer fc-shimmer--back" />
-
-              {/* Logo */}
-              <div className="fc-logo fc-logo--back">
-                <Image
-                  src={backLogo}
-                  alt={DEFAULTS.backLogoAlt}
-                  fill
-                  sizes="(max-width: 768px) 60vw, 270px"
-                  className="object-cover"
-                />
-              </div>
-
-              {/* Services header */}
+              {/* Reasons header */}
               <div className="fc-services-header">
-                <p className="fc-services-title">{servicesTitle}</p>
+                <p className="fc-services-title">{reasonsTitle}</p>
                 <div className="fc-services-divider" />
               </div>
 
-              {/* Services list */}
+              {/* Reasons list */}
               <div className="fc-services-list">
-                {SERVICES.map((svc) => (
+                {REASONS.map((svc) => (
                   <m.div
                     key={svc.label}
                     className="fc-service"
@@ -175,15 +153,69 @@ const FlipCard = ({
                     whileHover={{ x: 6, scale: 1.02 }}
                     transition={SPRING_SNAPPY}
                   >
-                    {/* A tick, not a per-row glyph: these rows are the
-                        reasons-to-choose list that used to sit in the hero,
-                        and the tick is what carried them there. */}
                     <span className="fc-service-icon" aria-hidden>
                       <Check strokeWidth={3.5} />
                     </span>
                     <span className="fc-service-label">{svc.label}</span>
                     <span className="fc-service-dot" />
                   </m.div>
+                ))}
+              </div>
+
+              {/* Flip prompt — the only thing telling a visitor the card has
+                  another side. The arrow loops, and the whole row pulses, so
+                  it reads as an invitation rather than a caption. */}
+              <div className="fc-prompt" aria-hidden="true">
+                <span className="fc-prompt-icon">
+                  <svg viewBox="0 0 24 24" fill="none" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
+                    <path d="M21 3v5h-5" />
+                    <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
+                    <path d="M8 16H3v5" />
+                  </svg>
+                </span>
+                <span className="fc-prompt-label">{DEFAULTS.flipPrompt}</span>
+              </div>
+
+              <div aria-hidden className="fc-edge fc-edge--bottom fc-edge--purple-soft" />
+            </div>
+
+            {/* ══════════ FLIP SIDE · CONTACT DETAILS ══════════ */}
+            <div className="fc-face fc-face--back">
+              <div aria-hidden className="fc-edge fc-edge--top fc-edge--purple" />
+              <div aria-hidden className="fc-shimmer fc-shimmer--back" />
+
+              {/* Same logo, same fitting — larger here because this face
+                  carries far less copy. */}
+              <div className="fc-logo fc-logo--mark fc-logo--lg">
+                <Image
+                  src={logo}
+                  alt={DEFAULTS.logoAlt}
+                  fill
+                  sizes="(max-width: 768px) 48vw, 215px"
+                  className="object-contain"
+                />
+              </div>
+
+              {/* Contact */}
+              <div className="fc-contact">
+                <div className="fc-contact-divider" />
+                <p className="fc-contact-title">{DEFAULTS.backTitle}</p>
+                {phoneNumbers.map((phone) => (
+                  <a key={phone} href={`tel:${phone.replace(/\s+/g, "")}`} className="fc-phone">
+                    {phone}
+                  </a>
+                ))}
+                <a href={`mailto:${email}`} className="fc-email">
+                  {email}
+                </a>
+              </div>
+
+              {/* QR */}
+              <div className="fc-qr">
+                <Image src={qrCode} alt={DEFAULTS.qrAlt} fill sizes="144px" className="object-cover" />
+                {QR_CORNERS.map((corner) => (
+                  <span key={corner} aria-hidden className={`fc-qr-corner fc-qr-corner--${corner}`} />
                 ))}
               </div>
 

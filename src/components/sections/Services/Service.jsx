@@ -2,6 +2,10 @@
 
 import React, { useRef } from "react";
 import Image from "next/image";
+import Link from "next/link";
+// By path, not via the ui barrel — see the note in components/ui/index.js:
+// the barrel would pull this onto the initial bundle of every route.
+import SectionCTA from "@/components/ui/SectionCTA/SectionCTA";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import ServiceCards from "./ServiceCards";
 // Host-app dependency — swap for your own Container/Button if re-using elsewhere.
@@ -154,12 +158,18 @@ const Service = () => {
                 ))}
               </div>
 
-              {/* Small CTA button — uses shared Button component */}
-              <Button
-                className="!w-auto !mt-0 self-center lg:self-start px-5 py-2 text-sm"
+              {/* Explore CTA — opens the Our Services index, which is a real
+                  generated route (see nav.json). Button renders a <button>, so
+                  the Link wraps it, the same pattern the Hero's CTAs use. */}
+              <Link
+                href={CONTENT.ctaHref}
+                className="self-center lg:self-start"
+                aria-label={CONTENT.ctaLabel.replace(/\s*→\s*$/, "")}
               >
-                {CONTENT.ctaLabel}
-              </Button>
+                <Button className="!w-auto !mt-0 px-5 py-2 text-sm">
+                  {CONTENT.ctaLabel}
+                </Button>
+              </Link>
             </motion.div>
 
             {/* ─ RIGHT: service-wire image ─ */}
@@ -210,6 +220,10 @@ const Service = () => {
             className="w-full"
           >
             <ServiceCards />
+
+            {/* Closing CTA — the pair every content section ends on. Dark
+                theme: this section runs on its own near-black gradient. */}
+            <SectionCTA theme="dark" />
           </motion.section>
 
         </article>

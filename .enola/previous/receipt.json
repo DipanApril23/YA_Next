@@ -1,14 +1,14 @@
 {
-  "snapshot_id": "sha256:1e8fdecda47a17c657c2904178bce893354227fa9745b4fab4ecf34e1b7dc65e",
+  "snapshot_id": "sha256:91420e0d24ef85963c8c3b0369d04a6055dd6f678629940b74880e9e467ffede",
   "format_version": 1,
   "enola_version": "0.4.21",
   "extractor_version": "v270",
-  "generated_at": "2026-09-29T15:52:53Z",
-  "duration": "2.0276665s",
+  "generated_at": "2026-10-01T15:11:32Z",
+  "duration": "970.5286ms",
   "repo_path": "C:\\Users\\user\\OneDrive\\Desktop\\ya-next-master",
   "git": {
     "ref": "main",
-    "commit": "d8cfc52b330cfbae9534cb80cd2db8f793d18c25",
+    "commit": "ab14759e62bc4b01d14ff23818621d3a959a68bc",
     "dirty": true,
     "remote": "github.com/dipanapril23/ya_next"
   },
@@ -47,11 +47,11 @@
   "config_hash": "sha256:73d78ea79f51e19979d4c7d00bd9463ae684ebcb909116abad86675323c32c05",
   "ignore_glob_hash": "sha256:7523cc6397a498e151125a682d28fbf6df20c6f51f6dfaf18fd8f5239a20d2d8",
   "output_hashes": {
-    "facts.jsonl": "sha256:2fb19746c522d1d1e6009e9cd999f3fe7462f391c23f6076c098b048a9d24e71",
-    "insights.json": "sha256:f851076750c69592fb1cdb5effccf8bb742278a74cb901c986834ce181a99b81",
-    "llm_context.md": "sha256:92442b8c621591d243efa4c0e757985bb7a2aff40c21917e5eb550315803e184"
+    "facts.jsonl": "sha256:38bcdfbadcf89592a395500c7bc49065b3361f6cbc19f6f079bd8f9934fd3c44",
+    "insights.json": "sha256:6c485ebe7bff7f332b36c9e2cb3fdb85f1b0e9ce318922cbe1804a2a00f1361c",
+    "llm_context.md": "sha256:bb18ae9a47c3fa79a30beebd37072f4d3526bc66f53ad06025beef238f2e73b9"
   },
-  "fact_count": 722,
+  "fact_count": 723,
   "insight_count": 23,
   "quality": {
     "files_seen": 285,

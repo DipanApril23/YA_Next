@@ -464,9 +464,11 @@ const ServiceGrid = ({ serviceList, accent, glow, onLearnMore }) => {
 //      hover lift in their own accent colour, so they read as pressable rather
 //      than disabled. This is the cue that carries once the motion is over.
 //
-// The written hint above the group is a training wheel: it is removed the
-// moment the visitor switches a tab for the first time, because by then they
-// have proved they understand and the words are just clutter.
+// The written hint above the group is PERMANENT. It began as a training wheel
+// that vanished on the first tab switch, but the line it now carries —
+// "Switch tabs, not vendors." — is the section's whole argument, not an
+// instruction about the widget. A visitor who has already switched a tab is
+// exactly the one who should still be reading it.
 //
 // IT IS A COACH-MARK, NOT A CAPTION. As dim grey 9.5px type it was invisible
 // against the near-black section — present in the DOM, absent to the eye, and
@@ -735,12 +737,28 @@ const ServiceCards = () => {
   const modalRootRef = useRef(null);
   const [activeTabId, setActiveTabId] = useState(DEFAULT_TAB);
   const [selectedService, setSelectedService] = useState(null);
-  const [viewMode, setViewMode] = useState("stack");
+  /* DEFAULTS TO THE DEVICE'S NATURAL LAYOUT: grid on a phone, the slide deck
+     on a desktop. A fanned 3D stack needs width and a pointer to read as a
+     stack at all; on a phone it is just one card with clutter behind it, and
+     the grid shows the whole category at once.
+
+     Reading matchMedia in the initialiser is safe HERE and would not be in a
+     server-rendered component: ServiceCards only ever mounts through
+     <DeferredSection>, which imports it inside an effect — so this always runs
+     on the client, with no server pass to disagree with. The `typeof window`
+     guard keeps that true if it is ever mounted somewhere else.
+
+     It runs ONCE. A visitor who picks a view keeps it; resizing does not
+     overrule them mid-session. */
+  const [viewMode, setViewMode] = useState(() =>
+    typeof window !== "undefined" && window.matchMedia("(max-width: 767px)").matches
+      ? "grid"
+      : "stack",
+  );
 
   /* Which categories the visitor has actually opened. Drives the "unseen" dots
      and the entrance nudge — the tab we land on counts as already seen. */
   const [seenTabs, setSeenTabs] = useState([DEFAULT_TAB]);
-  const hasSwitched = seenTabs.length > 1;
 
   const activeTab = TABS.find((t) => t.id === activeTabId);
   const activeServiceList = (services[activeTabId] || []).map((s) => ({ ...s, category: activeTabId }));
@@ -775,7 +793,12 @@ const ServiceCards = () => {
           onTabChange={handleTabChange}
           counts={tabCounts}
           seenTabs={seenTabs}
-          showHint={!hasSwitched}
+          /* ALWAYS ON. This line used to be a coach-mark that disappeared
+             after the first tab switch. It is now the section's positioning
+             line — "Switch tabs, not vendors." — which is a claim about the
+             agency, not an instruction about the widget, so it has to survive
+             the interaction that taught it. */
+          showHint
           copy={CONTENT.tabs}
         />
 

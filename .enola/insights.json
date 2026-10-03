@@ -360,9 +360,9 @@
     ]
   },
   {
-    "title": "Large public surface: src/data exports 59 of 68 symbols (87%)",
+    "title": "Large public surface: src/data exports 60 of 69 symbols (87%)",
     "source": "exported-surface",
-    "description": "Module \"src/data\" exports 59 of its 68 symbols (87%). A large, near-fully-exported module hides little of its implementation, so consumers can couple to internals and it is hard to change without breaking them. Worth a visibility review — though a deliberate library API may legitimately export most of its surface.",
+    "description": "Module \"src/data\" exports 60 of its 69 symbols (87%). A large, near-fully-exported module hides little of its implementation, so consumers can couple to internals and it is hard to change without breaking them. Worth a visibility review — though a deliberate library API may legitimately export most of its surface.",
     "confidence": 0.6,
     "evidence": [
       {
@@ -441,8 +441,8 @@
       {
         "file": "src/components/sections/Services/ServiceCards.jsx",
         "symbol": "src/components/sections/Services.TabSelector",
-        "detail": "cyclomatic complexity 38 at line 482",
-        "line": 482,
+        "detail": "cyclomatic complexity 38 at line 484",
+        "line": 484,
         "fact_id": "30e402597d7941c1b4176853adf12c75"
       }
     ],

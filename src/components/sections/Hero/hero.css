@@ -131,6 +131,13 @@
   font-size: clamp(1.95rem, 5vw, 3.8rem);
 }
 
+/* Sub-headline — the positioning line under the h1. Deliberately a long step
+   down from the headline (roughly 45% of it) so the two never read as one
+   block of display type, and so the h1 keeps the keyword weight. */
+.hero-subheadline {
+  font-size: clamp(1rem, 2.1vw, 1.65rem);
+}
+
 @keyframes heroShimmer {
   0% { background-position: -300% center; }
   100% { background-position: 300% center; }
@@ -215,7 +222,37 @@
 }
 .hero-fade--chip { animation-delay: 0.1s; }
 .hero-fade--ctas { animation-delay: 1.1s; }
+.hero-fade--policy { animation-delay: 1.25s; }
 .hero-fade--stats { animation-delay: 1.4s; }
+
+/* ── Policy link — tertiary, under the two CTA buttons ───────── */
+.hero-policy-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: rgba(255, 255, 255, 0.42);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+.hero-policy-link:hover {
+  color: rgba(255, 255, 255, 0.78);
+}
+.hero-policy-link:focus-visible {
+  outline: 2px solid #06b6d4;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+.hero-policy-icon {
+  width: 12px;
+  height: 12px;
+  transition: transform 0.3s ease;
+}
+.hero-policy-link:hover .hero-policy-icon {
+  transform: translate(1.5px, -1.5px);
+}
 
 /*
   FlipCard column entrance — the old Framer `flipCardIn`: y:35→0 with a

@@ -360,9 +360,9 @@
     ]
   },
   {
-    "title": "Large public surface: src/data exports 59 of 68 symbols (87%)",
+    "title": "Large public surface: src/data exports 60 of 69 symbols (87%)",
     "source": "exported-surface",
-    "description": "Module \"src/data\" exports 59 of its 68 symbols (87%). A large, near-fully-exported module hides little of its implementation, so consumers can couple to internals and it is hard to change without breaking them. Worth a visibility review — though a deliberate library API may legitimately export most of its surface.",
+    "description": "Module \"src/data\" exports 60 of its 69 symbols (87%). A large, near-fully-exported module hides little of its implementation, so consumers can couple to internals and it is hard to change without breaking them. Worth a visibility review — though a deliberate library API may legitimately export most of its surface.",
     "confidence": 0.6,
     "evidence": [
       {

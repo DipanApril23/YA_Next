@@ -49,6 +49,7 @@ export {
 export {
   HERO_CONTENT,
   HERO_CTAS,
+  HERO_POLICY_CTA,
   HERO_STATS,
   HERO_PARTICLES,
 } from "./hero";
@@ -78,7 +79,7 @@ export { MAIN_SERVICES, MAIN_SERVICES_CONTENT } from "./mainServices";
 export { WHYCHOOSE_CONTENT } from "./whyChoose";
 
 // ── Shared UI ────────────────────────────────────────────────────────
-export { FLIPCARD_SERVICES, FLIPCARD_QR_CORNERS, FLIPCARD_DEFAULTS } from "./flipCard";
+export { FLIPCARD_REASONS, FLIPCARD_QR_CORNERS, FLIPCARD_DEFAULTS } from "./flipCard";
 export {
   EASE_SMOOTH,
   EASE_ENTRANCE,

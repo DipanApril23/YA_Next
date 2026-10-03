@@ -20,6 +20,7 @@ import {
   HERO_STATS as STATS,
   HERO_PARTICLES as PARTICLES,
   HERO_CTAS as CTAS,
+  HERO_POLICY_CTA as POLICY_CTA,
   HERO_CONTENT as CONTENT,
 } from "@/data";
 import "./hero.css";
@@ -155,28 +156,35 @@ const Hero = () => {
               entrance is a CSS transform-only slide (`hero-rise`) that holds
               opacity at 1 and runs at paint time.
             */}
-            <div className="w-full flex flex-col gap-1">
-              <div className="hero-rise hero-rise-1">
-                <h1 className="hero-grad-text hero-headline font-black leading-[1.1] md:leading-[1.03] tracking-tight pb-1">
-                  {CONTENT.headlineLead}
-                </h1>
-              </div>
+            {/* ONE <h1>, in two painted halves.
+                The gradient lead and the solid remainder are a single
+                sentence — "Best AI Digital Marketing Agency in Kolkata" — so
+                they are two spans inside one heading, not two headings. This
+                used to be two sibling <h1> elements, which split the page's
+                primary heading in half and gave the document two of them. */}
+            <div className="hero-rise hero-rise-1 w-full">
+              <h1 className="hero-headline font-black leading-[1.1] md:leading-[1.03] tracking-tight text-white pb-1">
+                <span className="hero-grad-text">{CONTENT.headlineLead}</span>
+                {CONTENT.headlineMain}
+              </h1>
+            </div>
 
-              <div className="hero-rise hero-rise-2">
-                <h1 className="hero-headline font-black leading-[1.1] md:leading-[1.03] tracking-tight text-white">
-                  {CONTENT.headlineMain}
-                </h1>
-              </div>
+            {/* Sub-headline — the positioning line under the keyword headline. */}
+            <div className="hero-rise hero-rise-2 w-full">
+              <h2 className="hero-subheadline font-bold leading-[1.2] tracking-tight text-white/90">
+                {CONTENT.subheadline}
+              </h2>
             </div>
 
             {/* Brand name */}
             <div className="hero-rise hero-rise-3">
-              <h2 className="hero-pink-text font-black uppercase tracking-widest text-[15px] sm:text-lg md:text-xl lg:text-2xl">
+              <h3 className="hero-pink-text font-black uppercase tracking-widest text-[14px] sm:text-base md:text-lg lg:text-xl">
                 {CONTENT.brand}
-              </h2>
+              </h3>
             </div>
 
-            {/* Lead paragraph */}
+            {/* Lead paragraph. `leadStrong` carries the primary keyword and is
+                the only emphasised phrase — see content/hero.json. */}
             <p className="hero-rise hero-rise-4 max-w-[38rem] text-sm sm:text-base text-white/75 font-medium leading-relaxed">
               {CONTENT.leadBefore}
               <strong>{CONTENT.leadStrong}</strong>
@@ -205,6 +213,39 @@ const Hero = () => {
                   </Tag>
                 );
               })}
+            </div>
+
+            {/* ── Policy link ──
+                A tertiary text link, not a third button. "View Policy" is a
+                reassurance for the small number of visitors who look for it,
+                and giving it the same weight as "Book a Consultation" would
+                compete with the one action this section exists to get. */}
+            <div className="hero-fade hero-fade--policy -mt-1">
+              {/* Opens in a new tab on purpose: a visitor who stops to read the
+                  policy should come back to a hero they never left, not to a
+                  back button. The arrow glyph is the standard signal for it. */}
+              <Link
+                href={POLICY_CTA.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hero-policy-link"
+              >
+                {POLICY_CTA.label}
+                <svg
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  aria-hidden="true"
+                  className="hero-policy-icon"
+                >
+                  <path
+                    d="M7 4.5h8.5V13M15.5 4.5 4.5 15.5"
+                    stroke="currentColor"
+                    strokeWidth="1.7"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </Link>
             </div>
 
             {/* The reasons-to-choose tick list used to sit here, between the

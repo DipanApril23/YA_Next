@@ -1,26 +1,27 @@
 {
-  "$comment": "Copy for the VISIBLE Services section (the interactive card deck) — distinct from services.json, which is the catalogue of individual services, and from servicesSeo.json, which is the hidden crawlable version. Editable content — safe for a CMS. Headings are split into parts because each part carries a different gradient; keep the trailing space on `headingLeadTrail` (it separates the two halves when they wrap onto one line). In `tabs.hint` the token {count} is replaced with the real number of categories at render time — keep it in any rewrite; `tabs.hintCompact` is the phone-width version and has no room for it.",
+  "$comment": "Copy for the VISIBLE Services section (the interactive card deck) — distinct from services.json, which is the catalogue of individual services, and from servicesSeo.json, which is the hidden crawlable version. Editable content — safe for a CMS. Headings are split into parts because each part carries a different gradient; keep the trailing space on `headingLeadTrail` (it separates the two halves when they wrap onto one line). `tabs.hint` is PERMANENT — it is the section's positioning line, not a coach-mark, so it is never dismissed; it may contain a {count} token, which is lifted out and set as its own badge, but it does not have to. `tabs.hintCompact` is the phone-width version. `ctaHref` must point at a route that exists — /our-services/ is generated from the nav tree.",
   "content": {
     "badge": "Our Expertise",
-    "headingLead": "Premium Services",
+    "headingLead": "Premium Services Built",
     "headingLeadTrail": " ",
-    "headingRest": "Built to Scale",
-    "intro": "Streamline development, marketing, and design operations with our custom-made solutions engineered for enterprise-grade growth.",
+    "headingRest": "to Scale and Grow",
+    "intro": "Most businesses juggle three agencies for this — and none of them talk to each other. Development. Marketing. Design. Built together under one roof.",
     "tagline": {
-      "line1": "Create a new way",
-      "line2": "to enhance your",
-      "line3": "business needs"
+      "line1": "Stop Juggling Vendors.",
+      "line2": "Start Growing —",
+      "line3": "In Every Direction."
     },
-    "description": "Stay organised and improve. Streamline custom development, marketing, design, and other business operations of your enterprise. Let us help enhance the bottom line with our custom-made solutions.",
+    "description": "Development that ships. Marketing that ranks. Design that converts. Plus every workflow and automation in between — run by one team, not stitched together from three agencies.",
     "ctaLabel": "Click to Explore →",
+    "ctaHref": "/our-services/",
     "viewModes": {
-      "stack": "Desktop View",
-      "grid": "Mobile View"
+      "stack": "Slide View",
+      "grid": "Grid View"
     },
     "tabs": {
       "ariaLabel": "Service category",
-      "hint": "{count} categories — switch to see different services",
-      "hintCompact": "Tap to switch category",
+      "hint": "Switch tabs, not vendors.",
+      "hintCompact": "Switch tabs, not vendors.",
       "unseenLabel": "Not viewed yet"
     }
   }

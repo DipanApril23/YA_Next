@@ -1,30 +1,34 @@
 {
-  "$comment": "Hero section copy. Editable content — safe to hand to a CMS/backend team. Rendered by src/components/sections/Hero/Hero.jsx via src/data/hero.js. NOTE: the \"View Policy\" CTA pointed at https://youngarchitects.in/assets/YA_Policy.pdf, a file that was lost when public_html was cleared and is not in this repo. It now points at the on-site /privacy-policy page so the button is not a dead link. To go back to the PDF, put the file in public/assets/ and set this href to /assets/YA_Policy.pdf.",
+  "$comment": "Hero section copy. Editable content — safe to hand to a CMS/backend team. Rendered by src/components/sections/Hero/Hero.jsx via src/data/hero.js. HEADING LEVELS ARE DELIBERATE: headlineLead + headlineMain together form the page's single <h1> (the gradient half and the solid half of one sentence — they are not two headings); `subheadline` is the <h2>; `brand` is the <h3>. Do not add a second <h1>. The paragraph's `leadStrong` is the phrase that gets emphasis — keep the primary keyword there. NOTE: the \"View Policy\" CTA pointed at https://youngarchitects.in/assets/YA_Policy.pdf, a file that was lost when public_html was cleared and is not in this repo. It now points at the on-site /privacy-policy page so the button is not a dead link. To go back to the PDF, put the file in public/assets/ and set this href to /assets/YA_Policy.pdf.",
   "content": {
     "eyebrow": "AI-Powered Digital Agency · Kolkata",
-    "headlineLead": "The AI Digital Marketing Agency",
-    "headlineMain": " in Kolkata tailored for Local Businesses",
+    "headlineLead": "Best AI Digital Marketing Agency",
+    "headlineMain": " in Kolkata",
+    "subheadline": "Built to Grow Revenue, Not Just Rankings",
     "brand": "⚡ Young Architects",
-    "leadBefore": "Best ",
-    "leadStrong": " Digital marketing agency in Kolkata",
-    "leadAfter": " that engineers your growth system: websites that convert, SEO that gets you found, and AI automation that follows up with every lead."
+    "leadBefore": "",
+    "leadStrong": "AI digital marketing agency in Kolkata",
+    "leadAfter": " building websites that convert, SEO that ranks, and AI automation systems that follow up with leads so you don't have to."
   },
   "ctas": [
     {
-      "label": "Book Consultation",
+      "label": "Book a Consultation",
       "href": "https://calendly.com/yafoundations/45min",
       "variant": "primary"
     },
     {
-      "label": "View Policy",
-      "href": "/privacy-policy",
-      "variant": "secondary",
-      "narrow": true
+      "label": "Contact Us",
+      "href": "/#book-consultation",
+      "variant": "secondary"
     }
   ],
+  "policyCta": {
+    "label": "View Policy",
+    "href": "/privacy-policy"
+  },
   "stats": [
     {
-      "value": "10+",
+      "value": "15+",
       "label": "Projects Delivered"
     },
     {
@@ -32,7 +36,7 @@
       "label": "Happy Clients"
     },
     {
-      "value": "4.1★",
+      "value": "4.2★",
       "label": "Client Rating"
     }
   ]

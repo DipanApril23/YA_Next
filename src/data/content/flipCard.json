@@ -1,44 +1,44 @@
 {
-  "$comment": "FlipCard (digital business card) copy. Editable content — safe for a CMS. `services` is the list on the BACK face: these are the six reasons-to-choose that used to sit as a tick list in the hero's left column, moved here so the hero can put its CTAs above the fold. Each row's `color` is the accent that src/data/flipCard.js expands into the row's background tint, border tint and pulse timing — keep the six colours distinct so consecutive rows stay separable. Rows render with a tick icon rather than a per-row glyph, so no `icon` key is needed. Keep labels under about 60 characters: longer than that and a row wraps to three lines on the narrowest card.",
-  "services": [
+  "$comment": "FlipCard (digital business card) copy. Editable content — safe for a CMS. WHICH FACE IS WHICH: the card rests on the 'Why Choose Us' face, and flips to the contact face — `reasons` is the resting face, `defaults.phoneNumbers`/`email`/`qrCode` are the flip side. Each reason's `color` is the accent that src/data/flipCard.js expands into that row's background tint, border tint and pulse timing — keep the six colours distinct so consecutive rows stay separable. Rows render with a tick icon, so no `icon` key is needed. Keep labels SHORT (about 34 characters): these are claims, not sentences, and a row that wraps to two lines breaks the rhythm of the list. Both faces use the same logo file on purpose — see `defaults.logo`.",
+  "reasons": [
     {
-      "label": "AI-Powered Marketing — Smarter, Faster, Measurable",
+      "label": "Outcomes Over Impressions",
       "color": "#06b6d4"
     },
     {
-      "label": "Everything Under One Roof: Web, SEO, Ads, Content & Automation",
+      "label": "One Team, Every Channel",
       "color": "#3b82f6"
     },
     {
-      "label": "Built for Local Businesses — Strategies That Fit Kolkata's Market",
+      "label": "AI-Powered, Not AI-Buzzword",
       "color": "#a855f7"
     },
     {
-      "label": "Results You Can Count: Leads, Sales & ROI, Not Vanity Metrics",
+      "label": "We'll Say If You're Not Ready",
       "color": "#ec4899"
     },
     {
-      "label": "Transparent Reporting in Plain Language",
+      "label": "Revenue-Focused Reporting",
       "color": "#22d3ee"
     },
     {
-      "label": "No Long Lock-In Contracts",
+      "label": "No Lock-In Contracts",
       "color": "#8b5cf6"
     }
   ],
   "defaults": {
-    "frontLogo": "/assets/image/logo.webp",
-    "backLogo": "/assets/image/logo2.webp",
+    "logo": "/assets/image/logo.webp",
     "qrCode": "/assets/image/qr.webp",
     "phoneNumbers": [
       "+91 9883952010",
-      "+91 9804569051"
+      "+91 9432274587"
     ],
-    "email": "yafoundations@gmail.com",
-    "servicesTitle": "Why Choose Us",
-    "frontLogoAlt": "Young Architects",
-    "backLogoAlt": "Young Architects",
-    "qrAlt": "QR Code",
-    "flipAriaLabel": "Click to flip card"
+    "email": "info@youngarchitects.in",
+    "reasonsTitle": "Why Choose Us",
+    "flipPrompt": "Flip Card for Contact Details",
+    "backTitle": "Get In Touch",
+    "logoAlt": "Young Architects",
+    "qrAlt": "Scan for Young Architects contact details",
+    "flipAriaLabel": "Flip the card"
   }
 }

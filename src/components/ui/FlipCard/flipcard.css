@@ -37,6 +37,19 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  /* RESERVES THE FLIP CONTROL'S OVERHANG.
+     .fc-flip-slot is absolutely positioned 42px ABOVE the card, so it
+     contributes no height of its own. That was fine until the hero's left
+     column got shorter: the row then centres a card whose real top edge is
+     42px higher than its box, and on a short viewport (<=820px tall, where the
+     row already gives up padding) the control rode up under the FIXED navbar.
+
+     Reserving the overhang here makes the component's box describe what it
+     actually occupies, so it can never collide with whatever sits above it —
+     at any viewport height, in any column. --fc-control-space is the single
+     source of truth; .fc-flip-slot's offset is derived from it. */
+  --fc-control-space: 48px;
+  padding-top: var(--fc-control-space);
 }
 .fc-stage {
   position: relative;
@@ -184,7 +197,20 @@
   animation: fcShim 6s linear infinite reverse;
 }
 
-/* ── Logo circles ────────────────────────────────────────────── */
+/* ── Logo circle ─────────────────────────────────────────────── */
+/* ONE rule for both faces: the card carries the same mark on each side. The
+   back used to show a different, older logo.
+
+   `object-contain`, not `object-cover`. Both compute the same here (a square
+   image in a square box), but contain states the intent: never crop the mark.
+   Measured against the circular mask, the artwork's widest point sits at 85%
+   of the circle's chord — a ~15% margin all round, clipping nothing.
+   
+   DO NOT try to add margin by shrinking the image inside this circle. The art
+   is a full-bleed square on a dark backdrop; scaled below ~100% its straight
+   edges appear inside the round mask while the corners stay clipped, which
+   reads as a flat-sided blob rather than a circle. Margin belongs in the
+   source file, not here. */
 .fc-logo {
   position: relative;
   flex-shrink: 0;
@@ -192,51 +218,137 @@
   border-radius: 50%;
   overflow: hidden;
 }
-.fc-logo--front {
-  width: 82%;
+.fc-logo--mark {
+  width: 46%;
   background: radial-gradient(circle, rgba(6, 182, 212, 0.07) 0%, transparent 70%);
   box-shadow:
-    -6px -10px 12px rgba(255, 255, 255, 0.055),
-    6px 10px 14px rgba(0, 0, 0, 0.6),
-    0 0 50px rgba(6, 182, 212, 0.08),
-    inset 0 0 40px rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+    -6px -10px 12px rgba(255, 255, 255, 0.045),
+    6px 10px 14px rgba(0, 0, 0, 0.55),
+    0 0 46px rgba(6, 182, 212, 0.08),
+    inset 0 0 40px rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.07);
 }
-/* Smaller than the front's 82%. The back now carries six reasons-to-choose
-   rows whose copy wraps to two lines each; at the old 78% the logo alone ate
-   ~270px of a 530px card and the last rows were clipped by the face's
-   `overflow: hidden`. The mark still reads clearly at this size because it is
-   the second thing the visitor sees, not the first. */
-.fc-logo--back {
-  width: 46%;
-  background: radial-gradient(circle, rgba(168, 85, 247, 0.07) 0%, transparent 70%);
-  box-shadow: 0 0 50px rgba(168, 85, 247, 0.1), inset 0 0 40px rgba(0, 0, 0, 0.4);
-  border: 1px solid rgba(168, 85, 247, 0.1);
+/* The contact face carries far less copy than the reasons face, so the mark
+   can be the hero of it. */
+.fc-logo--lg {
+  width: 72%;
 }
 
-/* ── Contact block (front) ───────────────────────────────────── */
+/* ── Contact block (flip side) ───────────────────────────────── */
 .fc-contact {
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  align-items: center;
+  gap: 7px;
 }
 .fc-contact-divider {
   height: 1px;
-  margin: 0 18%;
+  width: 64%;
+  margin: 0 auto 3px;
   background: linear-gradient(90deg, transparent, rgba(6, 182, 212, 0.35), transparent);
 }
+.fc-contact-title {
+  margin: 0 0 2px;
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.38);
+}
+/* Phone and email are real links on this face — a business card a visitor can
+   tap is worth more than one they have to transcribe. */
+.fc-phone,
+.fc-email {
+  margin: 0;
+  text-decoration: none;
+  transition: color 0.25s ease;
+}
 .fc-phone {
-  font-size: 1.05rem;
+  font-size: 1.02rem;
   font-weight: 500;
   letter-spacing: 0.04em;
   color: rgba(255, 255, 255, 0.88);
-  margin: 0;
+}
+.fc-phone:hover {
+  color: #22d3ee;
 }
 .fc-email {
-  font-size: 0.88rem;
+  font-size: 0.84rem;
   color: rgba(255, 255, 255, 0.5);
-  margin: 0;
+  word-break: break-word;
+}
+.fc-email:hover {
+  color: #f472b6;
+}
+
+/* ── Flip prompt (resting face) ──────────────────────────────── */
+/* The card's only affordance on this face. It has to catch the eye without
+   competing with the six reasons above it, so: a quiet pill that breathes,
+   with an arrow loop that turns on a slow cycle. Both animations are
+   transform/opacity only, so they stay on the compositor. */
+@keyframes fcPromptBreathe {
+  0%, 100% {
+    border-color: rgba(168, 85, 247, 0.22);
+    box-shadow: 0 0 0 0 rgba(168, 85, 247, 0);
+  }
+  50% {
+    border-color: rgba(168, 85, 247, 0.5);
+    box-shadow: 0 0 16px 0 rgba(168, 85, 247, 0.18);
+  }
+}
+@keyframes fcPromptSpin {
+  0%, 62%  { transform: rotate(0deg); }
+  82%, 100% { transform: rotate(-360deg); }
+}
+
+.fc-prompt {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+  padding: 0.4rem 0.9rem;
+  border: 1px solid rgba(168, 85, 247, 0.22);
+  border-radius: 9999px;
+  background: rgba(168, 85, 247, 0.07);
+  animation: fcPromptBreathe 3.2s ease-in-out infinite;
+}
+.fc-prompt-icon {
+  display: flex;
+  width: 12px;
+  height: 12px;
+  color: #c084fc;
+  animation: fcPromptSpin 3.2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+.fc-prompt-icon svg {
+  width: 100%;
+  height: 100%;
+  stroke: currentColor;
+}
+.fc-prompt-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.66);
+  white-space: nowrap;
+}
+/* The whole card is the hit target, so brighten the prompt on card hover —
+   it is the thing that explains what the click does. */
+.fc-tilt:hover .fc-prompt {
+  border-color: rgba(168, 85, 247, 0.55);
+  background: rgba(168, 85, 247, 0.12);
+}
+.fc-tilt:hover .fc-prompt-label {
+  color: rgba(255, 255, 255, 0.92);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fc-prompt,
+  .fc-prompt-icon {
+    animation: none;
+  }
 }
 
 /* ── QR code ─────────────────────────────────────────────────── */
@@ -372,6 +484,8 @@
    the card's tilt; the button itself takes them back. */
 .fc-flip-slot {
   position: absolute;
+  /* Rides just above the card's top edge. Derived from the reserved space in
+     .fc-root so the two can never drift apart. */
   top: -42px;
   left: 0;
   right: 0;

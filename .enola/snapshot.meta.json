@@ -1,8 +1,8 @@
 {
   "repo_path": "C:\\Users\\user\\OneDrive\\Desktop\\ya-next-master",
   "repo_label": "ya_next",
-  "generated_at": "2026-09-29T16:08:58Z",
-  "duration": "881.3468ms",
+  "generated_at": "2026-10-02T19:47:04Z",
+  "duration": "1.7960895s",
   "extractors": [
     "manifests",
     "mdintent",
@@ -37,169 +37,34 @@
   ],
   "file_hashes": [
     {
-      "path": "src/components/sections/Hero/hero.css",
-      "hash": "c13ed4fb7a12ca58b65a0f8c6886e28377faab12cbe3681063a3310cefee4f23",
-      "mod_time": "2026-08-15T07:56:33Z"
+      "path": "src/components/sections/OurProcess/visuals/ConsultVisual.jsx",
+      "hash": "3704d98b3ded26ff6ccdad4558f00fa284730aa10711c0cf4b5d3958960792a0",
+      "mod_time": "2026-08-24T16:43:02Z"
     },
     {
-      "path": "src/components/sections/NotFound/notFound.css",
-      "hash": "dd6b6378a98607d4fc7d48831335c32c3e68b594b1899825b05c5caa6475bfac",
-      "mod_time": "2026-08-13T17:10:57Z"
+      "path": "src/data/faq.js",
+      "hash": "074054c24c45a7c49bdee8890e2930dd7e4ed2b2d7473a4b31cea0421c817e30",
+      "mod_time": "2026-07-30T21:28:26Z"
     },
     {
-      "path": "src/assets/clientLogo/locksmith.webp",
-      "hash": "051d24f144a61873dbf6a9e3311273cd2a4a23a7fec0c0312b6a0f396bf00701",
+      "path": "src/assets/coursesImage/pngaaa.com-3593909.webp",
+      "hash": "34150030197e90d774712f923d5de54c67130c3ebb9c6e77a8e68cf5e847f1fe",
       "mod_time": "2026-05-24T19:36:42Z"
     },
     {
-      "path": "src/assets/gif/Click here 2.gif",
-      "hash": "ec1b6c91e224491bd7832daa2c2da21cfa76376d7a1b7330e108c0fe5fd4c0e8",
-      "mod_time": "2026-05-24T19:36:42Z"
+      "path": "src/components/sections/OurProcess/visuals/FunnelVisual.jsx",
+      "hash": "6e567ae57f1247517c4a9c05ea93177587ff5ac013320042f8493d3bb438028a",
+      "mod_time": "2026-08-24T17:01:11Z"
     },
     {
-      "path": "src/assets/image/about-image-4.webp",
-      "hash": "1bf2d19875cad2818cfb5a2aef5dd2155d9dd08c38812830c9aa4e8195d9f8e4",
-      "mod_time": "2026-05-24T19:36:42Z"
+      "path": "src/components/ui/index.js",
+      "hash": "9bd394eef1a8f66c94e46e3495ee5356dc61e8d84e2b636782ad686d40c8ae90",
+      "mod_time": "2026-09-29T15:19:04Z"
     },
     {
-      "path": "src/assets/image/yalogofinal 512 x 512.webp",
-      "hash": "875cfc996e99d96f38f5f5171b1c2c11f03cf88347cb80aae84689f3b27181da",
-      "mod_time": "2026-05-24T19:36:43Z"
-    },
-    {
-      "path": "src/assets/student/anuska.svg",
-      "hash": "0cd5518667edb1f9bf8a08e46875c8a2e5676e5ea6605bcfbc207563b2044993",
-      "mod_time": "2026-05-24T19:36:43Z"
-    },
-    {
-      "path": "src/components/sections/ConsultationCTA/ConsultationCTA.jsx",
-      "hash": "3a8aa8378ce8e5779aab9e0753b6cd9cee605b2564ae40f61f505648a6776d1b",
-      "mod_time": "2026-09-29T14:16:26Z"
-    },
-    {
-      "path": "src/components/sections/Faq/faqSection.css",
-      "hash": "e5a7f08522775855a5b6c005c2e9ac507fba82ca25521f42615120ba07c65711",
-      "mod_time": "2026-08-31T21:41:01Z"
-    },
-    {
-      "path": "src/components/sections/WhyChoose/WhyChoose.jsx",
-      "hash": "e824392fe3f23d8dea663fc29bda2b64eedd4939236718b20029879e915a653e",
-      "mod_time": "2026-07-18T21:12:38Z"
-    },
-    {
-      "path": "src/assets/student/Nibedita_Mondal.webp",
-      "hash": "62a5172226b8cdb21b2175235ab20a08502c3503290dac385bb5a70ff35ccc37",
-      "mod_time": "2026-05-24T19:36:43Z"
-    },
-    {
-      "path": "src/components/ui/SectionCTA/sectionCta.css",
-      "hash": "0ff48064b43df050034965f4294797b37c7e1d76fec4466f147e42157342a138",
-      "mod_time": "2026-09-29T15:25:22Z"
-    },
-    {
-      "path": "src/data/content/hero.json",
-      "hash": "009f3f7d65def95545ca5e7aed112671b4960e2afacdb381dafb501e3a2027f0",
-      "mod_time": "2026-08-16T21:11:37Z"
-    },
-    {
-      "path": "src/data/testimonials.js",
-      "hash": "437b5729325b89d00fbbf1290a83e05ad4a2b12325e3554dde9a0b631ea7be50",
-      "mod_time": "2026-07-30T21:22:12Z"
-    },
-    {
-      "path": "src/assets/image/qr.webp",
-      "hash": "08e9b8f6e9407fa3346c7bf50927237b5793a3f78d5d33bf719420f1203a01ce",
-      "mod_time": "2026-09-29T13:35:12Z"
-    },
-    {
-      "path": "src/components/layout/Header/Header.jsx",
-      "hash": "3bf2c2b67780de3adf13b982895648405c454c8b9e990654d358784ed7b8b31a",
-      "mod_time": "2026-07-18T21:11:59Z"
-    },
-    {
-      "path": "src/components/ui/SectionDivider/sectionDivider.css",
-      "hash": "7433090d122cc942f95babd5ce98808ff32f6ce436a07ffabe140bd1b645371c",
-      "mod_time": "2026-07-23T22:21:41Z"
-    },
-    {
-      "path": "src/data/content/whyChoose.json",
-      "hash": "e296f7c5c748df9394fff47a4f04684d6c2082bbefcd528440b6b2c5a0bbe52d",
-      "mod_time": "2026-07-30T21:20:04Z"
-    },
-    {
-      "path": "jsconfig.json",
-      "hash": "56123956b551c203af11a2a5a985e82bcfdf6d4e619acbdd0a5e2bf1e79aba58",
-      "mod_time": "2026-06-25T15:18:38Z"
-    },
-    {
-      "path": "src/assets/servicesImage/Custom_web_development.webp",
-      "hash": "73f407ca53ac69a822fc8fe2457256229e522c74dfea799ae574979a15369a56",
-      "mod_time": "2026-05-24T19:36:43Z"
-    },
-    {
-      "path": "src/assets/servicesImage/Local_and_website seo.webp",
-      "hash": "1aecf3e86a851605553768ec6bf7d216222224df080c688dcc5c36127ef93f34",
-      "mod_time": "2026-05-24T19:36:43Z"
-    },
-    {
-      "path": "src/data/services.js",
-      "hash": "82811fc345dda8efe2443b770df7b8d8ee0957fe8750bda96978a3daf1c8f645",
-      "mod_time": "2026-07-30T21:45:54Z"
-    },
-    {
-      "path": ".claude/settings.json",
-      "hash": "4940737beaed55d7748a92c3e060bf51329c23c27544d70ea7f465d2672414b8",
-      "mod_time": "2026-08-13T21:22:45Z"
-    },
-    {
-      "path": "package-lock.json",
-      "hash": "e0aba0bdf5273bd0f988e86d21be43d96da479e1a7bfb51d8e398000eb7307de",
-      "mod_time": "2026-07-24T08:08:42Z"
-    },
-    {
-      "path": "src/assets/client/patrick.svg",
-      "hash": "1f10764ba0b23d1d4535a7253d1a7f15d948f154d4529f58849f86a1f6b950c9",
-      "mod_time": "2026-05-24T19:36:41Z"
-    },
-    {
-      "path": "src/assets/workImage/Design5.webp",
-      "hash": "61c975acd68844f1969f77b265a94a84289b059d749d11de1f9d626fdb723641",
-      "mod_time": "2026-05-24T19:36:44Z"
-    },
-    {
-      "path": "src/assets/image/ya logo circle 192 x 192.webp",
-      "hash": "23a7692fdb43bd6dcbcd15591aad04096f59c9482514933b442f0fba71ea29b8",
-      "mod_time": "2026-05-24T19:36:42Z"
-    },
-    {
-      "path": "src/assets/servicesImage/API_development.webp",
-      "hash": "b2e45ec233646ae0d2766df932b8ca931fcd87aca3bee85200f5554af6aee83b",
-      "mod_time": "2026-05-24T19:36:43Z"
-    },
-    {
-      "path": "src/assets/servicesImage/Facebook_marketing.webp",
-      "hash": "f6bf2ad489c3ee87eac76024b321ae98f475f6ae9df891831ed4046584f633d5",
-      "mod_time": "2026-05-24T19:36:43Z"
-    },
-    {
-      "path": "public/.htaccess",
-      "hash": "daeac42aaa4953e8091bea2310f81bd9149c8c7255b90a9453c48dea03772fd3",
-      "mod_time": "2026-08-15T09:38:04Z"
-    },
-    {
-      "path": "src/assets/client/petro.svg",
-      "hash": "9236c34cedc26cec92b5dd209d3ff831e41a425c942296bc83bf0244e0ed06fc",
-      "mod_time": "2026-05-24T19:36:41Z"
-    },
-    {
-      "path": "src/assets/image/yalogofinal 192 x 192.webp",
-      "hash": "aca58e9fc9b4feb80f2e51205ae08beb73a22836d9f31ba3c5c05150f3d980e1",
-      "mod_time": "2026-05-24T19:36:43Z"
-    },
-    {
-      "path": "src/assets/student/Arijit_Paul.svg",
-      "hash": "ee0981c71f662f5624b8a58b9c6fde022f8ad9bb5951dd0dce0b991ee588573f",
-      "mod_time": "2026-05-24T19:36:43Z"
+      "path": "public/downloads/README.md",
+      "hash": "4181c784a699b994cb2d3fa2117fee5ef317deb7dd5cdd46d0fb1cbacb1259e4",
+      "mod_time": "2026-09-29T14:16:38Z"
     },
     {
       "path": "src/assets/image/clickhere.webp",
@@ -207,33 +72,358 @@
       "mod_time": "2026-05-24T19:36:42Z"
     },
     {
-      "path": "src/assets/student/Dipta_Karar.webp",
-      "hash": "de55bd6b403ee3e303e617c2ef5f7c59df6c8b346625f700b03cc5738823ed4f",
+      "path": "src/assets/workImage/Design5.webp",
+      "hash": "61c975acd68844f1969f77b265a94a84289b059d749d11de1f9d626fdb723641",
+      "mod_time": "2026-05-24T19:36:44Z"
+    },
+    {
+      "path": "src/components/sections/MainServices/mainServices.css",
+      "hash": "fff3da45dcbfdc8f437538120825f013565957f54117b8cbd9450dd90e4ff0ce",
+      "mod_time": "2026-07-23T21:48:29Z"
+    },
+    {
+      "path": "src/components/sections/Testimonials/testimonials.css",
+      "hash": "af3bdc075d5590311419e065fca2c833db01b2a8ad7b20398584ff64d09a0104",
+      "mod_time": "2026-08-31T21:41:01Z"
+    },
+    {
+      "path": "src/components/ui/MagneticButton/magneticButton.css",
+      "hash": "5d0a114ad1fc82c29e6404ccf6903c8ad0ee008d816b0917b0bef99f80fce195",
+      "mod_time": "2026-08-31T21:41:01Z"
+    },
+    {
+      "path": "src/data/ourProcess.js",
+      "hash": "02d0d87b35be2940c643ac500bbbced11ae41dae5789f5de3e1d14488d5ea0f3",
+      "mod_time": "2026-07-30T21:18:39Z"
+    },
+    {
+      "path": "src/assets/servicesImage/Youtube_Marketing.webp",
+      "hash": "2d9f9a8300348280000f7e9dd4cf96a852ebe3473fb64d11036f9ea2fef060dc",
       "mod_time": "2026-05-24T19:36:43Z"
     },
     {
-      "path": "src/assets/student/abhishek.svg",
-      "hash": "73602437a7f72ea79f9d8a55f2ee959b79357b344be9d59f05115dafa739b9d3",
+      "path": "src/components/layout/index.js",
+      "hash": "c655f40138d09c42ebe80b28959414c3d3f54770eb21deaad8cb77ef0e68fdac",
+      "mod_time": "2026-07-28T19:08:13Z"
+    },
+    {
+      "path": "src/components/sections/WhyChoose/WhyChoose.jsx",
+      "hash": "e824392fe3f23d8dea663fc29bda2b64eedd4939236718b20029879e915a653e",
+      "mod_time": "2026-07-18T21:12:38Z"
+    },
+    {
+      "path": "src/data/content/flipCard.json",
+      "hash": "4d70849ab77dcac82e7e672aba53c1075de5fd53fca228084a25b25c8c110fdf",
+      "mod_time": "2026-10-01T14:44:14Z"
+    },
+    {
+      "path": "src/data/json/testimonials.json",
+      "hash": "025fca8119724540bdd91eb0ca1cf4cd82d0e168acf9fcd5de699088b48b8556",
+      "mod_time": "2026-08-15T10:08:31Z"
+    },
+    {
+      "path": "src/assets/clientLogo/iwls.webp",
+      "hash": "7437deff63def9c5aea5724695bf7a5435ad0bb36eb0ab74cf4682c3b2f46447",
+      "mod_time": "2026-05-24T19:36:42Z"
+    },
+    {
+      "path": "src/data/content/brandMark.json",
+      "hash": "ec8bed8f93991aea3fce7c31a6908576df3df762330018692e0a8d29ac757981",
+      "mod_time": "2026-08-02T08:06:38Z"
+    },
+    {
+      "path": "src/data/content/footer.json",
+      "hash": "f9ca1cc7270b5bdc683950e48732f5bba18411354a79696ea36d217c4b326c40",
+      "mod_time": "2026-08-16T21:10:13Z"
+    },
+    {
+      "path": "src/data/navIcons.js",
+      "hash": "a860ec430ac203b7609e1bef407bbb0a86aa214af38ebe0a26cf80520b6d3600",
+      "mod_time": "2026-08-05T14:11:39Z"
+    },
+    {
+      "path": "src/assets/clientLogo/locksmith.webp",
+      "hash": "051d24f144a61873dbf6a9e3311273cd2a4a23a7fec0c0312b6a0f396bf00701",
+      "mod_time": "2026-05-24T19:36:42Z"
+    },
+    {
+      "path": "src/assets/image/about-image-2.webp",
+      "hash": "0e6ebc8577cb65cbeb6bec6fe492354381fcb707d371904218596bbd995f2569",
+      "mod_time": "2026-05-24T19:36:42Z"
+    },
+    {
+      "path": "src/assets/image/logo.webp",
+      "hash": "b0f710aaf4e68378f1117d8a54bca9e1dd62024da46ae60546e415858351134f",
+      "mod_time": "2026-09-29T13:35:12Z"
+    },
+    {
+      "path": "src/assets/student/Rishikesh_Kumar_Formal.webp",
+      "hash": "55c83909bc26c9e391d5cbb2699e83970706fb5c7f5893baa6a57dc7abaa59b1",
       "mod_time": "2026-05-24T19:36:43Z"
     },
     {
-      "path": "src/data/content/servicesSection.json",
-      "hash": "4b6ac61490b5dda5bf0bce34ddb2e32d28b399d566c25268ae72c3b0ce8f47c2",
-      "mod_time": "2026-08-02T09:16:29Z"
+      "path": "src/components/layout/Footer/Footer.jsx",
+      "hash": "c0adb48818c0d52f8daee58a9375ff9dd4bcc069417e077fadc5de5ba47c1d5f",
+      "mod_time": "2026-08-01T20:30:16Z"
     },
     {
-      "path": "src/app/(site)/page.js",
-      "hash": "70c061d4b6122715ad7509781aeafd62a0ae662d53eed842ff2e2ff516f9605d",
+      "path": "src/components/sections/OurProcess/visuals/useLiveInView.js",
+      "hash": "f115337d3793da000ee33eca3218cd767e28dc79d350faa2bee3f784315f0473",
+      "mod_time": "2026-08-24T16:41:56Z"
+    },
+    {
+      "path": "src/assets/client/sujit.svg",
+      "hash": "2464f42cc624504a66acc8467d28f92b24a2a07b073a3a3d611e768f94668fde",
+      "mod_time": "2026-05-24T19:36:41Z"
+    },
+    {
+      "path": "src/assets/gif/Click here 2.webp",
+      "hash": "91f12b957048d6edf1eceed38ddbe0f62e43d1cf1965cb374fd18a4fd68fa9fb",
+      "mod_time": "2026-05-24T19:36:42Z"
+    },
+    {
+      "path": "src/assets/image/about-image-5.webp",
+      "hash": "a7e1462f4b063e85970e46e4fb5550caf71594b8ca0e3bbeb08a0ba95597cc89",
+      "mod_time": "2026-05-24T19:36:42Z"
+    },
+    {
+      "path": "src/assets/logo/brandlogo.webp",
+      "hash": "684a571a4c10bab1849b986c6d08a666a514ed0f6a8511430158438ba307db0c",
+      "mod_time": "2026-09-29T13:34:53Z"
+    },
+    {
+      "path": "src/assets/student/Brishti_Mahato.webp",
+      "hash": "cc55c535cd0420d7913869bca7c03c9b7e3f886ca85f24fef98edb39d36b7258",
+      "mod_time": "2026-05-24T19:36:43Z"
+    },
+    {
+      "path": "src/assets/workImage/Design3.webp",
+      "hash": "7ac91d14477df53749bea3c2606d9dec46b425dbecedf819c11c44de443a0c98",
+      "mod_time": "2026-05-24T19:36:44Z"
+    },
+    {
+      "path": "src/components/sections/Hero/hero.css",
+      "hash": "6b745a5428014ca73e4ba972e450639615bd724dc5f24a19446f0767d550d0ee",
+      "mod_time": "2026-10-01T14:44:04Z"
+    },
+    {
+      "path": "src/app/icon.png",
+      "hash": "0e676adc0d52194b14bf96f19d4dd1d1ac48457664ef3ac8c98511098981be09",
+      "mod_time": "2026-09-29T13:35:12Z"
+    },
+    {
+      "path": "src/app/layout.js",
+      "hash": "d124848441f7a26b3490024cec9aba3a0aef7fa3e604245a33ca7c5ecc6bae5e",
+      "mod_time": "2026-09-29T13:38:42Z"
+    },
+    {
+      "path": "src/data/content/caseStudies.json",
+      "hash": "8a2c8b0c9f800d24caab4708dac3f214e4be409f3b77b13e69a7d51d824bd3bb",
+      "mod_time": "2026-08-28T19:35:46Z"
+    },
+    {
+      "path": "src/data/content/testimonials.json",
+      "hash": "a856e7af1e94e5df03b293384a21f9aa8d7f7f551a58cf44d81fe4c1c770eeab",
+      "mod_time": "2026-07-30T21:19:02Z"
+    },
+    {
+      "path": "src/assets/image/card-2.webp",
+      "hash": "55311dd8bd80de5221b2d182fdd71952e6b06d3fa8782f875b3944fbb3fee7e1",
+      "mod_time": "2026-05-24T19:36:42Z"
+    },
+    {
+      "path": "src/assets/image/service-wire.webp",
+      "hash": "cd0ef5a19523ea503ec55f43e1e1a4a6767d8f0b6cfc50599bc4182e5fe11c1a",
+      "mod_time": "2026-09-29T13:34:59Z"
+    },
+    {
+      "path": "src/assets/student/Anuska_Paul.webp",
+      "hash": "dbee8fb46b1e9424b83e6ad6e2c962afb94c32a276c956912607dcc8c2cc2d84",
+      "mod_time": "2026-05-24T19:36:43Z"
+    },
+    {
+      "path": "src/assets/student/Nibedita_Mondal.webp",
+      "hash": "62a5172226b8cdb21b2175235ab20a08502c3503290dac385bb5a70ff35ccc37",
+      "mod_time": "2026-05-24T19:36:43Z"
+    },
+    {
+      "path": "src/components/sections/CaseStudies/caseStudies.css",
+      "hash": "c770224bc51374409ce5948828d37f91916d5862eb46987c5465dd669e7b34e2",
+      "mod_time": "2026-08-31T21:32:00Z"
+    },
+    {
+      "path": "src/components/sections/index.js",
+      "hash": "ebabdb07ba5bd6030717a39db796895308ae9edef38290847758f886b80d6314",
       "mod_time": "2026-09-29T15:47:43Z"
     },
     {
-      "path": "src/app/apple-icon.png",
-      "hash": "777a43ff95ff3af2dc24c2be28a48160725f33f6ad6ca7187ac3da1d40122ed9",
-      "mod_time": "2026-08-16T21:28:31Z"
+      "path": "src/assets/servicesImage/Custom_web_development.webp",
+      "hash": "73f407ca53ac69a822fc8fe2457256229e522c74dfea799ae574979a15369a56",
+      "mod_time": "2026-05-24T19:36:43Z"
     },
     {
-      "path": "src/assets/servicesImage/Custom_app_development.webp",
-      "hash": "c3bf14e0cdd11359b771e46cf9fb2045d1c611c1cbdb02c86c111b032d023f9a",
+      "path": "src/assets/workImage/Design1.webp",
+      "hash": "8b4ba2414273f5eb8cf1447056551f2efbab00eb7153a620ab4caa4b1cf516ec",
+      "mod_time": "2026-05-24T19:36:44Z"
+    },
+    {
+      "path": "src/assets/workImage/Design2.webp",
+      "hash": "3b46935ae8bf033ca9bd80970f48f94d0add8938abf3e38c657796c65166707a",
+      "mod_time": "2026-05-24T19:36:44Z"
+    },
+    {
+      "path": "src/assets/workImage/Marketing4.webp",
+      "hash": "b840981f9c109c1447bf3f2c1faa8c98898b948f22f91c971d612b42002c2e07",
+      "mod_time": "2026-05-24T19:36:44Z"
+    },
+    {
+      "path": "src/assets/mainServices/README.md",
+      "hash": "93253136a7b809f23c1bb71a71b715c2edfbfcc01a26a08df5949031b457df98",
+      "mod_time": "2026-07-30T21:56:13Z"
+    },
+    {
+      "path": "src/assets/servicesImage/Instagram_marketing.webp",
+      "hash": "1f49a27c68c15252c330840c61ff2c1883477feb23a2e0ba2893f856bba5bc8a",
+      "mod_time": "2026-05-24T19:36:43Z"
+    },
+    {
+      "path": "src/data/caseStudies.js",
+      "hash": "61cd704662ab209473eab3513dce2a1735821b4bdc4a9d3b312c19d62472ba2f",
+      "mod_time": "2026-07-30T21:20:17Z"
+    },
+    {
+      "path": "src/data/index.js",
+      "hash": "785e362eef55c905bffe5ce686973c790be5012babcd6027c89bcc717346bf7f",
+      "mod_time": "2026-10-01T14:44:29Z"
+    },
+    {
+      "path": "src/data/mainServices.js",
+      "hash": "af184636cbb87e8f36547a83b7e93ff79f81f0dccacfe99a6bab79d13c84d7b7",
+      "mod_time": "2026-07-30T21:20:29Z"
+    },
+    {
+      "path": "src/data/navRoutes.js",
+      "hash": "153a41afa4eafa887bdea9fd24b360cb015d82e7a7f870d88a5b34b124dc2687",
+      "mod_time": "2026-08-16T21:10:53Z"
+    },
+    {
+      "path": "src/assets/image/yalogofinal 192 x 192.webp",
+      "hash": "aca58e9fc9b4feb80f2e51205ae08beb73a22836d9f31ba3c5c05150f3d980e1",
+      "mod_time": "2026-05-24T19:36:43Z"
+    },
+    {
+      "path": "src/assets/image/yalogofinal 512 x 512.webp",
+      "hash": "875cfc996e99d96f38f5f5171b1c2c11f03cf88347cb80aae84689f3b27181da",
+      "mod_time": "2026-05-24T19:36:43Z"
+    },
+    {
+      "path": "src/assets/workImage/Dev1.webp",
+      "hash": "4f144c7e3b5d3eee5d8bbf0246ff22ad4e11fef14f9101869038e4d86a16ec4a",
+      "mod_time": "2026-05-24T19:36:44Z"
+    },
+    {
+      "path": "src/components/sections/ComingSoon/comingSoon.css",
+      "hash": "a2cea8e4370c46268226114ce28bf933d8992a4a53f100f8ac31736d2a39d8c8",
+      "mod_time": "2026-08-13T20:33:35Z"
+    },
+    {
+      "path": "src/data/sectionCta.js",
+      "hash": "297095d9268dbd8dc43fc7ee38e0e247dbcc9f13f7198d9876199a483050a8f0",
+      "mod_time": "2026-09-29T14:13:55Z"
+    },
+    {
+      "path": "src/assets/client/petro.webp",
+      "hash": "c7f72fd646a2ff6a28fc3fb6414b63fd031ea614168252461519111263688b12",
+      "mod_time": "2026-05-24T19:36:41Z"
+    },
+    {
+      "path": "src/assets/servicesImage/Write_ups_and_thumbnail_design.webp",
+      "hash": "03f42e52b080dd71e4e62ac08dc579b03257d7c2530a169edbd387837a218960",
+      "mod_time": "2026-05-24T19:36:43Z"
+    },
+    {
+      "path": "src/components/layout/Navbar/navbar.css",
+      "hash": "b3af2172266caf76c9b92b52b3639ac35aa1657a8702b0d8e7998481262f395a",
+      "mod_time": "2026-07-24T08:24:58Z"
+    },
+    {
+      "path": "src/data/notFound.js",
+      "hash": "ab6142e230265fb7509e1457fe5966dbfff39decb6a667ebaccc02c18ce9d422",
+      "mod_time": "2026-08-13T16:57:10Z"
+    },
+    {
+      "path": "src/assets/client/asim.svg",
+      "hash": "233101a8c48a7f0e0d2206f2b7a82d108b40eefb3b4f680384c4eda1a525f211",
+      "mod_time": "2026-05-24T19:36:41Z"
+    },
+    {
+      "path": "src/assets/clientLogo/iwallp.webp",
+      "hash": "1579f27b3fff6ead8481c482e4315ae909948312afd7737d23afc0fbefb0f414",
+      "mod_time": "2026-05-24T19:36:42Z"
+    },
+    {
+      "path": "src/assets/image/yalogo 16 x 16.webp",
+      "hash": "b6ea57b34f8be356da2c70ed24a99b2c9aaaf839a5209c4912020ff578dfe6d2",
+      "mod_time": "2026-05-24T19:36:42Z"
+    },
+    {
+      "path": "src/components/sections/Services/ServicesSeo.jsx",
+      "hash": "ce145724284d572679b08ec6f079d4758947225e24ab8ff09504d20b0a45e71d",
+      "mod_time": "2026-07-30T21:30:38Z"
+    },
+    {
+      "path": "src/components/ui/SectionHeader/sectionHeader.css",
+      "hash": "d79acaed0a5a508d9ffd76ce60fcfa519a977efc03eff552617b5fd8fd2cb4f5",
+      "mod_time": "2026-09-29T14:16:08Z"
+    },
+    {
+      "path": "src/data/content/servicesSeo.json",
+      "hash": "8abfeb73589af9c329479749c54606c1bc77ce506314934c5b2036cd8128ee0a",
+      "mod_time": "2026-07-30T21:28:14Z"
+    },
+    {
+      "path": ".claude/settings.json",
+      "hash": "4940737beaed55d7748a92c3e060bf51329c23c27544d70ea7f465d2672414b8",
+      "mod_time": "2026-08-13T21:22:45Z"
+    },
+    {
+      "path": "src/app/not-found.jsx",
+      "hash": "c6153271af4954b2200d37af6ca4bcecd8364416e86c0230b9d5ecd62db30d79",
+      "mod_time": "2026-08-13T21:23:32Z"
+    },
+    {
+      "path": "src/assets/image/about-image-3.webp",
+      "hash": "591493a2b0557afa0823de766daa1ffba4f9fa18033ded2480151bcd2622b93b",
+      "mod_time": "2026-05-24T19:36:42Z"
+    },
+    {
+      "path": "src/assets/servicesImage/Customized_forms_of_design_and_marketing.webp",
+      "hash": "788dcc7370cfff5ded36eb9b8a49e8db69f90d78177713da7899c91b50f2f046",
+      "mod_time": "2026-05-24T19:36:43Z"
+    },
+    {
+      "path": "src/components/ui/Modal/modal.css",
+      "hash": "2f19b028d9b48a044dc096cb5fd65ad7acd662057ce50743ddc875833811bec7",
+      "mod_time": "2026-08-31T21:36:09Z"
+    },
+    {
+      "path": "src/data/content/finalCta.json",
+      "hash": "d45b39d245eb01941f9945c9059def621165cf19b1ed948ad63a353ea464d3ad",
+      "mod_time": "2026-09-29T15:56:29Z"
+    },
+    {
+      "path": "src/data/content/sectionCta.json",
+      "hash": "3201178e9ed824d72556062dd0c6472b6f499ed34d9524a1b9940758b4aed66d",
+      "mod_time": "2026-09-29T14:13:47Z"
+    },
+    {
+      "path": "eslint.config.mjs",
+      "hash": "ce5c7cb800dd4df06597ce6aafb613a70f4a6ac9cad8d7facedb52998d8bf048",
+      "mod_time": "2026-05-24T19:36:41Z"
+    },
+    {
+      "path": "src/assets/servicesImage/Social_Media_and_Event_Poster_Design.webp",
+      "hash": "4c0946635925983527eb8a7664f4138c7fad9ab678a66752317e1775c3245696",
       "mod_time": "2026-05-24T19:36:43Z"
     },
     {
@@ -242,9 +432,159 @@
       "mod_time": "2026-05-24T19:36:43Z"
     },
     {
-      "path": "src/components/DeferredSection.jsx",
-      "hash": "d0e5d7a56456025e817085da6b37c82c81f4b7c12b974f912c28bd5281b4ee28",
-      "mod_time": "2026-09-29T15:47:43Z"
+      "path": "src/assets/workImage/Design6.webp",
+      "hash": "8b4e6462c1b0091f5d8683451d951f5a7d31b9507231e4c9263db972c2dc1ccc",
+      "mod_time": "2026-05-24T19:36:44Z"
+    },
+    {
+      "path": "src/components/sections/ComingSoon/ComingSoon.jsx",
+      "hash": "be3ee8238c52feed0c5b75162ca8bc97918cf84f1e618b375c624f54a399a097",
+      "mod_time": "2026-08-13T21:20:16Z"
+    },
+    {
+      "path": "src/components/sections/NotFound/notFound.css",
+      "hash": "dd6b6378a98607d4fc7d48831335c32c3e68b594b1899825b05c5caa6475bfac",
+      "mod_time": "2026-08-13T17:10:57Z"
+    },
+    {
+      "path": "src/data/config/heroParticles.json",
+      "hash": "d1baf1ad13ff2ee58229ba7f88a310df13acca3dd08ff8972c097c841cae986c",
+      "mod_time": "2026-07-30T21:17:32Z"
+    },
+    {
+      "path": "src/data/config/motion.json",
+      "hash": "a4bf393e990a04b91042605fcb1fcc1f5a9cdfdc10b37e57d1fd719ba8e5360e",
+      "mod_time": "2026-07-30T21:43:55Z"
+    },
+    {
+      "path": "src/assets/student/Poulami_Pan.webp",
+      "hash": "52babb24ca59968758f890945eeb56a40209211117443eaba8e0a8e5c8278716",
+      "mod_time": "2026-05-24T19:36:43Z"
+    },
+    {
+      "path": "src/assets/student/Rishikesh_Kumar_Casual.svg",
+      "hash": "9c2d9b9c7a8a0ca992dd797864865214b5c3406f356150e19e25b18658b81679",
+      "mod_time": "2026-05-24T19:36:43Z"
+    },
+    {
+      "path": "src/components/ui/SplashCursor/splashCursor.css",
+      "hash": "b5df11cda6e0463cf4d111c91977948358398d809490a40f912c8e978ddce73a",
+      "mod_time": "2026-08-05T15:12:00Z"
+    },
+    {
+      "path": "src/data/config/serviceTabs.json",
+      "hash": "1528b7b052219246c17791c45fe435499d9dd5b8e0320593c04b531dce3e9673",
+      "mod_time": "2026-07-30T21:27:31Z"
+    },
+    {
+      "path": "src/assets/client/deepak.webp",
+      "hash": "716b8526b75bd7056772535fc838afda37513f7cc7f9dcab7d2c5916db488d7d",
+      "mod_time": "2026-05-24T19:36:41Z"
+    },
+    {
+      "path": "src/assets/image/card-3.webp",
+      "hash": "0842eb239b8129b2f23636e6fa3902288542a688f852ad8eafb3aadda9265a86",
+      "mod_time": "2026-05-24T19:36:42Z"
+    },
+    {
+      "path": "src/assets/image/logo2.webp",
+      "hash": "e9b969054b8ba069a0313f7c0f3ba2bf11b8971ea7ee676ce11fef121b3ca905",
+      "mod_time": "2026-09-29T13:35:12Z"
+    },
+    {
+      "path": "src/assets/workImage/Design4.webp",
+      "hash": "87c1879f9667ceb2bc0759b18791cbcd9309949231539dda20174392527652d5",
+      "mod_time": "2026-05-24T19:36:44Z"
+    },
+    {
+      "path": "src/app/globals.css",
+      "hash": "7ab22f7b4d38413719d1981f60c3a6e71f278b3c8314ef23a5f837e640790e4a",
+      "mod_time": "2026-08-05T14:14:12Z"
+    },
+    {
+      "path": "src/assets/coursesImage/database.webp",
+      "hash": "afa7fde37cb57cc28a3c56b1b5a02eefe571dcb27a2f5150d06af8075085f2a5",
+      "mod_time": "2026-05-24T19:36:42Z"
+    },
+    {
+      "path": "src/assets/coursesImage/oracleDB.webp",
+      "hash": "76d62a60697a44c3244ab175a67d85acb5f874556989f0bc02ca6bd6eaa45170",
+      "mod_time": "2026-05-24T19:36:42Z"
+    },
+    {
+      "path": "src/assets/image/qr.webp",
+      "hash": "08e9b8f6e9407fa3346c7bf50927237b5793a3f78d5d33bf719420f1203a01ce",
+      "mod_time": "2026-09-29T13:35:12Z"
+    },
+    {
+      "path": "src/assets/servicesImage/Video_and_Image_Editing.webp",
+      "hash": "c3022f46238300bb903bf175f565c93734670eaf975e84f8dba4472bb4f0ff8b",
+      "mod_time": "2026-05-24T19:36:43Z"
+    },
+    {
+      "path": "src/data/content/notFound.json",
+      "hash": "372a43064462c87b74247a2fea2817d982091dd5cf3a7b0d75d66950ecb4c835",
+      "mod_time": "2026-08-13T16:49:53Z"
+    },
+    {
+      "path": "src/components/sections/CaseStudies/CaseStudies.jsx",
+      "hash": "eb45c445bcc387d89b12082e58b01cbd6ccf4c45eb260cf72ae867af242fbf72",
+      "mod_time": "2026-09-29T15:19:04Z"
+    },
+    {
+      "path": "src/components/sections/Faq/faqSection.css",
+      "hash": "e5a7f08522775855a5b6c005c2e9ac507fba82ca25521f42615120ba07c65711",
+      "mod_time": "2026-08-31T21:41:01Z"
+    },
+    {
+      "path": "src/components/ui/MagneticButton/MagneticButton.jsx",
+      "hash": "f2792aba72d52400eebc1bafc292bfb7a2446096c73eacb3e875eeed67d70b0f",
+      "mod_time": "2026-08-31T21:41:01Z"
+    },
+    {
+      "path": "src/components/ui/SectionHeader/SectionHeader.jsx",
+      "hash": "32a58574c769a962ddc9499e516f607adcada036568d7e6c6496b178a5a54f80",
+      "mod_time": "2026-07-24T08:24:58Z"
+    },
+    {
+      "path": "src/data/content/hero.json",
+      "hash": "c7fa165997b332be2f9f719c379f04dd9780cc9243547e469bd8cb7ebe776d21",
+      "mod_time": "2026-10-01T14:43:15Z"
+    },
+    {
+      "path": "src/data/config/notFound.json",
+      "hash": "b9e28c5b2bc13355711e89422dc158212d9f87f31b36786c465e99da82c57a4e",
+      "mod_time": "2026-08-13T16:56:57Z"
+    },
+    {
+      "path": "ya-site.zip",
+      "hash": "e2b8e97592eea67ef4ac57fbef786a393f19206d32f40f40003dec6bf4fee3e2",
+      "mod_time": "2026-09-25T19:05:40Z"
+    },
+    {
+      "path": "src/assets/image/about-image-1.webp",
+      "hash": "dc2abdb88b1618593ee2eb885f8acb2c3d921b2650749d4a2f0c0cf1794c6d00",
+      "mod_time": "2026-05-24T19:36:42Z"
+    },
+    {
+      "path": "src/assets/image/ya logo circle 32 x 32.webp",
+      "hash": "fba9f3623fd802ffabe7d6564e3b20c2bb5538b89aa13f7c7dfc8d15cb4472b8",
+      "mod_time": "2026-05-24T19:36:42Z"
+    },
+    {
+      "path": "src/assets/servicesImage/Business_Card_Design.webp",
+      "hash": "c2de077caac319544b494a5a70034827be620201302b50fed247b6df964acd18",
+      "mod_time": "2026-05-24T19:36:43Z"
+    },
+    {
+      "path": "src/assets/workImage/Dev2.webp",
+      "hash": "70ef6535a0e8008dbfae3706e33acf61496708f44f48d96c2572797f63ecb2db",
+      "mod_time": "2026-05-24T19:36:44Z"
+    },
+    {
+      "path": "src/components/layout/Header/Header.jsx",
+      "hash": "3bf2c2b67780de3adf13b982895648405c454c8b9e990654d358784ed7b8b31a",
+      "mod_time": "2026-07-18T21:11:59Z"
     },
     {
       "path": "src/components/layout/Navbar/Navbar.jsx",
@@ -252,23 +592,13 @@
       "mod_time": "2026-08-15T08:27:59Z"
     },
     {
-      "path": "src/assets/workImage/Marketing1.webp",
-      "hash": "4b77a842a5c16000fb7ca1e788293ff34918ca912ba2fbbee029b2665a1bc5ad",
-      "mod_time": "2026-05-24T19:36:44Z"
+      "path": "package.json",
+      "hash": "a04cbad4485a229f553912c82bd2da1303f8e4ba158fd4dfa6a63339255d14eb",
+      "mod_time": "2026-07-24T08:24:58Z"
     },
     {
-      "path": "src/components/ui/Modal/modal.css",
-      "hash": "2f19b028d9b48a044dc096cb5fd65ad7acd662057ce50743ddc875833811bec7",
-      "mod_time": "2026-08-31T21:36:09Z"
-    },
-    {
-      "path": "src/data/content/consultationCta.json",
-      "hash": "328120ec3de19f2ead1a4bd67446d560692581f9e26f2d59d49f43d040f31825",
-      "mod_time": "2026-09-29T14:13:05Z"
-    },
-    {
-      "path": "src/assets/client/asim.svg",
-      "hash": "233101a8c48a7f0e0d2206f2b7a82d108b40eefb3b4f680384c4eda1a525f211",
+      "path": "src/assets/client/jaclyn.webp",
+      "hash": "69c454459fd0dc89b42a751cb58790cefc4474afc7140e7f971c8fe64d1642a6",
       "mod_time": "2026-05-24T19:36:41Z"
     },
     {
@@ -277,9 +607,44 @@
       "mod_time": "2026-05-24T19:36:42Z"
     },
     {
-      "path": "src/assets/servicesImage/Saas CRM AUTOMATIONS.webp",
-      "hash": "5a0144dfb441d82c259bd533a749f848f5e13c9fd62b31ec14ba55630757d86a",
+      "path": "src/assets/coursesImage/java.webp",
+      "hash": "d90b690791559ca5bb1be2136fead92a349988a311d4ec590e665fbfdadc9184",
+      "mod_time": "2026-05-24T19:36:42Z"
+    },
+    {
+      "path": "src/assets/student/Dipta_Karar.svg",
+      "hash": "b783286d6dba4a1e0a34607c0a5c1f8a2ece41cf2b5de2e1c1b637314b5699a5",
       "mod_time": "2026-05-24T19:36:43Z"
+    },
+    {
+      "path": "src/assets/student/arijit.webp",
+      "hash": "1497ca11375a3bbd92e4d0935977e90602eba08aced2eac7a6367deaf0fcbfa0",
+      "mod_time": "2026-05-24T19:36:43Z"
+    },
+    {
+      "path": "src/assets/workImage/Marketing1.webp",
+      "hash": "4b77a842a5c16000fb7ca1e788293ff34918ca912ba2fbbee029b2665a1bc5ad",
+      "mod_time": "2026-05-24T19:36:44Z"
+    },
+    {
+      "path": "src/components/sections/Hero/Hero.jsx",
+      "hash": "2e7c676dfa90d660bb9889d3c58768ab723e55e805c7a7284f0ba3427a11b7a1",
+      "mod_time": "2026-10-01T14:49:44Z"
+    },
+    {
+      "path": "src/assets/coursesImage/spring.webp",
+      "hash": "04c04415f46b6d58f43c8129764df36b961feea92b096fff651f0433db4da1fb",
+      "mod_time": "2026-05-24T19:36:42Z"
+    },
+    {
+      "path": "src/assets/servicesImage/API_development.webp",
+      "hash": "b2e45ec233646ae0d2766df932b8ca931fcd87aca3bee85200f5554af6aee83b",
+      "mod_time": "2026-05-24T19:36:43Z"
+    },
+    {
+      "path": "src/components/sections/Faq/ScrollBeamDivider.jsx",
+      "hash": "baec03cf361beffa0a909ea9ac9e82406dcbafa1b6168fdaabed80ca5965ae49",
+      "mod_time": "2026-07-27T14:52:40Z"
     },
     {
       "path": "src/components/sections/NotFound/NotFoundActions.jsx",
@@ -287,19 +652,379 @@
       "mod_time": "2026-09-29T13:52:20Z"
     },
     {
+      "path": "src/components/sections/Services/ServiceCards.jsx",
+      "hash": "98fc2efdd2fda32ffc3fdefc78026861c9487f5c0122cc0e839200758e301167",
+      "mod_time": "2026-10-02T19:36:18Z"
+    },
+    {
+      "path": "src/data/config/ourProcessParticles.json",
+      "hash": "34a4ffcf3623f026ea16af5b5333643af3debe6bf7c39e48bca1b46338124989",
+      "mod_time": "2026-07-30T21:18:24Z"
+    },
+    {
+      "path": "src/data/content/consultationCta.json",
+      "hash": "328120ec3de19f2ead1a4bd67446d560692581f9e26f2d59d49f43d040f31825",
+      "mod_time": "2026-09-29T14:13:05Z"
+    },
+    {
+      "path": "src/data/json/about.json",
+      "hash": "7a1baa8ade98480c157f5f99e7e3910b491faa9dc96e9731fd7636d56d530adb",
+      "mod_time": "2026-08-15T10:08:31Z"
+    },
+    {
+      "path": "public/robots.txt",
+      "hash": "76b71b82a1e09bf7adce75e398bde15c8ddc6049e5a1081a49a406f6f8964603",
+      "mod_time": "2026-09-25T18:57:41Z"
+    },
+    {
+      "path": "src/assets/client/patrick.svg",
+      "hash": "1f10764ba0b23d1d4535a7253d1a7f15d948f154d4529f58849f86a1f6b950c9",
+      "mod_time": "2026-05-24T19:36:41Z"
+    },
+    {
+      "path": "src/assets/student/Arijit_Paul.svg",
+      "hash": "ee0981c71f662f5624b8a58b9c6fde022f8ad9bb5951dd0dce0b991ee588573f",
+      "mod_time": "2026-05-24T19:36:43Z"
+    },
+    {
+      "path": "src/assets/student/anuska.webp",
+      "hash": "62d22e148214de1bf155fad2008a986760379d7ccf47ce306e4464020a44b02b",
+      "mod_time": "2026-05-24T19:36:43Z"
+    },
+    {
+      "path": "src/assets/workImage/Dev5.webp",
+      "hash": "672876a1f55e2c51a0f4ae97c529f4dcec3fb277f3e8ae35bede660741c04098",
+      "mod_time": "2026-05-24T19:36:44Z"
+    },
+    {
+      "path": "src/components/analytics/TagManager.jsx",
+      "hash": "be42ccbe3d1e0f439ae0468a42b71c3b5b5aa6b8074983f20c487bf39741cc2b",
+      "mod_time": "2026-09-29T13:38:14Z"
+    },
+    {
+      "path": "src/components/sections/FinalCTA/FinalCTA.jsx",
+      "hash": "cfcb15e7fc4897e07935445465e7f11369ce91ae5355f768612bd056d43737d8",
+      "mod_time": "2026-09-29T16:17:45Z"
+    },
+    {
+      "path": "src/components/sections/OurProcess/visuals/index.js",
+      "hash": "36f1b0998a85bbda00fc29ac2311b4a9215be5f2d6a435d4e3cab64facd58991",
+      "mod_time": "2026-08-24T16:44:42Z"
+    },
+    {
+      "path": "src/assets/image/dev1.webp",
+      "hash": "f9fa22a2e09a32554a7bd3978915b3a8eafc300f7b25abe557e568eda0a38469",
+      "mod_time": "2026-05-24T19:36:42Z"
+    },
+    {
+      "path": "src/components/DeferredSection.jsx",
+      "hash": "d0e5d7a56456025e817085da6b37c82c81f4b7c12b974f912c28bd5281b4ee28",
+      "mod_time": "2026-09-29T15:47:43Z"
+    },
+    {
+      "path": "src/components/sections/Services/Service.jsx",
+      "hash": "112f93323bf182b4c06506dfee695de6db6623b037d9ead8a8625e39cc2d5f2b",
+      "mod_time": "2026-10-02T19:36:37Z"
+    },
+    {
+      "path": "src/components/sections/Testimonials/Testimonials.jsx",
+      "hash": "59033adb72d936ee1254f0747ef953d16bc16f31aba17a6b6213dbe238567c92",
+      "mod_time": "2026-09-29T15:19:04Z"
+    },
+    {
+      "path": "src/data/motion.js",
+      "hash": "adfc53bad417f4544b8492e759fa8efed436d2c87d221d0af11ceb6f95a7ba1c",
+      "mod_time": "2026-07-30T21:48:33Z"
+    },
+    {
+      "path": "src/assets/client/jasbin.webp",
+      "hash": "f136ed4f20d1df0fc2498a260de0c2ad969d67cd8041a4bc8342f08acbeda555",
+      "mod_time": "2026-05-24T19:36:41Z"
+    },
+    {
+      "path": "src/assets/client/meni.svg",
+      "hash": "1d57872f7575650a132c05c3a381d7736c50001cad30c3100530a4e424b489bc",
+      "mod_time": "2026-05-24T19:36:41Z"
+    },
+    {
+      "path": "src/assets/image/large-quote.webp",
+      "hash": "ca2509af39f0bba84ffec012e4f6e994ac92e5383ee55dfe12d85790010e08a3",
+      "mod_time": "2026-05-24T19:36:42Z"
+    },
+    {
+      "path": "src/assets/image/ya logo circle 512x 512.webp",
+      "hash": "979b47b84169a4fab6158c8252edcab370dfe2c40704d70a01e74fb8cfef275d",
+      "mod_time": "2026-05-24T19:36:42Z"
+    },
+    {
+      "path": "src/components/layout/Navbar/scrollToSection.js",
+      "hash": "44d6dba3a76e796d3af1b5d7f93c88d99b04e5f3e2f02fb0c1e0f5327901cb7e",
+      "mod_time": "2026-08-15T08:25:58Z"
+    },
+    {
+      "path": "src/assets/coursesImage/node.webp",
+      "hash": "91f14bfcd53bac6c0d5a3b07365423532ef0bd5c523e68967ffe650a05cb0e65",
+      "mod_time": "2026-05-24T19:36:42Z"
+    },
+    {
+      "path": "src/assets/image/about-image-4.webp",
+      "hash": "1bf2d19875cad2818cfb5a2aef5dd2155d9dd08c38812830c9aa4e8195d9f8e4",
+      "mod_time": "2026-05-24T19:36:42Z"
+    },
+    {
+      "path": "src/assets/student/Arijit_Paul.webp",
+      "hash": "007fb32c4bbb17352d104ccb6f6c8663a8bbc5b490827e13f87464bd288e4893",
+      "mod_time": "2026-05-24T19:36:43Z"
+    },
+    {
+      "path": "src/data/config/serviceSection.json",
+      "hash": "1d33624358ae9fc75610c9b4b5f82137236d9848876bb49e65efa42627909d9e",
+      "mod_time": "2026-07-30T21:43:55Z"
+    },
+    {
+      "path": "src/assets/clientLogo/iwls2.webp",
+      "hash": "42116466755d4cd0890fb1cba985bea18e562bcc674142ea2d4929f374dee609",
+      "mod_time": "2026-05-24T19:36:42Z"
+    },
+    {
+      "path": "src/assets/servicesImage/Custom_app_development.webp",
+      "hash": "c3bf14e0cdd11359b771e46cf9fb2045d1c611c1cbdb02c86c111b032d023f9a",
+      "mod_time": "2026-05-24T19:36:43Z"
+    },
+    {
+      "path": "src/assets/student/rishikesh.webp",
+      "hash": "434b55ecf0fc22e3c98a32f6d9d4eddb72e836cbb6749df815749e3b4169e1d7",
+      "mod_time": "2026-05-24T19:36:43Z"
+    },
+    {
+      "path": "src/assets/client/bibaswan.svg",
+      "hash": "62129172b89bb9a04e6c3e1fa2265c2ded6642b23aa0d194a8dc3a94968ca553",
+      "mod_time": "2026-05-24T19:36:41Z"
+    },
+    {
+      "path": "src/assets/coursesImage/selenium.webp",
+      "hash": "a0a64cc8ccbdc03e28334cc7c7cf45884b772e5da6bb8ba89b9aac55729ac376",
+      "mod_time": "2026-05-24T19:36:42Z"
+    },
+    {
+      "path": "src/components/sections/FinalCTA/finalCta.css",
+      "hash": "cd8b4cf1b2985a44e60541943b9165b33d88827637f5e6c5d41e0b78037c3915",
+      "mod_time": "2026-09-29T16:17:45Z"
+    },
+    {
+      "path": "src/data/content/faq.json",
+      "hash": "9669d72370e57268652f0d2a5b45b9a2e2e93518a226706ed59a8cc12257dd31",
+      "mod_time": "2026-08-01T20:16:38Z"
+    },
+    {
+      "path": "README.md",
+      "hash": "24ff135b16affa6fc1c5fe5cb8248b76a175ecdd1d6c443b148ba536cd14727a",
+      "mod_time": "2026-08-31T21:43:31Z"
+    },
+    {
+      "path": "src/app/apple-icon.png",
+      "hash": "777a43ff95ff3af2dc24c2be28a48160725f33f6ad6ca7187ac3da1d40122ed9",
+      "mod_time": "2026-08-16T21:28:31Z"
+    },
+    {
+      "path": "src/assets/client/patrick.webp",
+      "hash": "686e15234f8c8cd22ed4c66310ffc04463bfb0e6036314940cb38ae6a498b8d0",
+      "mod_time": "2026-05-24T19:36:41Z"
+    },
+    {
+      "path": "src/assets/servicesImage/Custom_software_design.webp",
+      "hash": "b89f8043c54f88c6bf4a15ec6205f5a381f7617f5ddd375f788a631505b5890d",
+      "mod_time": "2026-05-24T19:36:43Z"
+    },
+    {
+      "path": "src/assets/student/Dipta_Karar.webp",
+      "hash": "de55bd6b403ee3e303e617c2ef5f7c59df6c8b346625f700b03cc5738823ed4f",
+      "mod_time": "2026-05-24T19:36:43Z"
+    },
+    {
+      "path": "src/components/sections/OurProcess/visuals/ScaleVisual.jsx",
+      "hash": "86762bda8db16164cab347da51233d2c34f96fd3cbd2e5d8277370020c30b6da",
+      "mod_time": "2026-08-24T17:01:12Z"
+    },
+    {
+      "path": "src/assets/coursesImage/mongo.webp",
+      "hash": "372f01f8f096dd1ece3bbc8ba1ba600a770d1a5fe0cfd8b3324ea2e3a9bb4406",
+      "mod_time": "2026-05-24T19:36:42Z"
+    },
+    {
+      "path": "src/assets/workImage/Dev3.webp",
+      "hash": "f1bd7acbf351833a93404bb6908221e1f745f9c066a256277aba2fd29b0b9e79",
+      "mod_time": "2026-05-24T19:36:44Z"
+    },
+    {
+      "path": "src/components/sections/ConsultationCTA/ConsultationCTA.jsx",
+      "hash": "3a8aa8378ce8e5779aab9e0753b6cd9cee605b2564ae40f61f505648a6776d1b",
+      "mod_time": "2026-09-29T14:16:26Z"
+    },
+    {
+      "path": "src/components/sections/ConsultationCTA/consultationCta.css",
+      "hash": "a0c7c17d040f7d955b8abd383768b497a8a7ceb6a73850a0f6e99457dfdf79a3",
+      "mod_time": "2026-07-18T20:28:59Z"
+    },
+    {
+      "path": "package-lock.json",
+      "hash": "e0aba0bdf5273bd0f988e86d21be43d96da479e1a7bfb51d8e398000eb7307de",
+      "mod_time": "2026-07-24T08:08:42Z"
+    },
+    {
+      "path": "src/components/sections/OurProcess/ourProcess.css",
+      "hash": "259c6537cca5a576c50469ec71a7a447f4c08bfd0fd8cb81b419e28007c3c067",
+      "mod_time": "2026-08-24T16:49:32Z"
+    },
+    {
+      "path": "src/components/sections/OurProcess/visuals/PlanVisual.jsx",
+      "hash": "e6156962f8b282d21d551689f79e9afa9991217bd72b6d5f7de5fa7231fb808e",
+      "mod_time": "2026-08-24T17:02:28Z"
+    },
+    {
+      "path": "src/assets/coursesImage/JavaScript-logo.webp",
+      "hash": "4a50499601ee5f3e2e975e04d9f421816ae3bb0d46cef920fd16d93994d56924",
+      "mod_time": "2026-05-24T19:36:42Z"
+    },
+    {
+      "path": "src/assets/servicesImage/Magazine_cover_design.webp",
+      "hash": "7e35b534fda1432c4e40871740d90a8856ef9c60587e4177e40a7eaec20a4e66",
+      "mod_time": "2026-05-24T19:36:43Z"
+    },
+    {
+      "path": "src/assets/servicesImage/Other_forms_of_marketing.webp",
+      "hash": "324fe3c8fc4beb28345de958b4c56c1349cd3cd4289a837cfc2a2659f5fea605",
+      "mod_time": "2026-05-24T19:36:43Z"
+    },
+    {
+      "path": "src/assets/client/deepak.svg",
+      "hash": "8c9ccc2bfc80e5ac6f5e45bc9be84763ef3c0a765212286555b5284cd1314e34",
+      "mod_time": "2026-05-24T19:36:41Z"
+    },
+    {
+      "path": "src/assets/coursesImage/React_(web_framework)-Logo.wine.webp",
+      "hash": "1203e5db1314c9c1ed97cdf8bc175be2202559d0f5f79faae8937b3db793a818",
+      "mod_time": "2026-05-24T19:36:42Z"
+    },
+    {
+      "path": "src/assets/coursesImage/next.webp",
+      "hash": "c203c8bc9363f850829bdc523025e005bdeac09a76f339035102f3e0998be088",
+      "mod_time": "2026-05-24T19:36:42Z"
+    },
+    {
+      "path": "src/components/layout/MotionProvider/MotionProvider.jsx",
+      "hash": "450fe41b43ecc60b0f7832b28f567d3956012ed9e55747f4c34077d90c3aefbf",
+      "mod_time": "2026-07-24T08:24:58Z"
+    },
+    {
+      "path": "src/components/ui/Modal/Modal.jsx",
+      "hash": "5317bdb050dea6c83b278db12137f90ce7fbc51ea923a1cf46c0445a3fe7a867",
+      "mod_time": "2026-08-31T21:36:09Z"
+    },
+    {
       "path": "src/data/config/caseStudiesTheme.json",
       "hash": "91f471bca6bbcc5dd20d7c7227cb196f70deab3b5726e367f24515a587fe67c1",
       "mod_time": "2026-08-28T20:00:23Z"
     },
     {
-      "path": "src/data/mainServices.js",
-      "hash": "af184636cbb87e8f36547a83b7e93ff79f81f0dccacfe99a6bab79d13c84d7b7",
-      "mod_time": "2026-07-30T21:20:29Z"
+      "path": "src/data/config/testimonialsTheme.json",
+      "hash": "3093d5662d48c23cff904f304475abe28ad5d38840b3cae177414f67ad503813",
+      "mod_time": "2026-07-30T21:21:56Z"
     },
     {
-      "path": "src/data/notFound.js",
-      "hash": "ab6142e230265fb7509e1457fe5966dbfff39decb6a667ebaccc02c18ce9d422",
-      "mod_time": "2026-08-13T16:57:10Z"
+      "path": "src/data/content/services.json",
+      "hash": "4531715ad2087934beb33c7667f61d6c52d510b3ac54e68916a6a023dbd9c62e",
+      "mod_time": "2026-09-01T15:50:47Z"
+    },
+    {
+      "path": "src/assets/client/petro.svg",
+      "hash": "9236c34cedc26cec92b5dd209d3ff831e41a425c942296bc83bf0244e0ed06fc",
+      "mod_time": "2026-05-24T19:36:41Z"
+    },
+    {
+      "path": "src/data/nav.js",
+      "hash": "8ae462baf7bf2e7e2f894cdb5fd0c30aa79a7dba544b80a4591701fc6e531e68",
+      "mod_time": "2026-08-05T14:14:20Z"
+    },
+    {
+      "path": "src/components/sections/OurProcess/README.md",
+      "hash": "08b10e9815bef4c5785e58df72602d5792c03883f35ba10520a6ff0af95f7720",
+      "mod_time": "2026-08-24T16:50:17Z"
+    },
+    {
+      "path": "src/components/sections/WhyChoose/WhyChoose.module.css",
+      "hash": "e600048c6187737cb9d507c289feb2af154f8eb262ac7632c3f5af6d20d6cbb4",
+      "mod_time": "2026-07-30T21:52:35Z"
+    },
+    {
+      "path": "src/components/ui/Button/button.css",
+      "hash": "5bf6f86e96bb60cd0d3611c93d96f703846205a6db33ef9a1dcc543424ab2824",
+      "mod_time": "2026-07-16T07:57:55Z"
+    },
+    {
+      "path": "src/data/content/nav.json",
+      "hash": "97ec510e3d95112e2bab61a430cc217600635336c055966af063e7f63343248e",
+      "mod_time": "2026-09-29T14:12:37Z"
+    },
+    {
+      "path": "src/assets/coursesImage/next (1).webp",
+      "hash": "cc78d08cdd41d5de29d62ee81474a94c9480ab36455e9fc3e4a4ae343d0c77aa",
+      "mod_time": "2026-05-24T19:36:42Z"
+    },
+    {
+      "path": "src/assets/workImage/Marketing3.webp",
+      "hash": "ab5367d14fd0656424a5545b3dda83bd7fb1ed9f3bd9986ee2d56af1d6ed9db9",
+      "mod_time": "2026-05-24T19:36:44Z"
+    },
+    {
+      "path": "src/components/index.js",
+      "hash": "725a39bf623f60035b7b04cc1bf9e5c9e7d813c5774528169f2127ea9eb4bc04",
+      "mod_time": "2026-07-18T21:13:18Z"
+    },
+    {
+      "path": "src/data/footer.js",
+      "hash": "f17e492aed96e83ab4bc03397e6c141407bcec1f23d3587300f43bc5424d1a14",
+      "mod_time": "2026-07-30T21:20:53Z"
+    },
+    {
+      "path": "public/sitemap.xml",
+      "hash": "4f3f15f806a4f941a1318a88c5986c37dd1b0b2aeee30d30d4180484e3307158",
+      "mod_time": "2026-09-25T18:57:51Z"
+    },
+    {
+      "path": "src/app/(site)/layout.js",
+      "hash": "87151f002a2db30fda3ca675905978ff0b608da87e20af4078705e7db36d4294",
+      "mod_time": "2026-08-11T20:15:42Z"
+    },
+    {
+      "path": "src/assets/coursesImage/javaimg.webp",
+      "hash": "507ad8bd37ee25bda48987041f13e1f65d9979c768354f0673603f0ca7d2e808",
+      "mod_time": "2026-05-24T19:36:42Z"
+    },
+    {
+      "path": "src/assets/coursesImage/spring-2.webp",
+      "hash": "0941c225140a5abf67422ddadef924a846a5b3f95259581234ea9c17d9974ecc",
+      "mod_time": "2026-05-24T19:36:42Z"
+    },
+    {
+      "path": "src/components/sections/MainServices/MainServices.jsx",
+      "hash": "c40ebbb72e4912093a754e669cd4f1020e75dad626a71b8746318d493ceb94fa",
+      "mod_time": "2026-07-30T21:42:00Z"
+    },
+    {
+      "path": "src/data/consultationCta.js",
+      "hash": "82bf7e44dfb6bd637a528622bfd49694519c7b4c739155ed365e85cf0bbf0dab",
+      "mod_time": "2026-07-30T21:20:41Z"
+    },
+    {
+      "path": "public/.htaccess",
+      "hash": "daeac42aaa4953e8091bea2310f81bd9149c8c7255b90a9453c48dea03772fd3",
+      "mod_time": "2026-08-15T09:38:04Z"
+    },
+    {
+      "path": "src/data/finalCta.js",
+      "hash": "53a27a7f2da8763dbe269fc6296f39de3537c102cbf2703dbe9f65d319cb9d43",
+      "mod_time": "2026-09-29T15:45:52Z"
     },
     {
       "path": "src/data/whyChoose.js",
@@ -312,104 +1037,69 @@
       "mod_time": "2026-05-24T19:36:42Z"
     },
     {
-      "path": "src/assets/servicesImage/AI_development_and_integrations.webp",
-      "hash": "71cfc2f29ab4d4c868d2cc437c202d3f5eefd654b75f67d16f93e75dc1c65a1e",
+      "path": "src/components/ui/FlipCard/FlipCard.jsx",
+      "hash": "4a63a869fdabc0246358fd0f512b8427cd551585e966100cd584ccb06ec72478",
+      "mod_time": "2026-10-01T14:45:16Z"
+    },
+    {
+      "path": "src/data/testimonials.js",
+      "hash": "437b5729325b89d00fbbf1290a83e05ad4a2b12325e3554dde9a0b631ea7be50",
+      "mod_time": "2026-07-30T21:22:12Z"
+    },
+    {
+      "path": "src/assets/student/bristi.webp",
+      "hash": "c87ba939f8058c6370ebac5b3af1d9b4c1f46e75b995af3e7600113b93f36a4b",
       "mod_time": "2026-05-24T19:36:43Z"
     },
     {
-      "path": "src/assets/servicesImage/LinkedIn_Marketing.webp",
-      "hash": "84e4352f7b8f08cc43c0a70329d86d0f1af2694ee0e4b27ac9f27382577c38c0",
-      "mod_time": "2026-05-24T19:36:43Z"
+      "path": "src/components/ui/SplashCursor/SplashCursor.jsx",
+      "hash": "50bc20804ee04c7ba3120b1dc1e258d4602e8645e7ab907861dcfd854e4eacf4",
+      "mod_time": "2026-08-05T14:58:35Z"
     },
     {
-      "path": "src/assets/student/Rishikesh_Kumar_Formal.webp",
-      "hash": "55c83909bc26c9e391d5cbb2699e83970706fb5c7f5893baa6a57dc7abaa59b1",
-      "mod_time": "2026-05-24T19:36:43Z"
+      "path": "src/data/content/comingSoon.json",
+      "hash": "850e50396e4dd8494045896ba918d75b2bb08859d9a1ef1f6c522147609f903e",
+      "mod_time": "2026-08-13T20:31:45Z"
     },
     {
-      "path": "src/assets/student/nibedita.webp",
-      "hash": "99fa80d12ee19fc5a7e9732cf15604e9a668c2580b60310b9b9db6e3113b5b19",
-      "mod_time": "2026-05-24T19:36:43Z"
+      "path": "src/data/content/ourProcess.json",
+      "hash": "4b776edf3690720cf6c3eb8daeef4e5f8142c2d1e05be436f91668cb17f1fe59",
+      "mod_time": "2026-08-24T16:41:37Z"
     },
     {
-      "path": "src/assets/student/rishikesh.webp",
-      "hash": "434b55ecf0fc22e3c98a32f6d9d4eddb72e836cbb6749df815749e3b4169e1d7",
-      "mod_time": "2026-05-24T19:36:43Z"
-    },
-    {
-      "path": "src/assets/workImage/Design3.webp",
-      "hash": "7ac91d14477df53749bea3c2606d9dec46b425dbecedf819c11c44de443a0c98",
-      "mod_time": "2026-05-24T19:36:44Z"
-    },
-    {
-      "path": "src/data/faq.js",
-      "hash": "074054c24c45a7c49bdee8890e2930dd7e4ed2b2d7473a4b31cea0421c817e30",
-      "mod_time": "2026-07-30T21:28:26Z"
-    },
-    {
-      "path": "src/assets/coursesImage/computer.webp",
-      "hash": "e3102203c6a552802b08ff910a19713fa5fa6c4d6257eedf1d4a7f26d086974b",
-      "mod_time": "2026-05-24T19:36:42Z"
-    },
-    {
-      "path": "src/components/layout/index.js",
-      "hash": "c655f40138d09c42ebe80b28959414c3d3f54770eb21deaad8cb77ef0e68fdac",
-      "mod_time": "2026-07-28T19:08:13Z"
-    },
-    {
-      "path": "public/robots.txt",
-      "hash": "76b71b82a1e09bf7adce75e398bde15c8ddc6049e5a1081a49a406f6f8964603",
-      "mod_time": "2026-09-25T18:57:41Z"
-    },
-    {
-      "path": "src/assets/client/jaclyn.webp",
-      "hash": "69c454459fd0dc89b42a751cb58790cefc4474afc7140e7f971c8fe64d1642a6",
+      "path": "src/assets/client/jaclyn.svg",
+      "hash": "7506fae2c4312aba8de3b3e96d2cb4f33931fba8a3f59470f3021bb2fad6e811",
       "mod_time": "2026-05-24T19:36:41Z"
     },
     {
-      "path": "src/assets/coursesImage/python.webp",
-      "hash": "db42e5138813fbff3de4f84d012287bac13d8197ef02a07d7995181a7485e036",
-      "mod_time": "2026-05-24T19:36:42Z"
+      "path": "src/assets/servicesImage/Saas CRM AUTOMATIONS.webp",
+      "hash": "5a0144dfb441d82c259bd533a749f848f5e13c9fd62b31ec14ba55630757d86a",
+      "mod_time": "2026-05-24T19:36:43Z"
     },
     {
-      "path": "src/components/ui/MagneticButton/magneticButton.css",
-      "hash": "5d0a114ad1fc82c29e6404ccf6903c8ad0ee008d816b0917b0bef99f80fce195",
-      "mod_time": "2026-08-31T21:41:01Z"
+      "path": "src/data/services.js",
+      "hash": "82811fc345dda8efe2443b770df7b8d8ee0957fe8750bda96978a3daf1c8f645",
+      "mod_time": "2026-07-30T21:45:54Z"
     },
     {
-      "path": "src/assets/gif/student.webp",
-      "hash": "ef11439886c7027614f46ed70b2f2331cde3514502889023e79e9e5bc820fc38",
-      "mod_time": "2026-05-24T19:36:42Z"
+      "path": "postcss.config.mjs",
+      "hash": "c1b55464542f7f12f1b810d9d02d72d0fb4f0a26debf0556e3fe8d73b187bdb1",
+      "mod_time": "2026-05-24T19:36:41Z"
     },
     {
-      "path": "src/components/sections/Hero/Hero.jsx",
-      "hash": "ae76bb7fee2a2bb9809155023bba21e2adb372f1fe27b52965a8487c35ac6429",
-      "mod_time": "2026-08-16T21:12:27Z"
+      "path": "src/assets/client/bibaswan.webp",
+      "hash": "0aa9c5c0ddead750ed4e6324a3253c0c728ad6c362052a4e4a35d2f78fac091e",
+      "mod_time": "2026-05-24T19:36:41Z"
     },
     {
-      "path": "src/components/sections/OurProcess/visuals/VisualFrame.jsx",
-      "hash": "d976238c983fd8f4be500052245f8291f2847d6efe4ffd1598bd16a191753125",
-      "mod_time": "2026-08-24T16:42:05Z"
+      "path": "src/assets/servicesImage/Facebook_marketing.webp",
+      "hash": "f6bf2ad489c3ee87eac76024b321ae98f475f6ae9df891831ed4046584f633d5",
+      "mod_time": "2026-05-24T19:36:43Z"
     },
     {
-      "path": "src/components/sections/FinalCTA/finalCta.css",
-      "hash": "d3ac9acbc9d4852e81bda73ffc007d4b67363f4eb6a004d2f5e9dc51cc416308",
-      "mod_time": "2026-09-29T15:56:29Z"
-    },
-    {
-      "path": "src/components/sections/OurProcess/visuals/CloseVisual.jsx",
-      "hash": "003f0ac1098e865327f814a9e88207ed2c9d0d178e6fec6af2aede2a04c5552a",
-      "mod_time": "2026-08-24T17:01:13Z"
-    },
-    {
-      "path": "src/data/config/serviceSection.json",
-      "hash": "1d33624358ae9fc75610c9b4b5f82137236d9848876bb49e65efa42627909d9e",
-      "mod_time": "2026-07-30T21:43:55Z"
-    },
-    {
-      "path": "src/assets/coursesImage/React_(web_framework)-Logo.wine.webp",
-      "hash": "1203e5db1314c9c1ed97cdf8bc175be2202559d0f5f79faae8937b3db793a818",
-      "mod_time": "2026-05-24T19:36:42Z"
+      "path": "src/assets/servicesImage/Marketing_and_content_strategy_consultancy.webp",
+      "hash": "96c3d3b45b85199b884341f01d01255224cc6e18d0e5bcb49124f3a2bcee3bec",
+      "mod_time": "2026-05-24T19:36:43Z"
     },
     {
       "path": "src/assets/student/Dipayan_Halder.webp",
@@ -417,348 +1107,48 @@
       "mod_time": "2026-05-24T19:36:43Z"
     },
     {
-      "path": "src/assets/student/dipayan.svg",
-      "hash": "ed29d1aa88223517c196dcc87cf4867e58c50d96092c07fdc3405eea564cdf32",
-      "mod_time": "2026-05-24T19:36:43Z"
+      "path": "src/assets/workImage/Marketing2.webp",
+      "hash": "c52bb002667c4dc2ce8679ae0120a562939f068e860c8b17957de6e367e04fcf",
+      "mod_time": "2026-05-24T19:36:44Z"
     },
     {
-      "path": "src/components/sections/ComingSoon/ComingSoon.jsx",
-      "hash": "be3ee8238c52feed0c5b75162ca8bc97918cf84f1e618b375c624f54a399a097",
-      "mod_time": "2026-08-13T21:20:16Z"
+      "path": ".gitignore",
+      "hash": "2dfe16941b3afc5866090eaa8750fb0ad25e59f5d23e431ac4eb0063ff39f34b",
+      "mod_time": "2026-08-15T09:40:05Z"
     },
     {
-      "path": "src/components/sections/MainServices/MainServices.jsx",
-      "hash": "c40ebbb72e4912093a754e669cd4f1020e75dad626a71b8746318d493ceb94fa",
-      "mod_time": "2026-07-30T21:42:00Z"
+      "path": "src/assets/client/meni.webp",
+      "hash": "7052a8a52dd9728d4a5183f75cc69d854762437906d6e7c302df873cbea9702c",
+      "mod_time": "2026-05-24T19:36:41Z"
     },
     {
-      "path": "src/components/ui/FlipCard/FlipCard.jsx",
-      "hash": "820763bc950c15976354389ecb571c6ad686c119e83ad955cc1f90a7d58e3e6f",
-      "mod_time": "2026-08-15T08:08:09Z"
+      "path": "src/assets/student/rishikesh_formal.webp",
+      "hash": "d15738ced72e04b897bf6f8425fd58a5b4d63107deeee1ac835b637a44c8dd8d",
+      "mod_time": "2026-05-24T19:36:44Z"
     },
     {
-      "path": "src/components/ui/MagneticButton/MagneticButton.jsx",
-      "hash": "f2792aba72d52400eebc1bafc292bfb7a2446096c73eacb3e875eeed67d70b0f",
-      "mod_time": "2026-08-31T21:41:01Z"
+      "path": "src/components/sections/BrandMark/brandMark.css",
+      "hash": "dd2b30362b84bd7417c161b83263744fc200777e6d9b0d542e2937984f83bc10",
+      "mod_time": "2026-07-30T20:35:49Z"
     },
     {
-      "path": "src/components/ui/SectionCTA/SectionCTA.jsx",
-      "hash": "5cea50e47223a23ae565a9508873fe0980478b2b8e7d90ad8d10a78fd7d65046",
-      "mod_time": "2026-09-29T16:04:37Z"
-    },
-    {
-      "path": "src/assets/servicesImage/Magazine_cover_design.webp",
-      "hash": "7e35b534fda1432c4e40871740d90a8856ef9c60587e4177e40a7eaec20a4e66",
-      "mod_time": "2026-05-24T19:36:43Z"
-    },
-    {
-      "path": "src/assets/student/rishikesh_formal.svg",
-      "hash": "2c7d0574be12461f7cf795bf8b9d1dd39b184d06a7b69d61506a949da01b9127",
-      "mod_time": "2026-05-24T19:36:43Z"
-    },
-    {
-      "path": "src/components/ui/index.js",
-      "hash": "9bd394eef1a8f66c94e46e3495ee5356dc61e8d84e2b636782ad686d40c8ae90",
+      "path": "src/components/sections/OurProcess/OurProcess.jsx",
+      "hash": "30614aaa003fd252e86f55272517eb58f3b2ddfb82c505e3677790ff642e3414",
       "mod_time": "2026-09-29T15:19:04Z"
     },
     {
-      "path": "src/assets/client/deepak.webp",
-      "hash": "716b8526b75bd7056772535fc838afda37513f7cc7f9dcab7d2c5916db488d7d",
-      "mod_time": "2026-05-24T19:36:41Z"
+      "path": "src/components/ui/SectionDivider/sectionDivider.css",
+      "hash": "7433090d122cc942f95babd5ce98808ff32f6ce436a07ffabe140bd1b645371c",
+      "mod_time": "2026-07-23T22:21:41Z"
     },
     {
-      "path": "src/assets/coursesImage/JavaScript-logo.webp",
-      "hash": "4a50499601ee5f3e2e975e04d9f421816ae3bb0d46cef920fd16d93994d56924",
+      "path": "src/assets/coursesImage/computer.webp",
+      "hash": "e3102203c6a552802b08ff910a19713fa5fa6c4d6257eedf1d4a7f26d086974b",
       "mod_time": "2026-05-24T19:36:42Z"
     },
     {
-      "path": "src/assets/coursesImage/spring.webp",
-      "hash": "04c04415f46b6d58f43c8129764df36b961feea92b096fff651f0433db4da1fb",
-      "mod_time": "2026-05-24T19:36:42Z"
-    },
-    {
-      "path": "src/components/sections/NotFound/NotFound.jsx",
-      "hash": "b6fc630894d99cfd26cccfc40c8369a8bd0e0f05205347c23f2e3ce0d5969e19",
-      "mod_time": "2026-08-13T17:09:14Z"
-    },
-    {
-      "path": "src/data/config/ourProcessParticles.json",
-      "hash": "34a4ffcf3623f026ea16af5b5333643af3debe6bf7c39e48bca1b46338124989",
-      "mod_time": "2026-07-30T21:18:24Z"
-    },
-    {
-      "path": "src/assets/image/about-image-3.webp",
-      "hash": "591493a2b0557afa0823de766daa1ffba4f9fa18033ded2480151bcd2622b93b",
-      "mod_time": "2026-05-24T19:36:42Z"
-    },
-    {
-      "path": "src/components/sections/OurProcess/README.md",
-      "hash": "08b10e9815bef4c5785e58df72602d5792c03883f35ba10520a6ff0af95f7720",
-      "mod_time": "2026-08-24T16:50:17Z"
-    },
-    {
-      "path": "src/components/ui/SectionHeader/sectionHeader.css",
-      "hash": "d79acaed0a5a508d9ffd76ce60fcfa519a977efc03eff552617b5fd8fd2cb4f5",
-      "mod_time": "2026-09-29T14:16:08Z"
-    },
-    {
-      "path": "src/app/icon.png",
-      "hash": "0e676adc0d52194b14bf96f19d4dd1d1ac48457664ef3ac8c98511098981be09",
-      "mod_time": "2026-09-29T13:35:12Z"
-    },
-    {
-      "path": "src/assets/client/bibaswan.svg",
-      "hash": "62129172b89bb9a04e6c3e1fa2265c2ded6642b23aa0d194a8dc3a94968ca553",
-      "mod_time": "2026-05-24T19:36:41Z"
-    },
-    {
-      "path": "src/components/sections/OurProcess/visuals/FunnelVisual.jsx",
-      "hash": "6e567ae57f1247517c4a9c05ea93177587ff5ac013320042f8493d3bb438028a",
-      "mod_time": "2026-08-24T17:01:11Z"
-    },
-    {
-      "path": "src/components/ui/SplashCursor/splashCursor.css",
-      "hash": "b5df11cda6e0463cf4d111c91977948358398d809490a40f912c8e978ddce73a",
-      "mod_time": "2026-08-05T15:12:00Z"
-    },
-    {
-      "path": "src/data/content/footer.json",
-      "hash": "f9ca1cc7270b5bdc683950e48732f5bba18411354a79696ea36d217c4b326c40",
-      "mod_time": "2026-08-16T21:10:13Z"
-    },
-    {
-      "path": "src/app/layout.js",
-      "hash": "d124848441f7a26b3490024cec9aba3a0aef7fa3e604245a33ca7c5ecc6bae5e",
-      "mod_time": "2026-09-29T13:38:42Z"
-    },
-    {
-      "path": "src/assets/coursesImage/selenium.webp",
-      "hash": "a0a64cc8ccbdc03e28334cc7c7cf45884b772e5da6bb8ba89b9aac55729ac376",
-      "mod_time": "2026-05-24T19:36:42Z"
-    },
-    {
-      "path": "src/data/comingSoon.js",
-      "hash": "bc3a27795841e3f07b52e50aff04097d94e3702c3ec6d8726cee1ecc16ab8594",
-      "mod_time": "2026-08-13T20:31:55Z"
-    },
-    {
-      "path": "src/data/content/brandMark.json",
-      "hash": "ec8bed8f93991aea3fce7c31a6908576df3df762330018692e0a8d29ac757981",
-      "mod_time": "2026-08-02T08:06:38Z"
-    },
-    {
-      "path": "public/downloads/README.md",
-      "hash": "4181c784a699b994cb2d3fa2117fee5ef317deb7dd5cdd46d0fb1cbacb1259e4",
-      "mod_time": "2026-09-29T14:16:38Z"
-    },
-    {
-      "path": "src/assets/coursesImage/mongo.webp",
-      "hash": "372f01f8f096dd1ece3bbc8ba1ba600a770d1a5fe0cfd8b3324ea2e3a9bb4406",
-      "mod_time": "2026-05-24T19:36:42Z"
-    },
-    {
-      "path": "src/assets/image/quote.webp",
-      "hash": "3f350dab8966fd37fee1975080c6859f43f46740e5c1fcc48770411af39efc5f",
-      "mod_time": "2026-05-24T19:36:42Z"
-    },
-    {
-      "path": "src/assets/image/service-wire.webp",
-      "hash": "cd0ef5a19523ea503ec55f43e1e1a4a6767d8f0b6cfc50599bc4182e5fe11c1a",
-      "mod_time": "2026-09-29T13:34:59Z"
-    },
-    {
-      "path": "src/assets/servicesImage/Instagram_marketing.webp",
-      "hash": "1f49a27c68c15252c330840c61ff2c1883477feb23a2e0ba2893f856bba5bc8a",
-      "mod_time": "2026-05-24T19:36:43Z"
-    },
-    {
-      "path": "src/components/ui/Container/Container.jsx",
-      "hash": "9a6ef8acc42affd7d95b1c72171bc0c6c47b2404e363161f4920c8bcab9b60a3",
-      "mod_time": "2026-07-18T21:11:52Z"
-    },
-    {
-      "path": "src/data/json/testimonials.json",
-      "hash": "025fca8119724540bdd91eb0ca1cf4cd82d0e168acf9fcd5de699088b48b8556",
-      "mod_time": "2026-08-15T10:08:31Z"
-    },
-    {
-      "path": "src/data/motion.js",
-      "hash": "adfc53bad417f4544b8492e759fa8efed436d2c87d221d0af11ceb6f95a7ba1c",
-      "mod_time": "2026-07-30T21:48:33Z"
-    },
-    {
-      "path": "src/assets/client/deepak.svg",
-      "hash": "8c9ccc2bfc80e5ac6f5e45bc9be84763ef3c0a765212286555b5284cd1314e34",
-      "mod_time": "2026-05-24T19:36:41Z"
-    },
-    {
-      "path": "src/assets/image/about-image-2.webp",
-      "hash": "0e6ebc8577cb65cbeb6bec6fe492354381fcb707d371904218596bbd995f2569",
-      "mod_time": "2026-05-24T19:36:42Z"
-    },
-    {
-      "path": "src/components/sections/WhyChoose/WhyChoose.module.css",
-      "hash": "e600048c6187737cb9d507c289feb2af154f8eb262ac7632c3f5af6d20d6cbb4",
-      "mod_time": "2026-07-30T21:52:35Z"
-    },
-    {
-      "path": "src/assets/clientLogo/iwallp.webp",
-      "hash": "1579f27b3fff6ead8481c482e4315ae909948312afd7737d23afc0fbefb0f414",
-      "mod_time": "2026-05-24T19:36:42Z"
-    },
-    {
-      "path": "src/components/sections/Faq/ScrollBeamDivider.jsx",
-      "hash": "baec03cf361beffa0a909ea9ac9e82406dcbafa1b6168fdaabed80ca5965ae49",
-      "mod_time": "2026-07-27T14:52:40Z"
-    },
-    {
-      "path": "src/data/content/caseStudies.json",
-      "hash": "8a2c8b0c9f800d24caab4708dac3f214e4be409f3b77b13e69a7d51d824bd3bb",
-      "mod_time": "2026-08-28T19:35:46Z"
-    },
-    {
-      "path": "src/assets/workImage/Marketing4.webp",
-      "hash": "b840981f9c109c1447bf3f2c1faa8c98898b948f22f91c971d612b42002c2e07",
-      "mod_time": "2026-05-24T19:36:44Z"
-    },
-    {
-      "path": "src/data/config/motion.json",
-      "hash": "a4bf393e990a04b91042605fcb1fcc1f5a9cdfdc10b37e57d1fd719ba8e5360e",
-      "mod_time": "2026-07-30T21:43:55Z"
-    },
-    {
-      "path": "src/data/content/nav.json",
-      "hash": "97ec510e3d95112e2bab61a430cc217600635336c055966af063e7f63343248e",
-      "mod_time": "2026-09-29T14:12:37Z"
-    },
-    {
-      "path": "src/data/index.js",
-      "hash": "c18cc3a97c62bf8382b54090474653e4a395b0746133ef24fd4b8aa0f5abe918",
-      "mod_time": "2026-09-29T15:47:43Z"
-    },
-    {
-      "path": "src/data/json/about.json",
-      "hash": "7a1baa8ade98480c157f5f99e7e3910b491faa9dc96e9731fd7636d56d530adb",
-      "mod_time": "2026-08-15T10:08:31Z"
-    },
-    {
-      "path": "src/data/json/courses.json",
-      "hash": "da545fb753b669d218ff0806e9959c19275e0ff44923ba60fee9b499cee1aefa",
-      "mod_time": "2026-08-15T10:08:31Z"
-    },
-    {
-      "path": "src/assets/servicesImage/SaaS_CRM_Automations.webp",
-      "hash": "64cc54ada44649d4756494f4644f3f18c53de18f47e8a5371b16d0a0d92c5e8c",
-      "mod_time": "2026-05-24T19:36:43Z"
-    },
-    {
-      "path": "src/components/sections/OurProcess/visuals/processVisuals.css",
-      "hash": "6e9b87a96add141e2c606cdae739d01aa0f3c3c2b21c2080455e0980fc921817",
-      "mod_time": "2026-08-24T17:03:40Z"
-    },
-    {
-      "path": "src/assets/gif/student.gif",
-      "hash": "abf37be9bd7a9bbf4ffb7933a73b2cda70a7c96828463c9a191e1f1ffa2e7fdb",
-      "mod_time": "2026-05-24T19:36:42Z"
-    },
-    {
-      "path": "src/assets/image/card-3.webp",
-      "hash": "0842eb239b8129b2f23636e6fa3902288542a688f852ad8eafb3aadda9265a86",
-      "mod_time": "2026-05-24T19:36:42Z"
-    },
-    {
-      "path": "src/assets/workImage/Dev1.webp",
-      "hash": "4f144c7e3b5d3eee5d8bbf0246ff22ad4e11fef14f9101869038e4d86a16ec4a",
-      "mod_time": "2026-05-24T19:36:44Z"
-    },
-    {
-      "path": "src/assets/workImage/Marketing3.webp",
-      "hash": "ab5367d14fd0656424a5545b3dda83bd7fb1ed9f3bd9986ee2d56af1d6ed9db9",
-      "mod_time": "2026-05-24T19:36:44Z"
-    },
-    {
-      "path": "src/components/sections/Faq/FaqSection.jsx",
-      "hash": "df93f968be656f61478ad64f3ad9ca5d24da931b77db34f2302b10ab2299319a",
-      "mod_time": "2026-09-29T14:24:36Z"
-    },
-    {
-      "path": "src/components/sections/Services/service.css",
-      "hash": "060c9fdc5e3bab09e2770d7311dd1093b9b906a3f2517e3f6cbd52889111d3a1",
-      "mod_time": "2026-08-31T21:36:36Z"
-    },
-    {
-      "path": "src/data/json/students.json",
-      "hash": "502419e1b6cf3c9c2e48a7995fd87cf8026a1781c2386122959edb99e1b629eb",
-      "mod_time": "2026-08-15T10:08:31Z"
-    },
-    {
-      "path": "src/assets/coursesImage/java.webp",
-      "hash": "d90b690791559ca5bb1be2136fead92a349988a311d4ec590e665fbfdadc9184",
-      "mod_time": "2026-05-24T19:36:42Z"
-    },
-    {
-      "path": "src/assets/student/Brishti_Mahato.webp",
-      "hash": "cc55c535cd0420d7913869bca7c03c9b7e3f886ca85f24fef98edb39d36b7258",
-      "mod_time": "2026-05-24T19:36:43Z"
-    },
-    {
-      "path": "src/data/content/servicesSeo.json",
-      "hash": "8abfeb73589af9c329479749c54606c1bc77ce506314934c5b2036cd8128ee0a",
-      "mod_time": "2026-07-30T21:28:14Z"
-    },
-    {
-      "path": "src/data/hero.js",
-      "hash": "2802ae8a5b7e9ef731b4d34dc57a64e361970381f725f30a6da102e6bdc69da5",
-      "mod_time": "2026-08-15T07:34:40Z"
-    },
-    {
-      "path": "src/data/nav.js",
-      "hash": "8ae462baf7bf2e7e2f894cdb5fd0c30aa79a7dba544b80a4591701fc6e531e68",
-      "mod_time": "2026-08-05T14:14:20Z"
-    },
-    {
-      "path": "src/assets/logo/brandlogo.webp",
-      "hash": "684a571a4c10bab1849b986c6d08a666a514ed0f6a8511430158438ba307db0c",
-      "mod_time": "2026-09-29T13:34:53Z"
-    },
-    {
-      "path": "src/assets/workImage/Design1.webp",
-      "hash": "8b4ba2414273f5eb8cf1447056551f2efbab00eb7153a620ab4caa4b1cf516ec",
-      "mod_time": "2026-05-24T19:36:44Z"
-    },
-    {
-      "path": "src/assets/workImage/Design6.webp",
-      "hash": "8b4e6462c1b0091f5d8683451d951f5a7d31b9507231e4c9263db972c2dc1ccc",
-      "mod_time": "2026-05-24T19:36:44Z"
-    },
-    {
-      "path": "src/components/analytics/TagManager.jsx",
-      "hash": "be42ccbe3d1e0f439ae0468a42b71c3b5b5aa6b8074983f20c487bf39741cc2b",
-      "mod_time": "2026-09-29T13:38:14Z"
-    },
-    {
-      "path": "src/components/sections/MainServices/mainServices.css",
-      "hash": "fff3da45dcbfdc8f437538120825f013565957f54117b8cbd9450dd90e4ff0ce",
-      "mod_time": "2026-07-23T21:48:29Z"
-    },
-    {
-      "path": "src/components/sections/Testimonials/Testimonials.jsx",
-      "hash": "59033adb72d936ee1254f0747ef953d16bc16f31aba17a6b6213dbe238567c92",
-      "mod_time": "2026-09-29T15:19:04Z"
-    },
-    {
-      "path": "public/sitemap.xml",
-      "hash": "4f3f15f806a4f941a1318a88c5986c37dd1b0b2aeee30d30d4180484e3307158",
-      "mod_time": "2026-09-25T18:57:51Z"
-    },
-    {
-      "path": "src/app/(site)/[...slug]/page.jsx",
-      "hash": "badd6059478bb5b2b48705d90ecfabec591ccdd2803a6ab5de99862baeba4745",
-      "mod_time": "2026-08-13T21:29:18Z"
-    },
-    {
-      "path": "src/assets/image/large-quote.webp",
-      "hash": "ca2509af39f0bba84ffec012e4f6e994ac92e5383ee55dfe12d85790010e08a3",
+      "path": "src/assets/coursesImage/react.webp",
+      "hash": "cf623ff88c2bc9f54472760249bee3f2c39b1eb48713565b173424e2bcb1cf50",
       "mod_time": "2026-05-24T19:36:42Z"
     },
     {
@@ -772,94 +1162,19 @@
       "mod_time": "2026-05-24T19:36:43Z"
     },
     {
-      "path": "src/components/layout/Navbar/navbar.css",
-      "hash": "b3af2172266caf76c9b92b52b3639ac35aa1657a8702b0d8e7998481262f395a",
-      "mod_time": "2026-07-24T08:24:58Z"
-    },
-    {
-      "path": "src/assets/student/anuska.webp",
-      "hash": "62d22e148214de1bf155fad2008a986760379d7ccf47ce306e4464020a44b02b",
-      "mod_time": "2026-05-24T19:36:43Z"
-    },
-    {
-      "path": "src/components/sections/OurProcess/visuals/ConsultVisual.jsx",
-      "hash": "3704d98b3ded26ff6ccdad4558f00fa284730aa10711c0cf4b5d3958960792a0",
-      "mod_time": "2026-08-24T16:43:02Z"
-    },
-    {
-      "path": "src/data/config/notFound.json",
-      "hash": "b9e28c5b2bc13355711e89422dc158212d9f87f31b36786c465e99da82c57a4e",
-      "mod_time": "2026-08-13T16:56:57Z"
-    },
-    {
-      "path": "src/components/ui/SectionHeader/SectionHeader.jsx",
-      "hash": "32a58574c769a962ddc9499e516f607adcada036568d7e6c6496b178a5a54f80",
-      "mod_time": "2026-07-24T08:24:58Z"
-    },
-    {
-      "path": "src/data/sectionCta.js",
-      "hash": "297095d9268dbd8dc43fc7ee38e0e247dbcc9f13f7198d9876199a483050a8f0",
-      "mod_time": "2026-09-29T14:13:55Z"
-    },
-    {
-      "path": "src/assets/client/jasbin.webp",
-      "hash": "f136ed4f20d1df0fc2498a260de0c2ad969d67cd8041a4bc8342f08acbeda555",
-      "mod_time": "2026-05-24T19:36:41Z"
-    },
-    {
-      "path": "src/assets/clientLogo/iwls.webp",
-      "hash": "7437deff63def9c5aea5724695bf7a5435ad0bb36eb0ab74cf4682c3b2f46447",
-      "mod_time": "2026-05-24T19:36:42Z"
-    },
-    {
-      "path": "src/assets/image/dev1.webp",
-      "hash": "f9fa22a2e09a32554a7bd3978915b3a8eafc300f7b25abe557e568eda0a38469",
-      "mod_time": "2026-05-24T19:36:42Z"
-    },
-    {
-      "path": "src/components/sections/CaseStudies/CaseStudies.jsx",
-      "hash": "eb45c445bcc387d89b12082e58b01cbd6ccf4c45eb260cf72ae867af242fbf72",
-      "mod_time": "2026-09-29T15:19:04Z"
-    },
-    {
       "path": "src/data/brandMark.js",
       "hash": "7d9acb54a64132bff89f7e7bbbb1d79f0ee33a59071ee2c1ceaa7f04123cf78c",
       "mod_time": "2026-07-30T21:29:17Z"
     },
     {
-      "path": "package.json",
-      "hash": "a04cbad4485a229f553912c82bd2da1303f8e4ba158fd4dfa6a63339255d14eb",
-      "mod_time": "2026-07-24T08:24:58Z"
+      "path": "src/components/ui/SplashCursor/SplashCursorGate.jsx",
+      "hash": "85a5535805b1d1c12d582e9124abfac5a1512f41a46171da48fe88fe1f5a245c",
+      "mod_time": "2026-08-05T20:29:42Z"
     },
     {
-      "path": "src/assets/client/meni.svg",
-      "hash": "1d57872f7575650a132c05c3a381d7736c50001cad30c3100530a4e424b489bc",
-      "mod_time": "2026-05-24T19:36:41Z"
-    },
-    {
-      "path": "src/assets/client/meni.webp",
-      "hash": "7052a8a52dd9728d4a5183f75cc69d854762437906d6e7c302df873cbea9702c",
-      "mod_time": "2026-05-24T19:36:41Z"
-    },
-    {
-      "path": "src/assets/coursesImage/javaimg.webp",
-      "hash": "507ad8bd37ee25bda48987041f13e1f65d9979c768354f0673603f0ca7d2e808",
-      "mod_time": "2026-05-24T19:36:42Z"
-    },
-    {
-      "path": "src/assets/image/ya logo circle 512x 512.webp",
-      "hash": "979b47b84169a4fab6158c8252edcab370dfe2c40704d70a01e74fb8cfef275d",
-      "mod_time": "2026-05-24T19:36:42Z"
-    },
-    {
-      "path": "src/components/index.js",
-      "hash": "725a39bf623f60035b7b04cc1bf9e5c9e7d813c5774528169f2127ea9eb4bc04",
-      "mod_time": "2026-07-18T21:13:18Z"
-    },
-    {
-      "path": "src/components/sections/OurProcess/ourProcess.css",
-      "hash": "259c6537cca5a576c50469ec71a7a447f4c08bfd0fd8cb81b419e28007c3c067",
-      "mod_time": "2026-08-24T16:49:32Z"
+      "path": "src/data/content/mainServices.json",
+      "hash": "8739b4416a4c15393c2613b4816dc70a218984ab659237409d9f2b1682ff8787",
+      "mod_time": "2026-07-30T21:20:04Z"
     },
     {
       "path": "next.config.mjs",
@@ -867,198 +1182,8 @@
       "mod_time": "2026-08-15T10:31:13Z"
     },
     {
-      "path": "src/assets/gif/Click here 2.webp",
-      "hash": "91f12b957048d6edf1eceed38ddbe0f62e43d1cf1965cb374fd18a4fd68fa9fb",
-      "mod_time": "2026-05-24T19:36:42Z"
-    },
-    {
-      "path": "src/components/sections/OurProcess/visuals/ScaleVisual.jsx",
-      "hash": "86762bda8db16164cab347da51233d2c34f96fd3cbd2e5d8277370020c30b6da",
-      "mod_time": "2026-08-24T17:01:12Z"
-    },
-    {
-      "path": "src/components/sections/Services/ServicesSeo.jsx",
-      "hash": "ce145724284d572679b08ec6f079d4758947225e24ab8ff09504d20b0a45e71d",
-      "mod_time": "2026-07-30T21:30:38Z"
-    },
-    {
-      "path": "src/data/content/notFound.json",
-      "hash": "372a43064462c87b74247a2fea2817d982091dd5cf3a7b0d75d66950ecb4c835",
-      "mod_time": "2026-08-13T16:49:53Z"
-    },
-    {
-      "path": "src/assets/client/patrick.webp",
-      "hash": "686e15234f8c8cd22ed4c66310ffc04463bfb0e6036314940cb38ae6a498b8d0",
-      "mod_time": "2026-05-24T19:36:41Z"
-    },
-    {
-      "path": "src/assets/servicesImage/Other_forms_of_marketing.webp",
-      "hash": "324fe3c8fc4beb28345de958b4c56c1349cd3cd4289a837cfc2a2659f5fea605",
-      "mod_time": "2026-05-24T19:36:43Z"
-    },
-    {
-      "path": "src/data/content/testimonials.json",
-      "hash": "a856e7af1e94e5df03b293384a21f9aa8d7f7f551a58cf44d81fe4c1c770eeab",
-      "mod_time": "2026-07-30T21:19:02Z"
-    },
-    {
-      "path": "src/assets/clientLogo/iwls2.webp",
-      "hash": "42116466755d4cd0890fb1cba985bea18e562bcc674142ea2d4929f374dee609",
-      "mod_time": "2026-05-24T19:36:42Z"
-    },
-    {
-      "path": "src/assets/coursesImage/pngaaa.com-3593909.webp",
-      "hash": "34150030197e90d774712f923d5de54c67130c3ebb9c6e77a8e68cf5e847f1fe",
-      "mod_time": "2026-05-24T19:36:42Z"
-    },
-    {
-      "path": "src/assets/servicesImage/Business_Card_Design.webp",
-      "hash": "c2de077caac319544b494a5a70034827be620201302b50fed247b6df964acd18",
-      "mod_time": "2026-05-24T19:36:43Z"
-    },
-    {
-      "path": "src/assets/workImage/Marketing2.webp",
-      "hash": "c52bb002667c4dc2ce8679ae0120a562939f068e860c8b17957de6e367e04fcf",
-      "mod_time": "2026-05-24T19:36:44Z"
-    },
-    {
-      "path": "src/components/sections/ConsultationCTA/consultationCta.css",
-      "hash": "a0c7c17d040f7d955b8abd383768b497a8a7ceb6a73850a0f6e99457dfdf79a3",
-      "mod_time": "2026-07-18T20:28:59Z"
-    },
-    {
-      "path": "src/components/sections/FinalCTA/FinalCTA.jsx",
-      "hash": "6ac9fe01c501318e6e29961bb3bdec719bd9d5afda609b6dca15c8880111ff05",
-      "mod_time": "2026-09-29T16:04:37Z"
-    },
-    {
-      "path": "src/data/ourProcess.js",
-      "hash": "02d0d87b35be2940c643ac500bbbced11ae41dae5789f5de3e1d14488d5ea0f3",
-      "mod_time": "2026-07-30T21:18:39Z"
-    },
-    {
-      "path": "src/app/favicon.ico",
-      "hash": "82b3658345cfb1fa7332c20480fc7cc9c193ce045b7ff8dcc42bc645db2f8c49",
-      "mod_time": "2026-08-16T21:28:31Z"
-    },
-    {
-      "path": "src/assets/coursesImage/react.webp",
-      "hash": "cf623ff88c2bc9f54472760249bee3f2c39b1eb48713565b173424e2bcb1cf50",
-      "mod_time": "2026-05-24T19:36:42Z"
-    },
-    {
-      "path": "src/assets/servicesImage/Custom_software_design.webp",
-      "hash": "b89f8043c54f88c6bf4a15ec6205f5a381f7617f5ddd375f788a631505b5890d",
-      "mod_time": "2026-05-24T19:36:43Z"
-    },
-    {
-      "path": "src/data/content/flipCard.json",
-      "hash": "643f780b921fa0b8be7295d829bdb398ce5e287d7e1288abfdc789a618d88406",
-      "mod_time": "2026-08-15T10:08:31Z"
-    },
-    {
-      "path": "src/app/(site)/layout.js",
-      "hash": "87151f002a2db30fda3ca675905978ff0b608da87e20af4078705e7db36d4294",
-      "mod_time": "2026-08-11T20:15:42Z"
-    },
-    {
-      "path": "src/assets/coursesImage/database.webp",
-      "hash": "afa7fde37cb57cc28a3c56b1b5a02eefe571dcb27a2f5150d06af8075085f2a5",
-      "mod_time": "2026-05-24T19:36:42Z"
-    },
-    {
-      "path": "src/assets/student/bristi.webp",
-      "hash": "c87ba939f8058c6370ebac5b3af1d9b4c1f46e75b995af3e7600113b93f36a4b",
-      "mod_time": "2026-05-24T19:36:43Z"
-    },
-    {
-      "path": "postcss.config.mjs",
-      "hash": "c1b55464542f7f12f1b810d9d02d72d0fb4f0a26debf0556e3fe8d73b187bdb1",
-      "mod_time": "2026-05-24T19:36:41Z"
-    },
-    {
-      "path": "src/assets/image/logo2.webp",
-      "hash": "e9b969054b8ba069a0313f7c0f3ba2bf11b8971ea7ee676ce11fef121b3ca905",
-      "mod_time": "2026-09-29T13:35:12Z"
-    },
-    {
-      "path": "src/assets/servicesImage/Enterprise_software_development.webp",
-      "hash": "fc0032e8cf9ed224d996c241f23f249aeb8d3a745855fdf20507d7cb324e1bc4",
-      "mod_time": "2026-05-24T19:36:43Z"
-    },
-    {
-      "path": "src/assets/workImage/Design4.webp",
-      "hash": "87c1879f9667ceb2bc0759b18791cbcd9309949231539dda20174392527652d5",
-      "mod_time": "2026-05-24T19:36:44Z"
-    },
-    {
-      "path": "src/components/sections/Services/Service.jsx",
-      "hash": "aebe972d5debd9a39089169d61f8df2f28ad1c8bd6cef7912e92491dcdbaeccd",
-      "mod_time": "2026-09-29T14:16:26Z"
-    },
-    {
-      "path": "src/assets/client/petro.webp",
-      "hash": "c7f72fd646a2ff6a28fc3fb6414b63fd031ea614168252461519111263688b12",
-      "mod_time": "2026-05-24T19:36:41Z"
-    },
-    {
-      "path": "src/assets/client/sujit.svg",
-      "hash": "2464f42cc624504a66acc8467d28f92b24a2a07b073a3a3d611e768f94668fde",
-      "mod_time": "2026-05-24T19:36:41Z"
-    },
-    {
-      "path": "src/assets/coursesImage/next.webp",
-      "hash": "c203c8bc9363f850829bdc523025e005bdeac09a76f339035102f3e0998be088",
-      "mod_time": "2026-05-24T19:36:42Z"
-    },
-    {
-      "path": "src/assets/servicesImage/Write_ups_and_thumbnail_design.webp",
-      "hash": "03f42e52b080dd71e4e62ac08dc579b03257d7c2530a169edbd387837a218960",
-      "mod_time": "2026-05-24T19:36:43Z"
-    },
-    {
-      "path": "src/components/sections/ComingSoon/comingSoon.css",
-      "hash": "a2cea8e4370c46268226114ce28bf933d8992a4a53f100f8ac31736d2a39d8c8",
-      "mod_time": "2026-08-13T20:33:35Z"
-    },
-    {
-      "path": "src/components/sections/OurProcess/visuals/index.js",
-      "hash": "36f1b0998a85bbda00fc29ac2311b4a9215be5f2d6a435d4e3cab64facd58991",
-      "mod_time": "2026-08-24T16:44:42Z"
-    },
-    {
-      "path": "src/data/config/testimonialsTheme.json",
-      "hash": "3093d5662d48c23cff904f304475abe28ad5d38840b3cae177414f67ad503813",
-      "mod_time": "2026-07-30T21:21:56Z"
-    },
-    {
-      "path": "src/assets/coursesImage/node.webp",
-      "hash": "91f14bfcd53bac6c0d5a3b07365423532ef0bd5c523e68967ffe650a05cb0e65",
-      "mod_time": "2026-05-24T19:36:42Z"
-    },
-    {
-      "path": "src/assets/image/old-logo.webp",
-      "hash": "75168b8dcac1536adfdb82c3551b4029cddb6efdab1e567246f686eefd60262e",
-      "mod_time": "2026-05-24T19:36:42Z"
-    },
-    {
-      "path": "src/components/sections/OurProcess/visuals/PlanVisual.jsx",
-      "hash": "e6156962f8b282d21d551689f79e9afa9991217bd72b6d5f7de5fa7231fb808e",
-      "mod_time": "2026-08-24T17:02:28Z"
-    },
-    {
-      "path": "src/data/consultationCta.js",
-      "hash": "82bf7e44dfb6bd637a528622bfd49694519c7b4c739155ed365e85cf0bbf0dab",
-      "mod_time": "2026-07-30T21:20:41Z"
-    },
-    {
-      "path": "src/data/content/comingSoon.json",
-      "hash": "850e50396e4dd8494045896ba918d75b2bb08859d9a1ef1f6c522147609f903e",
-      "mod_time": "2026-08-13T20:31:45Z"
-    },
-    {
-      "path": "src/assets/image/yalogo 32 x 32.webp",
-      "hash": "77bc8ad047f95d172ad5e927f6d0e41df4d2ffe8d1b2ac9378f54a4845b91eea",
+      "path": "src/assets/coursesImage/python.webp",
+      "hash": "db42e5138813fbff3de4f84d012287bac13d8197ef02a07d7995181a7485e036",
       "mod_time": "2026-05-24T19:36:42Z"
     },
     {
@@ -1067,8 +1192,83 @@
       "mod_time": "2026-09-29T14:59:13Z"
     },
     {
-      "path": "src/assets/image/ya logo circle 16 x 16.webp",
-      "hash": "d63f7dacb94a66d28a5e6e68fbde02157224b1a155c2dbbdd0e5300715758c24",
+      "path": "src/components/ui/SectionDivider/SectionDivider.jsx",
+      "hash": "6e4483eb31723875a12cbf135e3c62f5d927b4946bd531cedd9de04fe065f32a",
+      "mod_time": "2026-07-30T21:34:20Z"
+    },
+    {
+      "path": "src/data/json/works.json",
+      "hash": "fcdbec1004d4fa3324e741479f12ec690414eeefe99076feadbdfa50ee612c33",
+      "mod_time": "2026-08-15T10:08:31Z"
+    },
+    {
+      "path": "src/assets/servicesImage/LinkedIn_Marketing.webp",
+      "hash": "84e4352f7b8f08cc43c0a70329d86d0f1af2694ee0e4b27ac9f27382577c38c0",
+      "mod_time": "2026-05-24T19:36:43Z"
+    },
+    {
+      "path": "src/assets/student/Rishikesh_Kumar_Casual.webp",
+      "hash": "748c6fb68187bde40d3e7dd58be21a41476d56091ab7db4c0def1bbb077bf922",
+      "mod_time": "2026-05-24T19:36:43Z"
+    },
+    {
+      "path": "src/assets/student/nibedita.webp",
+      "hash": "99fa80d12ee19fc5a7e9732cf15604e9a668c2580b60310b9b9db6e3113b5b19",
+      "mod_time": "2026-05-24T19:36:43Z"
+    },
+    {
+      "path": "src/components/sections/Services/serviceCards.css",
+      "hash": "92ec330f51beb271efb88536669fd10b38ebf8d89cf8f6b17c8935a6f3cd6e84",
+      "mod_time": "2026-09-01T15:36:22Z"
+    },
+    {
+      "path": "src/components/ui/SectionCTA/SectionCTA.jsx",
+      "hash": "5cea50e47223a23ae565a9508873fe0980478b2b8e7d90ad8d10a78fd7d65046",
+      "mod_time": "2026-09-29T16:04:37Z"
+    },
+    {
+      "path": "src/data/comingSoon.js",
+      "hash": "bc3a27795841e3f07b52e50aff04097d94e3702c3ec6d8726cee1ecc16ab8594",
+      "mod_time": "2026-08-13T20:31:55Z"
+    },
+    {
+      "path": "src/data/content/whyChoose.json",
+      "hash": "e296f7c5c748df9394fff47a4f04684d6c2082bbefcd528440b6b2c5a0bbe52d",
+      "mod_time": "2026-07-30T21:20:04Z"
+    },
+    {
+      "path": "src/assets/gif/student.gif",
+      "hash": "abf37be9bd7a9bbf4ffb7933a73b2cda70a7c96828463c9a191e1f1ffa2e7fdb",
+      "mod_time": "2026-05-24T19:36:42Z"
+    },
+    {
+      "path": "src/assets/image/ya logo circle 192 x 192.webp",
+      "hash": "23a7692fdb43bd6dcbcd15591aad04096f59c9482514933b442f0fba71ea29b8",
+      "mod_time": "2026-05-24T19:36:42Z"
+    },
+    {
+      "path": "src/assets/student/anuska.svg",
+      "hash": "0cd5518667edb1f9bf8a08e46875c8a2e5676e5ea6605bcfbc207563b2044993",
+      "mod_time": "2026-05-24T19:36:43Z"
+    },
+    {
+      "path": "src/assets/workImage/Dev6.webp",
+      "hash": "c74c2c7a774b036f2d2389ab64fc3edd08d8612216af7fdef40141833271e8c1",
+      "mod_time": "2026-05-24T19:36:44Z"
+    },
+    {
+      "path": "src/app/(site)/[...slug]/page.jsx",
+      "hash": "badd6059478bb5b2b48705d90ecfabec591ccdd2803a6ab5de99862baeba4745",
+      "mod_time": "2026-08-13T21:29:18Z"
+    },
+    {
+      "path": "src/assets/image/old-logo.webp",
+      "hash": "75168b8dcac1536adfdb82c3551b4029cddb6efdab1e567246f686eefd60262e",
+      "mod_time": "2026-05-24T19:36:42Z"
+    },
+    {
+      "path": "src/assets/image/quote.webp",
+      "hash": "3f350dab8966fd37fee1975080c6859f43f46740e5c1fcc48770411af39efc5f",
       "mod_time": "2026-05-24T19:36:42Z"
     },
     {
@@ -1082,43 +1282,53 @@
       "mod_time": "2026-05-24T19:36:44Z"
     },
     {
-      "path": "src/components/sections/CaseStudies/caseStudies.css",
-      "hash": "c770224bc51374409ce5948828d37f91916d5862eb46987c5465dd669e7b34e2",
-      "mod_time": "2026-08-31T21:32:00Z"
+      "path": "src/assets/servicesImage/SaaS_CRM_Automations.webp",
+      "hash": "64cc54ada44649d4756494f4644f3f18c53de18f47e8a5371b16d0a0d92c5e8c",
+      "mod_time": "2026-05-24T19:36:43Z"
     },
     {
-      "path": "src/components/ui/SplashCursor/SplashCursorGate.jsx",
-      "hash": "85a5535805b1d1c12d582e9124abfac5a1512f41a46171da48fe88fe1f5a245c",
-      "mod_time": "2026-08-05T20:29:42Z"
+      "path": "jsconfig.json",
+      "hash": "56123956b551c203af11a2a5a985e82bcfdf6d4e619acbdd0a5e2bf1e79aba58",
+      "mod_time": "2026-06-25T15:18:38Z"
     },
     {
-      "path": "eslint.config.mjs",
-      "hash": "ce5c7cb800dd4df06597ce6aafb613a70f4a6ac9cad8d7facedb52998d8bf048",
-      "mod_time": "2026-05-24T19:36:41Z"
+      "path": "src/app/favicon.ico",
+      "hash": "82b3658345cfb1fa7332c20480fc7cc9c193ce045b7ff8dcc42bc645db2f8c49",
+      "mod_time": "2026-08-16T21:28:31Z"
+    },
+    {
+      "path": "src/assets/gif/Click here 2.gif",
+      "hash": "ec1b6c91e224491bd7832daa2c2da21cfa76376d7a1b7330e108c0fe5fd4c0e8",
+      "mod_time": "2026-05-24T19:36:42Z"
+    },
+    {
+      "path": "src/assets/student/abhishek.svg",
+      "hash": "73602437a7f72ea79f9d8a55f2ee959b79357b344be9d59f05115dafa739b9d3",
+      "mod_time": "2026-05-24T19:36:43Z"
+    },
+    {
+      "path": "src/assets/student/rishikesh_formal.svg",
+      "hash": "2c7d0574be12461f7cf795bf8b9d1dd39b184d06a7b69d61506a949da01b9127",
+      "mod_time": "2026-05-24T19:36:43Z"
+    },
+    {
+      "path": "src/assets/student/abhishek.webp",
+      "hash": "34c282aaaff254da88803e17bd3f1e2117f3437154ac09cd5ad361d75034490a",
+      "mod_time": "2026-05-24T19:36:43Z"
+    },
+    {
+      "path": "src/components/sections/OurProcess/visuals/VisualFrame.jsx",
+      "hash": "d976238c983fd8f4be500052245f8291f2847d6efe4ffd1598bd16a191753125",
+      "mod_time": "2026-08-24T16:42:05Z"
+    },
+    {
+      "path": "src/components/ui/FlipCard/flipcard.css",
+      "hash": "0006e08b18adc754ebefa87114c59d2b2ded7cfbd4814d61a976cc40c6879ed9",
+      "mod_time": "2026-10-01T15:09:30Z"
     },
     {
       "path": "src/assets/client/asim.webp",
       "hash": "756fb6b77ac74e89323cc7de5bd5c9e0b76d1e02595038c6c1cdfb550173b8e4",
-      "mod_time": "2026-05-24T19:36:41Z"
-    },
-    {
-      "path": "src/assets/coursesImage/spring-2.webp",
-      "hash": "0941c225140a5abf67422ddadef924a846a5b3f95259581234ea9c17d9974ecc",
-      "mod_time": "2026-05-24T19:36:42Z"
-    },
-    {
-      "path": "src/components/sections/OurProcess/OurProcess.jsx",
-      "hash": "30614aaa003fd252e86f55272517eb58f3b2ddfb82c505e3677790ff642e3414",
-      "mod_time": "2026-09-29T15:19:04Z"
-    },
-    {
-      "path": "src/data/json/works.json",
-      "hash": "fcdbec1004d4fa3324e741479f12ec690414eeefe99076feadbdfa50ee612c33",
-      "mod_time": "2026-08-15T10:08:31Z"
-    },
-    {
-      "path": "src/assets/client/jaclyn.svg",
-      "hash": "7506fae2c4312aba8de3b3e96d2cb4f33931fba8a3f59470f3021bb2fad6e811",
       "mod_time": "2026-05-24T19:36:41Z"
     },
     {
@@ -1127,84 +1337,34 @@
       "mod_time": "2026-05-24T19:36:43Z"
     },
     {
-      "path": "src/data/content/ourProcess.json",
-      "hash": "4b776edf3690720cf6c3eb8daeef4e5f8142c2d1e05be436f91668cb17f1fe59",
-      "mod_time": "2026-08-24T16:41:37Z"
+      "path": "src/components/sections/Services/service.css",
+      "hash": "060c9fdc5e3bab09e2770d7311dd1093b9b906a3f2517e3f6cbd52889111d3a1",
+      "mod_time": "2026-08-31T21:36:36Z"
     },
     {
-      "path": "src/data/footer.js",
-      "hash": "f17e492aed96e83ab4bc03397e6c141407bcec1f23d3587300f43bc5424d1a14",
-      "mod_time": "2026-07-30T21:20:53Z"
+      "path": "src/data/hero.js",
+      "hash": "b625c6c9c2c883b4f23a15e947d3cff1eb4434b9af64158e25f171a63ee4ad85",
+      "mod_time": "2026-10-01T14:43:24Z"
     },
     {
-      "path": "src/data/navIcons.js",
-      "hash": "a860ec430ac203b7609e1bef407bbb0a86aa214af38ebe0a26cf80520b6d3600",
-      "mod_time": "2026-08-05T14:11:39Z"
+      "path": "src/data/json/courses.json",
+      "hash": "da545fb753b669d218ff0806e9959c19275e0ff44923ba60fee9b499cee1aefa",
+      "mod_time": "2026-08-15T10:08:31Z"
     },
     {
-      "path": "src/assets/workImage/Design2.webp",
-      "hash": "3b46935ae8bf033ca9bd80970f48f94d0add8938abf3e38c657796c65166707a",
-      "mod_time": "2026-05-24T19:36:44Z"
-    },
-    {
-      "path": "src/components/sections/Testimonials/testimonials.css",
-      "hash": "af3bdc075d5590311419e065fca2c833db01b2a8ad7b20398584ff64d09a0104",
-      "mod_time": "2026-08-31T21:41:01Z"
-    },
-    {
-      "path": "src/assets/servicesImage/Social_Media_and_Event_Poster_Design.webp",
-      "hash": "4c0946635925983527eb8a7664f4138c7fad9ab678a66752317e1775c3245696",
-      "mod_time": "2026-05-24T19:36:43Z"
-    },
-    {
-      "path": "src/data/config/heroParticles.json",
-      "hash": "d1baf1ad13ff2ee58229ba7f88a310df13acca3dd08ff8972c097c841cae986c",
-      "mod_time": "2026-07-30T21:17:32Z"
-    },
-    {
-      "path": "src/data/flipCard.js",
-      "hash": "2ad0dd909b1c7d523fc74abc7c251a56383e84b10a42a34106e1d34dfc6e78a3",
-      "mod_time": "2026-07-30T21:21:42Z"
-    },
-    {
-      "path": "src/assets/servicesImage/Youtube_Marketing.webp",
-      "hash": "2d9f9a8300348280000f7e9dd4cf96a852ebe3473fb64d11036f9ea2fef060dc",
-      "mod_time": "2026-05-24T19:36:43Z"
-    },
-    {
-      "path": "src/assets/image/card-2.webp",
-      "hash": "55311dd8bd80de5221b2d182fdd71952e6b06d3fa8782f875b3944fbb3fee7e1",
+      "path": "src/assets/image/ya logo circle 16 x 16.webp",
+      "hash": "d63f7dacb94a66d28a5e6e68fbde02157224b1a155c2dbbdd0e5300715758c24",
       "mod_time": "2026-05-24T19:36:42Z"
     },
     {
-      "path": "src/data/content/sectionCta.json",
-      "hash": "3201178e9ed824d72556062dd0c6472b6f499ed34d9524a1b9940758b4aed66d",
-      "mod_time": "2026-09-29T14:13:47Z"
+      "path": "src/assets/servicesImage/Enterprise_software_development.webp",
+      "hash": "fc0032e8cf9ed224d996c241f23f249aeb8d3a745855fdf20507d7cb324e1bc4",
+      "mod_time": "2026-05-24T19:36:43Z"
     },
     {
-      "path": "src/assets/coursesImage/oracleDB.webp",
-      "hash": "76d62a60697a44c3244ab175a67d85acb5f874556989f0bc02ca6bd6eaa45170",
-      "mod_time": "2026-05-24T19:36:42Z"
-    },
-    {
-      "path": "src/assets/mainServices/README.md",
-      "hash": "93253136a7b809f23c1bb71a71b715c2edfbfcc01a26a08df5949031b457df98",
-      "mod_time": "2026-07-30T21:56:13Z"
-    },
-    {
-      "path": "src/components/sections/OurProcess/visuals/useLiveInView.js",
-      "hash": "f115337d3793da000ee33eca3218cd767e28dc79d350faa2bee3f784315f0473",
-      "mod_time": "2026-08-24T16:41:56Z"
-    },
-    {
-      "path": "src/components/sections/Services/ServiceCards.jsx",
-      "hash": "9e7ab47795652f11a1a288b234899f075b980f142429cb33e86256d0f8995728",
-      "mod_time": "2026-09-01T15:36:13Z"
-    },
-    {
-      "path": "src/components/ui/Modal/Modal.jsx",
-      "hash": "5317bdb050dea6c83b278db12137f90ce7fbc51ea923a1cf46c0445a3fe7a867",
-      "mod_time": "2026-08-31T21:36:09Z"
+      "path": "src/components/sections/OurProcess/visuals/CloseVisual.jsx",
+      "hash": "003f0ac1098e865327f814a9e88207ed2c9d0d178e6fec6af2aede2a04c5552a",
+      "mod_time": "2026-08-24T17:01:13Z"
     },
     {
       "path": "src/data/config/flipCard.json",
@@ -1212,119 +1372,14 @@
       "mod_time": "2026-07-30T21:20:04Z"
     },
     {
-      "path": "src/data/content/mainServices.json",
-      "hash": "8739b4416a4c15393c2613b4816dc70a218984ab659237409d9f2b1682ff8787",
-      "mod_time": "2026-07-30T21:20:04Z"
+      "path": "src/data/flipCard.js",
+      "hash": "9ec826c33ec19a200ab45d2404a10f5fdbbf85e0cb82b4258c41075f49d04cd1",
+      "mod_time": "2026-10-01T14:44:23Z"
     },
     {
-      "path": "src/app/not-found.jsx",
-      "hash": "c6153271af4954b2200d37af6ca4bcecd8364416e86c0230b9d5ecd62db30d79",
-      "mod_time": "2026-08-13T21:23:32Z"
-    },
-    {
-      "path": "src/assets/student/Rishikesh_Kumar_Casual.svg",
-      "hash": "9c2d9b9c7a8a0ca992dd797864865214b5c3406f356150e19e25b18658b81679",
-      "mod_time": "2026-05-24T19:36:43Z"
-    },
-    {
-      "path": "src/assets/workImage/Dev2.webp",
-      "hash": "70ef6535a0e8008dbfae3706e33acf61496708f44f48d96c2572797f63ecb2db",
-      "mod_time": "2026-05-24T19:36:44Z"
-    },
-    {
-      "path": "src/assets/workImage/Dev6.webp",
-      "hash": "c74c2c7a774b036f2d2389ab64fc3edd08d8612216af7fdef40141833271e8c1",
-      "mod_time": "2026-05-24T19:36:44Z"
-    },
-    {
-      "path": "src/data/caseStudies.js",
-      "hash": "61cd704662ab209473eab3513dce2a1735821b4bdc4a9d3b312c19d62472ba2f",
-      "mod_time": "2026-07-30T21:20:17Z"
-    },
-    {
-      "path": "src/data/navRoutes.js",
-      "hash": "153a41afa4eafa887bdea9fd24b360cb015d82e7a7f870d88a5b34b124dc2687",
-      "mod_time": "2026-08-16T21:10:53Z"
-    },
-    {
-      "path": "src/assets/image/ya logo circle 32 x 32.webp",
-      "hash": "fba9f3623fd802ffabe7d6564e3b20c2bb5538b89aa13f7c7dfc8d15cb4472b8",
-      "mod_time": "2026-05-24T19:36:42Z"
-    },
-    {
-      "path": "src/assets/servicesImage/Customized_forms_of_design_and_marketing.webp",
-      "hash": "788dcc7370cfff5ded36eb9b8a49e8db69f90d78177713da7899c91b50f2f046",
-      "mod_time": "2026-05-24T19:36:43Z"
-    },
-    {
-      "path": "src/components/ui/FlipCard/flipcard.css",
-      "hash": "094f5f7a47ed87a69db4eeac750edb9cde4fcae4906c7b128fda0c0ad9b8620a",
-      "mod_time": "2026-08-15T08:08:21Z"
-    },
-    {
-      "path": "src/data/content/faq.json",
-      "hash": "9669d72370e57268652f0d2a5b45b9a2e2e93518a226706ed59a8cc12257dd31",
-      "mod_time": "2026-08-01T20:16:38Z"
-    },
-    {
-      "path": "src/assets/coursesImage/next (1).webp",
-      "hash": "cc78d08cdd41d5de29d62ee81474a94c9480ab36455e9fc3e4a4ae343d0c77aa",
-      "mod_time": "2026-05-24T19:36:42Z"
-    },
-    {
-      "path": "src/assets/image/logo.webp",
-      "hash": "b0f710aaf4e68378f1117d8a54bca9e1dd62024da46ae60546e415858351134f",
-      "mod_time": "2026-09-29T13:35:12Z"
-    },
-    {
-      "path": "src/assets/student/Poulami_Pan.svg",
-      "hash": "3f004cdcb8878fcec61f9c40d7f5a8c57131df19ac4734c64271463b0044eb32",
-      "mod_time": "2026-05-24T19:36:43Z"
-    },
-    {
-      "path": "src/assets/student/Poulami_Pan.webp",
-      "hash": "52babb24ca59968758f890945eeb56a40209211117443eaba8e0a8e5c8278716",
-      "mod_time": "2026-05-24T19:36:43Z"
-    },
-    {
-      "path": "src/assets/workImage/Dev3.webp",
-      "hash": "f1bd7acbf351833a93404bb6908221e1f745f9c066a256277aba2fd29b0b9e79",
-      "mod_time": "2026-05-24T19:36:44Z"
-    },
-    {
-      "path": "src/components/layout/Footer/Footer.jsx",
-      "hash": "c0adb48818c0d52f8daee58a9375ff9dd4bcc069417e077fadc5de5ba47c1d5f",
-      "mod_time": "2026-08-01T20:30:16Z"
-    },
-    {
-      "path": "src/assets/servicesImage/Video_and_Image_Editing.webp",
-      "hash": "c3022f46238300bb903bf175f565c93734670eaf975e84f8dba4472bb4f0ff8b",
-      "mod_time": "2026-05-24T19:36:43Z"
-    },
-    {
-      "path": "src/assets/student/Anuska_Paul.webp",
-      "hash": "dbee8fb46b1e9424b83e6ad6e2c962afb94c32a276c956912607dcc8c2cc2d84",
-      "mod_time": "2026-05-24T19:36:43Z"
-    },
-    {
-      "path": "src/components/layout/Layout/Layout.jsx",
-      "hash": "a216255f55ace20babc3a132aa9b36a60e5e41d6fb3c50d02001683b81f0363d",
-      "mod_time": "2026-08-05T20:44:25Z"
-    },
-    {
-      "path": "README.md",
-      "hash": "24ff135b16affa6fc1c5fe5cb8248b76a175ecdd1d6c443b148ba536cd14727a",
-      "mod_time": "2026-08-31T21:43:31Z"
-    },
-    {
-      "path": "src/app/globals.css",
-      "hash": "7ab22f7b4d38413719d1981f60c3a6e71f278b3c8314ef23a5f837e640790e4a",
-      "mod_time": "2026-08-05T14:14:12Z"
-    },
-    {
-      "path": "src/assets/student/abhishek.webp",
-      "hash": "34c282aaaff254da88803e17bd3f1e2117f3437154ac09cd5ad361d75034490a",
-      "mod_time": "2026-05-24T19:36:43Z"
+      "path": "src/components/sections/Faq/FaqSection.jsx",
+      "hash": "df93f968be656f61478ad64f3ad9ca5d24da931b77db34f2302b10ab2299319a",
+      "mod_time": "2026-09-29T14:24:36Z"
     },
     {
       "path": "src/components/ui/Button/Button.jsx",
@@ -1332,143 +1387,88 @@
       "mod_time": "2026-07-24T08:24:58Z"
     },
     {
+      "path": "src/app/(site)/page.js",
+      "hash": "70c061d4b6122715ad7509781aeafd62a0ae662d53eed842ff2e2ff516f9605d",
+      "mod_time": "2026-09-29T15:47:43Z"
+    },
+    {
       "path": "src/assets/client/jasbin.svg",
       "hash": "ec8f6849fb2055811d30ebae5972c1df16aa35e127cd7d24ec50d1f1864f9019",
       "mod_time": "2026-05-24T19:36:41Z"
     },
     {
-      "path": "src/components/sections/BrandMark/brandMark.css",
-      "hash": "dd2b30362b84bd7417c161b83263744fc200777e6d9b0d542e2937984f83bc10",
-      "mod_time": "2026-07-30T20:35:49Z"
+      "path": "src/components/ui/Container/Container.jsx",
+      "hash": "9a6ef8acc42affd7d95b1c72171bc0c6c47b2404e363161f4920c8bcab9b60a3",
+      "mod_time": "2026-07-18T21:11:52Z"
     },
     {
-      "path": "src/components/sections/index.js",
-      "hash": "ebabdb07ba5bd6030717a39db796895308ae9edef38290847758f886b80d6314",
-      "mod_time": "2026-09-29T15:47:43Z"
+      "path": "src/data/json/students.json",
+      "hash": "502419e1b6cf3c9c2e48a7995fd87cf8026a1781c2386122959edb99e1b629eb",
+      "mod_time": "2026-08-15T10:08:31Z"
     },
     {
-      "path": "src/components/ui/SectionDivider/SectionDivider.jsx",
-      "hash": "6e4483eb31723875a12cbf135e3c62f5d927b4946bd531cedd9de04fe065f32a",
-      "mod_time": "2026-07-30T21:34:20Z"
-    },
-    {
-      "path": "src/data/config/serviceTabs.json",
-      "hash": "1528b7b052219246c17791c45fe435499d9dd5b8e0320593c04b531dce3e9673",
-      "mod_time": "2026-07-30T21:27:31Z"
-    },
-    {
-      "path": "ya-site.zip",
-      "hash": "e2b8e97592eea67ef4ac57fbef786a393f19206d32f40f40003dec6bf4fee3e2",
-      "mod_time": "2026-09-25T19:05:40Z"
-    },
-    {
-      "path": ".gitignore",
-      "hash": "2dfe16941b3afc5866090eaa8750fb0ad25e59f5d23e431ac4eb0063ff39f34b",
-      "mod_time": "2026-08-15T09:40:05Z"
-    },
-    {
-      "path": "src/assets/student/Dipta_Karar.svg",
-      "hash": "b783286d6dba4a1e0a34607c0a5c1f8a2ece41cf2b5de2e1c1b637314b5699a5",
-      "mod_time": "2026-05-24T19:36:43Z"
-    },
-    {
-      "path": "src/components/layout/MotionProvider/MotionProvider.jsx",
-      "hash": "450fe41b43ecc60b0f7832b28f567d3956012ed9e55747f4c34077d90c3aefbf",
-      "mod_time": "2026-07-24T08:24:58Z"
-    },
-    {
-      "path": "src/data/finalCta.js",
-      "hash": "53a27a7f2da8763dbe269fc6296f39de3537c102cbf2703dbe9f65d319cb9d43",
-      "mod_time": "2026-09-29T15:45:52Z"
-    },
-    {
-      "path": "src/assets/image/about-image-5.webp",
-      "hash": "a7e1462f4b063e85970e46e4fb5550caf71594b8ca0e3bbeb08a0ba95597cc89",
+      "path": "src/assets/image/yalogo 32 x 32.webp",
+      "hash": "77bc8ad047f95d172ad5e927f6d0e41df4d2ffe8d1b2ac9378f54a4845b91eea",
       "mod_time": "2026-05-24T19:36:42Z"
     },
     {
-      "path": "src/assets/student/Arijit_Paul.webp",
-      "hash": "007fb32c4bbb17352d104ccb6f6c8663a8bbc5b490827e13f87464bd288e4893",
+      "path": "src/assets/servicesImage/AI_development_and_integrations.webp",
+      "hash": "71cfc2f29ab4d4c868d2cc437c202d3f5eefd654b75f67d16f93e75dc1c65a1e",
       "mod_time": "2026-05-24T19:36:43Z"
     },
     {
-      "path": "src/assets/student/Rishikesh_Kumar_Casual.webp",
-      "hash": "748c6fb68187bde40d3e7dd58be21a41476d56091ab7db4c0def1bbb077bf922",
-      "mod_time": "2026-05-24T19:36:43Z"
+      "path": "src/components/sections/OurProcess/visuals/processVisuals.css",
+      "hash": "6e9b87a96add141e2c606cdae739d01aa0f3c3c2b21c2080455e0980fc921817",
+      "mod_time": "2026-08-24T17:03:40Z"
     },
     {
-      "path": "src/assets/student/arijit.webp",
-      "hash": "1497ca11375a3bbd92e4d0935977e90602eba08aced2eac7a6367deaf0fcbfa0",
-      "mod_time": "2026-05-24T19:36:43Z"
+      "path": "src/data/content/servicesSection.json",
+      "hash": "dd77f0a4011bfc5a82c10429a8bccb9981f5e35fb2e0b99a64d96ba4ae074049",
+      "mod_time": "2026-10-02T19:35:54Z"
     },
     {
-      "path": "src/components/layout/Navbar/scrollToSection.js",
-      "hash": "44d6dba3a76e796d3af1b5d7f93c88d99b04e5f3e2f02fb0c1e0f5327901cb7e",
-      "mod_time": "2026-08-15T08:25:58Z"
-    },
-    {
-      "path": "src/components/sections/Services/serviceCards.css",
-      "hash": "92ec330f51beb271efb88536669fd10b38ebf8d89cf8f6b17c8935a6f3cd6e84",
-      "mod_time": "2026-09-01T15:36:22Z"
-    },
-    {
-      "path": "src/assets/client/bibaswan.webp",
-      "hash": "0aa9c5c0ddead750ed4e6324a3253c0c728ad6c362052a4e4a35d2f78fac091e",
-      "mod_time": "2026-05-24T19:36:41Z"
-    },
-    {
-      "path": "src/assets/image/about-image-1.webp",
-      "hash": "dc2abdb88b1618593ee2eb885f8acb2c3d921b2650749d4a2f0c0cf1794c6d00",
+      "path": "src/assets/gif/student.webp",
+      "hash": "ef11439886c7027614f46ed70b2f2331cde3514502889023e79e9e5bc820fc38",
       "mod_time": "2026-05-24T19:36:42Z"
     },
     {
-      "path": "src/assets/image/yalogo 16 x 16.webp",
-      "hash": "b6ea57b34f8be356da2c70ed24a99b2c9aaaf839a5209c4912020ff578dfe6d2",
-      "mod_time": "2026-05-24T19:36:42Z"
+      "path": "src/components/sections/NotFound/NotFound.jsx",
+      "hash": "b6fc630894d99cfd26cccfc40c8369a8bd0e0f05205347c23f2e3ce0d5969e19",
+      "mod_time": "2026-08-13T17:09:14Z"
     },
     {
-      "path": "src/assets/student/rishikesh_formal.webp",
-      "hash": "d15738ced72e04b897bf6f8425fd58a5b4d63107deeee1ac835b637a44c8dd8d",
-      "mod_time": "2026-05-24T19:36:44Z"
+      "path": "src/components/ui/SectionCTA/sectionCta.css",
+      "hash": "0ff48064b43df050034965f4294797b37c7e1d76fec4466f147e42157342a138",
+      "mod_time": "2026-09-29T15:25:22Z"
     },
     {
-      "path": "src/assets/workImage/Dev5.webp",
-      "hash": "672876a1f55e2c51a0f4ae97c529f4dcec3fb277f3e8ae35bede660741c04098",
-      "mod_time": "2026-05-24T19:36:44Z"
-    },
-    {
-      "path": "src/components/ui/SplashCursor/SplashCursor.jsx",
-      "hash": "50bc20804ee04c7ba3120b1dc1e258d4602e8645e7ab907861dcfd854e4eacf4",
-      "mod_time": "2026-08-05T14:58:35Z"
-    },
-    {
-      "path": "src/data/content/services.json",
-      "hash": "4531715ad2087934beb33c7667f61d6c52d510b3ac54e68916a6a023dbd9c62e",
-      "mod_time": "2026-09-01T15:50:47Z"
-    },
-    {
-      "path": "src/assets/servicesImage/Marketing_and_content_strategy_consultancy.webp",
-      "hash": "96c3d3b45b85199b884341f01d01255224cc6e18d0e5bcb49124f3a2bcee3bec",
+      "path": "src/assets/servicesImage/Local_and_website seo.webp",
+      "hash": "1aecf3e86a851605553768ec6bf7d216222224df080c688dcc5c36127ef93f34",
       "mod_time": "2026-05-24T19:36:43Z"
     },
     {
-      "path": "src/components/ui/Button/button.css",
-      "hash": "5bf6f86e96bb60cd0d3611c93d96f703846205a6db33ef9a1dcc543424ab2824",
-      "mod_time": "2026-07-16T07:57:55Z"
+      "path": "src/assets/student/Poulami_Pan.svg",
+      "hash": "3f004cdcb8878fcec61f9c40d7f5a8c57131df19ac4734c64271463b0044eb32",
+      "mod_time": "2026-05-24T19:36:43Z"
     },
     {
-      "path": "src/data/content/finalCta.json",
-      "hash": "d45b39d245eb01941f9945c9059def621165cf19b1ed948ad63a353ea464d3ad",
-      "mod_time": "2026-09-29T15:56:29Z"
+      "path": "src/assets/student/dipayan.svg",
+      "hash": "ed29d1aa88223517c196dcc87cf4867e58c50d96092c07fdc3405eea564cdf32",
+      "mod_time": "2026-05-24T19:36:43Z"
+    },
+    {
+      "path": "src/components/layout/Layout/Layout.jsx",
+      "hash": "a216255f55ace20babc3a132aa9b36a60e5e41d6fb3c50d02001683b81f0363d",
+      "mod_time": "2026-08-05T20:44:25Z"
     }
   ],
-  "fact_count": 722,
+  "fact_count": 725,
   "insight_count": 23,
   "enola_version": "0.4.21",
-  "snapshot_id": "sha256:e9b2886f8477523a38c2974779ac6a7de1b5f976f4145b73a6dc1227c9549280",
+  "snapshot_id": "sha256:2cd2538f7c4fda159253548c3c523bb9fa3ac8238e1f630136339f8231698d48",
   "git": {
     "ref": "main",
-    "commit": "d8cfc52b330cfbae9534cb80cd2db8f793d18c25",
+    "commit": "ab14759e62bc4b01d14ff23818621d3a959a68bc",
     "dirty": true,
     "remote": "github.com/dipanapril23/ya_next"
   },
@@ -1476,7 +1476,7 @@
   "extractor_version": "v270",
   "files_seen": 285,
   "files_parsed": 81,
-  "source_bytes": 492064,
+  "source_bytes": 499637,
   "dirs_skipped": 11,
   "skipped_sample": [
     ".git/ (glob: **/.git/**)",
@@ -1528,24 +1528,24 @@
     ]
   },
   "output_hashes": {
-    "facts.jsonl": "sha256:e46d20a286c4752e17f52ad85f1844ef61d3e36e878a97f31105b39f2f30c73e",
-    "insights.json": "sha256:f851076750c69592fb1cdb5effccf8bb742278a74cb901c986834ce181a99b81",
-    "llm_context.md": "sha256:fed7af5583f44fcc6520ea704c301ded62c0bf4f9092cad5f837b84ead612146"
+    "facts.jsonl": "sha256:f3e879c292fd0b58de9b6e4700fb22fe379666e209aeb725e5e31383a59a5387",
+    "insights.json": "sha256:5b39dda04f1c374bba4f79f05e812852003073cd44b586b14474bf3b5d3af59b",
+    "llm_context.md": "sha256:9fc1337a09b5ece99d61a05815e5e67f423bb27646a66ba6a87cdb648500284a"
   },
   "unseen": {
     "files_excluded_by_ignore": 0,
     "dirs_excluded_by_ignore": 11,
     "outside_graph": {
-      "imports": 138
+      "imports": 140
     },
     "outside_graph_prefixes": {
       "@/assets": 4,
-      "@/components": 26,
+      "@/components": 27,
       "@/data": 4,
       "eslint": 1,
       "eslint-config-next": 1,
       "gsap": 3,
-      "next": 21
+      "next": 22
     },
     "dead_exemptions": 0,
     "dynamic_feature_classes": 0

@@ -21,7 +21,11 @@ import flipCardConfig from "./config/flipCard.json";
 const { bgAlphaHex, borderAlphaHex, iconAlphaHex, pulseBaseSeconds, pulseStepSeconds } =
   flipCardConfig.tintFormula;
 
-export const FLIPCARD_SERVICES = flipCardContent.services.map((svc, i) => ({
+/* The six reasons-to-choose on the card's resting face. Renamed from
+   FLIPCARD_SERVICES when that face became the default one: they are claims
+   about the agency, not a service catalogue, and the old name invited the two
+   to be confused. */
+export const FLIPCARD_REASONS = flipCardContent.reasons.map((svc, i) => ({
   ...svc,
   tintBg: `${svc.color}${bgAlphaHex}`,
   tintBorder: `${svc.color}${borderAlphaHex}`,
